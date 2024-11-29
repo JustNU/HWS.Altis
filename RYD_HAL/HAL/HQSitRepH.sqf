@@ -324,7 +324,7 @@ while {true} do
 	_HQ setVariable ["RydHQ_NoLandCargo",RydHQH_NoLandCargo];
 	if (isNil ("RydHQH_LastFriends")) then {RydHQH_LastFriends = []};
 	_HQ setVariable ["RydHQ_LastFriends",RydHQH_LastFriends];
-	if (isNil ("RydHQH_CargoFind")) then {RydHQH_CargoFind = 0};
+	if (isNil ("RydHQH_CargoFind")) then {RydHQH_CargoFind = 1};
 	_HQ setVariable ["RydHQ_CargoFind",RydHQH_CargoFind];
 	if (isNil ("RydHQH_Subordinated")) then {RydHQH_Subordinated = []};
 	_HQ setVariable ["RydHQ_Subordinated",RydHQH_Subordinated];
@@ -424,6 +424,9 @@ while {true} do
 	if (isNil "RydHQH_InfoMarkers") then {RydHQH_InfoMarkers = false};
 	_HQ setVariable ["RydHQ_InfoMarkers",RydHQH_InfoMarkers];
 
+	if (isNil "RydHQH_ArtyMarks") then {RydHQH_ArtyMarks = false};
+	_HQ setVariable ["RydHQ_ArtyMarks",RydHQH_ArtyMarks];
+	
 	if (isNil ("RydHQH_ResetNow")) then {RydHQH_ResetNow = false};
 	_HQ setVariable ["RydHQ_ResetNow",RydHQH_ResetNow];
 	if (isNil ("RydHQH_ResetOnDemand")) then {RydHQH_ResetOnDemand = false};
@@ -572,6 +575,9 @@ while {true} do
 	if (isNil ("RydHQH_SimpleMode")) then {RydHQH_SimpleMode = true};
 	_HQ setVariable ["RydHQ_SimpleMode",RydHQH_SimpleMode];
 
+	if (isNil ("RydHQH_SecTasks")) then {RydHQH_SecTasks = false};
+	_HQ setVariable ["RydHQ_SecTasks",RydHQH_SecTasks];
+	
 	if (isNil ("RydHQH_SimpleObjs")) then {RydHQH_SimpleObjs = []};
 	_HQ setVariable ["RydHQ_SimpleObjs",RydHQH_SimpleObjs];
 

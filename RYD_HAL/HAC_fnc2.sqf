@@ -589,6 +589,87 @@ RYD_StatusQuo =
 			}
 		}
 	foreach (_HQ getVariable ["RydHQ_AmmoDrop",[]]);
+
+	if not (isnil "LeaderHQ") then {if (_HQ == (group LeaderHQ)) then {
+		ArtyFriendsA = _friends;
+		ArtyArtA = _Art;
+		ArtyArtGA = _ArtG;
+		publicVariable "ArtyFriendsA";
+		publicVariable "ArtyArtA";
+		publicVariable "ArtyArtGA";
+		}
+	};
+
+	if not (isnil "LeaderHQB") then {if (_HQ == (group LeaderHQB)) then {
+		ArtyFriendsB = _friends;
+		ArtyArtB = _Art;
+		ArtyArtGB = _ArtG;
+		publicVariable "ArtyFriendsB";
+		publicVariable "ArtyArtB";
+		publicVariable "ArtyArtGB";
+		}
+	};
+
+	if not (isnil "LeaderHQC") then {if (_HQ == (group LeaderHQC)) then {
+		ArtyFriendsC = _friends;
+		ArtyArtC = _Art;
+		ArtyArtGC = _ArtG;
+		publicVariable "ArtyFriendsC";
+		publicVariable "ArtyArtC";
+		publicVariable "ArtyArtGC";
+		}
+	};
+
+	if not (isnil "LeaderHQD") then {if (_HQ == (group LeaderHQD)) then {
+		ArtyFriendsD = _friends;
+		ArtyArtD = _Art;
+		ArtyArtGD = _ArtG;
+		publicVariable "ArtyFriendsD";
+		publicVariable "ArtyArtD";
+		publicVariable "ArtyArtGD";
+		}
+	};
+
+	if not (isnil "LeaderHQE") then {if (_HQ == (group LeaderHQE)) then {
+		ArtyFriendsE = _friends;
+		ArtyArtE = _Art;
+		ArtyArtGE = _ArtG;
+		publicVariable "ArtyFriendsE";
+		publicVariable "ArtyArtE";
+		publicVariable "ArtyArtGE";
+		}
+	};
+
+	if not (isnil "LeaderHQF") then {if (_HQ == (group LeaderHQF)) then {
+		ArtyFriendsF = _friends;
+		ArtyArtF = _Art;
+		ArtyArtGF = _ArtG;
+		publicVariable "ArtyFriendsF";
+		publicVariable "ArtyArtF";
+		publicVariable "ArtyArtGF";
+		}
+	};
+
+	if not (isnil "LeaderHQG") then {if (_HQ == (group LeaderHQG)) then {
+		ArtyFriendsG = _friends;
+		ArtyArtG = _Art;
+		ArtyArtGG = _ArtG;
+		publicVariable "ArtyFriendsG";
+		publicVariable "ArtyArtG";
+		publicVariable "ArtyArtGG";
+		}
+	};
+
+	if not (isnil "LeaderHQH") then {if (_HQ == (group LeaderHQH)) then {
+		ArtyFriendsH = _friends;
+		ArtyArtH = _Art;
+		ArtyArtGH = _ArtG;
+		publicVariable "ArtyFriendsH";
+		publicVariable "ArtyArtH";
+		publicVariable "ArtyArtGH";
+		}
+	};
+
 	
 	_HQ setVariable ["RydHQ_NCrewInf",_NCrewInf];
 	_HQ setVariable ["RydHQ_NCrewInfG",_NCrewInfG];	
@@ -1002,7 +1083,10 @@ RYD_StatusQuo =
 	
 	if (_HQ getVariable ["RydHQ_KIA",false]) exitWith {RydxHQ_AllHQ = RydxHQ_AllHQ - [_HQ]};
 
-	if (((count _knownE) > 0) and {((count _ArtG) > 0) and {((_HQ getVariable ["RydHQ_ArtyShells",1]) > 0)}}) then {[_ArtG,_knownE,(_EnHArmor + _EnMArmor + _EnLArmor),_friends,(_HQ getVariable ["RydHQ_Debug",false]),(_HQ getVariable ["leaderHQ",(leader _HQ)])] call RYD_CFF};
+	_Artdebug = _HQ getVariable ["RydHQ_Debug",false];
+	if (_HQ getVariable ["RydHQ_ArtyMarks",false]) then {_Artdebug = true};
+
+	if (((count _knownE) > 0) and {((count _ArtG) > 0) and {((_HQ getVariable ["RydHQ_ArtyShells",1]) > 0)}}) then {[_ArtG,_knownE,(_EnHArmor + _EnMArmor + _EnLArmor),_friends,_Artdebug,(_HQ getVariable ["leaderHQ",(leader _HQ)])] call RYD_CFF};
 
 	_gauss100 = (random 10) + (random 10) + (random 10) + (random 10) + (random 10) + (random 10) + (random 10) + (random 10) + (random 10) + (random 10);
 	_obj = _HQ getVariable "RydHQ_Obj";
@@ -2606,6 +2690,20 @@ RYD_PresentRHQ =
 			};			
 		}
 	foreach _allVehs;
+
+	if (isNil "RydHQ_Add_OtherArty") then {RydHQ_Add_OtherArty = []};
+
+	RydHQ_OtherArty = [] + RydHQ_Add_OtherArty;
+
+		{
+			{
+			RydHQ_AllArty pushBackUnique (toLower _x)
+			}
+		foreach (_x select 0)
+		}
+	foreach RydHQ_OtherArty;
+
+	publicVariable "RydHQ_OtherArty";
 	
 	RHQ_Inf = RHQ_Inf - ["b_uav_ai","i_uav_ai","o_uav_ai"];
 	RHQ_Crew = RHQ_Crew - ["b_uav_ai","i_uav_ai","o_uav_ai"];

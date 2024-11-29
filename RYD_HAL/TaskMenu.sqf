@@ -20,7 +20,9 @@ NR6_Supports_Menu =
 	["Request Air Support", [2], "", -5, [["expression", "[player] remoteExec ['Action4ct',2]"]], "1", "1"],
 	["Request Infantry Support", [3], "", -5, [["expression", "[player] remoteExec ['Action5ct',2]"]], "1", "1"],
 	["Request Armored Support", [4], "", -5, [["expression", "[player] remoteExec ['Action6ct',2]"]], "1", "1"],
-	["Request Transport Support", [5], "", -5, [["expression", "[player] remoteExec ['Action7ct',2]"]], "1", "1"]
+	["Request Air Transport", [5], "", -5, [["expression", "[player] remoteExec ['Action7ct',2]"]], "1", "1"],
+	["Request Ground Transport", [6], "", -5, [["expression", "[player] remoteExec ['ActionGTct',2]"]], "1", "1"],
+	["Request Artillery Support", [7], "", -5, [["expression", "[player] spawn ActionArtct"]], "1", "1"]
 ];
 
 NR6_Logistics_Menu = 

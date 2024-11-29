@@ -146,7 +146,7 @@ if not (isNull _AV) then {
 	} forEach (units _unitG);
 };
 
-_task = [(leader _unitG),["Take a defensive position at the designated coordinates and standby for further orders. ", "Defend Position And Standby", ""],_DefPos,"defend"] call RYD_AddTask;
+_task = [(leader _unitG),["Patrol towards the designated area and standby for further orders. ", "Patrol Area And Standby", ""],_DefPos,"defend"] call RYD_AddTask;
 
 _tp = "MOVE";
 
@@ -224,7 +224,7 @@ if not (_alive) exitWith
 	_def = _HQ getVariable ["RydHQ_Def",[]];
 	_def = _def - [_unitG];
 	_HQ setVariable ["RydHQ_Def",_def];
-	_unitG setVariable [("Busy" + (str _unitG)),false];
+	_unitG setVariable ["Defending", false];
 	};
 
 //if not (_task isEqualTo taskNull) then {[_task,"SUCCEEDED",true] call BIS_fnc_taskSetState};

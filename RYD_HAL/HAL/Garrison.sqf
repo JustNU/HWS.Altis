@@ -41,6 +41,11 @@ for [{_a = 0},{_a < (count _Garrison)},{_a = _a + 1}] do
 
 		if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
 
+		if ((_unitG getVariable ["Busy" + str _unitG,true]) or (_unitG getVariable ["Defending" + str _unitG,true])) then {
+			_unitG setVariable ["Break",true];
+			waitUntil {sleep 1; not (_unitG getVariable ["Break",false])};
+		};
+
 		if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then 
 			{
 			_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
@@ -262,6 +267,11 @@ for [{_a = 0},{_a < (count _Garrison)},{_a = _a + 1}] do
 		_pos = getPosATL (vehicle (leader _unitG));
 
 		if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
+
+		if ((_unitG getVariable ["Busy" + str _unitG,true]) or (_unitG getVariable ["Defending" + str _unitG,true])) then {
+			_unitG setVariable ["Break",true];
+			waitUntil {sleep 1; not (_unitG getVariable ["Break",false])};
+		};
 
 		if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then 
 			{

@@ -7,8 +7,10 @@ _HQ = _this select 1;
 _posT = _this select 2;
 _withdraw = false;
 _request = false;
+_requestG = false;
 if ((count _this) > 3) then {_withdraw = _this select 3};
 if ((count _this) > 4) then {_request = _this select 4};
+if ((count _this) > 5) then {_requestG = _this select 5};
 
 if ((_withdraw) and not (_HQ getVariable ["RydHQ_AirEvac",false])) exitwith {_unitG setVariable [("CC" + (str _unitG)), true, true]};
 
@@ -75,10 +77,14 @@ if (isNull _ChosenOne) then
 		case ((count (_posS nearRoads 100)) < 1) : {_offRoad = true};
 		case ((count (_posT nearRoads 100)) < 1) : {_offRoad = true};
 		};
+
+	_GCargo = _allCargo - _airCargo;
+	_GCargo = +_GCargo;
 		
 	switch (true) do
 		{
 		case (_withdraw) : {_cargos = [_airCargo]};
+		case (_requestG) : {_cargos = [_GCargo]};
 		case (_request) : {_cargos = [_airCargo]};
 		case (_offRoad) : {_cargos = [_airCargo,_allCargo]};
 		default {_cargos = [_allCargo]};
@@ -87,6 +93,17 @@ if (isNull _ChosenOne) then
 		{
 			{
 			_ESpace = 0;
+			_SizeCargo = 0;
+			_prefV = ObjNull;
+
+				{
+					if (_SizeCargo < (((assignedvehicle _x) emptyPositions "Cargo") + ((assignedvehicle _x) emptyPositions "Gunner") + ((assignedvehicle _x) emptyPositions "Commander"))) then {
+						_SizeCargo = (((assignedvehicle _x) emptyPositions "Cargo") + ((assignedvehicle _x) emptyPositions "Gunner") + ((assignedvehicle _x) emptyPositions "Commander"));
+						_prefV = (assignedvehicle _x);
+					};
+				}
+			foreach (units _x);
+
 				{
 				_unitvar = str (group _x);
 				_busy = false;
@@ -114,9 +131,10 @@ if (isNull _ChosenOne) then
 				
 				_mpl2 = 500;
 				if (_withdraw) then {_mpl2 = 0};
+				if (_request) then {_mpl2 = 0; _mpl = 10000};
 				
 				if (((((_vHQ findNearestEnemy _vGL) distance _vGL) <= (_mpl2*_mpl)) or (((_vHQ findNearestEnemy _halfway) distance _halfway) <= (_mpl2*_mpl))) and ((random 100) > (20*(0.5 + (2*(_HQ getVariable ["RydHQ_Recklessness",0.5])))))) then {_noenemy = false};
-				if ((_ESpace >= _NG) and 
+				if ((_ESpace >= _NG) and (_prefV == (assignedvehicle _x)) and 
 					((count (assignedCargo (assignedvehicle _x))) == 0) and not 
 						((_busy) or (_unable) or (_hired)) and not
 							((_x in (_HQ getVariable ["RydHQ_NCrewInfG",[]])) and (count (units _x) > 1)) and
@@ -204,7 +222,7 @@ if not (_emptyV) then
 	
 	_Lpos = [((position _GL) select 0) + (random 100) - 50,((position _GL) select 1) + (random 100) - 50,0];
 	
-	if ((count _EDpositions) > 1) then 
+	if (((count _EDpositions) > 1) and not (_request)) then 
 		{
 		_Lpos = _EDpositions select 0;
 
@@ -408,7 +426,7 @@ if not (_GD == _unitG) then
 		if (_alive) then
 			{
 			_busy = _GD getvariable ("CargoM" + _unitvar);
-			if (not (_request)) then {if ((abs (speed _ChosenOne)) < 0.5) then {_timer = _timer + 5}};
+			if not (_request) then {if ((abs (speed _ChosenOne)) < 0.5) then {_timer = _timer + 5}};
 			};
 		
 		if (_request) then {
@@ -441,7 +459,8 @@ if not (_GD == _unitG) then
 
 			};
 
-			if (_GD getvariable ['HALReqDone',false]) then {_reqdone = true};
+			if (_GD getvariable ['HALReqDone',false]) then {_reqdone = true;};
+			if not (isPlayer (leader _unitG)) then {_reqdone = true; _timer = 601;};
 
 		};
 			
@@ -469,15 +488,19 @@ if not (_GD == _unitG) then
 		_firstlead setVariable ["HAL_ReqTraActs",[],true];
 		_firstlead setVariable ["HAL_ReqTraVActs",[],true];
 
+		{
+			[_x] remoteExecCall ["RYD_MP_unassignVehicle",0]; 
+		} foreach (units _unitG);
+
 	};
 
 	_unitvar = str _GD;
 		
-	if not (_alive) exitWith {_GD setVariable [("CargoM" + (str _GD)), false];_unitG setVariable [("Busy" + (str _unitG)),false];_GD setVariable [("CargoM" + (str _GD)), false];};
+	if not (_alive) exitWith {_GD setVariable [("CargoM" + (str _GD)), false];_unitG setVariable [("Busy" + (str _unitG)),false];};
 
 	_unitG setVariable ["CargoChosen",false];
 
-	if ((_timer > 600) or (_request)) then 
+	if (_timer > 600) then 
 		{
 		[_GD, (currentWaypoint _GD)] setWaypointPosition [position _ChosenOne, 0];
 		if (_ChosenOne isKindOf "Air") then 
@@ -513,7 +536,7 @@ if not (_GD == _unitG) then
 		_ChosenOne land 'NONE';
 		};
 
-	(units _unitG) doFollow (leader _unitG);
+//	(units _unitG) doFollow (leader _unitG);
 
 	_Landpos = [];
 	_Vpos = _GD getvariable ("START" + _unitvar);

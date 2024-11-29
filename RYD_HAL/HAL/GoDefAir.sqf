@@ -45,7 +45,7 @@ if (_busy) then
 
 _unitG setVariable [("Deployed" + (str _unitG)),false];
 _unitG setVariable [("Capt" + (str _unitG)),false];
-_unitG setVariable [("Busy" + _unitvar), false];
+//_unitG setVariable [("Busy" + _unitvar), false];
 _unitG setVariable ["Defending", true];
 
 [_unitG,_Spot,"HQ_ord_defend",_HQ] call RYD_OrderPause;
@@ -120,6 +120,7 @@ if not (_alive) exitWith
 		
 	_AirInDef = _HQ getVariable ["RydHQ_AirInDef",[]];
 	_AirInDef = _AirInDef - [_unitG];
+	_unitG setVariable ["Defending", false];
 	_HQ setVariable ["RydHQ_AirInDef",_AirInDef]
 	};
 
@@ -170,6 +171,7 @@ if not (_alive) exitwith
 		
 	_AirInDef = _HQ getVariable ["RydHQ_AirInDef",[]];
 	_AirInDef = _AirInDef - [_unitG];
+	_unitG setVariable ["Defending", false];
 	_HQ setVariable ["RydHQ_AirInDef",_AirInDef]
 	};
 

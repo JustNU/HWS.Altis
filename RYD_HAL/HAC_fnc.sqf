@@ -2692,6 +2692,18 @@ RYD_ArtyMission =
 									};
 								};
 										
+							case (_tp in RHQ_RocketArty) :
+								{
+								switch (_ammoG) do
+									{
+									case ("HE") : {_ammo = (((magazinesAllTurrets _vh) select 0) select 0)};
+									case ("SPECIAL") : {_ammo = (((magazinesAllTurrets _vh) select 0) select 0)};
+									case ("SECONDARY") : {_ammo = (((magazinesAllTurrets _vh) select 0) select 0)};
+									case ("SMOKE") : {_ammo = ""};
+									case ("ILLUM") : {_ammo = ""};
+									};
+								};
+							
 							case (_tp in RydHQ_Rocket_A3) :
 								{
 								switch (_ammoG) do
@@ -2706,7 +2718,7 @@ RYD_ArtyMission =
 								
 							default
 								{
-								if ((count RydHQ_OtherArty) > 0) then
+								if ((count RHQ_Art) > 0) then
 									{
 									_arr = [];
 									
@@ -2717,6 +2729,7 @@ RYD_ArtyMission =
 									
 									if ((count _arr) > 0) then
 										{
+
 										switch (_ammoG) do
 											{
 											case ("HE") : {_ammo = _arr select 0};
@@ -2725,6 +2738,18 @@ RYD_ArtyMission =
 											case ("SMOKE") : {_ammo = _arr select 3};
 											case ("ILLUM") : {_ammo = _arr select 4};
 											}
+
+										} else {
+
+										switch (_ammoG) do
+											{
+											case ("HE") : {_ammo = (((magazinesAllTurrets _vh) select 0) select 0)};
+											case ("SPECIAL") : {_ammo = (((magazinesAllTurrets _vh) select 0) select 0)};
+											case ("SECONDARY") : {_ammo = (((magazinesAllTurrets _vh) select 0) select 0)};
+											case ("SMOKE") : {_ammo = ""};
+											case ("ILLUM") : {_ammo = ""};
+											};
+
 										}
 									}
 								}
@@ -2895,13 +2920,20 @@ RYD_CFF_FFE =
 	_Debug = _this select 5;
 	_ammoG = _this select 6;
 	_amount = _this select 7;
+	_request = false;
+	if ((count _this) > 8) then {_request = _this select 8};
 
-	_myFO = _target getVariable ["RydHQ_MyFO",objNull];
-	_assumedPos = (getPosATL _target);
-	if not (isNull _myFO) then
-		{
-		_assumedPos = _myFO getHideFrom _target;
-		};
+	if (_request) then {_myFO = objNull;_assumedPos = _target;};
+
+	if not (_request) then {
+		_myFO = _target getVariable ["RydHQ_MyFO",objNull];
+		_assumedPos = (getPosATL _target);
+		if not (isNull _myFO) then
+			{
+			_assumedPos = _myFO getHideFrom _target;
+			};
+
+	};
 	
 	_markers = [];
 	
@@ -2914,7 +2946,7 @@ RYD_CFF_FFE =
 
 	//_artyGp = group _batlead;
 
-	_isTaken = (group _target) getVariable ["CFF_Taken",false];
+	if not (_request) then {_isTaken = (group _target) getVariable ["CFF_Taken",false]} else {_isTaken = false};
 	
 	if (_isTaken) exitWith 
 		{
@@ -2927,11 +2959,11 @@ RYD_CFF_FFE =
 		foreach _battery
 		};
 		
-	(group _target) setVariable ["CFF_Taken",true];
+	if not (_request) then {(group _target) setVariable ["CFF_Taken",true]};
 
 	_phaseF = [1];
 
-	_targlead = vehicle (leader _target);
+	if not (_request) then {_targlead = vehicle (leader _target)};
 
 	_waitFor = true;
 	
@@ -2939,28 +2971,30 @@ RYD_CFF_FFE =
 	_amount2 = _amount - _amount1;
 
 		{
-		if (isNil ("_myFO")) exitwith {_waitFor = false};
-		if (isNull _myFO) exitwith {_waitFor = false};
-		if not (alive _myFO) exitwith {_waitFor = false};
-		
-		if (isNil ("_target")) exitwith {_waitFor = false};
-		if (isNull _target) exitwith {_waitFor = false};
-		if not (alive _target) exitwith {_waitFor = false};
-		
-		if (({not (isNull _x)} count _batlead) < 1) exitwith {_waitFor = false};
-		if (isNull _battery1) exitWith {_waitFor = false};
-		if (({(alive _x)} count _batlead) < 1)  exitwith {_waitFor = false};
+		if not (_request) then {
+			if (isNil ("_myFO")) exitwith {_waitFor = false};
+			if (isNull _myFO) exitwith {_waitFor = false};
+			if not (alive _myFO) exitwith {_waitFor = false};
+			
+			if (isNil ("_target")) exitwith {_waitFor = false};
+			if (isNull _target) exitwith {_waitFor = false};
+			if not (alive _target) exitwith {_waitFor = false};
+			
+			if (({not (isNull _x)} count _batlead) < 1) exitwith {_waitFor = false};
+			if (isNull _battery1) exitWith {_waitFor = false};
+			if (({(alive _x)} count _batlead) < 1)  exitwith {_waitFor = false};
 
-		if ((abs (speed _target)) > 50) exitWith {_waitFor = false};
-		if ((_assumedPos select 2) > 20)  exitWith {_waitFor = false};
-		
-		if ((_assumedPos distance [0,0,0]) == 0) exitWith {_waitFor = false};
+			if ((abs (speed _target)) > 50) exitWith {_waitFor = false};
+			if ((_assumedPos select 2) > 20)  exitWith {_waitFor = false};
+			
+			if ((_assumedPos distance [0,0,0]) == 0) exitWith {_waitFor = false};
+		};
 		
 		_againF = 0.5;
 		_accF = 2;
 
 		_againcheck = _battery1 getVariable [("CFF_Trg" + _batname),objNull];
-		if not ((str _againcheck) == (str _target)) then {_againF = 1};
+		if not (_request) then {if not ((str _againcheck) == (str _target)) then {_againF = 1}};
 
 		_RydAccF = 1;
 
@@ -2983,10 +3017,12 @@ RYD_CFF_FFE =
 
 		if (_amount == 0) exitwith {_waitFor = false};
 
-		if not (isNull _myFO) then
-			{
-			_assumedPos = _myFO getHideFrom _target;
-			};
+		if not (_request) then {
+			if not (isNull _myFO) then
+				{
+				_assumedPos = _myFO getHideFrom _target;
+				};
+		};
 			
 		if ((_assumedPos distance [0,0,0]) == 0) exitWith {_waitFor = false};
 
@@ -3041,25 +3077,26 @@ RYD_CFF_FFE =
 		_Y0 = (_targetpos select 1);
 		
 		sleep 10;
-		
-		if (isNil ("_myFO")) exitwith {_waitFor = false};
-		if (isNull _myFO) exitwith {_waitFor = false};
-		if not (alive _myFO) exitwith {_waitFor = false};
+		if not (_request) then {
+			if (isNil ("_myFO")) exitwith {_waitFor = false};
+			if (isNull _myFO) exitwith {_waitFor = false};
+			if not (alive _myFO) exitwith {_waitFor = false};
 
-		if (isNull _target) exitwith {_waitFor = false};
-		if not (alive _target) exitwith {_waitFor = false};
-		
-		if (({not (isNull _x)} count _batlead) < 1) exitwith {_waitFor = false};
-		if (isNull _battery1) exitWith {_waitFor = false};
-		if (({(alive _x)} count _batlead) < 1)  exitwith {_waitFor = false};
+			if (isNull _target) exitwith {_waitFor = false};
+			if not (alive _target) exitwith {_waitFor = false};
+			
+			if (({not (isNull _x)} count _batlead) < 1) exitwith {_waitFor = false};
+			if (isNull _battery1) exitWith {_waitFor = false};
+			if (({(alive _x)} count _batlead) < 1)  exitwith {_waitFor = false};
 
-		if ((abs (speed _target)) > 50) exitWith {_waitFor = false};
-		if ((_assumedPos select 2) > 20)  exitWith {_waitFor = false};
+			if ((abs (speed _target)) > 50) exitWith {_waitFor = false};
+			if ((_assumedPos select 2) > 20)  exitWith {_waitFor = false};
 
-		if not (isNull _myFO) then
-			{
-			_assumedPos = _myFO getHideFrom _target;
-			};
+			if not (isNull _myFO) then
+				{
+				_assumedPos = _myFO getHideFrom _target;
+				};
+		};
 			
 		if ((_assumedPos distance [0,0,0]) == 0) exitWith {_waitFor = false};
 
@@ -3069,25 +3106,26 @@ RYD_CFF_FFE =
 		_Y1 = (_targetpos select 1);
 		
 		sleep 10;
+		if not (_request) then {
+			if (isNil ("_myFO")) exitwith {_waitFor = false};
+			if (isNull _myFO) exitwith {_waitFor = false};
+			if not (alive _myFO) exitwith {_waitFor = false};
 
-		if (isNil ("_myFO")) exitwith {_waitFor = false};
-		if (isNull _myFO) exitwith {_waitFor = false};
-		if not (alive _myFO) exitwith {_waitFor = false};
+			if (isNull _target) exitwith {_waitFor = false};
+			if not (alive _target) exitwith {_waitFor = false};
+			
+			if (({not (isNull _x)} count _batlead) < 1) exitwith {_waitFor = false};
+			if (isNull _battery1) exitWith {_waitFor = false};
+			if (({(alive _x)} count _batlead) < 1)  exitwith {_waitFor = false};
 
-		if (isNull _target) exitwith {_waitFor = false};
-		if not (alive _target) exitwith {_waitFor = false};
-		
-		if (({not (isNull _x)} count _batlead) < 1) exitwith {_waitFor = false};
-		if (isNull _battery1) exitWith {_waitFor = false};
-		if (({(alive _x)} count _batlead) < 1)  exitwith {_waitFor = false};
+			if ((abs (speed _target)) > 50) exitWith {_waitFor = false};
+			if ((_assumedPos select 2) > 20)  exitWith {_waitFor = false};
 
-		if ((abs (speed _target)) > 50) exitWith {_waitFor = false};
-		if ((_assumedPos select 2) > 20)  exitWith {_waitFor = false};
-
-		if not (isNull _myFO) then
-			{
-			_assumedPos = _myFO getHideFrom _target;
-			};
+			if not (isNull _myFO) then
+				{
+				_assumedPos = _myFO getHideFrom _target;
+				};
+		};
 			
 		if ((_assumedPos distance [0,0,0]) == 0) exitWith {_waitFor = false};
 
@@ -3096,7 +3134,7 @@ RYD_CFF_FFE =
 		_X2 = (_targetpos select 0);
 		_Y2 = (_targetpos select 1);
 
-		_onRoad = isOnRoad _targlead;
+		if not (_request) then {_onRoad = isOnRoad _targlead} else {_onRoad = false};
 
 		_Xav = (_X1+_X2)/2;
 		_Yav = (_Y1+_Y2)/2;
@@ -3219,7 +3257,7 @@ RYD_CFF_FFE =
 			}
 		else
 			{
-			_nR = _targlead nearRoads 30;
+			if not (_request) then {_nR = _targlead nearRoads 30} else {_nR = _target nearRoads 30};
 
 			_stRS = _nR select 0;
 			_dMin = _stRS distance _exPos;
@@ -3289,7 +3327,7 @@ RYD_CFF_FFE =
 			foreach _friends
 			};
 
-		if not (_safecheck) exitwith {(group _target) setVariable ["CFF_Taken",false]};
+		if not (_request) then {if not (_safecheck) exitwith {(group _target) setVariable ["CFF_Taken",false]}};
 		
 		_distance2 = _impactPos distance (getPosATL (vehicle _batlead1));
 		_DweatherF = 1 + overcast;
@@ -3329,20 +3367,21 @@ RYD_CFF_FFE =
 		_acc = 0.4 * _spotterF * _againF * _accF * ((_AdistF * _AdamageF) + (50 * _AweatherF * _anotherA)) / _Areduct;
 
 		_finalimpact = [(_impactpos select 0) + (random (2 * _acc)) - _acc,(_impactpos select 1) + (random (2 * _acc)) - _acc];
+		if not (_request) then {
+			if not (isNull _myFO) then
+				{
+				_assumedPos = _myFO getHideFrom _target;
+				};
 
-		if not (isNull _myFO) then
-			{
-			_assumedPos = _myFO getHideFrom _target;
-			};
-
-		if (isNull _target) exitwith {_waitFor = false};
-		if not (alive _target) exitwith {_waitFor = false};
+			if (isNull _target) exitwith {_waitFor = false};
+			if not (alive _target) exitwith {_waitFor = false};
+		};
 		
 		if (({not (isNull _x)} count _batlead) < 1) exitwith {_waitFor = false};
 		if (isNull _battery1) exitWith {_waitFor = false};
 		if (({(alive _x)} count _batlead) < 1)  exitwith {_waitFor = false};
 
-		if ((abs (speed _target)) > 50) exitWith {_waitFor = false};
+		if not (_request) then {if ((abs (speed _target)) > 50) exitWith {_waitFor = false}};
 		if ((_assumedPos select 2) > 20)  exitWith {_waitFor = false};
 
 		//_dstAct = _impactpos distance _batlead;
@@ -3477,6 +3516,8 @@ RYD_CFF_FFE =
 			_batlead = _this select 4;
 			_target = _this select 5;
 			_markers = _this select 6;
+			_request = false;
+			if ((count _this) > 7) then {_request = _this select 7};
 			
 			_battery1 = _battery select 0;
 
@@ -3548,7 +3589,7 @@ RYD_CFF_FFE =
 
 			if not (_alive) exitWith 
 				{
-				(group _target) setvariable ["CFF_Taken",false];
+				if not (_request) then {(group _target) setvariable ["CFF_Taken",false]};
 				
 					{
 					deleteMarker _x;
@@ -3564,7 +3605,7 @@ RYD_CFF_FFE =
 				};
 			};
 		
-		[[_battery,_distance,_eta,_ammoG,_batlead,_target,_markers],_code] call RYD_Spawn;
+		[[_battery,_distance,_eta,_ammoG,_batlead,_target,_markers,_request],_code] call RYD_Spawn;
 			
 		_eta = [_battery,_finalimpact,_ammo,_amount] call RYD_CFF_Fire;
 					
@@ -3682,7 +3723,7 @@ RYD_CFF_FFE =
 		}
 	foreach _markers;
 
-	(group _target) setVariable ["CFF_Taken",false];
+	if not (_request) then {(group _target) setVariable ["CFF_Taken",false]};
 	
 	_alive = true;
 	_stoper = time;

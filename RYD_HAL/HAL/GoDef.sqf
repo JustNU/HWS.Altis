@@ -201,7 +201,7 @@ if not (_alive) exitwith
 	_HQ setVariable ["RydHQ_DefSpot",_defSpot];
 	_def = _HQ getVariable ["RydHQ_Def",[]];
 	_def = _def - [_unitG];
-	_unitG setVariable [("Busy" + (str _unitG)),false];
+	_unitG setVariable ["Defending", false];
 	_HQ setVariable ["RydHQ_Def",_def]
 	};
 

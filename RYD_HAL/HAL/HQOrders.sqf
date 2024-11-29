@@ -200,7 +200,7 @@ _exhausted = _HQ getVariable ["RydHQ_Exhausted",[]];
 			if (_IsAPlayer) then {_vehready = true; _solready = true;};
 			
 			if (not (_x in _AttackAv) and not (_busy) and not (_Unable) and not (_x in _FlankAv) and (_vehready) and (_solready) and not (_x in ((_HQ getVariable ["RydHQ_StaticG",[]]) + (_HQ getVariable ["RydHQ_ArtG",[]]) + (_HQ getVariable ["RydHQ_NavalG",[]]) + (_HQ getVariable ["RydHQ_SpecForG",[]]) + (_HQ getVariable ["RydHQ_CargoOnly",[]])))) then {_AttackAv pushBack _x};
-			if (not (_x in _exhausted) and not (_IsAPlayer) and not (_x getVariable ["CargoM" + (str _x),false]) and (not (_vehready) or not (_solready))) then 
+			if (not (_x in _exhausted) and not (_IsAPlayer) and (not (_vehready) or not (_solready))) then 
 				{
 				_exhausted pushBack _x;
 				};
@@ -217,7 +217,7 @@ _exhausted = _HQ getVariable ["RydHQ_Exhausted",[]];
 					_Unable = _x getvariable "Unable";
 					if (isNil ("_Unable")) then {_Unable = false};
 					
-					if (not (_resting) and not (_Unable) and not (_x getVariable ["CargoM" + (str _x),false]) and not (_IsAPlayer)) then
+					if (not (_resting) and not (_Unable) and not (_IsAPlayer)) then
 						{
 						[[_x,_HQ,true],HAL_GoRest] call RYD_Spawn;
 						//_exhausted pushBack _x
@@ -500,7 +500,7 @@ if (not ((_HQ getVariable ["RydHQ_ReconDone",false])) and ((count (_HQ getVariab
 		if (isNil ("_Unable")) then {_Unable = false};
 		_IsAPlayer = false;
 		if (RydxHQ_NoRestPlayers and (isPlayer (leader _x))) then {_IsAPlayer = true};
-		if (not (_resting) and not (_Unable) and not (_x getVariable ["CargoM" + (str _x),false]) and not (_IsAPlayer)) then 
+		if (not (_resting) and not (_Unable) and not (_IsAPlayer)) then 
 			{
 			//[_x,_HQ] spawn HAL_GoRest
 			[[_x,_HQ],HAL_GoRest] call RYD_Spawn;
@@ -533,7 +533,7 @@ if (not ((_HQ getVariable ["RydHQ_ReconDone",false])) and ((count (_HQ getVariab
 				deleteWaypoint ((waypoints _x) select 0);
 				//[_x,_HQ] spawn HAL_GoIdle
 
-				if (_HQ getVariable ["RydHQ_IdleDef",true] and not ((_HQ getVariable ["RydHQ_Taken",[]]) isEqualTo [])) then {
+				if ((_HQ getVariable ["RydHQ_IdleDef",true]) and not (isPlayer (leader _x)) and not ((_HQ getVariable ["RydHQ_Taken",[]]) isEqualTo [])) then {
 					[[_x,selectrandom (_HQ getVariable ["RydHQ_Taken",[]]),_HQ],HAL_GoDefRes] call RYD_Spawn;
 					} else {
 					[[_x,_HQ],HAL_GoIdle] call RYD_Spawn;
@@ -978,7 +978,7 @@ if (_HQ getVariable ["RydHQ_IdleOrd",true]) then
 			deleteWaypoint ((waypoints _x) select 0);
 			//[_x,_HQ] spawn HAL_GoIdle
 
-			if (_HQ getVariable ["RydHQ_IdleDef",true] and not ((_HQ getVariable ["RydHQ_Taken",[]]) isEqualTo [])) then {
+			if ((_HQ getVariable ["RydHQ_IdleDef",true]) and not (isPlayer (leader _x)) and not ((_HQ getVariable ["RydHQ_Taken",[]]) isEqualTo [])) then {
 				[[_x,selectrandom (_HQ getVariable ["RydHQ_Taken",[]]),_HQ],HAL_GoDefRes] call RYD_Spawn;
 				} else {
 				[[_x,_HQ],HAL_GoIdle] call RYD_Spawn;
@@ -998,7 +998,7 @@ if (_HQ getVariable ["RydHQ_IdleOrd",true]) then
 	if (isNil ("_Unable")) then {_Unable = false};
 	_IsAPlayer = false;
 	if (RydxHQ_NoRestPlayers and (isPlayer (leader _x))) then {_IsAPlayer = true};
-	if (not (_resting) and not (_Unable) and not (_x getVariable ["CargoM" + (str _x),false]) and not (_IsAPlayer)) then 
+	if (not (_resting) and not (_Unable) and not (_IsAPlayer)) then 
 		{
 		if not (_x in (_HQ getVariable ["RydHQ_Garrison",[]])) then
 			{
