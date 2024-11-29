@@ -2369,7 +2369,7 @@ class CfgRadio
 		{
 		name = "";
 		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
-		title = "Take defensive position and standby";
+		title = "Patrol area and standby for orders";
 		};
 		
 	class HQ_ord_flank
