@@ -2341,7 +2341,42 @@ class CfgRadio
 		{
 		name = "";
 		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
-		title = "Engage the enemy";
+		title = "Engage enemy forces (Infantry)";
+		};
+
+	class HQ_ord_attackNaval
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
+		title = "Engage enemy ships";
+		};
+
+	class HQ_ord_attackArmor
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
+		title = "Engage enemy forces (Armor)";
+		};
+
+	class HQ_ord_attackAir
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
+		title = "Provide Close Air Support";
+		};
+
+	class HQ_ord_attackAirCAP
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
+		title = "Perform Combat Air Patrol";
+		};
+
+	class HQ_ord_attackSnip
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
+		title = "Perform sniper mission";
 		};
 		
 	class HQ_ord_recon
@@ -2355,7 +2390,14 @@ class CfgRadio
 		{
 		name = "";
 		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
-		title = "Capture objective";
+		title = "Secure objective";
+		};
+
+	class HQ_ord_captureNav
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
+		title = "Secure seas";
 		};
 		
 	class HQ_ord_defend
@@ -2371,12 +2413,19 @@ class CfgRadio
 		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
 		title = "Patrol area and standby for orders";
 		};
+
+	class HQ_ord_defendRNav
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
+		title = "Patrol seas and standby for orders";
+		};
 		
 	class HQ_ord_flank
 		{
 		name = "";
 		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
-		title = "Outflank the enemy positions";
+		title = "Outflank enemy forces";
 		};
 		
 	class HQ_ord_ammoS
@@ -2411,7 +2460,7 @@ class CfgRadio
 		{
 		name = "";
 		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
-		title = "Wait for orders";
+		title = "Standby for orders";
 		};
 		
 	class HQ_ord_withdraw
@@ -2432,7 +2481,7 @@ class CfgRadio
 		{
 		name = "";
 		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
-		title = "Perform operation";
+		title = "Perform tactical operation";
 		};
 	};
 

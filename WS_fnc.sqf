@@ -3432,7 +3432,7 @@ RYD_WS_SpawnAir =
 		{
 		_class = _classPool select (floor (random (count _classPool)));
 		
-		_vh = createVehicle [_class, _checkPos, [], 0, "NONE"];
+		_vh = createVehicle [_class, _checkPos, [], 0, "FLY"];
 		
 		RYD_WS_SpawnPositions set [(count RYD_WS_SpawnPositions),_checkPos];
 

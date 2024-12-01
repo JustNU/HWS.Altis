@@ -6,6 +6,7 @@ RydxHQ_NoRestPlayers = true;
 RydxHQ_NoCargoPlayers = true;
 RydHQ_Actions = true;
 RydxHQ_ReconCargo = false;
+RydHQ_Combining = true;
 
 //RHQ SECTION
 

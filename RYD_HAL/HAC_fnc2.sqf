@@ -2371,7 +2371,7 @@ RYD_PresentRHQ =
 			_isMedS = (getNumber (_vehClass2 >> "attendant")) > 0;
 			_mags = getArray (_vehClass2 >> "magazines") + _tMags;			
 			_isArmed = (count (_mags - _flareMags)) > 0;
-			_isCargo = ((getNumber (_vehClass2 >> "transportSoldier")) > 0) and {((getNumber (_vehClass2 >> "transportAmmo")) + (getNumber (_vehClass2 >> "transportFuel")) + (getNumber (_vehClass2 >> "transportRepair")) + (getNumber (_vehClass2 >> "attendant"))) < 1};
+			_isCargo = ((getNumber (_vehClass2 >> "transportSoldier")) > 1) and {((getNumber (_vehClass2 >> "transportAmmo")) + (getNumber (_vehClass2 >> "transportFuel")) + (getNumber (_vehClass2 >> "transportRepair")) + (getNumber (_vehClass2 >> "attendant"))) < 1};
 			_isArty = (getNumber (_vehClass2 >> "artilleryScanner")) > 0;
 						
 			_type = "inf";
