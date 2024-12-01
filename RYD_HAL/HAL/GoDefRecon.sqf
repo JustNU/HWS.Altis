@@ -126,7 +126,7 @@ _UL = leader _unitG;
  
 if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
 
-if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then 
+if (_HQ getVariable ["RydHQ_Debug",false]) then 
 	{
 	_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
 	_i = [_DefPos,_unitG,"markDef","ColorBrown","ICON","waypoint","REC " + (groupId _unitG) + " " + _signum," - WATCH FOREGROUND",[0.5,0.5]] call RYD_Mark
@@ -161,6 +161,7 @@ if not (_alive) exitwith
 	_RecDefSpot = _HQ getVariable ["RydHQ_RecDefSpot",[]];
 	_RecDefSpot = _RecDefSpot - [_unitG];
 	_unitG setVariable [("Busy" + (str _unitG)),false];
+	_unitG setVariable ["Defending", false];
 	_HQ setVariable ["RydHQ_RecDefSpot",_RecDefSpot]
 	};
 /*
@@ -225,6 +226,7 @@ if not (_alive) exitWith
 	_RecDefSpot = _HQ getVariable ["RydHQ_RecDefSpot",[]];
 	_RecDefSpot = _RecDefSpot - [_unitG];
 	_unitG setVariable [("Busy" + (str _unitG)),false];
+	_unitG setVariable ["Defending", false];
 	_HQ setVariable ["RydHQ_RecDefSpot",_RecDefSpot]
 	};
 

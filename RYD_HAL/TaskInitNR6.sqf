@@ -14,7 +14,7 @@ Action1ct = {
 	[_x,'CANCELED',true] call BIS_fnc_taskSetState;
 	} foreach ((group (_this select 0)) getVariable ['HACAddedTasks',[]]);
 
-	if (((group (_this select 0)) getVariable ["Busy" + str (group (_this select 0)),true]) or ((group (_this select 0)) getVariable ["Defending" + str (group (_this select 0)),true])) then {(group (_this select 0)) setVariable ["Break",true]};
+	if ((group (_this select 0)) getVariable ["Busy" + str (group (_this select 0)),true]) then {(group (_this select 0)) setVariable ["Break",true]};
 
 
 
@@ -662,7 +662,7 @@ Action8ct = {
 	_ammoBox = (_HQ getVariable ["RydHQ_AmmoBoxes",[]]) select 0;
 	_HQ setVariable ["RydHQ_AmmoBoxes",(_HQ getVariable ["RydHQ_AmmoBoxes",[]]) - [_ammoBox]];
 
-	[[assignedvehicle (leader _FlyBoy),(_this select 0),[],[],true,_ammoBox,_HQ],HAL_GoAmmoSupp] call RYD_Spawn;
+	[[assignedvehicle (leader _FlyBoy),(vehicle (_this select 0)),[],[],true,_ammoBox,_HQ],HAL_GoAmmoSupp] call RYD_Spawn;
 
 	[leader _HQ, (groupId (group (_this select 0))) + ', affirmative. Supplies are on their way - Out'] remoteExecCall ["RYD_MP_Sidechat"];
 
@@ -757,7 +757,7 @@ Action9ct = {
 
 	if (_AmmoBoy isEqualTo objNull) exitwith {[leader _HQ, (groupId (group (_this select 0))) + ', negative. No rearming services are currently available - Out'] remoteExecCall ["RYD_MP_Sidechat"]};
 
-	[[_AmmoBoy,(_this select 0),[],[],false,objNull,_HQ,true],HAL_GoAmmoSupp] call RYD_Spawn;
+	[[_AmmoBoy,(vehicle (_this select 0)),[],[],false,objNull,_HQ,true],HAL_GoAmmoSupp] call RYD_Spawn;
 
 	[leader _HQ, (groupId (group (_this select 0))) + ', affirmative. Ammunition truck is on its way - Out'] remoteExecCall ["RYD_MP_Sidechat"];
 
@@ -848,7 +848,7 @@ Action10ct = {
 
 	if (_FuelBoy isEqualTo objNull) exitwith {[leader _HQ, (groupId (group (_this select 0))) + ', negative. No refueling services are currently available - Out'] remoteExecCall ["RYD_MP_Sidechat"]};
 
-	[[_FuelBoy,(_this select 0),[],_HQ,true],HAL_GoFuelSupp] call RYD_Spawn;
+	[[_FuelBoy,(vehicle (_this select 0)),[],_HQ,true],HAL_GoFuelSupp] call RYD_Spawn;
 
 	[leader _HQ, (groupId (group (_this select 0))) + ', affirmative. Fuel truck is on its way - Out'] remoteExecCall ["RYD_MP_Sidechat"];
 
@@ -939,9 +939,9 @@ Action11ct = {
 
 	if (_MedBoy isEqualTo objNull) exitwith {[leader _HQ, (groupId (group (_this select 0))) + ', negative. No ambulances are currently available - Out'] remoteExecCall ["RYD_MP_Sidechat"]};
 
-	[[_MedBoy,(_this select 0),[],_HQ,true],HAL_GoMedSupp] call RYD_Spawn;
+	[[_MedBoy,(vehicle (_this select 0)),[],_HQ,true],HAL_GoMedSupp] call RYD_Spawn;
 
-	[leader _HQ, (groupId (group (_this select 0))) + ', affirmative. Ambuance is on its way - Out'] remoteExecCall ["RYD_MP_Sidechat"];
+	[leader _HQ, (groupId (group (_this select 0))) + ', affirmative. Ambulance is on its way - Out'] remoteExecCall ["RYD_MP_Sidechat"];
 
 };
 
@@ -1030,7 +1030,7 @@ Action12ct = {
 
 	if (_MedBoy isEqualTo objNull) exitwith {[leader _HQ, (groupId (group (_this select 0))) + ', negative. No MEDEVAC helicopters are currently available - Out'] remoteExecCall ["RYD_MP_Sidechat"]};
 
-	[[_MedBoy,(_this select 0),[],_HQ,true],HAL_GoMedSupp] call RYD_Spawn;
+	[[_MedBoy,(vehicle (_this select 0)),[],_HQ,true],HAL_GoMedSupp] call RYD_Spawn;
 
 	[leader _HQ, (groupId (group (_this select 0))) + ', affirmative. Helicopter is on its way - Out'] remoteExecCall ["RYD_MP_Sidechat"];
 
@@ -1122,7 +1122,7 @@ Action13ct = {
 
 	if (_FixBoy isEqualTo objNull) exitwith {[leader _HQ, (groupId (group (_this select 0))) + ', negative. No repair trucks are currently available - Out'] remoteExecCall ["RYD_MP_Sidechat"]};
 
-	[[_FixBoy,(_this select 0),[],_HQ,true],HAL_GoRepSupp] call RYD_Spawn;
+	[[_FixBoy,(vehicle (_this select 0)),[],_HQ,true],HAL_GoRepSupp] call RYD_Spawn;
 
 	[leader _HQ, (groupId (group (_this select 0))) + ', affirmative. Repair truck is on its way - Out'] remoteExecCall ["RYD_MP_Sidechat"];
 

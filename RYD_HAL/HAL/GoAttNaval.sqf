@@ -1,4 +1,4 @@
-_SCRname = "GoAttArmor";
+_SCRname = "GoAttNaval";
 
 _i = "";
 
@@ -9,7 +9,7 @@ _request = false;
 if ((count _this) > 3) then {_request = _this select 3};
 
 
-_isAttacked = (group _Trg) getvariable ("ArmorAttacked" + (str (group _Trg)));
+_isAttacked = (group _Trg) getvariable ("Attacked" + (str (group _Trg)));
 if (isNil ("_isAttacked")) then {_isAttacked = 0};
 
 
@@ -36,15 +36,12 @@ _angle = _dX atan2 _dY;
 _distance = (leader _HQ) distance _PosObj1;
 _distance2 = 500;
 
-_dstMpl = (_HQ getVariable ["RydHQ_AttArmDistance",1]) * (_unitG getVariable ["RydHQ_myAttDst",1]);
-_distance2 = _distance2 * _dstMpl;
-
 _dXc = _distance2 * (cos _angle);
 _dYc = _distance2 * (sin _angle);
 
 if not (_request) then {
-	if (_isAttacked == 1) then {(group _Trg) setvariable [("ArmorAttacked" + (str (group _Trg))),2,true];_dYc = - _dYc};
-	if (_isAttacked < 1) then {(group _Trg) setvariable [("ArmorAttacked" + (str (group _Trg))),1,true];_dXc = - _dXc};
+	if (_isAttacked == 1) then {(group _Trg) setvariable [("Attacked" + (str (group _Trg))),2,true];_dYc = - _dYc};
+	if (_isAttacked < 1) then {(group _Trg) setvariable [("Attacked" + (str (group _Trg))),1,true];_dXc = - _dXc};
 	if (_isAttacked > 1) then {_distance = _distance - _distance2;_dXc = 0;_dYc = 0};
 };
 
@@ -58,35 +55,8 @@ if (_request) then {
 	_posX = (_PosObj1 select 0) + (random 300) - 150;
 	_posY = (_PosObj1 select 1) + (random 300) - 150;
 };
-
-_isWater = surfaceIsWater [_posX,_posY];
-
-while {((_isWater) and (([_posX,_posY] distance _PosObj1) >= 50))} do
-	{
-	_posX = _posX - _dXc/20;
-	_posY = _posY - _dYc/20;
-	_isWater = surfaceIsWater [_posX,_posY];
-	};
-
-_isWater = surfaceIsWater [_posX,_posY];
-
-if (_isWater) exitwith 
-	{
-	_attAv = _HQ getVariable ["RydHQ_AttackAv",[]];
-	_attAv pushBack _unitG;
-	_HQ setVariable ["RydHQ_AttackAv",_attAv];
-	_unitG setVariable [("Busy" + (str _unitG)),false];
-	if not (_request) then {[_Trg,"ArmorAttacked"] call RYD_VarReductor};
-	};
-
-if ((RydxHQ_SynchroAttack) and not (isPlayer (leader _unitG)) and not (_request)) then
-	{
-	_attackedBy = (group _trg) getVariable ["RYD_Attacks",[]];
-	_attackedBy pushBack [_unitG,[_posX,_posY,0]];
-	(group _trg) setVariable ["RYD_Attacks",_attackedBy];
-	};
 	
-[_unitG,[_posX,_posY,0],"HQ_ord_attackArmor",_HQ] call RYD_OrderPause;
+[_unitG,[_posX,_posY,0],"HQ_ord_attackNaval",_HQ] call RYD_OrderPause;
 
 if ((isPlayer (leader _unitG)) and (RydxHQ_GPauseActive)) then {hintC "New orders from HQ!";setAccTime 1};
 
@@ -97,16 +67,22 @@ if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,
 if (_HQ getVariable ["RydHQ_Debug",false]) then
 	{
 	_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
-	_i = [[_posX,_posY],_unitG,"markAttack","ColorRed","ICON","waypoint","ARM " + (groupId _unitG) + " " + _signum," - ATTACK",[0.5,0.5]] call RYD_Mark;
+	_i = [[_posX,_posY],_unitG,"markAttack","ColorRed","ICON","waypoint","NAVATT " + (groupId _unitG) + " " + _signum," - ATTACK",[0.5,0.5]] call RYD_Mark;
 	};
 
-_task = [(leader _unitG),["Engage the designated hostile forces. ROE: WEAPONS FREE.", "Engage Hostile Forces", ""],[_posX,_posY],"attack"] call RYD_AddTask;
+_task = [(leader _unitG),["Engage the designated hostile ships. ROE: WEAPONS FREE.", "Engage Hostile Ship(s)", ""],[_posX,_posY],"attack"] call RYD_AddTask;
 
 _tp = "MOVE";
 if (_request) then {_tp = "SAD"};
 _wp = [_unitG,[_posX,_posY],_tp,"AWARE","RED","NORMAL"] call RYD_WPadd;
 if (isPlayer (leader _unitG)) then {deleteWaypoint _wp};
 
+if (RydxHQ_SynchroAttack) then
+	{
+	if not (_request) then {[_wp,_Trg] call RYD_WPSync};
+	 
+	 
+	};
 
 if not (_request) then {_unitG setVariable ["RydHQ_WaitingTarget",_trg]};
 _cause = [_unitG,6,true,0,24,[],false] call RYD_Wait;
@@ -117,27 +93,20 @@ if not (_alive) exitwith
 	{
 	if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {deleteMarker ("markAttack" + str (_unitG))};
 	_unitG setVariable [("Busy" + (str _unitG)),false];
-	if not (_request) then {[_Trg,"ArmorAttacked"] call RYD_VarReductor}
+	if not (_request) then {[_Trg,"NavAttacked"] call RYD_VarReductor}
 	};
 
 if (_timer > 24) then {deleteWaypoint _wp};
 
-if ((RydxHQ_SynchroAttack) and not (isPlayer (leader _unitG)) and not (_request)) then
-	{
-	[_wp,_Trg,_unitG,_HQ] call RYD_WPSync;
-	 
-	 
-	};
-
 if not (_task isEqualTo taskNull) then
 	{
 	
-	[_task,(leader _unitG),["Engage the designated hostile forces. ROE: WEAPONS FREE.", "Engage Hostile Forces"],(getPosATL _Trg),"ASSIGNED",0,false,true] call BIS_fnc_SetTask;
+	[_task,(leader _unitG),["Engage the designated hostile ship(s). ROE: WEAPONS FREE.", "Engage Hostile Ship(s)"],(getPosATL _Trg),"ASSIGNED",0,false,true] call BIS_fnc_SetTask;
 		
 	};
 
 _cur = true;
-//if (RydxHQ_SynchroAttack) then {_cur = false};
+if (RydxHQ_SynchroAttack) then {_cur = false};
 _frm = formation _unitG;
 if not (isPlayer (leader _unitG)) then {_frm = "WEDGE"};
 
@@ -171,7 +140,7 @@ if not (_alive) exitwith
 	{
 	if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {deleteMarker ("markAttack" + str (_unitG))};
 	_unitG setVariable [("Busy" + (str _unitG)),false];
-	if not (_request) then {[_Trg,"ArmorAttacked"] call RYD_VarReductor}
+	if not (_request) then {[_Trg,"NavAttacked"] call RYD_VarReductor}
 	};
 
 if (_timer > 24) then {deleteWaypoint _wp};
@@ -216,6 +185,6 @@ _HQ setVariable ["RydHQ_AttackAv",_attAv];
 
 _unitG setVariable [("Busy" + (str _unitG)),false];
 
-if not (_request) then {[_Trg,"ArmorAttacked"] call RYD_VarReductor};
+if not (_request) then {[_Trg,"NavAttacked"] call RYD_VarReductor};
 
 _UL = leader _unitG;if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdEnd,"OrdEnd"] call RYD_AIChatter}};

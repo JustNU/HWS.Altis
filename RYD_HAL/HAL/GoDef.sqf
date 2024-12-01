@@ -19,14 +19,15 @@ if ((_unitG in ((_HQ getVariable ["RydHQ_NCCargoG",[]]) - (_HQ getVariable ["Ryd
 	};
 
 _unitvar = str _unitG;
+
+_alive = true;
+
 _busy = false;
 _busy = _unitG getvariable ("Busy" + _unitvar);
 
 if (isNil ("_busy")) then {_busy = false};
 
-_alive = true;
-
-if (_busy) exitwith {_defSpot = _HQ getVariable ["RydHQ_DefSpot",[]];
+if ((_busy) or (_unitG in (_HQ getVariable ["RydHQ_SupportG",[]]))) exitwith {_defSpot = _HQ getVariable ["RydHQ_DefSpot",[]];
 	_defSpot = _defSpot - [_unitG];
 	_HQ setVariable ["RydHQ_DefSpot",_defSpot];
 	_def = _HQ getVariable ["RydHQ_Def",[]];
@@ -133,7 +134,7 @@ if not (isNull _nE) then
  
 if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
 
-if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then 
+if (_HQ getVariable ["RydHQ_Debug",false]) then 
 	{
 	_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
 	_clr = "ColorBrown";

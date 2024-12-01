@@ -1,6 +1,6 @@
 _SCRname = "SuppRep";
 
-private ["_HQ","_rep","_noenemy","_repS","_repSG","_damaged","_Sdamaged","_Ldamaged","_av","_rtrs","_rt","_unitvar","_busy","_rtrs2","_SDunits","_a","_rtr","_SDunit","_halfway","_distT","_eClose1",
+private ["_HQ","_rep","_noenemy","_repS","_repSG","_damaged","_Sdamaged","_Ldamaged","_av","_rtrs","_rt","_unitvar","_busy","_unable","_rtrs2","_SDunits","_a","_rtr","_SDunit","_halfway","_distT","_eClose1",
 	"_eClose2","_UL","_Dunits","_Dunit","_supported"];
 	
 _HQ = _this select 0;
@@ -78,7 +78,11 @@ _rtrs = [];
 				_busy = _x getvariable ("Busy" + _unitvar);
 				if (isNil ("_busy")) then {_busy = false};
 
-				if not (_busy) then
+				_unable = false;
+				_unable = _x getvariable "Unable";
+				if (isNil ("_unable")) then {_unable = false};
+
+				if (not (_busy) and not (_unable)) then
 					{
 					if not (_x in _rtrs) then 
 						{

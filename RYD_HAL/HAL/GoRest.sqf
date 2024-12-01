@@ -268,7 +268,7 @@ if not (isNull _nE) then
 			};
 		};
 
-	if not (_alive) exitWith {};
+	if not (_alive) exitWith {_unitG setVariable [("Busy" + (str _unitG)),false];};
 
 	_AV = assignedVehicle _UL;
 
@@ -329,6 +329,7 @@ if not (_alive) exitWith
 	_exh = _exh - [_unitG];
 	_HQ setVariable ["RydHQ_Exhausted",_exh];
 	_unitG setVariable [("Busy" + (str _unitG)),false];
+	_unitG setVariable [("Resting" + (str _unitG)),false];
 	};
 
 _AV = assignedVehicle _UL;
@@ -340,7 +341,7 @@ _UL = leader _unitG;
  
 if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
 
-if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then
+if (_HQ getVariable ["RydHQ_Debug",false]) then
 	{
 	_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
 	_i = [[_posX,_posY],_unitG,"markRest","Default","ICON","waypoint", (groupId _unitG) + " " + _signum," - WITHDRAW",[0.5,0.5]] call RYD_Mark
@@ -355,7 +356,7 @@ if (not ((leader _GDV) == (leader _unitG))) then
 	_Ctask = [(leader _GDV),["Drop off " + (groupId _unitG) + " for MEDEVAC.", "Withdraw " + (groupId _unitG), ""],[_posX,_posY],"heal"] call RYD_AddTask;
 	};
 
-if (isNull _unitG) exitWith {};
+if (isNull _unitG) exitWith {_unitG setVariable [("Busy" + (str _unitG)),false];_unitG setVariable [("Resting" + (str _unitG)),false];};
 _lackAmmo = _unitG getVariable ["LackAmmo",false];
 _counts = 6;
 if (_lackAmmo) then 
@@ -409,6 +410,7 @@ if (not (_alive) and not (_OtherGroup)) exitwith
 	_exh = _exh - [_unitG];
 	_HQ setVariable ["RydHQ_Exhausted",_exh];
 	_unitG setVariable [("Busy" + (str _unitG)),false];
+	_unitG setVariable [("Resting" + (str _unitG)),false];
 	};
 	
 if ((_timer > 60) and not (_otherGroup)) then {[_unitG, (currentWaypoint _unitG)] setWaypointPosition [getPosATL (vehicle _UL), 0]};
@@ -432,6 +434,7 @@ if not (_alive) exitwith
 	_exh = _exh - [_unitG];
 	_HQ setVariable ["RydHQ_Exhausted",_exh];
 	_unitG setVariable [("Busy" + (str _unitG)),false];
+	_unitG setVariable [("Resting" + (str _unitG)),false];
 	if not (isNull _GDV) then 
 		{
 		[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 0];
@@ -490,6 +493,7 @@ if ((isNull (leader (_this select 0))) or (_timer > 240)) exitwith
 	_exh = _exh - [_unitG];
 	_HQ setVariable ["RydHQ_Exhausted",_exh];
 	_unitG setVariable [("Busy" + (str _unitG)),false];
+	_unitG setVariable [("Resting" + (str _unitG)),false];
 	if not (isNull _GDV) then 
 		{
 		[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 0];
@@ -527,6 +531,7 @@ waituntil
 	_ammo = true;
 	_Gdamage = 0;
 	_alive = true;
+	_transfers = [];
 	
 	if not (isNull _unitG) then
 		{
@@ -577,8 +582,23 @@ waituntil
 				{
 				_noDanger = true
 				}
-			}
+			};
+		if ((_unitG in (_HQ getVariable ["RydHQ_InfG",[]])) and not ((_vehready) and (_solready) and (_noDanger))) then {
+			{if ((_x in ((_HQ getVariable ["RydHQ_Inf",[]]) - (_HQ getVariable ["RydHQ_Crew",[]]))) and (someAmmo _x) and ((damage _x) < 0.2)) then {_transfers pushBack _x}} foreach (units _unitG);
+			};
 		};
+
+	{
+		_trs = _x;
+		{
+			if ((((vehicle (leader _x)) distance (_trs)) < 600) and (_x in ((_HQ getVariable ["RydHQ_Inf",[]]) - (_HQ getVariable ["RydHQ_Crew",[]]))) and ((count (units _x)) >= (count (units _unitG))) and not (_x getVariable ["RestTransf",false])) then {[_trs] join _x};
+			_unitG setVariable ["RestTransf",true];
+
+		} foreach (_HQ getVariable ["RydHQ_Exhausted",[]]);
+
+	} foreach _transfers;
+
+	if (_unitG getVariable ["Break",false]) then {_unitG setVariable ["Break",false]; _alive = false};
 		
 	(((_vehready) and (_solready) and (_noDanger)) or not (_alive))
 	};
@@ -596,6 +616,8 @@ if not (_alive) exitWith
 	
 	_exh = _exh - [_unitG];
 	_unitG setVariable [("Busy" + (str _unitG)),false];
+	_unitG setVariable [("Resting" + (str _unitG)),false];
+	_unitG setVariable ["LackAmmo",false];
 	_HQ setVariable ["RydHQ_Exhausted",_exh]
 	};
 	

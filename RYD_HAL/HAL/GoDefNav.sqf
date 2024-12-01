@@ -1,4 +1,4 @@
-_SCRname = "GoDefRes";
+_SCRname = "GoDefNav";
 
 _i = "";
 
@@ -14,40 +14,14 @@ if (isNil ("_busy")) then {_busy = false};
 
 _alive = true;
 
-if ((_busy) or (_unitG in (_HQ getVariable ["RydHQ_SupportG",[]]))) exitwith {_defSpot = _HQ getVariable ["RydHQ_DefSpot",[]];
+if (_busy) exitwith {_defSpot = _HQ getVariable ["RydHQ_DefSpot",[]];
 	_defSpot = _defSpot - [_unitG];
 	_HQ setVariable ["RydHQ_DefSpot",_defSpot];
 	_def = _HQ getVariable ["RydHQ_Def",[]];
 	_def = _def - [_unitG];
-	_HQ setVariable ["RydHQ_Def",_def];};
-
-/*
-if (_busy) then 
-	{
-	_unitG setVariable ["RydHQ_MIA",true];
-	_ct = time;
-	
-	waitUntil
-		{
-		sleep 0.1;
-		
-		switch (true) do
-			{
-			case (isNull (_unitG)) : {_alive = false};
-			case (({alive _x} count (units _unitG)) < 1) : {_alive = false};
-			case ((time - _ct) > 300) : {_alive = false};
-			};
-			
-		_MIApass = false;
-		if (_alive) then
-			{
-			_MIAPass = not (_unitG getVariable ["RydHQ_MIA",false]);
-			};
-			
-		(not (_alive) or (_MIApass))	
-		}
+	_HQ setVariable ["RydHQ_Def",_def];
 	};
-*/
+
 
 [_unitG] call RYD_WPdel;
 
@@ -65,69 +39,21 @@ _DefPos = [_posX,_posY];
 
 _isWater = surfaceIsWater _DefPos;
 
-while {((_isWater) and ((leader _HQ) distance _DefPos >= 10))} do
-	{
-	_PosX = ((_DefPos select 0) + ((getPosATL (leader _HQ)) select 0))/2; 
-	_PosY = ((_DefPos select 1) + ((getPosATL (leader _HQ)) select 1))/2;
-	_DefPos = [_posX,_posY]
+if not (_isWater) exitwith {_defSpot = _HQ getVariable ["RydHQ_DefSpot",[]];
+	_defSpot = _defSpot - [_unitG];
+	_HQ setVariable ["RydHQ_DefSpot",_defSpot];
+	_def = _HQ getVariable ["RydHQ_Def",[]];
+	_def = _def - [_unitG];
+	_HQ setVariable ["RydHQ_Def",_def];
 	};
 
-if ((_unitG in (_HQ getVariable ["RydHQ_NCCargoG",[]])) and ((count (units _unitG)) <= 1)) then 
-	{
-	_PosX = ((getPosATL (leader _HQ)) select 0) + (random 200) - 100;
-	_PosY = ((getPosATL (leader _HQ)) select 1) + (random 200) - 100;
-	_DefPos = [_posX,_posY]
-	};
-
-_isWater = surfaceIsWater _DefPos;
-
-if (_isWater) then {_DefPos = getPosATL (vehicle (leader _unitG))};
-
-[_unitG,[_posX,_posY,0],"HQ_ord_defendR",_HQ] call RYD_OrderPause;
+[_unitG,[_posX,_posY,0],"HQ_ord_defendRNav",_HQ] call RYD_OrderPause;
 
 if ((isPlayer (leader _unitG)) and (RydxHQ_GPauseActive)) then {hintC "New orders from HQ!";setAccTime 1};
 
 _UL = leader _unitG;
 
 _nE = _UL findnearestenemy _UL;
-
-if not (isNull _nE) then
-	{
-	if ((_HQ getVariable ["RydHQ_Smoke",true]) and ((_nE distance (vehicle _UL)) <= 500) and not (isPlayer _UL)) then
-		{
-		_posSL = getPosASL _UL;
-		_posSL2 = getPosASL _nE;
-
-		_angle = [_posSL,_posSL2,15] call RYD_AngTowards;
-
-		_dstB = _posSL distance _posSL2;
-		_pos = [_posSL,_angle,_dstB/4 + (random 100) - 50] call RYD_PosTowards2D;
-
-		_CFF = false;
-
-		if ((_HQ getVariable ["RydHQ_ArtyShells",1]) > 0) then 
-			{
-			_CFF = ([_pos,(_HQ getVariable ["RydHQ_ArtG",[]]),"SMOKE",9,_UL] call RYD_ArtyMission) select 0;
-			if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_SmokeReq,"SmokeReq"] call RYD_AIChatter}};
-			};
-
-		if (_CFF) then 
-			{
-			if ((_HQ getVariable ["RydHQ_ArtyShells",1]) > 0) then {if ((random 100) < RydxHQ_AIChatDensity) then {[(leader _HQ),RydxHQ_AIC_ArtAss,"ArtAss"] call RYD_AIChatter}};
-			sleep 60
-			}
-		else
-			{
-			if ((_HQ getVariable ["RydHQ_ArtyShells",1]) > 0) then {if ((random 100) < RydxHQ_AIChatDensity) then {[(leader _HQ),RydxHQ_AIC_ArtDen,"ArtDen"] call RYD_AIChatter}};
-			//[_unitG,_nE] spawn RYD_Smoke;
-			[[_unitG,_nE],RYD_Smoke] call RYD_Spawn;
-			sleep 10;
-			if ((vehicle _UL) == _UL) then {sleep 25}
-			}
-		}
-	};
-
-_UL = leader _unitG;
  
 if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
 
@@ -137,16 +63,8 @@ if (_HQ getVariable ["RydHQ_Debug",false]) then
 	_i = [_DefPos,_unitG,"markDef","ColorWhite","ICON","waypoint","DEFR " + (groupId _unitG) + " " + _signum," - DEFEND POSITION",[0.5,0.5]] call RYD_Mark
 	};
 
-_AV = assignedVehicle _UL;
 
-if not (isNull _AV) then { 
-
-	{
-		if (isNull (assignedVehicle _x)) then {_x assignAsCargo _AV};
-	} forEach (units _unitG);
-};
-
-_task = [(leader _unitG),["Patrol towards the designated area and standby for further orders. ", "Patrol Area And Standby", ""],_DefPos,"defend"] call RYD_AddTask;
+_task = [(leader _unitG),["Patrol towards the designated area and standby for further orders. ", "Patrol Waters And Standby", ""],_DefPos,"defend"] call RYD_AddTask;
 
 _tp = "MOVE";
 

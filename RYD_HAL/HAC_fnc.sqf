@@ -393,8 +393,7 @@ RYD_GarrS =
 
 	_ix = _taken select 1;
 	_taken = _taken select 0;
-	_taken set [_ix,0];
-	_taken = _taken - [0]
+	_taken deleteAt _ix;
 	};
 	
 RYD_AmmoCount = 
@@ -589,7 +588,7 @@ RYD_WPadd =
 	{//[_gp,_pos,_tp,_beh,_CM,_spd,_sts,_crr,_rds,_TO,_frm] call RYD_WPadd;
 	private 
 		[
-		"_gp","_pos","_tp","_beh","_CM","_spd","_sts","_crr","_rds","_TO","_frm","_wp","_vh",
+		"_gp","_HQ","_pos","_tp","_beh","_CM","_spd","_sts","_crr","_rds","_TO","_frm","_wp","_vh",
 		"_topArr","_fFactor","_posX","_posY","_isWater","_wpn","_addedpath","_assVeh","_wps",
 		"_isAir","_sPoint","_dst","_dstFirst","_mPoints","_num","_actDst","_angle","_mPoint",
 		"_topPoints","_sPosX","_sPosY","_sUrban","_sForest","_sHills","_sFlat","_sSea",
@@ -602,6 +601,17 @@ RYD_WPadd =
 	_gp = _this select 0;
 
 	if ((typeName _gp) == "ARRAY") then {_pfAll = false;_gp = _gp select 0};
+
+	_HQ = grpNull;
+
+	if not (isnil "LeaderHQ") then {if (_gp in ((group LeaderHQ) getVariable ["RydHQ_Friends",[]])) then {_HQ = (group LeaderHQ)}};
+	if not (isnil "LeaderHQB") then {if (_gp in ((group LeaderHQB) getVariable ["RydHQ_Friends",[]])) then {_HQ = (group LeaderHQB)}};
+	if not (isnil "LeaderHQC") then {if (_gp in ((group LeaderHQC) getVariable ["RydHQ_Friends",[]])) then {_HQ = (group LeaderHQC)}};
+	if not (isnil "LeaderHQD") then {if (_gp in ((group LeaderHQD) getVariable ["RydHQ_Friends",[]])) then {_HQ = (group LeaderHQD)}};
+	if not (isnil "LeaderHQE") then {if (_gp in ((group LeaderHQE) getVariable ["RydHQ_Friends",[]])) then {_HQ = (group LeaderHQE)}};
+	if not (isnil "LeaderHQF") then {if (_gp in ((group LeaderHQF) getVariable ["RydHQ_Friends",[]])) then {_HQ = (group LeaderHQF)}};
+	if not (isnil "LeaderHQG") then {if (_gp in ((group LeaderHQG) getVariable ["RydHQ_Friends",[]])) then {_HQ = (group LeaderHQG)}};
+	if not (isnil "LeaderHQH") then {if (_gp in ((group LeaderHQH) getVariable ["RydHQ_Friends",[]])) then {_HQ = (group LeaderHQH)}};
 
 	_pos = _this select 1;
 
@@ -617,7 +627,7 @@ RYD_WPadd =
 	_spd = "NORMAL";
 	if ((count _this) > 5) then {_spd = _this select 5};
 
-	if (RydHQ_Rush) then 
+	if (_HQ getVariable ["RydHQ_Rush",false]) then 
 		{
 		if (_spd == "LIMITED") then
 			{
@@ -941,6 +951,8 @@ RYD_GoLaunch =
 		case ("ARM") : {_code = HAL_GoAttArmor};
 		case ("SNP") : {_code = HAL_GoAttSniper};
 		case ("AIR") : {_code = HAL_GoAttAir};
+		case ("AIRCAP") : {_code = HAL_GoAttAirCAP};
+		case ("NAVAL") : {_code = HAL_GoAttNaval};
 		};
 
 	_code
@@ -1025,7 +1037,7 @@ RYD_DistOrd =
 	{
 	private ["_array","_point","_final","_closest","_ix","_limit","_clst"];
 
-	_array = _this select 0;
+	_array = +(_this select 0);
 	_point = _this select 1;
 	_limit = _this select 2;
 
@@ -1044,8 +1056,7 @@ RYD_DistOrd =
 			_final pushBack _closest
 			};
 
-		_array set [_ix,0];
-		_array = _array - [0];
+		_array deleteAt _ix;
 		};
 
 	_final
@@ -1074,6 +1085,49 @@ RYD_DistOrdC =
 	foreach _first;
 
 	_first = nil;
+
+	_final
+	};
+
+RYD_DistOrdD = 
+	{
+	private ["_array","_first","_point","_dst","_limit","_final","_VL","_pos","_sort"];
+
+	_array = _this select 0;//BB strategic areas
+	_point = _this select 1;
+	_limit = _this select 2;
+
+	_first = [];
+	_sort = [];
+	_mid = [];
+	_final = [];
+
+		{
+		_dst = round (_x distance _point);
+		if (_dst <= _limit) then {_first set [_dst,_x]}
+		}
+	foreach _array;
+
+		{
+		if not (isNil "_x") then {_sort pushBack _x}
+		}
+	foreach _first;
+
+		{
+		_pos =	(round ((((_foreachindex + 1)/(count _sort))*1000) + ((11 - (_x getVariable ["objvalue",5]))*100)));
+		if ((count _mid) >= _pos) then {while {sleep 0.1; not (isNil {_mid select _pos})} do {_pos = _pos + 1}};
+		_mid set [_pos,_x];
+		}
+	foreach _sort;
+
+		{
+		if not (isNil "_x") then {_final pushBack _x}
+		}
+	foreach _mid;
+
+	_first = nil;
+	_sort = nil;
+	_mid = nil;
 
 	_final
 	};
@@ -1178,7 +1232,7 @@ RYD_Dispatcher =
 	private ["_threat","_kind","_pool","_cars","_air","_Fpool","_HQ","_force","_range","_pattern","_SortedForce","_tPos","_limit","_avF","_trg","_ix","_infEnough","_armEnough","_airEnough","_sum","_handled",
 	"_SnipersG","_NCrewInfG","_LArmorG","_HArmorG","_LArmorATG","_ATInfG","_AAInfG","_chosen","_ammo","_reck","_topo","_sCity","_sForest","_sHills","_sMeadow","_sGr","_sVal","_mpl","_attackAv","_garrison",
 	"_garrR","_flankAv","_busy","_positive","_ATriskResign1","_ATriskResign2","_AAriskResign","_AAthreat","_ATthreat","_allAir","_armorATthreat","_ATRR1","_ATRR2","_thRep","_isClose","_enDst","_thFct","_chVP",
-	"_clstE","_Airmpl","_NCVeh","_snpEnough","_cntInf","_cntArm","_cntAir","_cntSnp","_Unable"];
+	"_clstE","_Airmpl","_NCVeh","_snpEnough","_cntInf","_cntArm","_cntAir","_cntSnp","_Unable","_allNaval","_navEnough","_cntNav","_airCAP","_airCAS"];
 
 	_threat = _this select 0;
 	_kind = _this select 1;
@@ -1207,8 +1261,15 @@ RYD_Dispatcher =
 	_flankAv = _Fpool select 13;
 	_allAir = _Fpool select 14;
 	_NCVeh = _Fpool select 15;
+	_allNaval = _Fpool select 16;
+	_airCAS = _Fpool select 17;
+	_airCAP = _Fpool select 18;
 
 	_pool = [];
+
+	{
+		if not (_x in (_airCAP + _airCAS)) then {_airCAS pushBack _x; _airCAP pushBack _x;};
+	} foreach _air;
 
 	switch (_kind) do
 		{
@@ -1219,37 +1280,42 @@ RYD_Dispatcher =
 
 		case ("ATInf") : 
 			{
-			_pool = [[_SnipersG,0.5,"SNP"],[_air,2,"AIR"],[_NCrewInfG,0.5,"INF"]]
+			_pool = [[_SnipersG,0.5,"SNP"],[_airCAS,2,"AIR"],[_NCrewInfG,0.5,"INF"]]
 			};
 
 		case ("Inf") : 
 			{
-			_pool = [[_LArmorG,1,"ARM"],[_HArmorG,1,"ARM"],[_SnipersG,0.5,"SNP"],[_cars,1,"INF"],[_air,2,"AIR"],[_NCrewInfG,0.5,"INF"]]
+			_pool = [[_LArmorG,1,"ARM"],[_HArmorG,1,"ARM"],[_SnipersG,0.5,"SNP"],[_cars,1,"INF"],[_airCAS,2,"AIR"],[_NCrewInfG,0.5,"INF"]]
 			};
 
 		case ("Armor") : 
 			{
-			_pool = [[_air,2,"AIR"],[_HArmorG,1,"ARM"],[_LArmorATG,1,"ARM"],[_ATInfG,0.5,"INF"]]
+			_pool = [[_airCAS,2,"AIR"],[_HArmorG,1,"ARM"],[_LArmorATG,1,"ARM"],[_ATInfG,0.5,"INF"]]
 			};
 
 		case ("Cars") : 
 			{
-			_pool = [[_LArmorG,1,"ARM"],[_cars,1,"INF"],[_HArmorG,1,"ARM"],[_air,2,"AIR"],[_NCrewInfG,0.5,"INF"]]
+			_pool = [[_LArmorG,1,"ARM"],[_cars,1,"INF"],[_HArmorG,1,"ARM"],[_airCAS,2,"AIR"],[_NCrewInfG,0.5,"INF"]]
 			};
 
 		case ("Art") : 
 			{
-			_pool = [[_air,2,"AIR"],[_LArmorG,1,"ARM"],[_cars,1,"INF"],[_HArmorG,1,"ARM"],[_NCrewInfG,0.5,"INF"]]
+			_pool = [[_airCAS,2,"AIR"],[_LArmorG,1,"ARM"],[_cars,1,"INF"],[_HArmorG,1,"ARM"],[_NCrewInfG,0.5,"INF"]]
 			};
 
 		case ("Air") : 
 			{
-			_pool = [[_air,2,"AIR"],[_AAInfG,0.5,"INF"]]
+			_pool = [[_airCAP,2,"AIRCAP"],[_AAInfG,0.5,"INF"]]
 			};
 
 		case ("Static") : 
 			{
-			_pool = [[_air,2,"AIR"],[_LArmorG,1,"ARM"],[_SnipersG,0.5,"SNP"],[_cars,1,"INF"],[_HArmorG,1,"ARM"],[_NCrewInfG,0.5,"INF"]]
+			_pool = [[_airCAS,2,"AIR"],[_LArmorG,1,"ARM"],[_SnipersG,0.5,"SNP"],[_cars,1,"INF"],[_HArmorG,1,"ARM"],[_NCrewInfG,0.5,"INF"]]
+			};
+
+		case ("Naval") : 
+			{
+			_pool = [[_allNaval,2,"NAVAL"]]
 			};
 		};
 
@@ -1258,10 +1324,12 @@ RYD_Dispatcher =
 	_armEnough = 2;
 	_airEnough = 1;
 	_snpEnough = 2;
+	_navEnough = 3;
 
 	_cntInf = {(_x in ((_NCrewInfG - _cars) + _cars))} count _attackAv;
 	_cntArm = {(_x in ((_HArmorG + _LArmorG) - (_NCrewInfG + _air)))} count _attackAv;
 	_cntAir = {(_x in (_air - (_NCrewInfG)))} count _attackAv;
+	_cntNav = {(_x in (_allNaval - (_NCrewInfG)))} count _attackAv;
 	_cntSnp = {((_x in (_SnipersG)) and ((count (units _x)) <= 2))} count _attackAv;
 
 		{
@@ -1273,6 +1341,7 @@ RYD_Dispatcher =
 				case (1) : {_armEnough = ceil (_cntArm * _x)};
 				case (2) : {_airEnough = ceil (_cntAir * _x)};
 				case (3) : {_snpEnough = ceil (_cntSnp * _x)};
+				case (4) : {_navEnough = ceil (_cntNav * _x)};
 				}
 			}
 		}
@@ -1293,6 +1362,7 @@ RYD_Dispatcher =
 			_armEnough = 2;
 			_airEnough = 1;
 			_snpEnough = 2;
+			_navEnough = 3;
 
 				{
 				if (_x >= 0) then
@@ -1303,6 +1373,7 @@ RYD_Dispatcher =
 						case (1) : {_armEnough = ceil (_cntArm * _x)};
 						case (2) : {_airEnough = ceil (_cntAir * _x)};
 						case (3) : {_snpEnough = ceil (_cntSnp * _x)};
+						case (4) : {_navEnough = ceil (_cntNav * _x)};
 						}
 					}
 				}
@@ -1315,6 +1386,7 @@ RYD_Dispatcher =
 			_armEnough = _handled select 1;
 			_airEnough = _handled select 2;
 			_snpEnough = _handled select 3;
+			_navEnough = _handled select 4;
 			};
 
 		if not (alive (leader _x)) then {_sum = 0};
@@ -1339,8 +1411,9 @@ RYD_Dispatcher =
 				switch (true) do
 					{
 					case (_pattern in ["ARM"]) : {_limit = _armEnough};
-					case (_pattern in ["AIR"]) : {_limit = _airEnough};
+					case (_pattern in ["AIR","AIRCAP"]) : {_limit = _airEnough};
 					case (_pattern in ["SNP"]) : {_limit = _snpEnough};
+					case (_pattern in ["NAVAL"]) : {_limit = _navEnough};
 					default {_limit = _infEnough};
 					};
 
@@ -1385,7 +1458,8 @@ RYD_Dispatcher =
 							{
 							case (_pattern in ["SNP"]) : {_sVal = ((((2 * _sHills) + (2 * _sMeadow) + (_sGr/5)) * _mpl) - (((_sCity/2) + _sForest)/_mpl))};
 							case (_pattern in ["ARM"]) : {_sVal = ((((5 * _sMeadow) + (_sHills)) * _mpl) - (((_sCity/2) + (3 * _sForest) + _sGr)/_mpl))};
-							case (_pattern in ["AIR"]) : {_sVal = ((((4 * _sMeadow) + (_sHills)) * _mpl) - (((_sCity) + (2 * _sForest) + (_SGr/5))/_mpl))};
+							case (_pattern in ["AIR","AIRCAP"]) : {_sVal = ((((4 * _sMeadow) + (_sHills)) * _mpl) - (((_sCity) + (2 * _sForest) + (_SGr/5))/_mpl))};
+							case (_pattern in ["NAVAL"]) : {_sVal = 120};
 							default {_sVal = (0.5 + _sCity + (2 * _sForest) + (_sGr/10)) * (0.5 * _mpl) - ((0.05 + (2 * _sMeadow)) * (0.5/_mpl))};
 							};
 
@@ -1438,7 +1512,7 @@ RYD_Dispatcher =
 													}
 												else
 													{
-													if (_pattern in ["AIR"]) then
+													if (_pattern in ["AIR","AIRCAP"]) then
 														{
 														_Airmpl = 0;
 														if ([] call RYD_IsNight) then {_Airmpl = 3};
@@ -1553,7 +1627,7 @@ RYD_Dispatcher =
 									}
 								};
 
-							if (_pattern in ["AIR"]) then
+							if (_pattern in ["AIR","AIRCAP"]) then
 								{
 								if ((count _AAthreat) > 0) then
 									{
@@ -1590,8 +1664,9 @@ RYD_Dispatcher =
 					switch (true) do
 						{
 						case (_pattern in ["ARM"]) : {_armEnough = _limit};
-						case (_pattern in ["AIR"]) : {_airEnough = _limit};
+						case (_pattern in ["AIR","AIRCAP"]) : {_airEnough = _limit};
 						case (_pattern in ["SNP"]) : {_snpEnough = _limit};
+						case (_pattern in ["NAVAL"]) : {_navEnough = _limit};
 						default {_infEnough = _limit};
 						}
 					}
@@ -1599,7 +1674,7 @@ RYD_Dispatcher =
 				}
 			foreach _pool;
 			
-			_x setVariable ["HAC_Attacked",[_infEnough,_armEnough,_airEnough,_snpEnough]]
+			_x setVariable ["HAC_Attacked",[_infEnough,_armEnough,_airEnough,_snpEnough,_navEnough]]
 			}
 		}
 	foreach _threat
@@ -1607,18 +1682,19 @@ RYD_Dispatcher =
 
 RYD_VarReductor = 
 	{
-	private ["_trg","_kind","_HAC_Attacked","_infEnough","_armEnough","_airEnough","_isAttacked","_snpEnough"];
+	private ["_trg","_kind","_HAC_Attacked","_infEnough","_armEnough","_airEnough","_isAttacked","_snpEnough","_navEnough"];
 
 	_trg = _this select 0;
 	_kind = _this select 1;
 
 	_HAC_Attacked = (group _trg) getVariable "HAC_Attacked";
-	if (isNil "_HAC_Attacked") then {_HAC_Attacked = [0,0,0,0]};
+	if (isNil "_HAC_Attacked") then {_HAC_Attacked = [0,0,0,0,0]};
 
 	_infEnough = _HAC_Attacked select 0;
 	_armEnough = _HAC_Attacked select 1;
 	_airEnough = _HAC_Attacked select 2;
 	_snpEnough = _HAC_Attacked select 3;
+	_navEnough = _HAC_Attacked select 4;
 
 	switch (_kind) do
 		{
@@ -1626,9 +1702,10 @@ RYD_VarReductor =
 		case ("SnpAttacked") : {_snpEnough = _snpEnough + 1};
 		case ("ArmorAttacked") : {_armEnough = _armEnough + 1};
 		case ("AirAttacked") : {_airEnough = _airEnough + 1};
+		case ("NavAttacked") : {_navEnough = _navEnough + 1};
 		};
 	
-	(group _trg) setVariable ["HAC_Attacked",[_infEnough,_armEnough,_airEnough,_snpEnough]];
+	(group _trg) setVariable ["HAC_Attacked",[_infEnough,_armEnough,_airEnough,_snpEnough,_navEnough]];
 
 	if not (_kind == "AirAttacked") then 
 		{
@@ -1778,6 +1855,8 @@ RYD_Wait =
 				_AV = assignedVehicle _UL;
 				_DAV = assigneddriver _AV;
 				if not (_own) then {_GDV = group _DAV};
+
+				if (not (_gp getVariable ["CargoChosen",false]) and not (_own)) then {_Break = true};
 				};
 
 			if (_enemyF > 0) then
@@ -1880,6 +1959,16 @@ RYD_Wait =
 					_gp setVariable ["RydHQ_WaitingTarget",nil];
 					};	
 				};
+
+			if not (isnil {_gp getVariable "RydHQ_WaitingObjective"}) then
+				{
+				_wotgt = ((_gp getVariable "RydHQ_WaitingObjective") select 1);
+				_woHQ = ((_gp getVariable "RydHQ_WaitingObjective") select 0);
+				if ((isNull _wotgt) or (_wotgt in (_woHQ getVariable ["RydHQ_Taken",[]]))) then {
+					[_gp] call RYD_WPdel;
+					_gp setVariable ["RydHQ_WaitingObjective",nil];
+					};	
+				};
 			};
 
 		((((count (waypoints _GDV)) < _wplimit) and (_wpCheck)) or ((_timer > _tolerance) and not (_isPlayer)) or ((_enemy) and not (_isPlayer)) or (_Break) or not (_alive) or (_isInside) or (_isOutside) or (_busy))
@@ -1888,6 +1977,7 @@ RYD_Wait =
 	if (_isPlayer) then {_timer = 0};
 
 	_gp setVariable ["RydHQ_WaitingTarget",nil];
+	_gp setVariable ["RydHQ_WaitingObjective",nil];
 
 	if (_timer > _tolerance) then {if ((random 100) < RydxHQ_AIChatDensity) then {[(leader _gp),RydxHQ_AIC_OrdDen,"OrdDen"] call RYD_AIChatter}};
 
@@ -2362,7 +2452,7 @@ RYD_CFF_TGT =
 
 		if (_nearCiv) then 
 			{
-			_targets set [_foreachIndex,objNull]
+			_targets deleteAt _foreachIndex
 			}
 		else
 			{
@@ -2378,8 +2468,6 @@ RYD_CFF_TGT =
 		}
 	foreach _targets;
 	
-	_targets = _targets - [objNull];
-
 	_ValMax = 0;
 
 		{
@@ -3057,8 +3145,10 @@ RYD_CFF_FFE =
 						}
 					}
 				foreach (magazines _vh);
+
+				_newEta = -1;
 				
-				_newEta = _vh getArtilleryETA [_targetPosATL,_ammoC];
+				if not (isNil "_ammoC") then {_newEta = _vh getArtilleryETA [_targetPosATL,_ammoC]};
 
 				if (isNil "_newEta") then {_newEta = -1};
 				
@@ -3854,40 +3944,69 @@ RYD_CFF =
 
 RYD_WPSync = 
 	{
-	private ["_wp","_trg","_otherWP","_gp","_isRest","_pos","_alive","_cwp","_timer"];
+	private ["_trg","_otherWP","_gp","_pos","_uPos","_gps","_timer","_endThis"];
 
-	_wp = _this select 0;
+	_gp = _this select 2;
 	_trg = group (_this select 1);
 
 	if (isNull _trg) exitWith {};
 
-	_pos = waypointPosition _wp;
-
 	_otherWP = _trg getVariable ["RYD_Attacks",[]];
+	
+	_gps = [];
+	_positions = [];
+	
+		{
+		_gps pushBack (_x select 0);
+		_positions pushBack (_x select 1);
+		}
+	foreach _otherWP;
+	
+	_markT = markerText _i;
 
-	_wp synchronizeWaypoint _otherWP;
-	_trg setVariable ["RYD_Attacks",_otherWP + [_wp]];
-
-	_otherWP = _trg getVariable ["RYD_Attacks",[]];
-
-	_gp = _wp select 0;
-
-	_timer = 0;
-	_alive = true;
+	_timer = time;
+	_endThis = false;
 
 	waitUntil 
 		{
 		sleep 5;
-		_isRest = _gp getVariable [("Resting" + (str _gp)),false];
-		if (fleeing (leader _gp)) then {_isRest = true};
-		_timer = _timer + 1;
-		_cwp = [_gp,currentWaypoint _gp];
-		if (isNull _trg) then {_alive = false};
-		if ((((waypointPosition _cwp) distance _pos) > 1) and (((waypointPosition _cwp) distance (vehicle (leader _gp))) > 20)) then {_isRest = true};
-		((_isRest) or (_timer > 360) or not (_alive))
-		};
+		
+		switch (true) do
+			{
+			case (isNull _gp): {_endThis = true};
+			case ((({alive _x} count (units _gp)) < 1)): {_endThis = true};
+			case (_unitG getVariable ["Break",false]) : {_endThis = true; _unitG setVariable ["Break",false];};
+			case ((_gp getVariable [("Resting" + (str _gp)),false]) or {(_gp getVariable ["RydHQ_MIA",false])}): {_endThis = true};
+			case ((fleeing (leader _gp)) or {(captive (leader _gp))}): {_endThis = true};
+			};
+		
+		if not (_endThis) then
+			{
+			_endThis = true;
+			
+				{
+				_pos = _positions select _foreachIndex;
+				_uPos = position (vehicle (leader _x));
 
-	_wp synchronizeWaypoint [];
+				if (((_pos distance2D _uPos) > 40) and {not (_pos isEqualTo [0,0,0])}) exitWith {_endThis = false};			
+				}
+			foreach _gps
+			};
+			
+		if (_HQ getVariable ["RydHQ_Debug",false]) then
+			{
+			_i setMarkerText (_markT + "sync: " + (str (round (time - _timer))))
+			};
+			
+		((_endThis) or {(time - _timer) > 1800})
+		};
+		
+	if (_HQ getVariable ["RydHQ_Debug",false]) then
+		{
+		_i setMarkerText _markT
+		};
+		
+	_trg setVariable ["RYD_Attacks",[]];
 	};
 
 RYD_DbgMon = 
@@ -4079,7 +4198,7 @@ RYD_ValueOrd =
 	{
 	private ["_array","_final","_highest","_ix"];
 
-	_array = _this select 0;
+	_array = +(_this select 0);
 
 	_final = [];
 
@@ -4091,8 +4210,7 @@ RYD_ValueOrd =
 		
 		_final pushBack _highest;
 
-		_array set [_ix,0];
-		_array = _array - [0]
+		_array deleteAt _ix;
 		};
 
 	_final
@@ -4235,6 +4353,9 @@ RYD_AmmoDrop =
 	_ammoBox setDir _dir;
 
 	_ammoBox attachTo [_parachute,[0,0,0]];
+
+	_ammoBox enableSimulationGlobal true;
+	_ammoBox hideObjectGlobal false;
 
 	sleep 2;
 
@@ -4428,7 +4549,7 @@ RYD_HQChatter =
 	_unit = leader _gp;
 	_comm = leader _HQ;
 	
-	_sentence = getText (missionConfigFile >> "CfgRadio" >> _sentence >> "title");
+	_sentence = getText (configFile >> "CfgRadio" >> _sentence >> "title");
 	_who = toUpper (getText (configFile >> "CfgVehicles" >> (typeOf (vehicle _unit)) >> "displayName"));
 	
 	_who = groupId _gp ;
@@ -4633,7 +4754,7 @@ RYD_AIChatter =
 				};
 			};
 			
-		_sentence = getText (missionConfigFile >> "CfgRadio" >> _sentence >> "title");
+		_sentence = getText (configFile >> "CfgRadio" >> _sentence >> "title");
 		
 		_who = groupId (group _unit);
 
@@ -4880,7 +5001,7 @@ RYD_SizeOrd =
 	{
 	private ["_array","_final","_highest","_ix"];
 
-	_array = _this select 0;
+	_array = +(_this select 0);
 
 	_final = [];
 
@@ -4898,8 +5019,7 @@ RYD_SizeOrd =
 				}
 			};
 
-		_array set [_ix,0];
-		_array = _array - [0]
+		_array deleteAt _ix;
 		};
 
 	_final
@@ -4953,8 +5073,7 @@ RYD_RandomOrdB =
 
 		_final pushBack _random;
 			
-		_array set [_select,0];
-		_array = _array - [0]
+		_array deleteAt _select;
 		};
 
 	_final

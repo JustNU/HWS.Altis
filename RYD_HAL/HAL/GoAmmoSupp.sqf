@@ -11,13 +11,16 @@ _HQ = _this select 6;
 _request = false;
 if ((count _this) > 7) then {_request = _this select 7};
 
+
 _AmmoPoints = _HQ getVariable ["RydHQ_AmmoPoints",[]];
 
 _AmmoPoints pushBack _Trg;
 
-_startpos = position _unit;
-
 _unitG = group (assigneddriver _unit);
+_unitvar = str (_unitG);
+
+_startpos = _unitG getVariable ("START" + _unitvar);
+if (isNil ("_startpos")) then {_unitG setVariable [("START" + _unitvar),(position _unit)]};
 
 if (_unit in _soldiers) then {_unitG = group _unit};
 
@@ -57,7 +60,7 @@ _UL = leader _unitG;
 if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
 
 _alive = false;
-if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then 
+if (_HQ getVariable ["RydHQ_Debug",false]) then 
 	{
 	_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
 	_i = [[_posX,_posY],_unitG,"markAmmoSupp","ColorKhaki","ICON","waypoint","REARM " + (groupId _unitG) + " " + _signum," - REARM",[0.5,0.5],270] call RYD_Mark
@@ -416,6 +419,7 @@ if (_drop) then
 else
 	{
 	_counter = 0;
+	_timer = 0;
 
 	if (_request) then {
 
@@ -476,13 +480,18 @@ else
 			_AmmoPoints = _AmmoPoints - [_Trg];
 			_HQ setVariable ["RydHQ_AmmoPoints",_AmmoPoints];
 			_unitG setVariable [("Busy" + _unitvar), false];
+			_mtr setVariable ["HAL_Requested",false,true];
 			};
 			
-		if (_timer > 24) then {_counter = _counter + 1;[_unitG, (currentWaypoint _unitG)] setWaypointPosition [position (vehicle (leader _unitG)), 0]} else {_counter = _counter + 1}; 
+		if (_timer > 24) then {_counter = _counter + 1;[_unitG, (currentWaypoint _unitG)] setWaypointPosition [position (vehicle (leader _unitG)), 0];} else {_counter = _counter + 1}; 
+
+		if ((RydxHQ_MagicRearm) and (_timer <= 24)) then { {if (((side _x) getFriend (side _unitG)) >= 0.6) then {_x setVehicleAmmo 1; if (isPlayer _x) then {"Vehicle Rearmed" remoteExec ["hint", _x]};}} foreach ((vehicle (leader _unitG)) nearEntities [["Air", "LandVehicle"], 100]);};
 		
-		if ((_request) and ((_mtr getVariable ["HAL_Requested",false]) or ((_mtr distance _Trg) > 500))) then {_counter = 5};
+//		if ((_request) and ((_mtr getVariable ["HAL_Requested",false]) or ((_mtr distance _Trg) > 500))) then {_counter = 5};
 
 		if ((_request) and (_mtr getVariable ["HAL_Requested",false]) and ((_mtr distance _Trg) < 500)) then {_counter = 0};
+
+		if ((_request) and not (_mtr getVariable ["HAL_Requested",false])) then {_counter = 5};
 		
 		_UL = leader _unitG;if not (isPlayer _UL) then {if ((_timer <= 24) and (_counter == 1)) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdFinal,"OrdFinal"] call RYD_AIChatter}}};
 
@@ -491,6 +500,7 @@ else
 	};
 
 if (_request) then {[_mtr] remoteExecCall ["RYD_ReqLogisticsDelete_Actions"]};
+_mtr setVariable ["HAL_Requested",false,true];
 
 if not (_alive) exitwith 
 	{
@@ -510,6 +520,8 @@ _tp = "MOVE";
 if ((_HQ getVariable ["RydHQ_SupportWP",false]) and not (_drop)) then {_tp = "SUPPORT"};
 _pos = [_posX,_posY];
 
+if (_HQ getVariable ["RydHQ_SupportRTB",false]) then {_pos = _startpos; if not (isNull (_HQ getVariable ["RydHQ_SupportDecoy",objNull])) then {if ((random 100) <= (_HQ getVariable ["RydHQ_SDChance",100])) then {_pos = (getpos (_HQ getVariable ["RydHQ_SupportDecoy",objNull]))}}; _AmmoPoints = _AmmoPoints - [_Trg];};
+
 if (_drop) then 
 	{
 	_AmmoPoints = _AmmoPoints - [_Trg];
@@ -525,11 +537,28 @@ if (_drop) then
 _beh = "SAFE";
 if (_drop) then {_beh = "STEALTH"};
 
-_wp = [_unitG,_pos,_tp,_beh,"BLUE","FULL",["true","if not ((group this) getVariable ['AirNoLand',false]) then {{(vehicle _x) land 'LAND'} foreach (units (group this))}; deletewaypoint [(group this), 0]"]] call RYD_WPadd;
+_rrr = (_unitG getVariable ["Ryd_RRR",false]);
 
-_cause = [_unitG,6,true,0,24,[],true,true,true,true] call RYD_Wait;
-_timer = _cause select 0;
-_alive = _cause select 1;
+_radd = "";
+if (_rrr) then {_radd = "; {(vehicle _x) setFuel 1; (vehicle _x) setVehicleAmmo 1; (vehicle _x) setDamage 0;} foreach (units (group this))"};
+
+_wp = [_unitG,_pos,_tp,_beh,"BLUE","FULL",["true","if not ((group this) getVariable ['AirNoLand',false]) then {{(vehicle _x) land 'LAND'} foreach (units (group this))}; deletewaypoint [(group this), 0]" + _radd]] call RYD_WPadd;
+
+if (not (_task isEqualTo taskNull) and (_HQ getVariable ["RydHQ_SupportRTB",false]) and not (_drop)) then
+	{
+		
+	[_task,(leader _unitG),["Return to base.", "Return To Base", ""],_pos,"ASSIGNED",0,false,true] call BIS_fnc_SetTask;
+			 
+	};
+
+_timer = 0;
+_alive = true;
+
+if not (_HQ getVariable ["RydHQ_SupportRTB",false]) then {
+	_cause = [_unitG,6,true,0,24,[],true,true,true,true] call RYD_Wait;
+	_timer = _cause select 0;
+	_alive = _cause select 1;
+};
 
 if not (_alive) exitwith 
 	{
@@ -547,7 +576,7 @@ if (_timer > 24) then {[_unitG, (currentWaypoint _unitG)] setWaypointPosition [p
 
 _AmmoPoints = _AmmoPoints - [_Trg];
 _HQ setVariable ["RydHQ_AmmoPoints",_AmmoPoints];
-if not (_task isEqualTo taskNull) then {[_task,"SUCCEEDED",true] call BIS_fnc_taskSetState};
+if not (_HQ getVariable ["RydHQ_SupportRTB",false]) then {if not (_task isEqualTo taskNull) then {[_task,"SUCCEEDED",true] call BIS_fnc_taskSetState}};
 
 _mtr enableAI "TARGET";_mtr enableAI "AUTOTARGET";
 _unitG setVariable [("Busy" + _unitvar), false];

@@ -1,6 +1,6 @@
 _SCRname = "SuppFuel";
 
-private ["_HQ","_fuel","_noenemy","_fuelS","_fuelSG","_dried","_ZeroF","_av","_cisterns","_cis","_unitvar","_busy","_cisterns2","_Zunits","_a","_cistern","_Zunit","_noenemy","_halfway","_distT",
+private ["_HQ","_fuel","_noenemy","_fuelS","_fuelSG","_dried","_ZeroF","_av","_cisterns","_cis","_unitvar","_busy","_unable","_cisterns2","_Zunits","_a","_cistern","_Zunit","_noenemy","_halfway","_distT",
 	"_eClose1","_eClose2","_UL","_Dunits","_Dunit","_supported"];
 
 _HQ = _this select 0;
@@ -87,7 +87,11 @@ _cisterns = [];
 				_busy = _x getvariable ("Busy" + _unitvar);
 				if (isNil ("_busy")) then {_busy = false};
 
-				if not (_busy) then
+				_unable = false;
+				_unable = _x getvariable "Unable";
+				if (isNil ("_unable")) then {_unable = false};
+
+				if (not (_busy) and not (_unable)) then
 					{
 					if not (_x in _cisterns) then 
 						{

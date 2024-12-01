@@ -26,7 +26,7 @@ while {true} do {
 
 		if (RydHQ_ActionsMenu) then {
 
-			if ((_x == leader _x) and not (_x getVariable ["HAL_TaskMenuAdded",false]) and (_IsHal)) then {
+			if ((_x == leader _x) and (not (_x getVariable ["HAL_TaskMenuAdded",false]) or not (_x == (_x getVariable ["HAL_PlayerUnit",objnull]))) and (_IsHal)) then {
 
 					if not (RydHQ_ActionsAceOnly) then {
 
@@ -34,12 +34,13 @@ while {true} do {
 						
 					};
 
-					if (isClass(configFile >> "CfgPatches" >> "ace_main")) then {
+					if ((isClass(configFile >> "CfgPatches" >> "ace_main")) and not (_x getVariable ["HAL_TaskMenuAdded",false])) then {
 
 					[_x] remoteExecCall ["ACEActionMfnc",_x];				
 					
 					};
 					_x setVariable ["HAL_TaskMenuAdded",true];
+					_x setVariable ["HAL_PlayerUnit",_x];
 				};
 
 			if ((not (_x == leader _x) and (_x getVariable ["HAL_TaskMenuAdded",false])) or (not (_IsHal) and (_x getVariable ["HAL_TaskMenuAdded",false]))) then {

@@ -73,6 +73,11 @@ if (isNil "RydxHQ_GPauseActive") then {RydxHQ_GPauseActive = false};
 if (isNil ("RydHQ_DbgMon")) then {RydHQ_DbgMon = true};
 if (isNil ("RydHQ_RHQAutoFill")) then {RydHQ_RHQAutoFill = true};
 
+if (isNil "RydxHQ_MagicHeal") then {RydxHQ_MagicHeal = false};
+if (isNil "RydxHQ_MagicRepair") then {RydxHQ_MagicRepair = false};
+if (isNil "RydxHQ_MagicRearm") then {RydxHQ_MagicRearm = false};
+if (isNil "RydxHQ_MagicRefuel") then {RydxHQ_MagicRefuel = false};
+
 if (isNil ("RHQ_SpecFor")) then {RHQ_SpecFor = []};
 if (isNil ("RHQ_Recon")) then {RHQ_Recon = []};
 if (isNil ("RHQ_FO")) then {RHQ_FO = []};
@@ -165,7 +170,7 @@ call compile preprocessfile (RYD_Path + "RHQLibrary.sqf");
 
 if (isNil "RydxHQ_AIChatDensity") then {RydxHQ_AIChatDensity = 10};
 if (isNil "RydxHQ_NEAware") then {RydxHQ_NEAware = 0};
-if (isNil "RydxHQ_MARatio") then {RydxHQ_MARatio = [-1,-1,-1,-1]};
+if (isNil "RydxHQ_MARatio") then {RydxHQ_MARatio = [-1,-1,-1,-1,-1]};
 if (isNil "RydHQ_SlingDrop") then {RydHQ_SlingDrop = false};
 
 if (isNil "RydHQ_CallSignsA") then 
@@ -728,14 +733,18 @@ HAL_Flanking = compile preprocessfile (RYD_Path + "HAL\Flanking.sqf");
 HAL_Garrison = compile preprocessfile (RYD_Path + "HAL\Garrison.sqf");
 HAL_GoAmmoSupp = compile preprocessfile (RYD_Path + "HAL\GoAmmoSupp.sqf");
 HAL_GoAttAir = compile preprocessfile (RYD_Path + "HAL\GoAttAir.sqf");
+HAL_GoAttAirCAP = compile preprocessfile (RYD_Path + "HAL\GoAttAirCAP.sqf");
 HAL_GoAttArmor = compile preprocessfile (RYD_Path + "HAL\GoAttArmor.sqf");
 HAL_GoAttInf = compile preprocessfile (RYD_Path + "HAL\GoAttInf.sqf");
 HAL_GoAttSniper = compile preprocessfile (RYD_Path + "HAL\GoAttSniper.sqf");
+HAL_GoAttNaval = compile preprocessfile (RYD_Path + "HAL\GoAttNaval.sqf");
 HAL_GoCapture = compile preprocessfile (RYD_Path + "HAL\GoCapture.sqf");
+HAL_GoCaptureNaval = compile preprocessfile (RYD_Path + "HAL\GoCaptureNaval.sqf");
 HAL_GoDef = compile preprocessfile (RYD_Path + "HAL\GoDef.sqf");
 HAL_GoDefAir = compile preprocessfile (RYD_Path + "HAL\GoDefAir.sqf");
 HAL_GoDefRecon = compile preprocessfile (RYD_Path + "HAL\GoDefRecon.sqf");
 HAL_GoDefRes = compile preprocessfile (RYD_Path + "HAL\GoDefRes.sqf");
+HAL_GoDefNav = compile preprocessfile (RYD_Path + "HAL\GoDefNav.sqf");
 HAL_GoFlank = compile preprocessfile (RYD_Path + "HAL\GoFlank.sqf");
 HAL_GoFuelSupp = compile preprocessfile (RYD_Path + "HAL\GoFuelSupp.sqf");
 HAL_GoIdle = compile preprocessfile (RYD_Path + "HAL\GoIdle.sqf");

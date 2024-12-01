@@ -319,6 +319,10 @@ _strArea = _strArea - [0];
 
 _strArea0 = nil;
 
+{ 
+	if (isNil {_x select 1}) then {_strArea set [_foreachIndex,[_x select 0,5,_x select 2]]}
+} foreach _strArea;
+
 
 if not (isNil "Debug") then {Debug setVariable ["d",_strArea]};
 

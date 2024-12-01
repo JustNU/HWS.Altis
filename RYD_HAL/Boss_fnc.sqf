@@ -701,7 +701,7 @@ RYD_ExecuteObj =
 				"_frPos","_frDir","_frDim","_chosenPos","_maxTempt","_actTempt","_sectors","_ownKnEn","_ownForce","_ctOwn","_alliedForce","_alliedGarrisons","_alliedExhausted","_inFlank","_Garrisons","_exhausted",
 				"_prop","_enPos","_dst","_val","_profile","_j","_pCnt","_m","_checkPos","_actPos","_indx","_check","_reserve","_garrPool","_fG","_garrison","_chosen","_dstMin","_actG","_actDst","_side",
 				"_AllV","_Civs","_AllV2","_Civs2","_AllV0","_AllV20","_NearAllies","_NearEnemies","_actOPos","_mChange","_marksT","_firstP","_actP","_angleM","_centerPoint","_mr1","_mr2","_lM","_wp",
-				"_varName","_HandledArray","_cSum","_reck","_cons","_limit","_lColor","_alive","_AAO","_AAOPts","_BBAOObj","_Unable","_UnableArr","_noGarrAround"];	
+				"_varName","_HandledArray","_cSum","_reck","_cons","_limit","_lColor","_alive","_AAO","_AAOPts","_BBAOObj","_Unable","_UnableArr","_noGarrAround","_SideAllies","_SideEnemies"];	
 
 		_sortedA = _this select 0;
 		_HQ = _this select 1;
@@ -973,6 +973,13 @@ RYD_ExecuteObj =
 										_cons = _HQ getVariable ["RydHQ_Consistency",0.5];
 
 										_limit = _HQ getVariable ["RydHQ_CaptLimit",10];
+										
+										_SideAllies = [];
+										_SideEnemies = [];
+
+										{
+											if (((side _HQ) getFriend _x) >= 0.6) then {_SideAllies pushBack _x} else {_SideEnemies pushBack _x};
+										} foreach [west,east,resistance];
 
 										if (isNull _HQ) then {_nObj = 100};
 										if (({alive _x} count (units _HQ)) < 1) then {_nObj = 100};
@@ -1006,8 +1013,10 @@ RYD_ExecuteObj =
 											}
 										foreach _AllV20;
 
-										_NearAllies = (leader _HQ) countfriendly _AllV;
-										_NearEnemies = (leader _HQ) countenemy _AllV2;
+										//_NearAllies = (leader _HQ) countfriendly _AllV;
+										_NearAllies = ({(side _x) in _SideAllies} count _AllV);
+										//_NearEnemies = (leader _HQ) countenemy _AllV2;
+										_NearEnemies = ({(side _x) in _SideEnemies} count _AllV2);
 										};
 
 									(not (_alive) or (_nObj >= 5) or ((_NearAllies >= _limit) and (_NearEnemies <= ((_reck/(0.5 + _cons))*10))))
@@ -1079,7 +1088,7 @@ RYD_ExecuteObj =
 			_fG = (_x getVariable ["RydHQ_NCrewInfG",[]]) - ((_x getVariable ["RydHQ_Exhausted",[]]) + (_x getVariable ["RydHQ_Garrison",[]]));
 
 			{
-				if (_x getvariable ["Unable",false]) then {_UnableArr pushBack _x};
+				if (((_x getvariable ["Unable",false]) or (isPlayer (leader _x))) or (_x getVariable ["Busy" + (str _x),false])) then {_UnableArr pushBack _x};
 			} foreach _fG;
 
 			_fG = _fG - (_UnableArr);
@@ -1570,17 +1579,25 @@ RYD_ObjectivesMon =
 	{
 	_SCRName = "ObjectivesMon";
 	
-	private ["_area","_BBSide","_isTaken","_HQ","_AllV","_Civs","_AllV2","_Civs2","_NearAllies","_NearEnemies","_trg","_AllV0","_AllV20","_mChange","_HQs","_enArea","_enPos","_BBProg"];
+	private ["_area","_BBSide","_isTaken","_HQ","_AllV","_Civs","_AllV2","_Civs2","_NearAllies","_NearEnemies","_trg","_AllV0","_AllV20","_mChange","_HQs","_enArea","_enPos","_BBProg","_SideAllies","_SideEnemies"];
 
 	_area = _this select 0;
 	_BBSide = _this select 1;
 	_HQ = _this select 2;
 	_HQs = _this select 3;
+	
 
 	while {(RydBB_Active)} do
 		{
 		sleep 15;//60
 		if not (RydBB_Active) exitWith {};
+
+		_SideAllies = [];
+		_SideEnemies = [];
+
+		{
+			if (((side _HQ) getFriend _x) >= 0.6) then {_SideAllies pushBack _x} else {_SideEnemies pushBack _x};
+		} foreach [west,east,resistance];
 
 			{
 			_isTaken = _x select 2;
@@ -1617,8 +1634,10 @@ RYD_ObjectivesMon =
 					}
 				foreach _AllV20;
 
-				_NearAllies = (leader _HQ) countfriendly _AllV;
-				_NearEnemies = (leader _HQ) countenemy _AllV2;
+				//_NearAllies = (leader _HQ) countfriendly _AllV;
+				_NearAllies = ({(side _x) in _SideAllies} count _AllV);
+				//_NearEnemies = (leader _HQ) countenemy _AllV2;
+				_NearEnemies = ({(side _x) in _SideEnemies} count _AllV2);
 
 				if (_NearAllies < _NearEnemies) then 
 					{
@@ -1663,8 +1682,10 @@ RYD_ObjectivesMon =
 					}
 				foreach _AllV20;
 
-				_NearAllies = (leader _HQ) countfriendly _AllV;
-				_NearEnemies = (leader _HQ) countenemy _AllV2;
+				//_NearAllies = (leader _HQ) countfriendly _AllV;
+				_NearAllies = ({(side _x) in _SideAllies} count _AllV);
+				//_NearEnemies = (leader _HQ) countenemy _AllV2;
+				_NearEnemies = ({(side _x) in _SideEnemies} count _AllV2);
 
 				if ((_NearAllies >= (_HQ getVariable ["RydHQ_CaptLimit",10])) and (_NearEnemies <= (0 + (((_HQ getVariable ["RydHQ_Recklessness",0.5])/(0.5 + (_HQ getVariable ["RydHQ_Consistency",0.5])))*10)))) then 
 					{

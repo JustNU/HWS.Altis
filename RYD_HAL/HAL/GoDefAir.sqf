@@ -5,11 +5,13 @@ _i = "";
 _unitG = _this select 0;
 _Spot = _this select 1;
 _HQ = _this select 2;
-_StartPos = getPosATL (vehicle (leader _unitG));
 
 _unitvar = str _unitG;
 _busy = false;
 _busy = _unitG getvariable ("Busy" + _unitvar);
+
+_StartPos = _unitG getvariable ("START" + _unitvar); 
+if (isNil ("_StartPos")) then {_unitG setVariable [("START" + _unitvar),(position (vehicle (leader _unitG)))]};
 
 if (isNil ("_busy")) then {_busy = false};
 
@@ -62,7 +64,7 @@ _alive = true;
 
 
 _DefPos = [((getPosATL _Spot) select 0) + (random 1000) - 500,((getPosATL _Spot) select 1) + (random 1000) - 500];
-if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then 
+if (_HQ getVariable ["RydHQ_Debug",false]) then 
 	{
 	_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
 	_i = [_DefPos,_unitG,"markDef","ColorBrown","ICON","waypoint","CAP " + (groupId _unitG) + " " + _signum," - DEFEND AREA",[0.5,0.5]] call RYD_Mark
@@ -126,7 +128,12 @@ if not (_alive) exitWith
 
 _task = [(leader _unitG),["Return to Base", "Return To Base", ""],_StartPos,"land"] call RYD_AddTask;
 
-_wp = [_unitG,_StartPos,"MOVE","SAFE","GREEN","NORMAL",["true", "if not ((group this) getVariable ['AirNoLand',false]) then {{(vehicle _x) land 'LAND'} foreach (units (group this))}; deletewaypoint [(group this), 0]"]] call RYD_WPadd;
+_rrr = (_unitG getVariable ["Ryd_RRR",false]);
+
+_radd = "";
+if (_rrr) then {_radd = "; {(vehicle _x) setFuel 1; (vehicle _x) setVehicleAmmo 1; (vehicle _x) setDamage 0;} foreach (units (group this))"};
+
+_wp = [_unitG,_StartPos,"MOVE","SAFE","GREEN","NORMAL",["true", "if not ((group this) getVariable ['AirNoLand',false]) then {{(vehicle _x) land 'LAND'} foreach (units (group this))}; deletewaypoint [(group this), 0]" + _radd]] call RYD_WPadd;
 
 _alive = true;
 _endThis = false;

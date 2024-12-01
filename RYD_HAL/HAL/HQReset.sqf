@@ -2,7 +2,7 @@ _SCRname = "Reset";
 
 private ["_HQ","_Edistance","_LE","_LEvar","_trg","_mLoss","_lastObj","_lost","_AllV20","_Civs20","_AllV2","_Civs20","_Civs2","_NearEnemies","_AllV0","_Civs0","_AllV","_Civs","_NearAllies","_objectives",
 	"_captLimit","_enRoute","_captDiff","_isC","_amountC","_reserve","_exhausted","_unitvar","_nominal","_current","_ex","_Aex","_unitvarA","_nominalA","_currentA","_AAO","_taken","_cTaken","_oTaken",
-	"_garrPool","_UnableArr","_noGarrAround","_fG","_chosen","_dstMin","_actDst","_actG","_code","_unitG","_ct","_MIAPass","_garrison","_setTaken"];
+	"_garrPool","_UnableArr","_noGarrAround","_fG","_chosen","_dstMin","_actDst","_actG","_code","_unitG","_ct","_MIAPass","_garrison","_setTaken","_SideAllies","_SideEnemies","_Navaltaken","_Navalobjectives"];
 
 _HQ = _this select 0;
 
@@ -43,10 +43,12 @@ _trg = _HQ getVariable ["leaderHQ",(leader _HQ)];
 _nObj = _HQ getVariable ["RydHQ_NObj",1];
 
 _objectives = [(_HQ getVariable ["RydHQ_Obj1",(leader _HQ)]),(_HQ getVariable ["RydHQ_Obj2",(leader _HQ)]),(_HQ getVariable ["RydHQ_Obj3",(leader _HQ)]),(_HQ getVariable ["RydHQ_Obj4",(leader _HQ)])];
+_Navalobjectives = [];
 
 if (_HQ getVariable ["RydHQ_SimpleMode",false]) then {
 
 	_objectives = _HQ getVariable ["RydHQ_Objectives",[]];
+	_Navalobjectives = _HQ getVariable ["RydHQ_NavalObjectives",[]];
 
 };
 
@@ -65,10 +67,15 @@ _lastObj = _HQ getVariable ["RydHQ_NObj",1];
 
 _lost = ObjNull;
 _taken = _HQ getVariable ["RydHQ_Taken",[]];
+_Navaltaken = _HQ getVariable ["RydHQ_TakenNaval",[]];
 
 {
 	if not (_x in _objectives) then {_taken = _taken - [_x]}
 } foreach _taken;
+
+{
+	if not (_x in _Navalobjectives) then {_Navaltaken = _Navaltaken - [_x]}
+} foreach _Navaltaken;
 
 {
 	if (_x getVariable ["PatrolPoint",false]) then {
@@ -77,8 +84,22 @@ _taken = _HQ getVariable ["RydHQ_Taken",[]];
 		};
 } foreach _objectives;
 
+{
+	if (_x getVariable ["PatrolPoint",false]) then {
+		_Navalobjectives = _Navalobjectives - [_x];
+		if not (_x in _Navaltaken) then {_Navaltaken pushBack _x};
+		};
+} foreach _Navalobjectives;
+
 _oTaken = +_taken;
 _cTaken = count _taken;
+
+_SideAllies = [];
+_SideEnemies = [];
+
+{
+	if (((side _HQ) getFriend _x) >= 0.6) then {_SideAllies pushBack _x} else {_SideEnemies pushBack _x};
+} foreach [west,east,resistance];
 
 
 	{
@@ -116,7 +137,8 @@ _cTaken = count _taken;
 		}
 	foreach _AllV20;
 
-	_NearEnemies = (_HQ getVariable ["leaderHQ",(leader _HQ)]) countenemy _AllV2;
+//	_NearEnemies = (_HQ getVariable ["leaderHQ",(leader _HQ)]) countenemy _AllV2;
+	_NearEnemies = ({(side _x) in _SideEnemies} count _AllV2);
 	_AllV0 = _x nearEntities [["AllVehicles"],(_HQ getVariable ["RydHQ_ObjRadius2",500])];
 	_Civs0 = _x nearEntities [["Civilian"],(_HQ getVariable ["RydHQ_ObjRadius2",500])];
 
@@ -145,7 +167,8 @@ _cTaken = count _taken;
 		}
 	foreach _AllV0;
 
-	_NearAllies = (_HQ getVariable ["leaderHQ",(leader _HQ)]) countfriendly _AllV;
+//	_NearAllies = (_HQ getVariable ["leaderHQ",(leader _HQ)]) countfriendly _AllV;
+	_NearAllies = ({(side _x) in _SideAllies} count _AllV);
 
 	if (_x == _trg) then
 		{
@@ -220,7 +243,7 @@ _cTaken = count _taken;
 		_fG = (_HQ getVariable ["RydHQ_NCrewInfG",[]]) - ((_HQ getVariable ["RydHQ_Exhausted",[]]) + (_HQ getVariable ["RydHQ_AOnly",[]]) + (_HQ getVariable ["RydHQ_ROnly",[]]) + (_HQ getVariable ["RydHQ_Garrison",[]]));
 
 		{
-			if ((_x getvariable ["Unable",false]) or (_x getVariable ["Busy" + (str _x),false])) then {_UnableArr pushBack _x};
+			if (((_x getvariable ["Unable",false]) or (isPlayer (leader _x))) or (_x getVariable ["Busy" + (str _x),false])) then {_UnableArr pushBack _x};
 		} foreach _fG;
 
 		_fG = _fG - (_UnableArr);
@@ -291,9 +314,128 @@ _cTaken = count _taken;
 	}
 foreach _objectives;
 
+	{
+
+	if ((_HQ getVariable ["RydHQ_SimpleMode",false]) and not (RydBB_Active)) then {_trg = _x};
+
+	_AllV20 = _x nearEntities [["AllVehicles"],(_HQ getVariable ["RydHQ_ObjRadius1",300])];
+	_Civs20 = _x nearEntities [["Civilian"],(_HQ getVariable ["RydHQ_ObjRadius1",300])];
+
+	_AllV2 = [];
+
+		{
+		_AllV2 = _AllV2 + (crew _x)
+		}
+	foreach _AllV20;
+
+	_Civs20 = _trg nearEntities [["Civilian"],(_HQ getVariable ["RydHQ_ObjRadius2",500])];
+
+	_Civs2 = [];
+
+		{
+		_Civs2 = _Civs2 + (crew _x)
+		}
+	foreach _Civs20;
+
+	_AllV2 = _AllV2 - _Civs2;
+
+	_AllV20 = +_AllV2;
+
+		{
+		if not (_x isKindOf "Man") then
+			{
+			if ((count (crew _x)) == 0) then {_AllV2 = _AllV2 - [_x]}
+			}
+		}
+	foreach _AllV20;
+
+//	_NearEnemies = (_HQ getVariable ["leaderHQ",(leader _HQ)]) countenemy _AllV2;
+	_NearEnemies = ({(side _x) in _SideEnemies} count _AllV2);
+	_AllV0 = _x nearEntities [["AllVehicles"],(_HQ getVariable ["RydHQ_ObjRadius2",500])];
+	_Civs0 = _x nearEntities [["Civilian"],(_HQ getVariable ["RydHQ_ObjRadius2",500])];
+
+	_AllV = [];
+
+		{
+		_AllV = _AllV + (crew _x)
+		}
+	foreach _AllV0;
+
+	_Civs = [];
+
+		{
+		_Civs = _Civs + (crew _x)
+		}
+	foreach _Civs0;
+
+	_AllV = _AllV - _Civs;
+	_AllV0 = +_AllV;
+
+		{
+		if not (_x isKindOf "Man") then
+			{
+			if ((count (crew _x)) == 0) then {_AllV = _AllV - [_x]}
+			}
+		}
+	foreach _AllV0;
+
+//	_NearAllies = (_HQ getVariable ["leaderHQ",(leader _HQ)]) countfriendly _AllV;
+	_NearAllies = ({(side _x) in _SideAllies} count _AllV);
+
+	if (_x == _trg) then
+		{
+		_captLimit = 1 * (1 + ((_HQ getVariable ["RydHQ_Circumspection",0.5])/(2 + (_HQ getVariable ["RydHQ_Recklessness",0.5]))));
+		_enRoute = 0;
+
+			{
+			if not (isNull _x) then
+				{
+				if (_x getVariable [("Capt" + (str _x)),false]) then
+					{
+					_enRoute = _enRoute + (count (units _x))
+					}
+				}
+			}
+		foreach (_HQ getVariable ["RydHQ_NavalG",[]]);
+
+		_captDiff = _captLimit - _enRoute;
+
+		if (_captDiff > 0) then
+			{	
+			_isC = _trg getVariable ("Capturing" + (str _trg) + (str _HQ));if (isNil "_isC") then {_isC = [0,0]};
+
+			_amountC = _isC select 1;
+			_isC = _isC select 0;
+			if (_isC > 3) then {_isC = 3};
+			_trg setVariable [("Capturing" + (str _trg) + (str _HQ)),[_isC,_amountC - _captDiff]];
+			}
+		};
+
+	if (not (_HQ getVariable ["RydHQ_UnlimitedCapt",false]) and (_NearAllies >= (_HQ getVariable ["RydHQ_CaptLimit",10])) and (_NearEnemies < (_NearAllies*0.25))) then {
+		_Navaltaken pushBackUnique _x;
+	};
+
+	if ((_NearEnemies > _NearAllies) and not (_AAO)) exitwith {_lost = _x};
+	if (_NearEnemies > _NearAllies) then {
+		_Navaltaken = _Navaltaken - [_x];
+		if ((str (leader _HQ)) == "LeaderHQ") then {_x setVariable ["SetTakenA",false]};
+		if ((str (leader _HQ)) == "LeaderHQB") then {_x setVariable ["SetTakenB",false]};
+		if ((str (leader _HQ)) == "LeaderHQC") then {_x setVariable ["SetTakenC",false]};
+		if ((str (leader _HQ)) == "LeaderHQD") then {_x setVariable ["SetTakenD",false]};
+		if ((str (leader _HQ)) == "LeaderHQE") then {_x setVariable ["SetTakenE",false]};
+		if ((str (leader _HQ)) == "LeaderHQF") then {_x setVariable ["SetTakenF",false]};
+		if ((str (leader _HQ)) == "LeaderHQG") then {_x setVariable ["SetTakenG",false]};
+		if ((str (leader _HQ)) == "LeaderHQH") then {_x setVariable ["SetTakenH",false]};	
+	};
+
+
+	}
+foreach _Navalobjectives;
+
 if not ((RydBB_Active) and ((leader _HQ) in (RydBBa_HQs + RydBBb_HQs))) then
 	{
 	_HQ setVariable ["RydHQ_Taken",_taken]; 
+	_HQ setVariable ["RydHQ_TakenNaval",_Navaltaken]; 
 
 	if not (_AAO) then
 		{

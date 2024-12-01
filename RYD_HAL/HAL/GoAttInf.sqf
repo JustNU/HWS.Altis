@@ -45,6 +45,9 @@ _Armor = (_HQ getVariable ["RydHQ_LArmorG",[]]) + (_HQ getVariable ["RydHQ_HArmo
 if (_unitG in _Armor) then {_distance2 = 500};
 if (_unitG in (_HQ getVariable ["RydHQ_AirG",[]])) then {_distance2 = 750};
 
+_dstMpl = (_HQ getVariable ["RydHQ_AttInfDistance",1]) * (_unitG getVariable ["RydHQ_myAttDst",1]);
+_distance2 = _distance2 * _dstMpl;
+
 _dXc = _distance2 * (cos _angle);
 _dYc = _distance2 * (sin _angle);
 
@@ -94,7 +97,7 @@ _UL = leader _unitG;
  
 if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
 
-if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then 
+if (_HQ getVariable ["RydHQ_Debug",false]) then 
 	{
 	_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
 	_i = [[_posX,_posY],_unitG,"markAttack","ColorRed","ICON","waypoint", "INF " + (groupId _unitG) + " " + _signum," - ATTACK",[0.5,0.5]] call RYD_Mark
@@ -311,7 +314,7 @@ if ((isNull _AV) and (([_posX,_posY] distance _UL) > 1500) and not (isPlayer (le
 					_cc = (_unitG getvariable ("CC" + _unitvar))
 					};
 
-				if ((_unitG getVariable ["CargoChosen",false]) and not ((count (waypoints _unitG)) < 1)) then {[_unitG, (currentWaypoint _unitG)] setWaypointPosition [getPosATL (vehicle (leader _unitG)), 0];};
+				if ((_unitG getVariable ["CargoChosen",false]) and not ((count (waypoints _unitG)) < 1)) then {[_unitG, (currentWaypoint _unitG)] setWaypointPosition [getPosATL (vehicle (leader _unitG)), 0]; _wp0 = [];};
 					
 				(not (_alive) or (_cc))
 				};
@@ -319,7 +322,7 @@ if ((isNull _AV) and (([_posX,_posY] distance _UL) > 1500) and not (isPlayer (le
 			if not (isNull _unitG) then {_unitG setVariable [("CC" + _unitvar), false]};
 			};
 
-		if not (_unitG getVariable ["CargoChosen",false]) then {_wp0 = [_unitG,[_posX,_posY],"MOVE",_beh,"YELLOW",_spd,["true","deletewaypoint [(group this), 0];"],true,0,_TO] call RYD_WPadd;};
+		if not (_unitG getVariable ["CargoChosen",false]) then {if (_wp0 isEqualTo []) then {_wp0 = [_unitG,[_posX,_posY],"MOVE",_beh,"YELLOW",_spd,["true","deletewaypoint [(group this), 0];"],true,0,_TO] call RYD_WPadd;}};
 
 		if not (_alive) exitWith 
 			{
@@ -467,11 +470,11 @@ if (_request) then {_tp = "SAD"};
 _wp = [_gp,_pos,_tp,_beh,"YELLOW",_spd,_sts,_crr,0,_TO] call RYD_WPadd;
 if ((isPlayer (leader _gp)) and ((_GDV == _unitG) or (isNull _GDV))) then {deleteWaypoint _wp};
 
-if ((RydxHQ_SynchroAttack) and not (_halfway) and not (_request)) then
+if ((RydxHQ_SynchroAttack) and not (isPlayer (leader _unitG)) and not (_request)) then
 	{
-	[_wp,_Trg] call RYD_WPSync;
-	 
-	 
+	_attackedBy = (group _trg) getVariable ["RYD_Attacks",[]];
+	_attackedBy pushBack [_unitG,[_posX,_posY,0]];
+	(group _trg) setVariable ["RYD_Attacks",_attackedBy];
 	};
 
 _DAV = assigneddriver _AV;
@@ -492,6 +495,7 @@ if not (((group _DAV) == (group _UL)) or (isNull (group _DAV))) then
 	}
 else 
 	{
+	if not (_request) then {_unitG setVariable ["RydHQ_WaitingTarget",_trg]};
 	_cause = [_unitG,6,true,400,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],false] call RYD_Wait;
 	_timer = _cause select 0;
 	_alive = _cause select 1;
@@ -597,13 +601,14 @@ if ((_halfway) or (_earlyD)) then
 	_wp = [_unitG,[_posX,_posY],"MOVE","AWARE","YELLOW","NORMAL",["true","deletewaypoint [(group this), 0];"],true,0,[0,0,0],_frm] call RYD_WPadd;
 	if (isPlayer (leader _unitG)) then {deleteWaypoint _wp};
 
-	if (RydxHQ_SynchroAttack) then
+	if ((RydxHQ_SynchroAttack) and not (isPlayer (leader _unitG)) and not (_request)) then
 		{
-		if not (_request) then {[_wp,_Trg] call RYD_WPSync};
-		 
-		 
+		[_wp,_Trg,_unitG,_HQ] call RYD_WPSync;
+		
+		
 		};
 
+	if not (_request) then {_unitG setVariable ["RydHQ_WaitingTarget",_trg]};
 	_cause = [_unitG,6,true,0,30,[],false] call RYD_Wait;
 	_timer = _cause select 0;
 	_alive = _cause select 1;
@@ -632,7 +637,7 @@ _spd = "NORMAL";
 _frm = formation _unitG;
 if not (isPlayer (leader _unitG)) then {_frm = "WEDGE"};
 _cur = true;
-if (RydxHQ_SynchroAttack) then {_cur = false};
+//if (RydxHQ_SynchroAttack) then {_cur = false};
 
 _UL = leader _unitG;if not (isPlayer _UL) then {if ((_halfway) and (_timer <= 30)) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdFinal,"OrdFinal"] call RYD_AIChatter}}};
 

@@ -5,13 +5,11 @@ if (isNil ("RydHQ_Wait")) then {RydHQ_Wait = 15};
 
 sleep RydHQ_Wait;
 
-_hi = "HAL 1.22.11 RC4 [NR6 Edit] Initialized";
-_hi2 = "NR6 PACK 3.02 RC4 Initialized";
+_hi = "HAL 1.25.0 RC2 [NR6 Pack] Initialized";
 
 if ((random 100) < 1) then {_hi = "Good morning, Dave."};
 
 _hi remoteExecCall ["systemChat"];
-_hi2 remoteExecCall ["systemChat"];
 
 if (isNil "RYD_Path") then {RYD_Path = "RYD_HAL\"};
 
@@ -19,6 +17,7 @@ call compile preprocessfile (RYD_Path + "HAC_fnc.sqf");
 call compile preprocessfile (RYD_Path + "HAC_fnc2.sqf");
 call compile preprocessfile (RYD_Path + "VarInit.sqf");
 call compile preprocessfile (RYD_Path + "TaskMenu.sqf");
+call compile preprocessfile (RYD_Path + "TaskInitNR6.sqf");
 HAL_fnc_getType = compile preprocessFileLineNumbers "A3\modules_f\marta\data\scripts\fnc_getType.sqf";
 HAL_fnc_getSize = compile preprocessFileLineNumbers "A3\modules_f\marta\data\scripts\fnc_getSize.sqf";
 

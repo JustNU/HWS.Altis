@@ -1,4 +1,4 @@
-_SCRname = "GoAttAir";
+_SCRname = "GoAttAirCAP";
 
 _i = "";
 
@@ -12,9 +12,8 @@ _PosObj1 = getPosATL _Trg;
 _unitvar = str (_unitG);
 
 _UL = leader _unitG;
-
 _PosLand = _unitG getvariable ("START" + _unitvar); 
-if (isNil ("_PosLand")) then {_unitG setVariable [("START" + _unitvar),(position (vehicle (leader _unitG)))]};
+if (isNil ("_PosLand")) then {_unitG setVariable [("START" + _unitvar),(position (vehicle _UL))]};
 
 [_unitG] call RYD_WPdel;
 
@@ -44,7 +43,7 @@ if (_request) then {
 	_posY = (_PosObj1 select 1) + (random 300) - 150;
 };
 
-[_unitG,[_posX,_posY,0],"HQ_ord_attackAir",_HQ] call RYD_OrderPause;
+[_unitG,[_posX,_posY,0],"HQ_ord_attackAirCAP",_HQ] call RYD_OrderPause;
 
 if ((isPlayer (leader _unitG)) and (RydxHQ_GPauseActive)) then {hintC "New orders from HQ!";setAccTime 1};
 
@@ -55,72 +54,17 @@ if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,
 if (_HQ getVariable ["RydHQ_Debug",false]) then 
 	{
 	_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
-	_i = [[_posX,_posY],_unitG,"markAttack","ColorRed","ICON","waypoint","CAS " + (groupId _unitG) + " " + _signum," - CAS",[0.5,0.5]] call RYD_Mark
+	_i = [[_posX,_posY],_unitG,"markAttack","ColorRed","ICON","waypoint","CAP " + (groupId _unitG) + " " + _signum," - CAS",[0.5,0.5]] call RYD_Mark
 	};
 
-_task = [(leader _unitG),["Provide close air support and neutralize hostile targets.", "Provide Close Air Support", ""],[_posX,_posY],"destroy"] call RYD_AddTask;
+_task = [(leader _unitG),["Perform combat air patrol and intercept any hostile airborne assets.", "Perform Combat Air Patrol", ""],[_posX,_posY],"plane"] call RYD_AddTask;
 
 _wp = [_unitG,[_posX,_posY],"SAD","COMBAT","RED","NORMAL",["true", "deletewaypoint [(group this), 0]"],true,0.001] call RYD_WPadd;
 
 _lasT = ObjNull;
 
 
-if ((_unitG in (_HQ getVariable ["RydHQ_BAirG",[]])) and not (_request)) then 
-	{
-	_eSide = side _unitG;
-	_wp waypointAttachVehicle _Trg;
-
-	_tgt = "LaserTargetW";
-	if (_eSide == east) then {_tgt = "LaserTargetE"};
-	if (_eSide == resistance) then {_tgt = "LaserTargetC"};
-
-	_tPos = getPosATL _Trg;
-	//_tX = (_tPos select 0) + (random 60) - 30;
-	//_tY = (_tPos select 1) + (random 60) - 30;
-
-	_tX = (_tPos select 0);
-	_tY = (_tPos select 1);
-
-	_lasT = createVehicle [_tgt, _Trg, [], 0, "CAN_COLLIDE"];
-
-	_lasT attachTo [_Trg];
-
-	_code =
-		{
-		_Trg = _this select 0;
-		_lasT = _this select 1;
-		_unitG = _this select 2;
-
-		_VL = vehicle (leader _unitG);
-		_ct = 0;
-
-		while {(not (isNull _Trg) and (((side _unitG) knowsAbout _Trg) > 0) and {not (isNull _lasT) and {not (isNull _VL) and {(_ct < 100)}}})} do
-			{
-			if not (alive _Trg) exitWith {};
-			if (((getpos (vehicle _Trg)) select 2) > 10) exitWith {};
-			if not (alive _VL) exitWith {};
-			if (({alive _x} count (units _unitG)) < 1) exitWith {};
-			_isBusy = _unitG getVariable [("Busy" + (str _unitG)),false];
-			if not (_isBusy) exitWith {};
-
-		//	_tPos = getPosATL _Trg;
-		//	_tX = (_tPos select 0) + (random 60) - 30;
-		//	_tY = (_tPos select 1) + (random 60) - 30;
-
-		//	_lasT setPos [_tX,_tY,0];
-
-			sleep 15;
-			_ct = _ct + 1
-			};
-
-		deleteVehicle _lasT
-		};
-		
-	[[_Trg,_lasT,_unitG],_code] call RYD_Spawn
-	};
-
-
-if not (_request) then {_unitG setVariable ["RydHQ_WaitingTarget",_this select 1]};
+if not (_request) then {_unitG setVariable ["RydHQ_WaitingTarget",_trg]};
 _cause = [_unitG,6,true,0,120,[],false] call RYD_Wait;
 _timer = _cause select 0;
 _alive = _cause select 1;

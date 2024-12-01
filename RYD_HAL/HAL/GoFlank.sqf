@@ -43,6 +43,9 @@ _BorHQD = (leader _HQ) distance _BEnemyPos;
 
 _distanceSafe = 700;
 
+_dstMpl = (_HQ getVariable ["RydHQ_FlankDistance",1]) * (_unitG getVariable ["RydHQ_myAttDst",1]);
+_distanceSafe = _distanceSafe * _dstMpl;
+
 _safeX1 = _h * _distanceSafe * (cos _angle);
 _safeY1 = _h * _distanceSafe * (sin _angle);
 
@@ -162,7 +165,7 @@ if ((_ammo > 0) and not (_busy)) then
 	if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
 
 	
-	if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then 
+	if (_HQ getVariable ["RydHQ_Debug",false]) then 
 		{
 		_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
 		_i1 = [[_posXWP1,_posYWP1],_unitG,"markFlank1","ColorOrange","ICON","waypoint","FLANK1 "  + (groupId _unitG) + " " + _signum," - FLANK 1",[0.5,0.5]] call RYD_Mark;

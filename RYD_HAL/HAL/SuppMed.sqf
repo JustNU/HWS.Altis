@@ -1,6 +1,6 @@
 _SCRname = "SuppMed";
 
-private ["_HQ","_med","_noenemy","_medS","_medSG","_medASG","_airMedAv","_landMedAv","_busy","_wounded","_Swounded","_Lwounded","_ambulances","_amb","_unitvar","_ambulances2","_SWunits","_a",
+private ["_HQ","_med","_noenemy","_medS","_medSG","_medASG","_airMedAv","_landMedAv","_busy","_unable","_wounded","_Swounded","_Lwounded","_ambulances","_amb","_unitvar","_ambulances2","_SWunits","_a",
 	"_SWunit","_halfway","_distT","_eClose1","_eClose2","_UL","_Wunits","_ambulance","_WUnit","_supported"];
 
 _HQ = _this select 0;
@@ -45,14 +45,22 @@ _landMedAv = [];
 	{
 	_busy = _x getVariable ("Busy" + (str _x));
 	if (isNil "_busy") then {_busy = false};
-	if not (_busy) then {_airMedAv pushBack _x}
+	_unable = false;
+	_unable = _x getvariable "Unable";
+	if (isNil ("_unable")) then {_unable = false};
+
+	if not (_busy) and not (_unable) then {_airMedAv pushBack _x}
 	}
 foreach _medASG;
 
 	{
 	_busy = _x getVariable ("Busy" + (str _x));
 	if (isNil "_busy") then {_busy = false};
-	if not (_busy) then {_landMedAv pushBack _x}
+	_unable = false;
+	_unable = _x getvariable "Unable";
+	if (isNil ("_unable")) then {_unable = false};
+
+	if (not (_busy) and not (_unable)) then {_landMedAv pushBack _x}
 	}
 foreach (_medSG - _medASG);
 

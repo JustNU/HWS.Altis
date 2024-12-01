@@ -108,12 +108,12 @@ _cInitial = 0;
 
 while {true} do
 	{
-			
+
 	if (RydHQ_RHQAutoFill) then
 	{
 	[] call RYD_PresentRHQ
 	};
-
+	
 	_specFor_class = RHQ_SpecFor + RYD_WS_specFor_class - RHQs_SpecFor;
 
 	_recon_class = RHQ_Recon + RYD_WS_recon_class - RHQs_Recon;
@@ -451,6 +451,11 @@ while {true} do
 	if (isNil ("RydHQC_SupportedG")) then {RydHQC_SupportedG = []};
 	_HQ setVariable ["RydHQ_SupportedG",RydHQC_SupportedG];
 	
+	if (isNil ("RydHQC_RCAS")) then {RydHQC_RCAS = []};
+	_HQ setVariable ["RydHQ_RCAS",RydHQC_RCAS];
+	if (isNil ("RydHQC_RCAP")) then {RydHQC_RCAP = []};
+	_HQ setVariable ["RydHQ_RCAP",RydHQC_RCAP];
+
 	if (isNil ("RydHQC_SFuel")) then {RydHQC_SFuel = true};
 	_HQ setVariable ["RydHQ_SFuel",RydHQC_SFuel];
 	if (isNil ("RydHQC_ExRefuel")) then {RydHQC_ExRefuel = []};
@@ -522,6 +527,9 @@ while {true} do
 	_HQ setVariable ["RydHQ_Sec1",RydHQC_Sec1]; 
 	if (isNil "RydHQC_Sec2") then {RydHQC_Sec2 = objNull};
 	_HQ setVariable ["RydHQ_Sec2",RydHQC_Sec2];
+
+	if (isNil "RydHQC_SupportRTB") then {RydHQC_SupportRTB = false};
+	_HQ setVariable ["RydHQ_SupportRTB",RydHQC_SupportRTB];
 	
 	if (isNil "RydHQC_Debug") then {RydHQC_Debug = false};
 	_HQ setVariable ["RydHQ_Debug",RydHQC_Debug]; 
@@ -559,6 +567,31 @@ while {true} do
 	_HQ setVariable ["RydHQ_EBDoctrine",RydHQC_EBDoctrine]; 
 	if (isNil "RydHQC_ForceEBDoctrine") then {RydHQC_ForceEBDoctrine = false};
 	_HQ setVariable ["RydHQ_ForceEBDoctrine",RydHQC_ForceEBDoctrine]; 
+	
+	if (isNil "RydHQC_DefRange") then {RydHQC_DefRange = 1};
+	_HQ setVariable ["RydHQ_DefRange",RydHQC_DefRange];
+	if (isNil "RydHQC_GarrRange") then {RydHQC_GarrRange = 1};
+	_HQ setVariable ["RydHQ_GarrRange",RydHQC_GarrRange];
+
+	if (isNil "RydHQC_NoCapt") then {RydHQC_NoCapt = []};
+	_HQ setVariable ["RydHQ_NoCapt",RydHQ_NoCapt];
+	
+	if (isNil "RydHQC_AttInfDistance") then {RydHQC_AttInfDistance = 1};
+	_HQ setVariable ["RydHQ_AttInfDistance",RydHQC_AttInfDistance];
+	if (isNil "RydHQC_AttArmDistance") then {RydHQC_AttArmDistance = 1};
+	_HQ setVariable ["RydHQ_AttArmDistance",RydHQC_AttArmDistance];
+	if (isNil "RydHQC_AttSnpDistance") then {RydHQC_AttSnpDistance = 1};
+	_HQ setVariable ["RydHQ_AttSnpDistance",RydHQC_AttSnpDistance];
+	if (isNil "RydHQC_CaptureDistance") then {RydHQC_CaptureDistance = 1};
+	_HQ setVariable ["RydHQ_CaptureDistance",RydHQC_CaptureDistance];	
+	if (isNil "RydHQC_FlankDistance") then {RydHQC_FlankDistance = 1};
+	_HQ setVariable ["RydHQ_FlankDistance",RydHQC_FlankDistance];
+	if (isNil "RydHQC_AttSFDistance") then {RydHQC_AttSFDistance = 1};
+	_HQ setVariable ["RydHQ_AttSFDistance",RydHQC_AttSFDistance];
+	if (isNil "RydHQC_ReconDistance") then {RydHQC_ReconDistance = 1};
+	_HQ setVariable ["RydHQ_ReconDistance",RydHQC_ReconDistance];
+	if (isNil "RydHQC_UAVAlt") then {RydHQC_UAVAlt = 150};
+	_HQ setVariable ["RydHQ_UAVAlt",RydHQC_UAVAlt];
 
 	if (isNil "RydHQC_Obj1") then {RydHQC_Obj1 = createTrigger ["EmptyDetector", leaderHQC]};
 	if (isNil "RydHQC_Obj2") then {RydHQC_Obj2 = createTrigger ["EmptyDetector", leaderHQC]};
@@ -571,6 +604,7 @@ while {true} do
 	_HQ setVariable ["RydHQ_Obj4",RydHQC_Obj4];
 	
 	_objectives = [RydHQC_Obj1,RydHQC_Obj2,RydHQC_Obj3,RydHQC_Obj4];
+	_NAVObjectives = [];
 
 	if (isNil ("RydHQC_SimpleMode")) then {RydHQC_SimpleMode = true};
 	_HQ setVariable ["RydHQ_SimpleMode",RydHQC_SimpleMode];
@@ -581,18 +615,23 @@ while {true} do
 	if (isNil ("RydHQC_SimpleObjs")) then {RydHQC_SimpleObjs = []};
 	_HQ setVariable ["RydHQ_SimpleObjs",RydHQC_SimpleObjs];
 
+	if (isNil ("RydHQC_NavalObjs")) then {RydHQC_NavalObjs = []};
+	_HQ setVariable ["RydHQ_NavalObjs",RydHQC_NavalObjs];
+
 	if (isNil ("RydHQC_MaxSimpleObjs")) then {RydHQC_MaxSimpleObjs = 5};
 	_HQ setVariable ["RydHQ_MaxSimpleObjs",RydHQC_MaxSimpleObjs];
 
 	if (_HQ getVariable ["RydHQ_SimpleMode",false]) then {
 
 		_objectives = RydHQC_SimpleObjs;
+		_NAVObjectives = RydHQC_NavalObjs;
 		_HQ setVariable ["RydHQ_AAO",true]; 
 		_HQ setVariable ["RydHQ_ForceAAO",true];
 		
 	};
 		
 	_HQ setVariable ["RydHQ_Objectives",_objectives];
+	_HQ setVariable ["RydHQ_NavalObjectives",_NAVObjectives];
 	
 	_listed = _HQ getVariable "BBProgress";
 

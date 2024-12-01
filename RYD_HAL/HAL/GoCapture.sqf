@@ -41,6 +41,9 @@ _distance = (leader _HQ) distance _PosObj1;
 _distanceD = (leader _unitG) distance _PosObj1;
 _distance2 = 100;
 
+_dstMpl = (_HQ getVariable ["RydHQ_CaptureDistance",1]) * (_unitG getVariable ["RydHQ_myAttDst",1]);
+_distance2 = _distance2 * _dstMpl;
+
 _dXc = _distance2 * (cos _angle);
 _dYc = _distance2 * (sin _angle);
 
@@ -95,7 +98,7 @@ _UL = leader _unitG;
  
 if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
 
-if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then 
+if (_HQ getVariable ["RydHQ_Debug",false]) then 
 	{
 	_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
 	_i = [[_posX,_posY],_unitG,"markCapture","ColorRed","ICON","waypoint","CAP " + (groupId _unitG) + " " + _signum," - SECURE AREA",[0.5,0.5]] call RYD_Mark
@@ -326,7 +329,7 @@ if ((isNull _AV) and (([_posX,_posY] distance _UL) > 1500) and not (isPlayer (le
 					_cc = (_unitG getvariable ("CC" + _unitvar))
 					};
 
-				if ((_unitG getVariable ["CargoChosen",false]) and not ((count (waypoints _unitG)) < 1)) then {[_unitG, (currentWaypoint _unitG)] setWaypointPosition [getPosATL (vehicle (leader _unitG)), 0];};
+				if ((_unitG getVariable ["CargoChosen",false]) and not ((count (waypoints _unitG)) < 1)) then {[_unitG, (currentWaypoint _unitG)] setWaypointPosition [getPosATL (vehicle (leader _unitG)), 0]; _wp0 = [];};
 					
 				(not (_alive) or (_cc))
 				};
@@ -334,7 +337,7 @@ if ((isNull _AV) and (([_posX,_posY] distance _UL) > 1500) and not (isPlayer (le
 			if not (isNull _unitG) then {_unitG setVariable [("CC" + _unitvar), false]};
 			};
 
-		if not (_unitG getVariable ["CargoChosen",false]) then {_wp0 = [_unitG,[_posX,_posY],"MOVE",_beh,"YELLOW",_spd,["true","deletewaypoint [(group this), 0];"],true,0,_TO] call RYD_WPadd;};
+		if not (_unitG getVariable ["CargoChosen",false]) then {if (_wp0 isEqualTo []) then {_wp0 = [_unitG,[_posX,_posY],"MOVE",_beh,"YELLOW",_spd,["true","deletewaypoint [(group this), 0];"],true,0,_TO] call RYD_WPadd;}};
 
 		if not (_alive) exitWith 
 			{
@@ -426,7 +429,7 @@ _AV = assignedVehicle _UL;
 _DAV = assigneddriver _AV;
 _GDV = group _DAV;
 
-_task = [(leader _unitG),["Secure the objective. Neutralize any hostile forces and hold the objective.", "Capture And Hold Objective", ""],[_posX,_posY],"move"] call RYD_AddTask;
+_task = [(leader _unitG),["Secure the objective. Neutralize any hostile forces and hold the objective.", "Secure And Hold Objective", ""],[_posX,_posY],"move"] call RYD_AddTask;
 
 _Ctask = taskNull;
 if (not ((leader _GDV) == (leader _unitG)) and not (_GDV == _unitG)) then
@@ -528,6 +531,7 @@ if not (((group _DAV) == (group _UL)) or (isNull (group _DAV))) then
 	}
 else 
 	{
+	_unitG setVariable ["RydHQ_WaitingObjective",[_HQ,_trg]];
 	_cause = [_unitG,6,true,400,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],false] call RYD_Wait;
 	_timer = _cause select 0;
 	_alive = _cause select 1;
@@ -676,6 +680,7 @@ if ((_halfway) or (_earlyD)) then
 	_wp = [_unitG,[_posX,_posY],"MOVE","AWARE","YELLOW","NORMAL",["true","deletewaypoint [(group this), 0];"],true,0,[0,0,0],_frm] call RYD_WPadd;
 	if (isPlayer (leader _unitG)) then {deleteWaypoint _wp};
 
+	_unitG setVariable ["RydHQ_WaitingObjective",[_HQ,_trg]];
 	_cause = [_unitG,6,true,0,30,[],false] call RYD_Wait;
 	_timer = _cause select 0;
 	_alive = _cause select 1;
@@ -689,6 +694,7 @@ if ((_halfway) or (_earlyD)) then
 		_isAttacked = _isAttacked select 0;
 		_isAttacked = _isAttacked - 1;
 		_Trg setVariable [("Capturing" + (str _Trg) + (str _HQ)),[_isAttacked,_amountC]];
+		_unitG setVariable [("Busy" + (str _unitG)),false];
 		if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then 
 			{
 			deleteMarker ("markCapture" + str (_unitG))
@@ -730,7 +736,7 @@ _UL = leader _unitG;if not (isPlayer _UL) then {if ((_halfway) and (_timer <= 30
 
 if not (_task isEqualTo taskNull) then
 	{	 
-	[_task,(leader _unitG),["Secure the objective. Neutralize any hostile forces and hold the objective.", "Capture And Hold Objective", ""],(getPosATL _Trg),"ASSIGNED",0,false,true] call BIS_fnc_SetTask;
+	[_task,(leader _unitG),["Secure the objective. Neutralize any hostile forces and hold the objective.", "Secure And Hold Objective", ""],(getPosATL _Trg),"ASSIGNED",0,false,true] call BIS_fnc_SetTask;
 	};
 
 _beh = "AWARE";
@@ -741,6 +747,7 @@ if not (isPlayer (leader _unitG)) then {_frm = "WEDGE"};
 
 _wp = [_unitG,_Trg,"SAD",_beh,"RED",_spd,["true","deletewaypoint [(group this), 0];"],true,100,[0,0,0],_frm] call RYD_WPadd;
 
+_unitG setVariable ["RydHQ_WaitingObjective",[_HQ,_trg]];
 _cause = [_unitG,6,true,0,30,[],false] call RYD_Wait;
 _timer = _cause select 0;
 _alive = _cause select 1;
@@ -789,6 +796,13 @@ waitUntil
 	sleep 30;//60
 	_BBProgN = _HQ getVariable "BBProgress";
 	if (isNil "_BBProgN") then {_BBProgN = 0};
+
+	_SideAllies = [];
+	_SideEnemies = [];
+
+	{
+		if (((side _HQ) getFriend _x) >= 0.6) then {_SideAllies pushBack _x} else {_SideEnemies pushBack _x};
+	} foreach [west,east,resistance];
 	
 	if (not (_BBProgN > _BBProg)) then
 		{
@@ -852,8 +866,10 @@ waitUntil
 			}
 		foreach _AllV20;
 
-		_NearAllies = (leader _HQ) countfriendly _AllV;
-		_NearEnemies = (leader _HQ) countenemy _AllV2;
+		//_NearAllies = (leader _HQ) countfriendly _AllV;
+		_NearAllies = ({(side _x) in _SideAllies} count _AllV);
+		//_NearEnemies = (leader _HQ) countenemy _AllV2;
+		_NearEnemies = ({(side _x) in _SideEnemies} count _AllV2);
 
 		if (_trg in (_HQ getVariable ["RydHQ_Taken",[]])) then {_isTaken = true};
 

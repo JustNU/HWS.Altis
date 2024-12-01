@@ -113,7 +113,7 @@ while {true} do
 	{
 	[] call RYD_PresentRHQ
 	};
-
+	
 	_specFor_class = RHQ_SpecFor + RYD_WS_specFor_class - RHQs_SpecFor;
 
 	_recon_class = RHQ_Recon + RYD_WS_recon_class - RHQs_Recon;
@@ -450,6 +450,11 @@ while {true} do
 	_HQ setVariable ["RydHQ_MedPoints",RydHQB_MedPoints];
 	if (isNil ("RydHQB_SupportedG")) then {RydHQB_SupportedG = []};
 	_HQ setVariable ["RydHQ_SupportedG",RydHQB_SupportedG];
+
+	if (isNil ("RydHQB_RCASB")) then {RydHQB_RCAS = []};
+	_HQ setVariable ["RydHQ_RCAS",RydHQB_RCAS];
+	if (isNil ("RydHQB_RCAPB")) then {RydHQB_RCAP = []};
+	_HQ setVariable ["RydHQ_RCAP",RydHQB_RCAP];
 	
 	if (isNil ("RydHQB_SFuel")) then {RydHQB_SFuel = true};
 	_HQ setVariable ["RydHQ_SFuel",RydHQB_SFuel];
@@ -523,6 +528,9 @@ while {true} do
 	_HQ setVariable ["RydHQ_Sec1",RydHQB_Sec1]; 
 	if (isNil "RydHQB_Sec2") then {RydHQB_Sec2 = objNull};
 	_HQ setVariable ["RydHQ_Sec2",RydHQB_Sec2];
+
+	if (isNil "RydHQB_SupportRTB") then {RydHQB_SupportRTB = false};
+	_HQ setVariable ["RydHQ_SupportRTB",RydHQB_SupportRTB];
 	
 	if (isNil "RydHQB_Debug") then {RydHQB_Debug = false};
 	_HQ setVariable ["RydHQ_Debug",RydHQB_Debug]; 
@@ -547,7 +555,6 @@ while {true} do
 	if (isNil "RydHQB_ForceAAO") then {RydHQB_ForceAAO = false};
 	_HQ setVariable ["RydHQ_ForceAAO",RydHQB_ForceAAO];
 	
-
 	if (isNil "RydHQB_BBAOObj") then {RydHQB_BBAOObj = 1};
 	_HQ setVariable ["RydHQ_BBAOObj",RydHQB_BBAOObj]; 
 	
@@ -561,6 +568,31 @@ while {true} do
 	_HQ setVariable ["RydHQ_EBDoctrine",RydHQB_EBDoctrine]; 
 	if (isNil "RydHQB_ForceEBDoctrine") then {RydHQB_ForceEBDoctrine = false};
 	_HQ setVariable ["RydHQ_ForceEBDoctrine",RydHQB_ForceEBDoctrine]; 
+	
+	if (isNil "RydHQB_DefRange") then {RydHQB_DefRange = 1};
+	_HQ setVariable ["RydHQ_DefRange",RydHQB_DefRange];
+	if (isNil "RydHQB_GarrRange") then {RydHQB_GarrRange = 1};
+	_HQ setVariable ["RydHQ_GarrRange",RydHQB_GarrRange];
+		
+	if (isNil "RydHQB_NoCapt") then {RydHQB_NoCapt = []};
+	_HQ setVariable ["RydHQ_NoCapt",RydHQ_NoCapt];
+	
+	if (isNil "RydHQB_AttInfDistance") then {RydHQB_AttInfDistance = 1};
+	_HQ setVariable ["RydHQ_AttInfDistance",RydHQB_AttInfDistance];
+	if (isNil "RydHQB_AttArmDistance") then {RydHQB_AttArmDistance = 1};
+	_HQ setVariable ["RydHQ_AttArmDistance",RydHQB_AttArmDistance];
+	if (isNil "RydHQB_AttSnpDistance") then {RydHQB_AttSnpDistance = 1};
+	_HQ setVariable ["RydHQ_AttSnpDistance",RydHQB_AttSnpDistance];
+	if (isNil "RydHQB_CaptureDistance") then {RydHQB_CaptureDistance = 1};
+	_HQ setVariable ["RydHQ_CaptureDistance",RydHQB_CaptureDistance];	
+	if (isNil "RydHQB_FlankDistance") then {RydHQB_FlankDistance = 1};
+	_HQ setVariable ["RydHQ_FlankDistance",RydHQB_FlankDistance];
+	if (isNil "RydHQB_AttSFDistance") then {RydHQB_AttSFDistance = 1};
+	_HQ setVariable ["RydHQ_AttSFDistance",RydHQB_AttSFDistance];
+	if (isNil "RydHQB_ReconDistance") then {RydHQB_ReconDistance = 1};
+	_HQ setVariable ["RydHQ_ReconDistance",RydHQB_ReconDistance];
+	if (isNil "RydHQB_UAVAlt") then {RydHQB_UAVAlt = 150};
+	_HQ setVariable ["RydHQ_UAVAlt",RydHQB_UAVAlt];
 
 	if (isNil "RydHQB_Obj1") then {RydHQB_Obj1 = createTrigger ["EmptyDetector", leaderHQB]};
 	if (isNil "RydHQB_Obj2") then {RydHQB_Obj2 = createTrigger ["EmptyDetector", leaderHQB]};
@@ -573,9 +605,13 @@ while {true} do
 	_HQ setVariable ["RydHQ_Obj4",RydHQB_Obj4];
 		
 	_objectives = [RydHQB_Obj1,RydHQB_Obj2,RydHQB_Obj3,RydHQB_Obj4];
+	_NAVObjectives = [];
 
 	if (isNil ("RydHQB_SimpleMode")) then {RydHQB_SimpleMode = true};
 	_HQ setVariable ["RydHQ_SimpleMode",RydHQB_SimpleMode];
+
+	if (isNil ("RydHQB_NavalObjs")) then {RydHQB_NavalObjs = []};
+	_HQ setVariable ["RydHQ_NavalObjs",RydHQB_NavalObjs];
 
 	if (isNil ("RydHQB_SecTasks")) then {RydHQB_SecTasks = false};
 	_HQ setVariable ["RydHQ_SecTasks",RydHQB_SecTasks];
@@ -589,12 +625,14 @@ while {true} do
 	if (_HQ getVariable ["RydHQ_SimpleMode",false]) then {
 
 		_objectives = RydHQB_SimpleObjs;
+		_NAVObjectives = RydHQB_NavalObjs;
 		_HQ setVariable ["RydHQ_AAO",true]; 
 		_HQ setVariable ["RydHQ_ForceAAO",true];
 		
 	};
 		
 	_HQ setVariable ["RydHQ_Objectives",_objectives];
+	_HQ setVariable ["RydHQ_NavalObjectives",_NAVObjectives];
 		
 	_listed = _HQ getVariable "BBProgress";
 

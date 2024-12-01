@@ -108,12 +108,12 @@ _cInitial = 0;
 
 while {true} do
 	{
-		
+
 	if (RydHQ_RHQAutoFill) then
 	{
 	[] call RYD_PresentRHQ
 	};
-
+		
 	_specFor_class = RHQ_SpecFor + RYD_WS_specFor_class - RHQs_SpecFor;
 
 	_recon_class = RHQ_Recon + RYD_WS_recon_class - RHQs_Recon;
@@ -450,6 +450,11 @@ while {true} do
 	_HQ setVariable ["RydHQ_MedPoints",RydHQ_MedPoints];
 	if (isNil ("RydHQ_SupportedG")) then {RydHQ_SupportedG = []};
 	_HQ setVariable ["RydHQ_SupportedG",RydHQ_SupportedG];
+
+	if (isNil ("RydHQ_RCAS")) then {RydHQ_RCAS = []};
+	_HQ setVariable ["RydHQ_RCAS",RydHQ_RCAS];
+	if (isNil ("RydHQ_RCAP")) then {RydHQ_RCAP = []};
+	_HQ setVariable ["RydHQ_RCAP",RydHQ_RCAP];
 	
 	if (isNil ("RydHQ_SFuel")) then {RydHQ_SFuel = true};
 	_HQ setVariable ["RydHQ_SFuel",RydHQ_SFuel];
@@ -522,6 +527,9 @@ while {true} do
 	_HQ setVariable ["RydHQ_Sec1",RydHQ_Sec1]; 
 	if (isNil "RydHQ_Sec2") then {RydHQ_Sec2 = objNull};
 	_HQ setVariable ["RydHQ_Sec2",RydHQ_Sec2]; 
+
+	if (isNil "RydHQ_SupportRTB") then {RydHQ_SupportRTB = false};
+	_HQ setVariable ["RydHQ_SupportRTB",RydHQ_SupportRTB]; 
 	
 	if (isNil "RydHQ_Debug") then {RydHQ_Debug = false};
 	_HQ setVariable ["RydHQ_Debug",RydHQ_Debug]; 
@@ -561,6 +569,31 @@ while {true} do
 	if (isNil "RydHQ_ForceEBDoctrine") then {RydHQ_ForceEBDoctrine = false};
 	_HQ setVariable ["RydHQ_ForceEBDoctrine",RydHQ_ForceEBDoctrine]; 
 
+	if (isNil "RydHQ_DefRange") then {RydHQ_DefRange = 1};
+	_HQ setVariable ["RydHQ_DefRange",RydHQ_DefRange];
+	if (isNil "RydHQ_GarrRange") then {RydHQ_GarrRange = 1};
+	_HQ setVariable ["RydHQ_GarrRange",RydHQ_GarrRange];
+	
+	if (isNil "RydHQ_NoCapt") then {RydHQ_NoCapt = []};
+	_HQ setVariable ["RydHQ_NoCapt",RydHQ_NoCapt];
+	
+	if (isNil "RydHQ_AttInfDistance") then {RydHQ_AttInfDistance = 1};
+	_HQ setVariable ["RydHQ_AttInfDistance",RydHQ_AttInfDistance];
+	if (isNil "RydHQ_AttArmDistance") then {RydHQ_AttArmDistance = 1};
+	_HQ setVariable ["RydHQ_AttArmDistance",RydHQ_AttArmDistance];
+	if (isNil "RydHQ_AttSnpDistance") then {RydHQ_AttSnpDistance = 1};
+	_HQ setVariable ["RydHQ_AttSnpDistance",RydHQ_AttSnpDistance];
+	if (isNil "RydHQ_CaptureDistance") then {RydHQ_CaptureDistance = 1};
+	_HQ setVariable ["RydHQ_CaptureDistance",RydHQ_CaptureDistance];	
+	if (isNil "RydHQ_FlankDistance") then {RydHQ_FlankDistance = 1};
+	_HQ setVariable ["RydHQ_FlankDistance",RydHQ_FlankDistance];
+	if (isNil "RydHQ_AttSFDistance") then {RydHQ_AttSFDistance = 1};
+	_HQ setVariable ["RydHQ_AttSFDistance",RydHQ_AttSFDistance];
+	if (isNil "RydHQ_ReconDistance") then {RydHQ_ReconDistance = 1};
+	_HQ setVariable ["RydHQ_ReconDistance",RydHQ_ReconDistance];
+	if (isNil "RydHQ_UAVAlt") then {RydHQ_UAVAlt = 150};
+	_HQ setVariable ["RydHQ_UAVAlt",RydHQ_UAVAlt];
+
 	if (isNil "RydHQ_Obj1") then {RydHQ_Obj1 = createTrigger ["EmptyDetector", leaderHQ]};
 	if (isNil "RydHQ_Obj2") then {RydHQ_Obj2 = createTrigger ["EmptyDetector", leaderHQ]};
 	if (isNil "RydHQ_Obj3") then {RydHQ_Obj3 = createTrigger ["EmptyDetector", leaderHQ]};
@@ -572,6 +605,7 @@ while {true} do
 	_HQ setVariable ["RydHQ_Obj4",RydHQ_Obj4];
 		
 	_objectives = [RydHQ_Obj1,RydHQ_Obj2,RydHQ_Obj3,RydHQ_Obj4];
+	_NAVObjectives = [];
 
 	if (isNil ("RydHQ_SimpleMode")) then {RydHQ_SimpleMode = true};
 	_HQ setVariable ["RydHQ_SimpleMode",RydHQ_SimpleMode];
@@ -582,18 +616,23 @@ while {true} do
 	if (isNil ("RydHQ_SimpleObjs")) then {RydHQ_SimpleObjs = []};
 	_HQ setVariable ["RydHQ_SimpleObjs",RydHQ_SimpleObjs];
 
+	if (isNil ("RydHQ_NavalObjs")) then {RydHQ_NavalObjs = []};
+	_HQ setVariable ["RydHQ_NavalObjs",RydHQ_NavalObjs];
+
 	if (isNil ("RydHQ_MaxSimpleObjs")) then {RydHQ_MaxSimpleObjs = 5};
 	_HQ setVariable ["RydHQ_MaxSimpleObjs",RydHQ_MaxSimpleObjs];
 
 	if (_HQ getVariable ["RydHQ_SimpleMode",false]) then {
 
 		_objectives = RydHQ_SimpleObjs;
+		_NAVObjectives = RydHQ_NavalObjs;
 		_HQ setVariable ["RydHQ_AAO",true]; 
 		_HQ setVariable ["RydHQ_ForceAAO",true];
 		
 	};
 	
 	_HQ setVariable ["RydHQ_Objectives",_objectives];
+	_HQ setVariable ["RydHQ_NavalObjectives",_NAVObjectives];
 	
 	_listed = _HQ getVariable "BBProgress";
 

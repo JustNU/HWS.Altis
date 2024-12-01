@@ -145,7 +145,7 @@ if not (_isDecoy) then
 	_posY = _Spot select 1;
 
 	if (((_unitG in ((_HQ getVariable ["RydHQ_NCrewInfG",[]]) - (_HQ getVariable ["RydHQ_SupportG",[]]) - (_HQ getVariable ["RydHQ_CargoG",[]]))) and ((random 100) > (20/0.5 + (_HQ getVariable ["RydHQ_Activity",0.5])))) or (((random 100) > (80/0.5 + (_HQ getVariable ["RydHQ_Activity",0.5]))) and not (_unitG in (_HQ getVariable ["RydHQ_SupportG",[]])))) then {_patrol = true};
-
+	if (isPlayer (leader _unitG)) then {_patrol = false};
 	_sec = false;
 
 	if  ((not (_unitG in (_HQ getVariable ["RydHQ_NCCargoG",[]])) or ((count (units _unitG)) > 1)) and not (_unitG in (_HQ getVariable ["RydHQ_SupportG",[]])) and ((_VLU distance _obj) > (_VLU distance (leader _HQ)))) then 
@@ -193,7 +193,7 @@ _UL = leader _unitG;
 if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
 
 _i = "";
-if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then
+if (_HQ getVariable ["RydHQ_Debug",false]) then
 	{
 	_pltxt = " - HOLD POSITION";
 	if (_patrol) then {_pltxt = " - PATROL AREA"};

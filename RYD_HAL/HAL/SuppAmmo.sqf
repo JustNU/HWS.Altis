@@ -1,6 +1,6 @@
 _SCRname = "SuppAmmo";
 
-private ["_HQ","_ammo","_noenemy","_ammoS","_ammoSG","_Hollow","_soldiers","_ZeroA","_ammoN","_av","_MTrucks","_mtr","_unitvar","_busy","_MTrucks2","_MTrucks3","_MTrucks2a","_MTrucks3a","_Zunits","_a",
+private ["_HQ","_ammo","_noenemy","_ammoS","_ammoSG","_Hollow","_soldiers","_ZeroA","_ammoN","_av","_MTrucks","_mtr","_unitvar","_busy","_Unable","_MTrucks2","_MTrucks3","_MTrucks2a","_MTrucks3a","_Zunits","_a",
 	"_Zunit","_halfway","_distT","_eClose1","_eClose2","_UL","_Hunits","_MTruck","_Hunit","_ammoBox","_supported"];
 
 _HQ = _this select 0;
@@ -113,7 +113,11 @@ _MTrucks = [];
 				_busy = _x getvariable ("Busy" + _unitvar);
 				if (isNil ("_busy")) then {_busy = false};
 
-				if not (_busy) then
+				_unable = false;
+				_unable = _x getvariable "Unable";
+				if (isNil ("_unable")) then {_unable = false};
+
+				if (not (_busy) and not (_unable)) then
 					{
 					if not (_x in _MTrucks) then 
 						{

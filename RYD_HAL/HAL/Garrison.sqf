@@ -3,6 +3,7 @@ _SCRname = "Garrison";
 _HQ = _this select 0;
 _recArr = _this select 1;
 _Garrison = _HQ getVariable ["RydHQ_Garrison",[]];
+_garrRange = _HQ getVariable ["RydHQ_GarrRange",1];
 
 {
 	if (_x getVariable [("NOGarrisoned" + (str _x)),false]) then {_x setVariable [("Garrisoned" + (str _x)),false];_x setVariable [("NOGarrisoned" + (str _x)),false];_Garrison = _Garrison - [_x];};
@@ -41,15 +42,10 @@ for [{_a = 0},{_a < (count _Garrison)},{_a = _a + 1}] do
 
 		if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
 
-		if ((_unitG getVariable ["Busy" + str _unitG,true]) or (_unitG getVariable ["Defending" + str _unitG,true])) then {
-			_unitG setVariable ["Break",true];
-			waitUntil {sleep 1; not (_unitG getVariable ["Break",false])};
-		};
-
 		if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then 
 			{
 			_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
-			_i = [_pos,_unitG,"markGarrison","ColorBlack","ICON","mil_box","GARR " + (groupId _unitG) + " " + _signum," - GARRISON",[0.5,0.5]] call RYD_Mark;
+			_i = [_pos,_unitG,"markGarrison","ColorBrown","ICON","mil_box","Garr " + _signum," - GARRISON",[0.5,0.5]] call RYD_Mark;
 			};
 
 		if ((_HQ getVariable ["RydHQ_GarrVehAb",false]) and not (isPlayer (leader _unitG))) then
@@ -59,8 +55,6 @@ for [{_a = 0},{_a < (count _Garrison)},{_a = _a + 1}] do
 			(units _unitG) allowGetin false;//if (player in (units _unitG)) then {diag_log "NOT ALLOW garr"};
 			sleep 5
 			};
-
-		_task = [(leader _unitG),["Setup Garrison", "Setup a garrison and defend the area.", ""],(getPosATL (leader _unitG)),"defend"] call RYD_AddTask;
 
 		if (not (isNull _AV) and not (_HQ getVariable ["RydHQ_GarrVehAb",false])) exitWith
 			{
@@ -73,7 +67,7 @@ for [{_a = 0},{_a < (count _Garrison)},{_a = _a + 1}] do
 
 		if not (isPlayer _UL) then
 			{
-			_list = _pos nearObjects ["StaticWeapon", 300];
+			_list = _pos nearObjects ["StaticWeapon",300 * _garrRange];
 			_staticWeapons = [];
 
 				{
@@ -100,14 +94,14 @@ for [{_a = 0},{_a < (count _Garrison)},{_a = _a + 1}] do
 				} 
 			forEach _staticWeapons;
 
-			_Bldngs = _pos nearObjects ["House",300];
+			_Bldngs = _pos nearObjects ["House",300 * _garrRange];
 			_posTaken = missionnamespace getvariable ["PosTaken",[]];
 			_posAll = [];
 			_posAll0 = [];
 
 				{
 				_Bldg = _x;
-				if ((_Bldg distance _UL) > 300) then {_Bldg = ObjNull};
+				if ((_Bldg distance _UL) > (300 * _garrRange)) then {_Bldg = ObjNull};
 
 				if not (isNull _Bldg) then
 					{
@@ -172,7 +166,7 @@ for [{_a = 0},{_a < (count _Garrison)},{_a = _a + 1}] do
 						_ct = _ct + 1
 						};
 
-					if not ((_posS distance _pos) > 350) then
+					if not ((_posS distance _pos) > (350 * _garrRange)) then
 						{
 						if ((random 100) > 20) then
 							{
@@ -268,12 +262,12 @@ for [{_a = 0},{_a < (count _Garrison)},{_a = _a + 1}] do
 
 		if not (isPlayer _UL) then {if ((random 100) < RydxHQ_AIChatDensity) then {[_UL,RydxHQ_AIC_OrdConf,"OrdConf"] call RYD_AIChatter}};
 
-		if ((_unitG getVariable ["Busy" + str _unitG,true]) or (_unitG getVariable ["Defending" + str _unitG,true])) then {
+		if (_unitG getVariable ["Busy" + (str _unitG),true]) then {
 			_unitG setVariable ["Break",true];
 			waitUntil {sleep 1; not (_unitG getVariable ["Break",false])};
 		};
 
-		if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then 
+		if (_HQ getVariable ["RydHQ_Debug",false]) then 
 			{
 			_signum = _HQ getVariable ["RydHQ_CodeSign","X"];
 			_i = [_pos,_unitG,"markGarrison","ColorBlack","ICON","mil_box","GARR " + (groupId _unitG) + " " + _signum," - GARRISON",[0.5,0.5]] call RYD_Mark;

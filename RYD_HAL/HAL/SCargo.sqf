@@ -496,7 +496,7 @@ if not (_GD == _unitG) then
 
 	_unitvar = str _GD;
 		
-	if not (_alive) exitWith {_GD setVariable [("CargoM" + (str _GD)), false];_unitG setVariable [("Busy" + (str _unitG)),false];};
+	if not (_alive) exitWith {_unitG setVariable ["CargoChosen",false];_GD setVariable [("CargoM" + (str _GD)), false];_unitG setVariable [("Busy" + (str _unitG)),false];};
 
 	_unitG setVariable ["CargoChosen",false];
 
@@ -551,9 +551,15 @@ if not (_GD == _unitG) then
 
 	_GD = (group (assigneddriver _ChosenOne));
 
+	_rrr = (_GD getVariable ["Ryd_RRR",false]);
+
 	_beh = "AWARE";
 	if (_unitG in (_HQ getVariable ["RydHQ_RAirG",[]])) then {_beh = "SAFE"};
-	_wp = [_GD,_LandPos,"MOVE",_beh,"YELLOW","FULL",["true","if not ((group this) getVariable ['AirNoLand',false]) then {{(vehicle _x) land 'LAND'} foreach (units (group this))}; deletewaypoint [(group this), 0]"],true,0,[0,0,0],"COLUMN"] call RYD_WPadd;
+
+	_radd = "";
+	if (_rrr) then {_radd = "; {(vehicle _x) setFuel 1; (vehicle _x) setVehicleAmmo 1; (vehicle _x) setDamage 0;} foreach (units (group this))"};
+
+	_wp = [_GD,_LandPos,"MOVE",_beh,"YELLOW","FULL",["true","if not ((group this) getVariable ['AirNoLand',false]) then {{(vehicle _x) land 'LAND'} foreach (units (group this))}; deletewaypoint [(group this), 0]" + _radd],true,0,[0,0,0],"COLUMN"] call RYD_WPadd;
 
 	/*
 	_GD Move _LandPos;

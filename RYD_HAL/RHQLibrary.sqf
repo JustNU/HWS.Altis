@@ -2486,5 +2486,6 @@ RHQ_Crew_PMC =
 	
 if (RydHQ_RHQAutoFill) then
 	{
-	[] call RYD_PresentRHQ
+	[] call RYD_PresentRHQ;
+//	[] spawn RYD_PresentRHQLoop;
 	};
