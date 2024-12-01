@@ -415,57 +415,75 @@ if not (_GD == _unitG) then
 	};
 
 	waituntil 
-		{
+	{
 		sleep 5;
 		_GD = (group (assigneddriver _ChosenOne));
 		_reqdone = false;
-		if (isNull _GD) then {_alive = false};
-		if (_alive) then {if not (alive  (leader _GD)) then {_alive = false}};
-		if (_GD getVariable ["Break",false]) then {_endThis = true;_alive = false; _GD setVariable ["Break",false]; _GD setVariable ["Busy" + (str _GD),false];};
+		
+		if (isNull _GD) then
+		{
+			_alive = false;
+		};
 		
 		if (_alive) then
+		{
+			if not (alive (leader _GD)) then
 			{
-			_busy = _GD getvariable ("CargoM" + _unitvar);
-			if not (_request) then {if ((abs (speed _ChosenOne)) < 0.5) then {_timer = _timer + 5}};
-			};
+				_alive = false;
+			}
+		};
 		
-		if (_request) then {
-
-			if not ((leader _unitG) isEqualTo _firstlead) then {
-
+		if (_GD getVariable ["Break",false]) then 
+		{
+			_endThis = true;
+			_alive = false;
+			_GD setVariable ["Break",false];
+			_GD setVariable ["Busy" + (str _GD),false];
+		};
+			
+		if (_alive) then
+		{
+			_busy = _GD getvariable [("CargoM" + _unitvar), false];
+			
+			if not (_request) then 
+			{
+				if ((abs (speed _ChosenOne)) < 0.5) then 
+				{
+					_timer = _timer + 5;
+				}
+			};
+		};
+		
+		if (_request) then 
+		{
+			if not ((leader _unitG) isEqualTo _firstlead) then 
+			{
 				[_ChosenOne,leader _unitG,_GD] remoteExecCall ["RYD_ReqTransport_Actions",(leader _unitG)];
-
 				{[_firstlead,_x] remoteExecCall ["removeAction",_firstlead]} foreach (_firstlead getVariable ["HAL_ReqTraActs",[]]);
 				{[_ChosenOne,_x] remoteExecCall ["removeAction",_firstlead]} foreach (_firstlead getVariable ["HAL_ReqTraVActs",[]]);
-
 				_firstlead setVariable ["HAL_ReqTraActs",[],true];
-
 				_firstlead = (leader _unitG);
-				
-
 			};
-			
 			_Rdest = _unitG getvariable ["HALReqDest",nil];
-
-			if not (isNil "_Rdest") then {
-
-				_wp = [_GD,_Rdest,"MOVE",behaviour (leader _GD),combatMode _GD,"NORMAL",["true","(vehicle this) land 'LAND';deletewaypoint [(group this), 0];"],true,0,[0,0,0],"COLUMN"] call RYD_WPadd;
-
-				[_ChosenOne,"Destination received, we're headed there now."] remoteExecCall ["vehicleChat"];
-
-//				[(leader _unitG),""] remoteExecCall ["onMapSingleClick",(leader _unitG)];
-
-				_unitG setvariable ["HALReqDest",nil];
-
-			};
-
-			if (_GD getvariable ['HALReqDone',false]) then {_reqdone = true;};
-			if not (isPlayer (leader _unitG)) then {_reqdone = true; _timer = 601;};
-
-		};
 			
-		(not (_busy) or (_timer > 600) or (_reqdone) or not (_alive));
+			if not (isNil "_Rdest") then 
+			{
+				_wp = [_GD,_Rdest,"MOVE",behaviour (leader _GD),combatMode _GD,"NORMAL",["true","(vehicle this) land 'LAND';deletewaypoint [(group this), 0];"],true,0,[0,0,0],"COLUMN"] call RYD_WPadd;
+				[_ChosenOne,"Destination received, we're headed there now."] remoteExecCall ["vehicleChat"];
+				//[(leader _unitG),""] remoteExecCall ["onMapSingleClick",(leader _unitG)];
+				_unitG setvariable ["HALReqDest",nil];
+			};
+			
+			if (_GD getvariable ['HALReqDone',false]) then 
+			{
+				_reqdone = true;
+			};
+			
+			if not (isPlayer (leader _unitG)) then {_reqdone = true; _timer = 601;};
 		};
+		
+		(not (_busy) or (_timer > 600) or (_reqdone) or not (_alive));
+	};
 
 	if (_request) then {
 		

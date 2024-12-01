@@ -207,7 +207,7 @@ if not (_alive) exitwith
 	};
 
 //if not (_task isEqualTo taskNull) then {[_task,"SUCCEEDED",true] call BIS_fnc_taskSetState};
-if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {deleteMarker ("markDef" + (str _unitG));
+if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {deleteMarker ("markDef" + (str _unitG))};
 
 //(units _unitG) allowGetIn true;
 //(units _unitG) orderGetIn true;

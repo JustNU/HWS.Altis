@@ -5,7 +5,7 @@ _taken = profileNamespace getVariable ["RYD_WS_MapColors" + worldName,[]];
 RydxHQ_NoRestPlayers = true;
 RydxHQ_NoCargoPlayers = true;
 RydHQ_Actions = true;
-RydxHQ_ReconCargo = true;
+RydxHQ_ReconCargo = false;
 
 //RHQ SECTION
 
@@ -181,8 +181,8 @@ RydHQB_Debug = false;
 RydHQ_DebugII = false;
 RydHQB_DebugII = false;
 
-RydHQ_CargoFind = 1;
-RydHQB_CargoFind = 1;
+RydHQ_CargoFind = 100;
+RydHQB_CargoFind = 100;
 
 RydHQ_PathFinding = 100;
 
@@ -1598,11 +1598,12 @@ foreach (_set1 + _set2 + _set3);*/
 	
 
 
-	{
+{
 	addSwitchableUnit _x;
 	_x setVariable ["MARTA_showRules",[(RYD_WS_FacA select 1),1,(RYD_WS_FacB select 1),0]];
 	_x setVariable ["RYD_WS_Aside",true];
-	}
+}
+
 foreach _fcsA;
 
 _player = _fcsA select (floor (random (count _fcsA)));

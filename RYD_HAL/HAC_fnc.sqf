@@ -4549,7 +4549,7 @@ RYD_HQChatter =
 	_unit = leader _gp;
 	_comm = leader _HQ;
 	
-	_sentence = getText (configFile >> "CfgRadio" >> _sentence >> "title");
+	_sentence = getText (missionConfigFile >> "CfgRadio" >> _sentence >> "title");
 	_who = toUpper (getText (configFile >> "CfgVehicles" >> (typeOf (vehicle _unit)) >> "displayName"));
 	
 	_who = groupId _gp ;
@@ -4754,7 +4754,7 @@ RYD_AIChatter =
 				};
 			};
 			
-		_sentence = getText (configFile >> "CfgRadio" >> _sentence >> "title");
+		_sentence = getText (missionConfigFile >> "CfgRadio" >> _sentence >> "title");
 		
 		_who = groupId (group _unit);
 
