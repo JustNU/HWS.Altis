@@ -14,7 +14,12 @@ _unitvar = str (_unitG);
 _UL = leader _unitG;
 
 _PosLand = _unitG getvariable ("START" + _unitvar); 
-if (isNil ("_PosLand")) then {_unitG setVariable [("START" + _unitvar),(position (vehicle (leader _unitG)))]};
+if (isNil ("_PosLand")) then 
+{
+	_unitG setVariable [("START" + _unitvar),(position (vehicle (leader _unitG)))];
+	
+	_PosLand = _unitG getvariable ("START" + _unitvar); 
+};
 
 [_unitG] call RYD_WPdel;
 
@@ -136,11 +141,10 @@ if not (_alive) exitwith
 if (_timer > 120) then {deleteWaypoint _wp};
 
 if not (_task isEqualTo taskNull) then
-	{
+{
 	
 	[_task,(leader _unitG),["Return to base.", "Return To Base", ""],_Posland,"ASSIGNED",0,false,true] call BIS_fnc_SetTask;
-	
-	};
+};
 
 if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {_i setMarkerColor "ColorBlue"};
 if (_unitG in (_HQ getVariable ["RydHQ_BAirG",[]])) then {deleteVehicle _lasT};

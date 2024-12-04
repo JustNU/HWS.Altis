@@ -4,6 +4,7 @@
 #define GUI_GRID_H	(0.04)
 #define GUI_GRID_WAbs	(1)
 #define GUI_GRID_HAbs	(1)
+#include "\a3\Ui_f\hpp\defineCommonColors.inc"
 
 class HWS_RscText
 {
@@ -14,13 +15,13 @@ class HWS_RscText
 	type = 0;
 	style = 0;
 	shadow = 1;
-	font = "PuristaMedium";
+	font = "RobotoCondensed";
 	text = "";
 	lineSpacing = 1;
 	SizeEx = 0.03;
 	ColorBackground[] = {0,0,0,0};
-	ColorText[] = {1,1,1,1};
-	colorShadow[] = {0, 0, 0, 0.5};
+	ColorText[] = GUI_TEXT_COLOR;
+	colorShadow[] = GUI_TEXT_SHADOW;
 };
 
 class HWS_RscButton
@@ -30,9 +31,9 @@ class HWS_RscButton
 	text = "";
 	colorText[] = {0.8784,0.8471,0.651,0.8};
 	colorDisabled[] = {0.4,0.4,0.4,0.3};
-	colorBackground[] = {0.15, 0.4, 0.65,0.3};//{0.05, 0.5, 0.75,0.5};
+	colorBackground[] = GUI_BCG_EDITOR;//{0.05, 0.5, 0.75,0.5};
 	colorBackgroundDisabled[] = {0.95,0.95,0.95,0.3};
-	colorBackgroundActive[] = {0.1, 0.3, 0.7,0.3};//{0.05, 0.5, 0.75,0.2};
+	colorBackgroundActive[] = GUI_BCG_COLOR;//{0.05, 0.5, 0.75,0.2};
 	colorFocused[] = {0.1, 0.2, 0.6,0.3};//{0.05, 0.5, 0.75};
 	colorShadow[] = {0.04,0.04,0.04,0.1};//{0.023529,0,0.0313725,1};
 	colorBorder[] = {0.04,0.04,0.04,0.1};//{0.023529,0,0.0313725,1};
@@ -46,14 +47,14 @@ class HWS_RscButton
 	w = 0.095589;
 	h = 0.039216;
 	shadow = 2;
-	font = "Puristamedium";
+	font = "RobotoCondensed";
 	sizeEx = 0.03;
 	offsetX = 0.003;
 	offsetY = 0.003;
 	offsetPressedX = 0.002;
 	offsetPressedY = 0.002;
 	borderSize = 0;
-	};
+};
 
 class HWS_RscFrame
 {
@@ -61,50 +62,51 @@ class HWS_RscFrame
 	idc = -1;
 	style = 64;
 	shadow = 2;
-	colorBackground[] = {0,0,0,0};
-	colorText[] = {0.1,0.6,1,1};
-	font = "Puristamedium";
+	colorBackground[] = {0,0,0,1};
+	colorText[] = GUI_BCG_COLOR;
+	font = "RobotoCondensedBold";
 	sizeEx = 0.03;
 	text = "";
 };
 
 class ScrollBar 
-	{
- 	color[] = {1,1,1,0.6};
+{
+	color[] = {1,1,1,0.6};
 	colorActive[] = {1,1,1,1};
 	colorDisabled[] = {1,1,1,0.3};
 	thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
 	arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
 	arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
 	border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
-	shadow = 0;
- 	};
+	shadow = 1;
+ };
 
 class HWS_RscCombo
 {
 	access = 0;
 	type = 4;
 	style = 0;
-	colorSelect[] = {0.023529,0,0.0313725,1};
-	colorText[] = {0.023529,0,0.0313725,1};
-	colorBackground[] = {0.75,0.75,0.75,0.9};
-	colorScrollbar[] = {0.023529,0,0.0313725,0.9};
-	colorSelectBackground[] = {0.6,0.6,0.6,0.85};//{0.8784,0.8471,0.651,1}
+	colorSelect[] = {0,0,0,1};
+	colorText[] = GUI_TEXT_COLOR;
+	colorBackground[] = {0,0,0,1};
+	colorScrollbar[] = {1,1,1,1};
+	colorSelectBackground[] = {1,1,1,1};//{0.8784,0.8471,0.651,1}
 	soundSelect[] = {"\A3\ui_f\data\sound\rscbutton\soundclick",0.08,1};
 	soundExpand[] = {"\A3\ui_f\data\sound\rscbutton\soundenter",1,1};
 	soundCollapse[] = {"\A3\ui_f\data\sound\rscbutton\soundenter",1,1};
 	maxHistoryDelay = 1;
 	class ComboScrollBar : ScrollBar 
-		{
-	 	color[] = {0.95,0.95,0.95,0.3};
-		colorActive[] = {0.95,0.95,0.95,0.3};
-		colorDisabled[] = {0.95,0.95,0.95,0.3};
+	{
+	 	//color[] = {0.95,0.95,0.95,0.3};
+		//colorActive[] = {0.95,0.95,0.95,0.3};
+		//colorDisabled[] = {0.95,0.95,0.95,0.3};
 		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
 		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
 		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
 		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
 		shadow = 0;
-	 	};
+		//text = "#(argb,8,8,3)color(0,0,0,1)";
+	 };
  
 	x = 0;
 	y = 0;
@@ -117,7 +119,7 @@ class HWS_RscCombo
 	color[] = {0,0,0,0.6};
 	colorActive[] = {0,0,0,1};
 	colorDisabled[] = {0,0,0,0.3};
-	font = "Puristamedium";
+	font = "RobotoCondensed";
 	sizeEx = 0.03921;
 };
 
@@ -134,7 +136,7 @@ class RscEdit
 	colorText[] = {1,1,0.8,1};
 	colorSelection[] = {0.8,0.8,0.7,0.25};
 	colorDisabled[] = {1,1,1,0.5};
-	font = "Puristamedium";
+	font = "RobotoCondensed";
 	htmlControl = 1;
 	sizeEx = 0.04;
 	autocomplete = "";
@@ -149,18 +151,18 @@ class HWS_RscPicture
 	type = 0;
 	idc = -1;
 	style = 144;//48
-	colorBackground[] = {0,0,0,0};
-	colorText[] = {1,1,1,1};
+	colorBackground[] = {IGUI_BCG_RGB,1};
+	colorText[] = {IGUI_BCG_RGB,1};
 	font = "TahomaB";
 	sizeEx = 0;
 	lineSpacing = 0;
-	text = "";
 	fixedWidth = 0;
 	shadow = 0;
 	x = 0;
 	y = 0;
 	w = 0.2;
 	h = 0.15;
+	text = "#(argb,8,8,3)color(0,0,0,0.7)";
 };
 
 class HWS_RscMapControl
@@ -198,6 +200,7 @@ class HWS_RscMapControl
 	colorMainRoadsFill[] = {1,0.6,0.4,1};
 	colorGrid[] = {0.1,0.1,0.1,0.6};
 	colorGridMap[] = {0.1,0.1,0.1,0.6};
+	widthRailWay = 1;
 	stickX[] = {0.2,["Gamma",1,1.5]};
 	stickY[] = {0.2,["Gamma",1,1.5]};
 	class Legend
@@ -570,281 +573,278 @@ class HWS_RscMapControl
 // GUI EDITOR OUTPUT START (by Rydygier, v1.063, #Syfezo)
 ////////////////////////////////////////////////////////
 class RscHWS
-	{
+{
 	IDD = 2500;
 	name= "HWS";
 	onLoad = "";
 	MovingEnable = 0;
 	enableSimulation = true;
-		
+	
 	class controls
-		{
+	{
 		class RscBack: HWS_RscPicture
-			{
+		{
 			idc = 1798;
 			x = 5 * GUI_GRID_W + GUI_GRID_X;
 			y = -2.5 * GUI_GRID_H + GUI_GRID_Y;
 			w = 30 * GUI_GRID_W;
 			h = 29.5 * GUI_GRID_H;
-			text = "#(argb,8,8,3)color(0.01,0.1,0.3,0.25)";			
-			};
+			//text = "#(argb,8,8,3)color(0.01,0.1,0.3,0.25)";
+		};
 		
 		class RscFrame_HWS: HWS_RscFrame
-			{
+		{
 			idc = 1799;
-			text = "HETMAN: WAR STORIES version 1.09";
+			text = "HETMAN: WAR STORIES version 1.09-Custom";
 			x = 5.5 * GUI_GRID_W + GUI_GRID_X;
 			y = -2.5 * GUI_GRID_H + GUI_GRID_Y;
 			w = 29 * GUI_GRID_W;
 			h = 29 * GUI_GRID_H;
 			sizeEx = 1 * GUI_GRID_H;
-			};
-				
+		};
+
 		class SA_Frame: HWS_RscFrame
-			{
+		{
 			idc = 1800;
 			text = "Side A";
 			x = 6 * GUI_GRID_W + GUI_GRID_X;
 			y = -1 * GUI_GRID_H + GUI_GRID_Y;
 			w = 8 * GUI_GRID_W;
 			h = 2.5 * GUI_GRID_H;
-			};
+		};
 			
 		class SA_Combo: HWS_RscCombo
-			{
+		{
 			idc = 2100;
 			x = 6.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 0 * GUI_GRID_H + GUI_GRID_Y;
 			w = 7 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 			tooltip = "Select the side of the first army (player's side)";
-			};
+		};
 			
 		class SB_Frame: HWS_RscFrame
-			{
+		{
 			idc = 1801;
 			text = "Side B";
 			x = 26 * GUI_GRID_W + GUI_GRID_X;
 			y = -1 * GUI_GRID_H + GUI_GRID_Y;
 			w = 8 * GUI_GRID_W;
 			h = 2.5 * GUI_GRID_H;
-			};
+		};
 			
 		class SB_Combo: HWS_RscCombo
-			{
+		{
 			idc = 2101;
 			x = 26.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 0 * GUI_GRID_H + GUI_GRID_Y;
 			w = 7 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 			tooltip = "Select the side of the second army";
-			};
-									
+		};
+
 		class FacA_Frame: HWS_RscFrame
-			{
+		{
 			idc = 18000;
 			text = "Faction A";
 			x = 6 * GUI_GRID_W + GUI_GRID_X;
 			y = 2 * GUI_GRID_H + GUI_GRID_Y;
 			w = 8 * GUI_GRID_W;
 			h = 2.5 * GUI_GRID_H;
-			};	
-			
+		};	
+
 		class FacA_Combo: HWS_RscCombo
-			{
+		{
 			idc = 21000;
 			x = 6.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 3 * GUI_GRID_H + GUI_GRID_Y;
 			w = 7 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 			tooltip = "Select faction of side A";
-			};
-			
+		};
+
 		class Ratio_Frame: HWS_RscFrame
-			{
+		{
 			idc = 1805;
 			text = "A:B Ratio";
 			x = 16 * GUI_GRID_W + GUI_GRID_X;
 			y = 2 * GUI_GRID_H + GUI_GRID_Y;
 			w = 8 * GUI_GRID_W;
 			h = 2.5 * GUI_GRID_H;
-			};	
-			
+		};	
+
 		class Ratio_Combo: HWS_RscCombo
-			{
+		{
 			idc = 2105;
 			x = 16.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 3 * GUI_GRID_H + GUI_GRID_Y;
 			w = 7 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 			tooltip = "Set ratio of forces (group amount of side A comparing to side B, rough estimation)";
-			};
-			
-			
+		};
+
 		class FacB_Frame: HWS_RscFrame
-			{
+		{
 			idc = 18010;
 			text = "Faction B";
 			x = 26 * GUI_GRID_W + GUI_GRID_X;
 			y = 2 * GUI_GRID_H + GUI_GRID_Y;
 			w = 8 * GUI_GRID_W;
 			h = 2.5 * GUI_GRID_H;
-			};
-			
+		};
+
 		class FacB_Combo: HWS_RscCombo
-			{
+		{
 			idc = 21010;
 			x = 26.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 3 * GUI_GRID_H + GUI_GRID_Y;
 			w = 7 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 			tooltip = "Select faction of side B";
-			};
-			
+		};
+
 		class HSRA_Frame: HWS_RscFrame
-			{
+		{
 			idc = 1807;
 			text = "Armor density A";
 			x = 6 * GUI_GRID_W + GUI_GRID_X;
 			y = 5 * GUI_GRID_H + GUI_GRID_Y;
 			w = 8 * GUI_GRID_W;
 			h = 2.5 * GUI_GRID_H;
-			};
-			
+		};
+
 		class HSRA_Combo: HWS_RscCombo
-			{
+		{
 			idc = 2107;
 			x = 6.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 6 * GUI_GRID_H + GUI_GRID_Y;
 			w = 7 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 			tooltip = "Percentage of armored units compared to average amounts for given terrain for side A";
-			};
-			
+		};
+
 		class HSRB_Frame: HWS_RscFrame
-			{
+		{
 			idc = 1808;
 			text = "Armor density B";
 			x = 26 * GUI_GRID_W + GUI_GRID_X;
 			y = 5 * GUI_GRID_H + GUI_GRID_Y;
 			w = 8 * GUI_GRID_W;
 			h = 2.5 * GUI_GRID_H;
-			};
-			
+		};
+
 		class HSRB_Combo: HWS_RscCombo
-			{
+		{
 			idc = 2108;
 			x = 26.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 6 * GUI_GRID_H + GUI_GRID_Y;
 			w = 7 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 			tooltip = "Percentage of armored units compared to average amounts for given terrain for side B";
-			};					
-			
+		};					
+
 		class Camp_Frame: HWS_RscFrame
-			{
+		{
 			idc = 1806;
 			text = "Campaign";
 			x = 16 * GUI_GRID_W + GUI_GRID_X;
 			y = 5 * GUI_GRID_H + GUI_GRID_Y;
 			w = 8 * GUI_GRID_W;
 			h = 2.5 * GUI_GRID_H;
-			};
-			
+		};
+
 		class Camp_Combo: HWS_RscCombo
-			{
+		{
 			idc = 2106;
 			x = 16.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 6 * GUI_GRID_H + GUI_GRID_Y;
 			w = 7 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 			tooltip = "Whether include next battle result in the campaign score, exclude it or reset whole progress";
-			};			
-			
-						
+		};			
+
 		class Scale_Frame: HWS_RscFrame
-			{
+		{
 			idc = 1802;
 			text = "Scale";
 			x = 6 * GUI_GRID_W + GUI_GRID_X;
 			y = 8 * GUI_GRID_H + GUI_GRID_Y;
 			w = 8 * GUI_GRID_W;
 			h = 2.5 * GUI_GRID_H;
-			};
-						
-			
+		};
+
 		class Scale_Combo: HWS_RscCombo
-			{
+		{
 			idc = 2102;
 			x = 6.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 9 * GUI_GRID_H + GUI_GRID_Y;
 			w = 7 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 			tooltip = "Select the scale of the battle";
-			};
-			
+		};
+
 		class DT_Frame: HWS_RscFrame
-			{
+		{
 			idc = 1803;
 			text = "Daytime";
 			x = 16 * GUI_GRID_W + GUI_GRID_X;
 			y = 8 * GUI_GRID_H + GUI_GRID_Y;
 			w = 8 * GUI_GRID_W;
 			h = 2.5 * GUI_GRID_H;
-			};
-			
+		};
+
 		class DT_Combo: HWS_RscCombo
-			{
+		{
 			idc = 2103;
 			x = 16.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 9 * GUI_GRID_H + GUI_GRID_Y;
 			w = 7 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 			tooltip = "Select initial daytime";
-			};
-			
+		};
+
 		class OC_Frame: HWS_RscFrame
-			{
+		{
 			idc = 1804;
 			text = "Overcast";
 			x = 26 * GUI_GRID_W + GUI_GRID_X;
 			y = 8 * GUI_GRID_H + GUI_GRID_Y;
 			w = 8 * GUI_GRID_W;
 			h = 2.5 * GUI_GRID_H;
-			};
-			
+		};
+
 		class OC_Combo: HWS_RscCombo
-			{
+		{
 			idc = 2104;
 			x = 26.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 9 * GUI_GRID_H + GUI_GRID_Y;
 			w = 7 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 			tooltip = "Select overcast";
-			};
-			
+		};
+
 		class RscBack2: HWS_RscPicture
-			{
+		{
 			idc = 121;
 			x = 6.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 12 * GUI_GRID_H + GUI_GRID_Y;
 			w = 27 * GUI_GRID_W;
 			h = 10 * GUI_GRID_H;
-			text = "#(argb,8,8,3)color(0.1,0.1,0.2,0.2)";			
-			};
-			
+			//text = "#(argb,8,8,3)color(0.1,0.1,0.2,0.2)";			
+		};
+
 		class ED_Frame: HWS_RscFrame
-			{
+		{
 			idc = 1805;
 			text = "Advanced setup";
 			x = 6 * GUI_GRID_W + GUI_GRID_X;
 			y = 11 * GUI_GRID_H + GUI_GRID_Y;
 			w = 28 * GUI_GRID_W;
 			h = 11.5 * GUI_GRID_H;
-			};
-			
+		};
+
 		class ED_Edit: RscEdit
-			{
+		{
 			idc = 120;
 			x = 6.5 * GUI_GRID_W + GUI_GRID_X;
 			y = 12 * GUI_GRID_H + GUI_GRID_Y;
@@ -852,10 +852,10 @@ class RscHWS
 			h = 10 * GUI_GRID_H;
 			text = "";
 			autocomplete = "scripting";
-			};
-																	
+		};
+
 		class RscButton_HWS: HWS_RscButton
-			{
+		{
 			idc = -1;
 			text = "TELL ME A STORY";
 			x = 13 * GUI_GRID_W + GUI_GRID_X;
@@ -865,10 +865,10 @@ class RscHWS
 			colorText[] = {0.9,0.9,1,1};
 			sizeEx = 1 * GUI_GRID_H;
 			action = "[] call RYD_WS_TakeValues;closeDialog 1";
-			};
-			
+		};
+
 		class RscButton_MC: HWS_RscButton
-			{
+		{
 			idc = -1;
 			text = "MANUAL LOCATION";
 			x = 16 * GUI_GRID_W + GUI_GRID_X;
@@ -878,13 +878,13 @@ class RscHWS
 			colorText[] = {0.9,0.9,1,1};
 			sizeEx = 0.8 * GUI_GRID_H;
 			action = "[] spawn RYD_WS_FreeChoice;";
-			};
 		};
 	};
+};
 	
 class RscMapControl;	
 class RscFreeMap
-	{
+{
 	IDD = 2501;
 	name= "FM";
 	onLoad = "";
@@ -892,9 +892,9 @@ class RscFreeMap
 	enableSimulation = true;
 
 	class controls
-		{
+	{
 		class RscHWS_FM: HWS_RscMapControl
-			{
+		{
 			idc = 3;
 			type = 101;
 			tooltip = "LMB on the land to choose battle location, alt+LMB to cancel selection, ESC to exit";
@@ -902,6 +902,6 @@ class RscFreeMap
 			//y = 12 * GUI_GRID_H + GUI_GRID_Y;
 			//w = 27 * GUI_GRID_W;
 			//h = 10 * GUI_GRID_H;
-			};		
-		};
+		};		
 	};
+};

@@ -1,9 +1,6 @@
-RYD_WS_specFor_class =
-	[
-	];
+RYD_WS_specFor_class =[];
 
-RYD_WS_recon_class = 
-	[
+RYD_WS_recon_class = [
 	"o_recon_exp_f",
 	"o_recon_f",
 	"o_recon_jtac_f",
@@ -36,19 +33,17 @@ RYD_WS_recon_class =
 	"b_uav_02_f",
 	"b_ugv_01_f",
 	"b_ugv_01_rcws_f"
-	];
+];
 	
-RYD_WS_FO_class =
-	[
+RYD_WS_FO_class = [
 	"i_spotter_f",
 	"o_spotter_f",
 	"b_spotter_f",
 	"o_recon_jtac_f",
 	"b_recon_jtac_f"
-	];
+];
 	
-RYD_WS_snipers_class = 
-	[
+RYD_WS_snipers_class = [
 	"i_sniper_f",
 	"o_sniper_f",
 	"b_sniper_f",
@@ -59,10 +54,9 @@ RYD_WS_snipers_class =
 	"o_recon_m_f",
 	"b_recon_m_f",
 	"o_soldieru_m_f"
-	];
+];
 	
-RYD_WS_ATinf_class =
-	[
+RYD_WS_ATinf_class = [
 	"i_soldier_at_f",
 	"i_soldier_lat_f",
 	"o_soldier_at_f",
@@ -75,20 +69,18 @@ RYD_WS_ATinf_class =
 	"o_recon_lat_f",
 	"b_ctrg_soldier_gl_lat_f",
 	"b_recon_lat_f"
-	];
+];
 
-RYD_WS_AAinf_class = 
-	[
+RYD_WS_AAinf_class = [
 	"i_soldier_aa_f",
 	"b_soldier_aa_f",
 	"o_soldier_aa_f",
 	"o_apc_tracked_02_aa_f",
 	"b_apc_tracked_01_aa_f",
 	"o_soldieru_aa_f"
-	];
+];
 
-RYD_WS_Inf_class =
-	[
+RYD_WS_Inf_class = [
 	"i_crew_f",
 	"i_engineer_f",
 	"i_helicrew_f",
@@ -257,10 +249,9 @@ RYD_WS_Inf_class =
 	"i_g_story_sf_captain_f",
 	"i_g_resistancecommander_f",
 	"i_g_resistanceleader_f"
-	];
+];
 	
-RYD_WS_Art_class = 
-	[
+RYD_WS_Art_class =  [
 	"b_mbt_01_arty_f",
 	"o_mbt_02_arty_f",
 	"b_mbt_01_mlrs_f",
@@ -268,22 +259,18 @@ RYD_WS_Art_class =
 	"o_mortar_01_f",
 	"b_g_mortar_01_f",
 	"b_mortar_01_f"
-	];
+];
 	
-RYD_WS_HArmor_class = 
-	[
+RYD_WS_HArmor_class = [
 	"b_mbt_01_cannon_f",
 	"b_mbt_01_tusk_f",
 	"o_mbt_02_cannon_f",
 	"i_mbt_03_cannon_f"
-	];
+];
 	
-RYD_WS_MArmor_class = 
-	[
-	];
+RYD_WS_MArmor_class = [];
 
-RYD_WS_LArmor_class = 
-	[
+RYD_WS_LArmor_class = [
 	"i_apc_wheeled_03_cannon_f",
 	"o_apc_tracked_02_aa_f",
 	"o_apc_tracked_02_cannon_f",
@@ -292,18 +279,16 @@ RYD_WS_LArmor_class =
 	"b_apc_tracked_01_rcws_f",
 	"b_apc_wheeled_01_cannon_f",
 	"i_apc_tracked_03_cannon_f"
-	];
+];
 	
-RYD_WS_LArmorAT_class =
-	[
+RYD_WS_LArmorAT_class =[
 	"b_apc_wheeled_01_cannon_f",
 	"i_apc_wheeled_03_cannon_f",
 	"o_apc_tracked_02_cannon_f",
 	"i_apc_tracked_03_cannon_f"
-	];
+];
 
-RYD_WS_Cars_class =
-	[
+RYD_WS_Cars_class = [
 	"i_mrap_03_f",
 	"i_mrap_03_gmg_f",
 	"i_mrap_03_hmg_f",
@@ -355,10 +340,9 @@ RYD_WS_Cars_class =
 	"o_ugv_01_rcws_f",
 	"b_ugv_01_f",
 	"b_ugv_01_rcws_f"
-	];
+];
 	
-RYD_WS_Air_class = 
-	[
+RYD_WS_Air_class = [
 	"i_heli_transport_02_f",
 	"i_plane_fighter_03_aa_f",
 	"i_plane_fighter_03_cas_f",
@@ -373,59 +357,42 @@ RYD_WS_Air_class =
 	"b_heli_light_01_f",
 	"b_heli_transport_01_camo_f",
 	"b_heli_transport_01_f",
-	"i_uav_ai",
-	"o_uav_ai",
-	"b_uav_ai",
-	"i_uav_01_f",
-	"i_uav_02_cas_f",
-	"i_uav_02_f",
-	"o_uav_01_f",
-	"o_uav_02_cas_f",
-	"o_uav_02_f",
-	"b_uav_01_f",
-	"b_uav_02_cas_f",
-	"b_uav_02_f",
 	"i_heli_light_03_f",
 	"i_heli_light_03_unarmed_f"
-	];
+];
 	
-RYD_WS_Air_class_B = 
-	[
+RYD_WS_Air_class_B = [
 	//"b_plane_cas_01_f",
 	"b_heli_attack_01_f",
 	"b_heli_light_01_armed_f",
 	"b_heli_light_01_f",
 	"b_heli_transport_01_camo_f",
 	"b_heli_transport_01_f"
-	];
+];
 	
-RYD_WS_Air_class_O = 
-	[
+RYD_WS_Air_class_O = [
 	//"o_plane_cas_02_f",
 	"o_heli_attack_02_black_f",
 	"o_heli_attack_02_f",
 	"o_heli_light_02_f",
 	"o_heli_light_02_unarmed_f"
-	];
+];
 	
-RYD_WS_Air_class_I = 
-	[
+RYD_WS_Air_class_I = [
 	"i_heli_transport_02_f",
 	//"i_plane_fighter_03_aa_f",
 	//"i_plane_fighter_03_cas_f",
 	"i_heli_light_03_f",
 	"i_heli_light_03_unarmed_f"
-	];
+];
 	
-RYD_WS_BAir_class = 
-	[
+RYD_WS_BAir_class = [
 	"i_plane_fighter_03_cas_f",
 	"b_plane_cas_01_f",
 	"o_plane_cas_02_f"
-	];
+];
 	
-RYD_WS_RAir_class = 
-	[
+RYD_WS_RAir_class = [
 	"i_uav_01_f",
 	"i_uav_02_cas_f",
 	"i_uav_02_f",
@@ -435,10 +402,9 @@ RYD_WS_RAir_class =
 	"b_uav_01_f",
 	"b_uav_02_cas_f",
 	"b_uav_02_f"
-	];
+];
 	
-RYD_WS_NCAir_class = 
-	[
+RYD_WS_NCAir_class = [
 	"i_heli_transport_02_f",
 	"o_heli_light_02_unarmed_f",
 	"b_heli_light_01_f",
@@ -451,10 +417,9 @@ RYD_WS_NCAir_class =
 	"o_uav_02_f",
 	"b_uav_01_f",
 	"b_uav_02_f"	
-	];
+];
 
-RYD_WS_Naval_class = 
-	[
+RYD_WS_Naval_class = [
 	"i_boat_armed_01_minigun_f",
 	"i_boat_transport_01_f",
 	"o_boat_armed_01_hmg_f",
@@ -467,10 +432,9 @@ RYD_WS_Naval_class =
 	"i_sdv_01_f",
 	"o_sdv_01_f",
 	"b_sdv_01_f"	
-	];
+];
 	
-RYD_WS_Static_class = 
-	[
+RYD_WS_Static_class = [
 	"i_gmg_01_a_f",
 	"i_gmg_01_f",
 	"i_gmg_01_high_f",
@@ -499,10 +463,9 @@ RYD_WS_Static_class =
 	"b_mortar_01_f",
 	"b_static_aa_f",
 	"b_static_at_f"
-	];
+];
 	
-RYD_WS_Static_class_B = 
-	[
+RYD_WS_Static_class_B = [
 	"b_g_mortar_01_f",
 	"b_gmg_01_a_f",
 	"b_gmg_01_f",
@@ -513,10 +476,9 @@ RYD_WS_Static_class_B =
 	"b_mortar_01_f",
 	"b_static_aa_f",
 	"b_static_at_f"
-	];
+];
 	
-RYD_WS_Static_class_O = 
-	[
+RYD_WS_Static_class_O = [
 	"o_gmg_01_a_f",
 	"o_gmg_01_f",
 	"o_gmg_01_high_f",
@@ -526,10 +488,9 @@ RYD_WS_Static_class_O =
 	"o_mortar_01_f",
 	"o_static_aa_f",
 	"o_static_at_f"
-	];
+];
 	
-RYD_WS_Static_class_I = 
-	[
+RYD_WS_Static_class_I = [
 	"i_gmg_01_a_f",
 	"i_gmg_01_f",
 	"i_gmg_01_high_f",
@@ -539,24 +500,21 @@ RYD_WS_Static_class_I =
 	"i_mortar_01_f",
 	"i_static_aa_f",
 	"i_static_at_f"
-	];
+];
 	
-RYD_WS_StaticAA_class =
-	[
+RYD_WS_StaticAA_class = [
 	"i_static_aa_f",
 	"o_static_aa_f",
 	"b_static_aa_f"
-	];
+];
 	
-RYD_WS_StaticAT_class =
-	[
+RYD_WS_StaticAT_class = [
 	"i_static_at_f",
 	"o_static_at_f",
 	"b_static_at_f"
-	];
+];
 	
-RYD_WS_Support_class =
-	[
+RYD_WS_Support_class = [
 	"i_truck_02_ammo_f",
 	"i_truck_02_box_f",
 	"i_truck_02_fuel_f",
@@ -576,10 +534,9 @@ RYD_WS_Support_class =
 	"b_truck_01_repair_f",
 	"b_truck_01_fuel_f",
 	"b_truck_01_medical_f"
-	];
+];
 	
-RYD_WS_Support_class_B =
-	[
+RYD_WS_Support_class_B = [
 	"b_g_van_01_fuel_f",
 	"b_g_offroad_01_repair_f",
 	"b_apc_tracked_01_crv_f",
@@ -587,10 +544,9 @@ RYD_WS_Support_class_B =
 	"b_truck_01_repair_f",
 	"b_truck_01_fuel_f",
 	"b_truck_01_medical_f"
-	];
+];
 	
-RYD_WS_Support_class_O =
-	[
+RYD_WS_Support_class_O = [
 	"o_truck_02_ammo_f",
 	"o_truck_02_box_f",
 	"o_truck_02_fuel_f",
@@ -599,18 +555,16 @@ RYD_WS_Support_class_O =
 	"o_truck_03_fuel_f",
 	"o_truck_03_medical_f",
 	"o_truck_03_repair_f"
-	];
+];
 	
-RYD_WS_Support_class_I =
-	[
+RYD_WS_Support_class_I = [
 	"i_truck_02_ammo_f",
 	"i_truck_02_box_f",
 	"i_truck_02_fuel_f",
 	"i_truck_02_medical_f"
-	];
+];
 	
-RYD_WS_Cargo_class =
-	[
+RYD_WS_Cargo_class = [
 	"i_heli_transport_02_f",
 	"o_heli_attack_02_black_f",
 	"o_heli_attack_02_f",
@@ -671,10 +625,9 @@ RYD_WS_Cargo_class =
 	"i_heli_light_03_f",
 	"i_heli_light_03_unarmed_f",
 	"i_apc_tracked_03_cannon_f"	
-	];
+];
 	
-RYD_WS_NCCargo_class = 
-	[
+RYD_WS_NCCargo_class = [
 	"i_heli_transport_02_f",
 	"o_heli_light_02_unarmed_f",
 	"b_heli_light_01_f",
@@ -711,10 +664,9 @@ RYD_WS_NCCargo_class =
 	"b_truck_01_covered_f",
 	"b_truck_01_mover_f",
 	"b_truck_01_transport_f"	
-	];
+];
 	
-RYD_WS_NCCargo_class_B = 
-	[
+RYD_WS_NCCargo_class_B = [
 	"b_heli_light_01_f",
 	"b_heli_transport_01_camo_f",
 	"b_heli_transport_01_f",
@@ -725,29 +677,26 @@ RYD_WS_NCCargo_class_B =
 	"b_truck_01_covered_f",
 	"b_truck_01_mover_f",
 	"b_truck_01_transport_f"	
-	];
+];
 	
-RYD_WS_NCCargo_class_I = 
-	[
+RYD_WS_NCCargo_class_I = [
 	"i_heli_transport_02_f",
 	"i_heli_light_03_unarmed_f",
 	"i_mrap_03_f",
 	"i_truck_02_covered_f",
 	"i_truck_02_transport_f"	
-	];
+];
 	
-RYD_WS_NCCargo_class_O = 
-	[
+RYD_WS_NCCargo_class_O = [
 	"o_heli_light_02_unarmed_f",
 	"o_mrap_02_f",
 	"o_truck_02_covered_f",
 	"o_truck_02_transport_f",
 	"o_truck_03_transport_f",
 	"o_truck_03_covered_f"	
-	];
+];
 	
-RYD_WS_Crew_class =
-	[
+RYD_WS_Crew_class =[
 	"i_crew_f",
 	"i_helicrew_f",
 	"i_helipilot_f",
@@ -761,51 +710,92 @@ RYD_WS_Crew_class =
 	"b_helipilot_f",
 	"b_pilot_f",
 	"b_story_pilot_f"
-	];
+];
 	
-RYD_WS_Other_class = 
-	[
+RYD_WS_Other_class = [
 	"i_uav_ai",
 	"o_uav_ai",
 	"b_uav_ai"	
-	];
+];
 	
-RYD_WS_rep =
-	[
+RYD_WS_rep = [
 	"o_truck_03_repair_f",
 	"i_truck_02_box_f",
 	"o_truck_02_box_f",
 	"b_apc_tracked_01_crv_f",
 	"b_truck_01_repair_f",
 	"b_g_offroad_01_repair_f"
-	];
+];
+
+RYD_WS_rep_B = [
+	"b_apc_tracked_01_crv_f",
+	"b_truck_01_repair_f",
+	"b_g_offroad_01_repair_f"
+];
+RYD_WS_rep_I = [
+	"i_truck_02_box_f"
+];
+RYD_WS_rep_O = [
+	"o_truck_03_repair_f",
+	"o_truck_02_box_f"
+];
 	
-RYD_WS_med = 
-	[
+RYD_WS_med = [
 	"o_truck_03_medical_f",
 	"i_truck_02_medical_f",
 	"o_truck_02_medical_f",
 	"b_truck_01_medical_f"
-	];
+];	
+RYD_WS_med_B = [
+	"b_truck_01_medical_f"
+];	
+RYD_WS_med_I = [
+	"i_truck_02_medical_f"
+];	
+RYD_WS_med_O = [
+	"o_truck_03_medical_f",
+	"o_truck_02_medical_f"
+];
 	
-RYD_WS_fuel =
-	[
+RYD_WS_fuel = [
 	"o_truck_03_fuel_f",
 	"i_truck_02_fuel_f",
 	"o_truck_02_fuel_f",
 	"b_g_van_01_fuel_f",
 	"b_apc_tracked_01_crv_f",
 	"b_truck_01_fuel_f"
-	];
+];	
+RYD_WS_fuel_B = [
+	"b_g_van_01_fuel_f",
+	"b_apc_tracked_01_crv_f",
+	"b_truck_01_fuel_f"
+];	
+RYD_WS_fuel_I = [
+	"i_truck_02_fuel_f"
+];	
+RYD_WS_fuel_O = [
+	"o_truck_03_fuel_f",
+	"o_truck_02_fuel_f"
+];
 	
-RYD_WS_ammo = 
-	[
+RYD_WS_ammo = [
 	"o_truck_03_ammo_f",
 	"i_truck_02_ammo_f",
 	"o_truck_02_ammo_f",
 	"b_apc_tracked_01_crv_f",
 	"b_truck_01_ammo_f"
-	];
+];
+RYD_WS_ammo_B = [
+	"b_apc_tracked_01_crv_f",
+	"b_truck_01_ammo_f"
+];
+RYD_WS_ammo_I = [
+	"i_truck_02_ammo_f"
+];
+RYD_WS_ammo_O = [
+	"o_truck_03_ammo_f",
+	"o_truck_02_ammo_f"
+];
 	
 RYD_WS_AllClasses = RYD_WS_Inf_class + RYD_WS_Art_class + RYD_WS_HArmor_class + RYD_WS_MArmor_class + RYD_WS_LArmor_class + RYD_WS_Cars_class + RYD_WS_Air_class + RYD_WS_Naval_class + RYD_WS_Static_class + RYD_WS_Support_class + RYD_WS_Other_class;			
 	
@@ -850,6 +840,10 @@ RYD_WS_B_Static_G2 = [];
 RYD_WS_B_Support_G2 = [];
 RYD_WS_B_NCCargo_G2 = [];
 RYD_WS_B_Officers_G2 = [];
+RYD_WS_B_Supp_Ammo_G2 = [];
+RYD_WS_B_Supp_Med_G2 = [];
+RYD_WS_B_Supp_Repair_G2 = [];
+RYD_WS_B_Supp_Fuel_G2 = [];
 
 RYD_WS_I_Infantry_G = [];
 RYD_WS_I_Motorized_G = [];
@@ -861,6 +855,10 @@ RYD_WS_I_Static_G2 = [];
 RYD_WS_I_Support_G2 = [];
 RYD_WS_I_NCCargo_G2 = [];
 RYD_WS_I_Officers_G2 = [];
+RYD_WS_I_Supp_Ammo_G2 = [];
+RYD_WS_I_Supp_Med_G2 = [];
+RYD_WS_I_Supp_Repair_G2 = [];
+RYD_WS_I_Supp_Fuel_G2 = [];
 
 RYD_WS_O_Infantry_G = [];
 RYD_WS_O_Motorized_G = [];
@@ -872,62 +870,66 @@ RYD_WS_O_Static_G2 = [];
 RYD_WS_O_Support_G2 = [];
 RYD_WS_O_NCCargo_G2 = [];
 RYD_WS_O_Officers_G2 = [];
+RYD_WS_O_Supp_Ammo_G2 = [];
+RYD_WS_O_Supp_Med_G2 = [];
+RYD_WS_O_Supp_Repair_G2 = [];
+RYD_WS_O_Supp_Fuel_G2 = [];
 
 RydHQ_Add_OtherArty = [];
 
 RYD_WS_DynamicRHQ = 
-	{
+{
 	_gpClass = configFile >> "CfgGroups";
 	_vehClass = configFile >> "CfgVehicles";
 
 	for "_i" from 0 to ((count _gpClass) - 1) do
-		{
+	{
 		_class = _gpClass select _i;
 		
 		if (isClass _class) then
-			{
+		{
 			_side = configName _class;
 			_rSide = east;
 			
 			switch (toLower _side) do
-				{
+			{
 				case ("east") : {_rSide = east};
 				case ("west") : {_rSide = west};
 				case ("indep") : {_rSide = resistance};
 				default {_rSide = civilian};
-				};
+			};
 				
 			if (_rSide == civilian) exitWith {};	
 
 			_path = _gpClass >> _side;
 			
 			for "_j" from 0 to ((count _path) - 1) do
-				{
+			{
 				_class = _path select _j;
 				
 				if (isClass _class) then
-					{
+				{
 					_fc = configName _class;
 					_myFac = _fc;
 					
 					_path2 = _path >> _fc;
 					
 					for "_k" from 0 to ((count _path2) - 1) do
-						{
+					{
 						_class = _path2 select _k;
 				
 						if (isClass _class) then
-							{
+						{
 							_kind = configName _class;
 							
 							_path3 = _path2 >> _kind;
 							
 							for "_l" from 0 to ((count _path3) - 1) do
-								{
+							{
 								_class = _path3 select _l;
 								
 								if (isClass _class) then
-									{
+								{
 									_gp = configName _class;
 									
 									_path4 = _path3 >> _gp;
@@ -942,198 +944,216 @@ RYD_WS_DynamicRHQ =
 									_isArty = false;
 									
 									for "_m" from 0 to (_cnt - 1) do
-										{
+									{
 										_type = "inf";
 										_class = _path4 select _m;
 										
 										if (isClass _class) then
-											{
+										{
 											_unit = configName _class;
 											
 											_veh = _path4 >> _unit >> "vehicle";
 											
 											if (isText _veh) then
-												{
+											{
 												_veh = toLower (getText _veh);
 												_base = _veh;
 												_wrong = false;
 												
 												while {not (_base in ["air","ship","tank","car","wheeled_apc_f","ugv_01_base_f"])} do
-													{
+												{
 													_base = inheritsFrom (_vehClass >> _base);
 													if not (isClass _base) exitWith {};
 													_base = toLower (configName _base);
 													if (_base in ["allvehicles","all"]) exitWith {};
-													};
+												};
 
-												if (_base in ["ugv_01_base_f"]) then {_wrong = true;_gpType = "ugv_01_base_f"};
-													
+												if (_base in ["ugv_01_base_f"]) then 
+												{
+													_wrong = true;
+													_gpType = "ugv_01_base_f"
+												};
+
 												if not (_wrong) then
-													{
+												{
 													if (_base in ["air","ship","tank","car","wheeled_apc_f"]) then
-														{
+													{
 														_type = _base
-														};
+													};
 														
 													if not (_typeC) then
-														{
+													{
 														if not (_type in ["inf"]) then
-															{
+														{
 															_gpType = _type;
 															_typeC = true
-															}
-														};
+														}
+													};
 														
 													_vehClass2 = configfile >> "CfgVehicles" >> _veh;
 													
 													_myFac = getText (_vehClass2 >> "faction");
 														
 													if ((getNumber (_vehClass2 >> "artilleryScanner")) > 0) then
-														{
+													{
 														_isArty = true
-														};
+													};
 														
 													if not (_veh in RYD_WS_AllClasses) then
-														{
+													{
 														RYD_WS_AllClasses set [(count RYD_WS_AllClasses),_veh];
 														
 														_turrets = _vehClass2 >> "Turrets";
 														
 														switch (_type) do
-															{
+														{
 															case ("inf") : 
-																{
+															{
 																RHQ_Inf set [(count RHQ_Inf),_veh];
 
 																if ((getNumber (_vehClass2 >> "camouflage")) < 1) then
-																	{
+																{
 																	if ((toLower (getText (_vehClass2 >> "textSingular"))) in ["sniper"]) then
-																		{
+																	{
 																		RHQ_Snipers set [(count RHQ_Snipers),_veh]
-																		}
+																	}
 																	else
-																		{
+																	{
 																		_weapons = getArray (_vehClass2 >> "weapons");
 																		
 																		RHQ_Recon set [(count RHQ_Recon),_veh];
 																		
 																		_hasLaserD = false;
 																		
-																			{
+																		{
 																			_wpClass = configFile >> "CfgWeapons" >> _x;
 																			_type = getNumber (_wpClass >> "type");
 																			
 																			if (_type == 4096) then
-																				{
+																			{
 																				_cursor = toLower (getText (_wpClass >> "cursor"));
 																				if (_cursor in ["","emptycursor"]) then 
-																					{
+																				{
 																					_cursor = toLower (getText (_wpClass >> "cursorAim"))
-																					};
-
-																				if (_cursor in ["laserdesignator"]) exitWith {_hasLaserD = true}
 																				};
+
+																				if (_cursor in ["laserdesignator"]) exitWith 
+																				{
+																					_hasLaserD = true
+																				}
+																			};
 																				
 																			if (_hasLaserD) exitWith {}
-																			}
-																		foreach _weapons;
+																		} foreach _weapons;
 																		
 																		if (_hasLaserD) then
-																			{
+																		{
 																			RHQ_FO set [(count RHQ_FO),_veh]
-																			}
 																		}
-																	};
-																	
+																	}
+																};
+
 																if ((toLower ((getText (_vehClass2 >> "textSingular")))) in ["at soldier"]) then
-																	{
+																{
 																	_isAT = true;
 																	_weaponsArr = if (isArray (_vehClass2 >> "Weapons")) then
-																		{
+																	{
 																		getArray (_vehClass2 >> "Weapons")
-																		}
+																	}
 																	else
-																		{
+																	{
 																		[]
-																		};
+																	};
 																
 																	_weaponsArr =	_weaponsArr - ["Throw","Put"];
 																	
 																	if ((count _weaponsArr) > 1) then
-																		{
+																	{
 																		_sWeapon = _weaponsArr select 1;
 																		if (isArray (configfile >> "CfgWeapons" >> _sWeapon >> "magazines")) then
-																			{
+																		{
 																			_mags = (getArray (configfile >> "CfgWeapons" >> _sWeapon >> "magazines"));
 																			if ((count _mags) > 0) then
-																				{
+																			{
 																				_mag = (_mags select 0);
 																				
 																				if (isText (configfile >> "CfgMagazines" >> _mag >> "ammo")) then
-																					{
+																				{
 																					_ammo = getText (configfile >> "CfgMagazines" >> _mag >> "ammo");
 																					
 																					if (isNumber (configfile >> "CfgAmmo" >> _ammo >> "airLock")) then
-																						{
+																					{
 																						_isAT = (getNumber (configfile >> "CfgAmmo" >> _ammo >> "airLock")) < 1;
-																						}
-																					};
+																					}
 																				};
 																			};
 																		};
+																	};
 																	
 																	if (_isAT) then 
-																		{
+																	{
 																		RHQ_ATInf set [(count RHQ_ATInf),_veh]
-																		} 
+																	} 
 																	else 
-																		{
+																	{
 																		RHQ_AAInf set [(count RHQ_AAInf),_veh]
-																		};
-																	
-																	}
-																};
-																
+																	};
+																}
+															};
+
 															case ("car") : {RHQ_Cars set [(count RHQ_Cars),_veh]};	
 															case ("tank") : {RHQ_HArmor set [(count RHQ_HArmor),_veh]};	
 															case ("wheeled_apc_f") : {RHQ_LArmor set [(count RHQ_LArmor),_veh]};
 															case ("air") : 
-																{
+															{
 																RHQ_Air set [(count RHQ_Air),_veh];
-																if ((((count _turrets) + (count ((getArray (_vehClass2 >> "Weapons")) - ["CMFlareLauncher"]))) < 1)) then
-																	{
-																	RHQ_NCAir set [(count RHQ_NCAir),_veh];
-																	};
-																	
-																_isUAV = (getNumber (_vehClass2 >> "Uav")) > 0;
-																	
-																if (_isUAV) then
-																	{
-																	RHQ_RAir set [(count RHQ_RAir),_veh]
-																	}
+																_mainT = _turrets >> "MainTurret";
+																_isMainT = isClass _mainT;
+																
+																// get all possible weapons (more or less, doesnt count pylons yet)
+																_wpnsArr = getArray (_vehClass2 >> "Weapons");
+																if (_isMainT) then
+																{
+																	_wpnsArr = _wpnsArr + (getArray(_mainT >> "Weapons"));
 																};
 																
-															case ("ship") : {RHQ_Naval set [(count RHQ_Naval),_veh]};
+																// remove not actual weapons such as flares and etc
+																_wpnsArr = _wpnsArr - ["CMFlareLauncher", "FakeHorn", "Laserdesignator_mounted"];
+																
+																if (count(_wpnsArr) isEqualTo 0) then
+																{
+																	RHQ_NCAir set [(count RHQ_NCAir),_veh];
+																};
+
+																_isUAV = (toLower (getText (_vehClass2 >> "crew"))) in ["b_uav_ai","i_uav_ai","o_uav_ai"];
+
+																if (_isUAV) then
+																{
+																	RHQ_RAir set [(count RHQ_RAir),_veh]
+																}
 															};
-															
+																
+															case ("ship") : {RHQ_Naval set [(count RHQ_Naval),_veh]};
+														};
+
 														if not (_type in ["inf"]) then
-															{
+														{
 															_vehs set [(count _vehs),_veh];
 															
 															_mainT = _turrets >> "MainTurret";
 															_isMainT = isClass _mainT;
 															
 															if ((getNumber (_vehClass2 >> "transportSoldier")) > 1) then 
-																{
+															{
 																RHQ_Cargo set [(count RHQ_Cargo),_veh];
 																if not (_isMainT) then
-																	{
-																	RHQ_NCCargo set [(count RHQ_NCCargo),_veh];
-																	}
-																};
-																
-															if ((getNumber (_vehClass2 >> "artilleryScanner")) > 0) then
 																{
+																	RHQ_NCCargo set [(count RHQ_NCCargo),_veh];
+																}
+															};
+
+															if ((getNumber (_vehClass2 >> "artilleryScanner")) > 0) then
+															{
 																RHQ_Art set [(count RHQ_Art),_veh];
 																
 																_prim = "";
@@ -1143,23 +1163,22 @@ RYD_WS_DynamicRHQ =
 																_illum = "";
 
 																if (_isMainT) then
-																	{
+																{
 																	_mags = getArray (_mainT >> "magazines");
 																	_maxHit = 10;
 																	
-																		{
+																	{
 																		_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 																		_ammoC = configfile >> "CfgAmmo" >> _ammo;
 																		
 																		_actHit = getNumber (_ammoC >> "indirectHit");
 																		
 																		if (_actHit > _maxHit) then
-																			{
+																		{
 																			_maxHit = _actHit;
 																			_prim = _x
-																			}
 																		}
-																	foreach _mags;
+																	} foreach _mags;
 																	
 																	_mags = _mags - [_prim];
 																	_mags0 = +_mags;
@@ -1168,7 +1187,7 @@ RYD_WS_DynamicRHQ =
 																	_rareChosen = false;
 																	_secChosen = false;
 																	
-																		{
+																	{
 																		_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 																		_ammoC = configfile >> "CfgAmmo" >> _ammo;
 																		
@@ -1178,136 +1197,136 @@ RYD_WS_DynamicRHQ =
 																		_subM = toLower (getText (_ammoC >> "submunitionAmmo"));
 																		
 																		if (_hit <= 10) then
-																			{
+																		{
 																			if not (_subM in [""]) then
-																				{
+																			{
 																				_ammoC = configfile >> "CfgAmmo" >> _subM;
 																				_hit = getNumber (_ammoC >> "indirectHit")
-																				}
-																			};
+																			}
+																		};
 
 																		switch (true) do
-																			{
+																		{
 																			case ((isArray _lc) and not (_illumChosen)) : 
-																				{
+																			{
 																				_illum = _x;
 																				_mags = _mags - [_x];
 																				_illumChosen = true
-																				};
-																				
+																			};
+
 																			case ((_hit <= 10) and (_subM in ["smokeshellarty"]) and not (_smokeChosen)) : 
-																				{
+																			{
 																				_smoke = _x;
 																				_mags = _mags - [_x];
 																				_smokeChosen = true
-																				};
-																				
+																			};
+
 																			case ((_sim in ["shotsubmunitions"]) and not (_rareChosen)) : 
-																				{
+																			{
 																				_rare = _x;
 																				_mags = _mags - [_x];
 																				_rareChosen = true
-																				};
-																				
+																			};
+
 																			case ((_hit > 10) and not ((_secChosen) or (_rare == _x)))  : 
-																				{
+																			{
 																				_sec = _x;
 																				_mags = _mags - [_x];
 																				_secChosen = true
-																				}
 																			}
 																		}
-																	foreach _mags0;
+																	} foreach _mags0;
 																	
 																	if (_sec in [""]) then
-																		{
+																	{
 																		_maxHit = 10;
 																		
-																			{
+																		{
 																			_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 																			_ammoC = configfile >> "CfgAmmo" >> _ammo;
 																			_subAmmo = _ammoC >> "subMunitionAmmo";
 
 																			if ((isText _subAmmo) and {not ((getText _subAmmo) in [""])}) then
-																				{
+																			{
 																				_ammoC = configfile >> "CfgAmmo" >> (getText _subAmmo);
-																				};
-																				
+																			};
+
 																			_actHit = getNumber (_ammoC >> "indirectHit");
 																			
 																			if (_actHit > _maxHit) then
-																				{
+																			{
 																				_maxHit = _actHit;
 																				_sec = _x
-																				}
 																			}
-																		foreach _mags;
-																		}
-																	};
-																	
-																_arr = [_prim,_rare,_sec,_smoke,_illum];
-																if (({_x in [""]} count _arr) < 5) then
-																	{
-																	RydHQ_Add_OtherArty set [(count RydHQ_Add_OtherArty),[[_veh],_arr]]
+																		} foreach _mags;
 																	}
 																};
-																
+
+																_arr = [_prim,_rare,_sec,_smoke,_illum];
+																if (({_x in [""]} count _arr) < 5) then
+																{
+																	RydHQ_Add_OtherArty set [(count RydHQ_Add_OtherArty),[[_veh],_arr]]
+																}
+															};
+															
 															RHQ_HArmor = RHQ_HArmor - RHQ_Art;
 
 															if (_isMainT) then
-																{
+															{
 																_mags = getArray (_mainT >> "magazines");
 																
-																	{
+																{
 																	_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 																	_ammoC = configfile >> "CfgAmmo" >> _ammo;
 																	
 																	_isAA = (getNumber (_ammoC >> "airLock")) > 1;
 																	_isAT = ((((getNumber (_ammoC >> "irLock")) + (getNumber (_ammoC >> "laserLock"))) > 0) and ((getNumber (_ammoC >> "airLock")) < 2));
 																	
-																	if (_isAA) then {RHQ_AAInf set [(count RHQ_AAInf),_veh]};
+																	if (_isAA) then 
+																	{
+																		RHQ_AAInf set [(count RHQ_AAInf),_veh]
+																	};
+																	
 																	if (_isAT) then 
-																		{
+																	{
 																		if (_type in ["wheeled_apc_f"]) then
-																			{
+																		{
 																			RHQ_LArmorAT set [(count RHQ_LArmorAT),_veh]
-																			}
+																		}
 																		else
-																			{
+																		{
 																			if (_type in ["car"]) then
-																				{
+																			{
 																				RHQ_ATInf set [(count RHQ_ATInf),_veh]
-																				}
 																			}
-																		};
-																		
+																		}
+																	};
+																	
 																	if ((_isAA) or (_isAT)) exitWith {}
-																	}
-																foreach _mags
-																}
+																} foreach _mags
 															}
-														}	
-													}
-												}
-											}
-										};
-																				
-										{
-										_crew = _vehClass >> _x >> "crew";
-										
-										if (isText _crew) then
-											{
-											_crew = toLower (getText _crew);
-
-											if not (_crew in (RYD_WS_Inf_class + RHQ_Inf)) then
-												{
-												RYD_WS_AllClasses set [(count RYD_WS_AllClasses),_crew];
-												RHQ_Inf set [(count RHQ_Inf),_crew];
-												RHQ_Crew set [(count RHQ_Crew),_crew];
+														}
+													}	
 												}
 											}
 										}
-									foreach _vehs;
+									};
+
+									{
+										_crew = _vehClass >> _x >> "crew";
+										
+										if (isText _crew) then
+										{
+											_crew = toLower (getText _crew);
+
+											if not (_crew in (RYD_WS_Inf_class + RHQ_Inf)) then
+											{
+												RYD_WS_AllClasses set [(count RYD_WS_AllClasses),_crew];
+												RHQ_Inf set [(count RHQ_Inf),_crew];
+												RHQ_Crew set [(count RHQ_Crew),_crew];
+											}
+										}
+									} foreach _vehs;
 									
 									RHQ_Inf = RHQ_Inf - ["b_uav_ai","i_uav_ai","o_uav_ai"];
 									RHQ_Crew = RHQ_Crew - ["b_uav_ai","i_uav_ai","o_uav_ai"];
@@ -1315,7 +1334,7 @@ RYD_WS_DynamicRHQ =
 									//diag_log format ["[_rSide,_path4,_isArty,_name]: %1 typ: %2",[_rSide,_path4,_isArty,_name],_gpType];
 									
 									if not (_gpType in ["air","ship","ugv_01_base_f"]) then
-										{
+									{
 										_fac = _myFac;
 										if ((toLower _fac) in ["guerilla"]) then {_fac = "blu_g_f"};
 										//diag_log format ["chosen: %1,this: %2",[(RYD_WS_FacA select 2),(RYD_WS_FacB select 2)],(toLower _fac)];
@@ -1324,90 +1343,209 @@ RYD_WS_DynamicRHQ =
 										_gp = [_rSide,_path4,_isArty,_name];
 										
 										//diag_log format ["gp: %1",_gp];
-											
+										
 										switch (true) do
-											{
+										{
 											case (_gpType in ["tank"]) : 
-												{
+											{
 												_added = false;
 												
-													{
-													if ((_x select 1) in [_path4]) exitWith {_added = true}
-													}
-												foreach (RYD_WS_B_Armored_G + RYD_WS_I_Armored_G + RYD_WS_O_Armored_G);
-												
-												if not (_added) then
-													{
-													switch (_rSide) do
-														{
-														case (west) : {RYD_WS_B_Armored_G set [(count RYD_WS_B_Armored_G),_gp]};
-														case (resistance) : {RYD_WS_I_Armored_G set [(count RYD_WS_I_Armored_G),_gp]};
-														case (east) : {RYD_WS_O_Armored_G set [(count RYD_WS_O_Armored_G),_gp]};
-														}
-													}
-												};
-												
-											case (_gpType in ["wheeled_apc_f"]) : 
 												{
-												_added = false;
-												
-													{
 													if ((_x select 1) in [_path4]) exitWith {_added = true}
-													}
-												foreach (RYD_WS_B_Mechanized_G + RYD_WS_I_Mechanized_G + RYD_WS_O_Mechanized_G);
+												} foreach (RYD_WS_B_Armored_G + RYD_WS_I_Armored_G + RYD_WS_O_Armored_G);
 												
 												if not (_added) then
-													{
-													switch (_rSide) do
-														{
-														case (west) : {RYD_WS_B_Mechanized_G set [(count RYD_WS_B_Mechanized_G),_gp]};
-														case (resistance) : {RYD_WS_I_Mechanized_G set [(count RYD_WS_I_Mechanized_G),_gp]};
-														case (east) : {RYD_WS_O_Mechanized_G set [(count RYD_WS_O_Mechanized_G),_gp]};
-														}
-													}
-												};
-												
-											case (_gpType in ["car"]) : 
 												{
-												_added = false;
-												
+													if ((toLower _fac) == (RYD_WS_FacA select 2)) then 
 													{
-													if ((_x select 1) in [_path4]) exitWith {_added = true}
-													}
-												foreach (RYD_WS_B_Motorized_G + RYD_WS_I_Motorized_G + RYD_WS_O_Motorized_G);
-												
-												if not (_added) then
-													{
-													switch (_rSide) do
+														switch (RYD_WS_SideA) do
 														{
-														case (west) : {RYD_WS_B_Motorized_G set [(count RYD_WS_B_Motorized_G),_gp]};
-														case (resistance) : {RYD_WS_I_Motorized_G set [(count RYD_WS_I_Motorized_G),_gp]};
-														case (east) : {RYD_WS_O_Motorized_G set [(count RYD_WS_O_Motorized_G),_gp]};
+															case (west): 
+															{
+																RYD_WS_B_Armored_G set [(count RYD_WS_B_Armored_G),[west, _gp select 1, _gp select 2]];
+															};
+															case (resistance): 
+															{
+																RYD_WS_I_Armored_G set [(count RYD_WS_I_Armored_G),[resistance, _gp select 1, _gp select 2]];
+															};
+															case (east): 
+															{
+																RYD_WS_O_Armored_G set [(count RYD_WS_O_Armored_G),[east, _gp select 1, _gp select 2]];
+															};
 														}
-													}
-												};
-												
-											default
-												{
-												_added = false;
-												
+													};
+													
+													if ((toLower _fac) == (RYD_WS_FacB select 2)) then 
 													{
-													if ((_x select 1) in [_path4]) exitWith {_added = true}
-													}
-												foreach (RYD_WS_B_Infantry_G + RYD_WS_I_Infantry_G + RYD_WS_O_Infantry_G);
-												
-												if not (_added) then
-													{
-													switch (_rSide) do
+														switch (RYD_WS_SideB) do
 														{
-														case (west) : {RYD_WS_B_Infantry_G set [(count RYD_WS_B_Infantry_G),_gp]};
-														case (resistance) : {RYD_WS_I_Infantry_G set [(count RYD_WS_I_Infantry_G),_gp]};
-														case (east) : {RYD_WS_O_Infantry_G set [(count RYD_WS_O_Infantry_G),_gp]};
+															case (west): 
+															{
+																RYD_WS_B_Armored_G set [(count RYD_WS_B_Armored_G),[west, _gp select 1, _gp select 2]];
+															};
+															case (resistance): 
+															{
+																RYD_WS_I_Armored_G set [(count RYD_WS_I_Armored_G),[resistance, _gp select 1, _gp select 2]];
+															};
+															case (east): 
+															{
+																RYD_WS_O_Armored_G set [(count RYD_WS_O_Armored_G),[east, _gp select 1, _gp select 2]];
+															};
 														}
-													}										
+													};
 												}
-											}										
-										}
+											};
+											
+											case (_gpType in ["wheeled_apc_f"]) : 
+											{
+												_added = false;
+												
+												{
+													if ((_x select 1) in [_path4]) exitWith {_added = true}
+												} foreach (RYD_WS_B_Mechanized_G + RYD_WS_I_Mechanized_G + RYD_WS_O_Mechanized_G);
+												
+												if not (_added) then
+												{
+													if ((toLower _fac) == (RYD_WS_FacA select 2)) then 
+													{
+														switch (RYD_WS_SideA) do
+														{
+															case (west): 
+															{
+																RYD_WS_B_Mechanized_G set [(count RYD_WS_B_Mechanized_G),[west, _gp select 1, _gp select 2]];
+															};
+															case (resistance): 
+															{
+																RYD_WS_I_Mechanized_G set [(count RYD_WS_I_Mechanized_G),[resistance, _gp select 1, _gp select 2]];
+															};
+															case (east): 
+															{
+																RYD_WS_O_Mechanized_G set [(count RYD_WS_O_Mechanized_G),[east, _gp select 1, _gp select 2]];
+															};
+														}
+													};
+													
+													if ((toLower _fac) == (RYD_WS_FacB select 2)) then 
+													{
+														switch (RYD_WS_SideB) do
+														{
+															case (west): 
+															{
+																RYD_WS_B_Mechanized_G set [(count RYD_WS_B_Mechanized_G),[west, _gp select 1, _gp select 2]];
+															};
+															case (resistance): 
+															{
+																RYD_WS_I_Mechanized_G set [(count RYD_WS_I_Mechanized_G),[resistance, _gp select 1, _gp select 2]];
+															};
+															case (east): 
+															{
+																RYD_WS_O_Mechanized_G set [(count RYD_WS_O_Mechanized_G),[east, _gp select 1, _gp select 2]];
+															};
+														}
+													};
+												}
+											};
+											
+											case (_gpType in ["car"]) : 
+											{
+												_added = false;
+												
+												{
+													if ((_x select 1) in [_path4]) exitWith {_added = true}
+												} foreach (RYD_WS_B_Motorized_G + RYD_WS_I_Motorized_G + RYD_WS_O_Motorized_G);
+												
+												if not (_added) then
+												{
+													if ((toLower _fac) == (RYD_WS_FacA select 2)) then 
+													{
+														switch (RYD_WS_SideA) do
+														{
+															case (west): 
+															{
+																RYD_WS_B_Motorized_G set [(count RYD_WS_B_Motorized_G),[west, _gp select 1, _gp select 2]];
+															};
+															case (resistance): 
+															{
+																RYD_WS_I_Motorized_G set [(count RYD_WS_I_Motorized_G),[resistance, _gp select 1, _gp select 2]];
+															};
+															case (east): 
+															{
+																RYD_WS_O_Motorized_G set [(count RYD_WS_O_Motorized_G),[east, _gp select 1, _gp select 2]];
+															};
+														}
+													};
+													
+													if ((toLower _fac) == (RYD_WS_FacB select 2)) then 
+													{
+														switch (RYD_WS_SideB) do
+														{
+															case (west): 
+															{
+																RYD_WS_B_Motorized_G set [(count RYD_WS_B_Motorized_G),[west, _gp select 1, _gp select 2]];
+															};
+															case (resistance): 
+															{
+																RYD_WS_I_Motorized_G set [(count RYD_WS_I_Motorized_G),[resistance, _gp select 1, _gp select 2]];
+															};
+															case (east): 
+															{
+																RYD_WS_O_Motorized_G set [(count RYD_WS_O_Motorized_G),[east, _gp select 1, _gp select 2]];
+															};
+														}
+													};
+												}
+											};
+											
+											default
+											{
+												_added = false;
+												
+												{
+													if ((_x select 1) in [_path4]) exitWith {_added = true}
+												} foreach (RYD_WS_B_Infantry_G + RYD_WS_I_Infantry_G + RYD_WS_O_Infantry_G);
+												
+												if not (_added) then
+												{
+													if ((toLower _fac) == (RYD_WS_FacA select 2)) then 
+													{
+														switch (RYD_WS_SideA) do
+														{
+															case (west): 
+															{
+																RYD_WS_B_Infantry_G set [(count RYD_WS_B_Infantry_G),[west, _gp select 1, _gp select 2]];
+															};
+															case (resistance): 
+															{
+																RYD_WS_I_Infantry_G set [(count RYD_WS_I_Infantry_G),[resistance, _gp select 1, _gp select 2]];
+															};
+															case (east): 
+															{
+																RYD_WS_O_Infantry_G set [(count RYD_WS_O_Infantry_G),[east, _gp select 1, _gp select 2]];
+															};
+														}
+													};
+													
+													if ((toLower _fac) == (RYD_WS_FacB select 2)) then 
+													{
+														switch (RYD_WS_SideB) do
+														{
+															case (west):
+															{
+																RYD_WS_B_Infantry_G set [(count RYD_WS_B_Infantry_G),[west, _gp select 1, _gp select 2]];
+															};
+															case (resistance):
+															{
+																RYD_WS_I_Infantry_G set [(count RYD_WS_I_Infantry_G),[resistance, _gp select 1, _gp select 2]];
+															};
+															case (east):
+															{
+																RYD_WS_O_Infantry_G set [(count RYD_WS_O_Infantry_G),[east, _gp select 1, _gp select 2]];
+															};
+														}
+													};
+												}										
+											}
+										}										
 									}
 								}
 							}
@@ -1415,23 +1553,24 @@ RYD_WS_DynamicRHQ =
 					}
 				}
 			}
-		};
-				
+		}
+	};
+	
 	for "_i" from 0 to ((count _vehClass) - 1) do
-		{
+	{
 		_class = _vehClass select _i;
 		
 		if (isClass _class) then
-			{
+		{
 			_class = toLower (configName _class);
 
 			if not (_class isKindOf "ugv_01_base_f") then
-				{
+			{
 				if not (_class in (RYD_WS_Art_class + RYD_WS_Static_class + RYD_WS_Support_class + RYD_WS_NCCargo_class)) then
-					{
+				{
 					_scope = getNumber (_vehClass >> _class >> "Scope");
 					if (_scope == 2) then
-						{
+					{
 						_vehClass2 = _vehClass >> _class;
 						_side = getNumber (_vehClass2 >> "side");
 						_hasD = (getNumber (_vehClass2 >> "hasDriver")) > 0;
@@ -1442,46 +1581,80 @@ RYD_WS_DynamicRHQ =
 						_mainT = _turrets >> "MainTurret";
 						_isMainT = isClass _mainT;
 						_crew = toLower (getText (_vehClass2 >> "crew"));
-						_isAI = not ((_crew find "uav_ai") isEqualTo -1);
+						//_isAI = not ((_crew find "uav_ai") isEqualTo -1);
 						
-						if ((_side in [0,1,2]) and {not (_isAI)}) then
-							{
+						if (_side in [0,1,2]) then
+						{
 							_fac = toLower (getText (_vehClass2 >> "faction"));
 							
 							if not (_hasD) then
-								{													
+							{													
 								if (_isMainT) then
-									{
+								{
 									RHQ_Static set [(count RHQ_Static),_class];
 									
-									if (_fac in [(RYD_WS_FacA select 2),(RYD_WS_FacB select 2)]) then
+									if ((_fac) == (RYD_WS_FacA select 2)) then 
+									{
+										switch (RYD_WS_SideA) do
 										{
-										switch (_side) do
+											case (west):
 											{
-											case (0) : {RYD_WS_O_Static_G2 set [(count RYD_WS_O_Static_G2),_class]};
-											case (1) : {RYD_WS_B_Static_G2 set [(count RYD_WS_B_Static_G2),_class]};
-											case (2) : {RYD_WS_I_Static_G2 set [(count RYD_WS_I_Static_G2),_class]};
-											}
-										};
-									
+												RYD_WS_B_Static_G2 set [(count RYD_WS_B_Static_G2),_class];
+											};
+											case (resistance):
+											{
+												RYD_WS_I_Static_G2 set [(count RYD_WS_I_Static_G2),_class];
+											};
+											case (east):
+											{
+												RYD_WS_O_Static_G2 set [(count RYD_WS_O_Static_G2),_class];
+											};
+										}
+									};
+
+									if ((_fac) == (RYD_WS_FacB select 2)) then 
+									{
+										switch (RYD_WS_SideB) do
+										{
+											case (west):
+											{
+												RYD_WS_B_Static_G2 set [(count RYD_WS_B_Static_G2),_class];
+											};
+											case (resistance):
+											{
+												RYD_WS_I_Static_G2 set [(count RYD_WS_I_Static_G2),_class];
+											};
+											case (east):
+											{
+												RYD_WS_O_Static_G2 set [(count RYD_WS_O_Static_G2),_class];
+											};
+										}
+									};
+
 									_mags = getArray (_mainT >> "magazines");
 									
-										{
+									{
 										_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 										_ammoC = configfile >> "CfgAmmo" >> _ammo;
 										
 										_isAA = (getNumber (_ammoC >> "airLock")) > 1;
 										_isAT = ((((getNumber (_ammoC >> "irLock")) + (getNumber (_ammoC >> "laserLock"))) > 0) and ((getNumber (_ammoC >> "airLock")) < 2));
 										
-										if (_isAA) then {RHQ_StaticAA set [(count RHQ_StaticAA),_class]};
-										if (_isAT) then {RHQ_StaticAT set [(count RHQ_StaticAT),_class]};
+										if (_isAA) then 
+										{
+											RHQ_StaticAA set [(count RHQ_StaticAA),_class]
+										};
+										
+										if (_isAT) then 
+										{
+											RHQ_StaticAT set [(count RHQ_StaticAT),_class]
+										};
 											
 										if ((_isAA) or (_isAT)) exitWith {}
-										}
-									foreach _mags;
+									} foreach _mags;
 									
 									if ((getNumber (_vehClass2 >> "artilleryScanner")) > 0) then
-										{
+									{
 										RHQ_Art set [(count RHQ_Art),_class];
 										
 										_prim = "";
@@ -1491,23 +1664,22 @@ RYD_WS_DynamicRHQ =
 										_illum = "";
 
 										if (_isMainT) then
-											{
+										{
 											_mags = getArray (_mainT >> "magazines");
 											_maxHit = 10;
 											
-												{
+											{
 												_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 												_ammoC = configfile >> "CfgAmmo" >> _ammo;
 												
 												_actHit = getNumber (_ammoC >> "hit");
 												
 												if (_actHit > _maxHit) then
-													{
+												{
 													_maxHit = _actHit;
 													_prim = _x
-													}
 												}
-											foreach _mags;
+											} foreach _mags;
 											
 											_mags = _mags - [_prim];
 											_mags0 = +_mags;
@@ -1516,7 +1688,7 @@ RYD_WS_DynamicRHQ =
 											_rareChosen = false;
 											_secChosen = false;
 											
-												{
+											{
 												_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 												_ammoC = configfile >> "CfgAmmo" >> _ammo;
 												
@@ -1526,255 +1698,412 @@ RYD_WS_DynamicRHQ =
 												_subM = toLower (getText (_ammoC >> "submunitionAmmo"));
 												
 												if (_hit <= 10) then
-													{
+												{
 													if not (_subM in [""]) then
-														{
+													{
 														_ammoC = configfile >> "CfgAmmo" >> _subM;
 														_hit = getNumber (_ammoC >> "hit")
-														}
-													};
+													}
+												};
 
 												switch (true) do
-													{
+												{
 													case ((isArray _lc) and not (_illumChosen)) : 
-														{
+													{
 														_illum = _x;
 														_mags = _mags - [_x];
 														_illumChosen = true
-														};
+													};
 														
 													case ((_hit <= 10) and (_subM in ["smokeshellarty"]) and not (_smokeChosen)) : 
-														{
+													{
 														_smoke = _x;
 														_mags = _mags - [_x];
 														_smokeChosen = true
-														};
+													};
 														
 													case ((_sim in ["shotsubmunitions"]) and not (_rareChosen)) : 
-														{
+													{
 														_rare = _x;
 														_mags = _mags - [_x];
 														_rareChosen = true
-														};
+													};
 														
 													case ((_hit > 10) and not ((_secChosen) or (_rare == _x)))  : 
-														{
+													{
 														_sec = _x;
 														_mags = _mags - [_x];
 														_secChosen = true
-														}
 													}
 												}
-											foreach _mags0;
+											} foreach _mags0;
 											
 											if (_sec in [""]) then
-												{
+											{
 												_maxHit = 10;
 												
-													{
+												{
 													_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 													_ammoC = configfile >> "CfgAmmo" >> _ammo;
 													_subAmmo = _ammoC >> "subMunitionAmmo";
 													
 													if ((isText _subAmmo) and {not ((getText _subAmmo) in [""])}) then
-														{
+													{
 														_ammoC = configfile >> "CfgAmmo" >> (getText _subAmmo);
-														};
-														
+													};
+
 													_actHit = getNumber (_ammoC >> "hit");
 													
 													if (_actHit > _maxHit) then
-														{
+													{
 														_maxHit = _actHit;
 														_sec = _x
-														}
 													}
-												foreach _mags;
-												}
-											};
-											
+												} foreach _mags;
+											}
+										};
+
 										_arr = [_prim,_rare,_sec,_smoke,_illum];
 										if (({_x in [""]} count _arr) < 5) then
-											{
+										{
 											RydHQ_Add_OtherArty set [(count RydHQ_Add_OtherArty),[[_class],_arr]]
-											}
 										}
 									}
 								}
+							}
 							else
-								{
+							{
 								_isMan = isNumber (_vehClass2 >> "isMan");
 								
 								if (_isMan) then
-									{
+								{
 									_isMan = (getNumber (_vehClass2 >> "isMan")) > 0;
-									};
-								
+								};
+
 								if not (_isMan) then
-									{
+								{
 									_isAmmoS = (getNumber (_vehClass2 >> "transportAmmo")) > 0;
 									_isFuelS = (getNumber (_vehClass2 >> "transportFuel")) > 0;
 									_isRepS = (getNumber (_vehClass2 >> "transportRepair")) > 0;
 									_isMedS = (getNumber (_vehClass2 >> "attendant")) > 0;
-									
+
 									if (_isAmmoS) then 
-										{
+									{
 										RHQ_Ammo set [(count RHQ_Ammo),_class];
+
 										if not (_class in RHQ_Support) then
-											{
-											RHQ_Support set [(count RHQ_Support),_class]
-											}
-										};
-										
+										{
+											RHQ_Support set [(count RHQ_Support),_class];
+										}
+									};
+
 									if (_isFuelS) then 
-										{
+									{
 										RHQ_Fuel set [(count RHQ_Fuel),_class];
+
 										if not (_class in RHQ_Support) then
-											{
+										{
 											RHQ_Support set [(count RHQ_Support),_class]
-											}
-										};
-										
+										}
+									};
+
 									if (_isRepS) then 
-										{
+									{
 										RHQ_Rep set [(count RHQ_Rep),_class];
+
 										if not (_class in RHQ_Support) then
-											{
+										{
 											RHQ_Support set [(count RHQ_Support),_class]
-											}
-										};
-										
+										}
+									};
+
 									if (_isMedS) then 
-										{
+									{
 										RHQ_Med set [(count RHQ_Med),_class];
+
 										if not (_class in RHQ_Support) then
-											{
-											RHQ_Support set [(count RHQ_Support),_class]
-											}
-										};
-										
-									if (_class in RHQ_Support) then
 										{
+											RHQ_Support set [(count RHQ_Support),_class]
+										}
+									};
+
+									if (_class in RHQ_Support) then
+									{
 										_side = getNumber (_vehClass2 >> "side");
 
-										if (_fac in [(RYD_WS_FacA select 2),(RYD_WS_FacB select 2)]) then
-											{
-											switch (_side) do
-												{
-												case (0) : {RYD_WS_O_Support_G2 set [(count RYD_WS_O_Support_G2),_class]};
-												case (1) : {RYD_WS_B_Support_G2 set [(count RYD_WS_B_Support_G2),_class]};
-												case (2) : {RYD_WS_I_Support_G2 set [(count RYD_WS_I_Support_G2),_class]};
-												}
-											};
-										};
 										
-									if not (_class in (RYD_WS_Air_class + RHQ_Air)) then	
+										if ((_fac) == (RYD_WS_FacA select 2)) then 
 										{
+											switch (RYD_WS_SideA) do
+											{
+												case (west):
+												{
+													RYD_WS_B_Support_G2 set [(count RYD_WS_B_Support_G2),_class];
+												};
+												case (resistance):
+												{
+													RYD_WS_I_Support_G2 set [(count RYD_WS_I_Support_G2),_class];
+												};
+												case (east):
+												{
+													RYD_WS_O_Support_G2 set [(count RYD_WS_O_Support_G2),_class];
+												};
+											}
+										};
+
+										if ((_fac) == (RYD_WS_FacB select 2)) then 
+										{
+											switch (RYD_WS_SideB) do
+											{
+												case (west):
+												{
+													RYD_WS_B_Support_G2 set [(count RYD_WS_B_Support_G2),_class];
+												};
+												case (resistance):
+												{
+													RYD_WS_I_Support_G2 set [(count RYD_WS_I_Support_G2),_class];
+												};
+												case (east):
+												{
+													RYD_WS_O_Support_G2 set [(count RYD_WS_O_Support_G2),_class];
+												};
+											}
+										};
+									};
+									if not (_class in (RYD_WS_Air_class + RHQ_Air)) then	
+									{
 										_base = _class;
 										
 										while {not (_base in ["air"])} do
-											{
+										{
 											_base = inheritsFrom (_vehClass >> _base);
 											if not (isClass _base) exitWith {};
 											_base = toLower (configName _base);
 											if (_base in ["allvehicles","all"]) exitWith {};
-											};
-										
-										if (_base in ["air"]) then 
-											{
-											_isChopper = _sim in ["helicopterx","helicopterrtd"];
-											
-											_isUAV = if (isNumber (_vehClass2 >> "Uav")) then
-												{
-												((getNumber (_vehClass2 >> "Uav")) > 0)
-												}
-											else
-												{
-												false
-												};
-
-											if (_isChopper) then
-												{
-												_mainT = _turrets >> "MainTurret";
-												_isMainT = isClass _mainT;
-												
-												if ((getNumber (_vehClass2 >> "transportSoldier")) > 1) then 
-													{
-													RHQ_Cargo set [(count RHQ_Cargo),_class];
-													if ((((count _turrets) + (count ((getArray (_vehClass2 >> "Weapons")) - ["CMFlareLauncher"]))) < 1)) then
-														{
-														RHQ_NCCargo set [(count RHQ_NCCargo),_class];
-														}
-													};
-												
-												RHQ_Air set [(count RHQ_Air),_class];
-
-												if (_fac in [(RYD_WS_FacA select 2),(RYD_WS_FacB select 2)]) then
-													{
-													switch (_side) do
-														{
-														case (0) : {RYD_WS_O_Air_G2 set [(count RYD_WS_O_Air_G2),_class]};
-														case (1) : {RYD_WS_B_Air_G2 set [(count RYD_WS_B_Air_G2),_class]};
-														case (2) : {RYD_WS_I_Air_G2 set [(count RYD_WS_I_Air_G2),_class]};
-														}
-													};
-												
-												if ((((count _turrets) + (count ((getArray (_vehClass2 >> "Weapons")) - ["CMFlareLauncher"]))) < 1)) then
-													{
-													RHQ_NCAir set [(count RHQ_NCAir),_class];
-													}
-												};
-																								
-											if (_isUAV) then
-												{
-												RHQ_Air set [(count RHQ_Air),_class];
-												RHQ_RAir set [(count RHQ_RAir),_class]
-												}
-											}
 										};
 										
-									if not (_class in (RYD_WS_NCCargo_class + RHQ_NCCargo)) then
+										if (_base in ["air"]) then 
 										{
-										if not (_isMainT) then
+											_isChopper = _sim in ["helicopterx","helicopterrtd"];
+
+											_isUAV = (toLower (getText (_vehClass2 >> "crew"))) in ["b_uav_ai","i_uav_ai","o_uav_ai"];
+											//diag_log format ["%1, %2", [_isUAV], _class];
+
+											if (_isChopper) then
 											{
-											if (_isCargo) then
+												_mainT = _turrets >> "MainTurret";
+												_isMainT = isClass _mainT;
+
+												// get all possible weapons (more or less, doesnt count pylons yet)
+												_wpnsArr = getArray (_vehClass2 >> "Weapons");
+												if (_isMainT) then
 												{
-												if (_sim in ["carx","helicopterx","helicopterrtd"]) then
+													_wpnsArr = _wpnsArr + (getArray(_mainT >> "Weapons"));
+												};
+
+												// remove not actual weapons such as flares and etc
+												_wpnsArr = _wpnsArr - ["CMFlareLauncher", "FakeHorn", "Laserdesignator_mounted"];
+
+												//diag_log format ["%1, %2, %3, %4", [_wpnsArr], [count(_wpnsArr)], [count(_wpnsArr) isEqualTo 0], _class];
+
+												if ((getNumber (_vehClass2 >> "transportSoldier")) > 1) then 
+												{
+													RHQ_Cargo set [(count RHQ_Cargo),_class];
+
+													if (count(_wpnsArr) isEqualTo 0) then
 													{
-													if (_fac in [(RYD_WS_FacA select 2),(RYD_WS_FacB select 2)]) then
+														RHQ_NCCargo set [(count RHQ_NCCargo),_class];
+
+														if ((_fac) == (RYD_WS_FacA select 2)) then 
 														{
-														if (({_x} count [_isAmmoS,_isFuelS,_isRepS,_isMedS]) < 1) then
+															switch (RYD_WS_SideA) do
 															{
-															switch (_side) do
+																case (west):
 																{
-																case (0) : {RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class]};
-																case (1) : {RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class]};
-																case (2) : {RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class]};
-																}
+																	RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
+																};
+																case (resistance):
+																{
+																	RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
+																};
+																case (east):
+																{
+																	RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
+																};
 															}
-														}
+														};
+
+														if ((_fac) == (RYD_WS_FacB select 2)) then 
+														{
+															switch (RYD_WS_SideB) do
+															{
+																case (west):
+																{
+																	RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
+																};
+																case (resistance):
+																{
+																	RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
+																};
+																case (east):
+																{
+																	RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
+																};
+															}
+														};
+													}
+												};
+
+												RHQ_Air set [(count RHQ_Air),_class];
+
+												if ((_fac) == (RYD_WS_FacA select 2)) then 
+												{
+													switch (RYD_WS_SideA) do
+													{
+														case (west):
+														{
+															RYD_WS_B_Air_G2 set [(count RYD_WS_B_Air_G2),_class];
+														};
+														case (resistance):
+														{
+															RYD_WS_I_Air_G2 set [(count RYD_WS_I_Air_G2),_class];
+														};
+														case (east):
+														{
+															RYD_WS_O_Air_G2 set [(count RYD_WS_O_Air_G2),_class];
+														};
+													}
+												};
+
+												if ((_fac) == (RYD_WS_FacB select 2)) then 
+												{
+													switch (RYD_WS_SideB) do
+													{
+														case (west):
+														{
+															RYD_WS_B_Air_G2 set [(count RYD_WS_B_Air_G2),_class];
+														};
+														case (resistance):
+														{
+															RYD_WS_I_Air_G2 set [(count RYD_WS_I_Air_G2),_class];
+														};
+														case (east):
+														{
+															RYD_WS_O_Air_G2 set [(count RYD_WS_O_Air_G2),_class];
+														};
+													}
+												};
+
+												if (count(_wpnsArr) isEqualTo 0) then
+												{
+													RHQ_NCAir set [(count RHQ_NCAir),_class];
+												}
+											};
+
+											if (_isUAV) then
+											{
+												RHQ_Air set [(count RHQ_Air),_class];
+												RHQ_RAir set [(count RHQ_RAir),_class]
+											}
+										}
+									};
+									if not (_class in (RYD_WS_NCCargo_class + RHQ_NCCargo)) then
+									{
+										if not (_isMainT) then
+										{
+											if (_isCargo) then
+											{
+												if (_sim in ["carx","helicopterx","helicopterrtd"]) then
+												{
+													if (({_x} count [_isAmmoS,_isFuelS,_isRepS,_isMedS]) < 1) then
+													{
+														if ((_fac) == (RYD_WS_FacA select 2)) then 
+														{
+															switch (RYD_WS_SideA) do
+															{
+																case (west):
+																{
+																	RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
+																};
+																case (resistance):
+																{
+																	RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
+																};
+																case (east):
+																{
+																	RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
+																};
+															}
+														};
+
+														if ((_fac) == (RYD_WS_FacB select 2)) then 
+														{
+															switch (RYD_WS_SideB) do
+															{
+																case (west):
+																{
+																	RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
+																};
+																case (resistance):
+																{
+																	RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
+																};
+																case (east):
+																{
+																	RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
+																};
+															}
+														};
 													}
 												}
 											}
-										}	
-									}
+										}
+									}	
+								}
 								else
-									{
+								{
 									_desc = toLower (getText (_vehClass2 >> "textSingular"));
 									
 									if (_desc in ["officer"]) then
+									{
+										if ((_fac) == (RYD_WS_FacA select 2)) then 
 										{
-										if (_fac in [(RYD_WS_FacA select 2),(RYD_WS_FacB select 2)]) then
+											switch (RYD_WS_SideA) do
 											{
-											switch (_side) do
+												case (west):
 												{
-												case (0) : {RYD_WS_O_Officers_G2 set [(count RYD_WS_O_Officers_G2),_class]};
-												case (1) : {RYD_WS_B_Officers_G2 set [(count RYD_WS_B_Officers_G2),_class]};
-												case (2) : {RYD_WS_I_Officers_G2 set [(count RYD_WS_I_Officers_G2),_class]};
-												}
+													RYD_WS_B_Officers_G2 set [(count RYD_WS_B_Officers_G2),_class];
+												};
+												case (resistance):
+												{
+													RYD_WS_I_Officers_G2 set [(count RYD_WS_I_Officers_G2),_class];
+												};
+												case (east):
+												{
+													RYD_WS_O_Officers_G2 set [(count RYD_WS_O_Officers_G2),_class];
+												};
 											}
-										};									
-									}
+										};
+
+										if ((_fac) == (RYD_WS_FacB select 2)) then 
+										{
+											switch (RYD_WS_SideB) do
+											{
+												case (west):
+												{
+													RYD_WS_B_Officers_G2 set [(count RYD_WS_B_Officers_G2),_class];
+												};
+												case (resistance):
+												{
+													RYD_WS_I_Officers_G2 set [(count RYD_WS_I_Officers_G2),_class];
+												};
+												case (east):
+												{
+													RYD_WS_O_Officers_G2 set [(count RYD_WS_O_Officers_G2),_class];
+												};
+											}
+										};
+									};									
 								}
 							}
 						}
@@ -1782,7 +2111,8 @@ RYD_WS_DynamicRHQ =
 				}
 			}
 		}
-	};
+	}
+};
 	
 RYD_WS_isOnMap = 
 	{
@@ -2248,7 +2578,7 @@ RYD_WS_MapAnalyze =
 	};
 	
 RYD_WS_Battlefield = 
-	{
+{
 	_mode = _this select 0;
 	_taken = _this select 1;
 
@@ -2390,10 +2720,10 @@ RYD_WS_Battlefield =
 	foreach _posArray;
 	
 	_posArray
-	};
+};
 	
 RYD_WS_Forces = 
-	{
+{
 	_mode = _this select 0;
 	_scale = _this select 1;
 	_sides = _this select 2;
@@ -2415,58 +2745,58 @@ RYD_WS_Forces =
 	_armPool = [];	
 		
 	switch (_sides select 0) do
-		{
+	{
 		case (west) : 
-			{
+		{
 			_infPoolA = RYD_WS_B_Infantry_G;
 			_motPoolA = RYD_WS_B_Motorized_G;
 			_mechPoolA = RYD_WS_B_Mechanized_G;
 			_armPoolA = RYD_WS_B_Armored_G
-			};
+		};
 			
 		case (east) : 
-			{
+		{
 			_infPoolA = RYD_WS_O_Infantry_G;
 			_motPoolA = RYD_WS_O_Motorized_G;
 			_mechPoolA = RYD_WS_O_Mechanized_G;
 			_armPoolA = RYD_WS_O_Armored_G
-			};
+		};
 			
 		case (resistance) : 
-			{
+		{
 			_infPoolA = RYD_WS_I_Infantry_G;
 			_motPoolA = RYD_WS_I_Motorized_G;
 			_mechPoolA = RYD_WS_I_Mechanized_G;
 			_armPoolA = RYD_WS_I_Armored_G
-			};
 		};
+	};
 		
 	switch (_sides select 1) do
-		{
+	{
 		case (west) : 
-			{
+		{
 			_infPoolB = RYD_WS_B_Infantry_G;
 			_motPoolB = RYD_WS_B_Motorized_G;
 			_mechPoolB = RYD_WS_B_Mechanized_G;
 			_armPoolB = RYD_WS_B_Armored_G
-			};
+		};
 			
 		case (east) : 
-			{
+		{
 			_infPoolB = RYD_WS_O_Infantry_G;
 			_motPoolB = RYD_WS_O_Motorized_G;
 			_mechPoolB = RYD_WS_O_Mechanized_G;
 			_armPoolB = RYD_WS_O_Armored_G
-			};
+		};
 			
 		case (resistance) : 
-			{
+		{
 			_infPoolB = RYD_WS_I_Infantry_G;
 			_motPoolB = RYD_WS_I_Motorized_G;
 			_mechPoolB = RYD_WS_I_Mechanized_G;
 			_armPoolB = RYD_WS_I_Armored_G
-			};
 		};
+	};
 	
 	_forcesA_inf = [];
 	_forcesA_mot = [];
@@ -2478,8 +2808,11 @@ RYD_WS_Forces =
 	_forcesB_mech = [];
 	_forcesB_arm = [];
 	
-	_forces = [[_forcesA_inf,_forcesA_mot,_forcesA_mech,_forcesA_arm],[_forcesB_inf,_forcesB_mot,_forcesB_mech,_forcesB_arm]];
-		
+	_forces = [
+		[_forcesA_inf,_forcesA_mot,_forcesA_mech,_forcesA_arm],
+		[_forcesB_inf,_forcesB_mot,_forcesB_mech,_forcesB_arm]
+	];
+	
 	_arr = 0;
 	_gps = [];
 	
@@ -2493,105 +2826,104 @@ RYD_WS_Forces =
 	
 	//diag_log format ["A: %1 B: %2",_amountA,_amountB];
 	
-		{
+	{
 		_artyC = 0;
 		
 		_ratio = switch (_foreachIndex) do
-			{
+		{
 			case (0) : {RYD_WS_Ratio};
 			case (1) : {1/RYD_WS_Ratio};
-			};
-			
+		};
+		
 		_HSratio = switch (_foreachIndex) do
-			{
+		{
 			case (0) : {RYD_WS_HSRatio_A};
 			case (1) : {RYD_WS_HSRatio_B};
-			};
+		};
 		
 		_inf = switch (_foreachIndex) do
-			{
+		{
 			case (0) : {_forcesA_inf};
 			case (1) : {_forcesB_inf};
-			};
-			
+		};
+		
 		_mot = switch (_foreachIndex) do
-			{
+		{
 			case (0) : {_forcesA_mot};
 			case (1) : {_forcesB_mot};
-			};
-			
+		};
+		
 		_mech = switch (_foreachIndex) do
-			{
+		{
 			case (0) : {_forcesA_mech};
 			case (1) : {_forcesB_mech};
-			};
-			
+		};
+		
 		_arm = switch (_foreachIndex) do
-			{
+		{
 			case (0) : {_forcesA_arm};
 			case (1) : {_forcesB_arm};
-			};
-			
+		};
+		
 		switch (_foreachIndex) do
-			{
+		{
 			case (0) :
-				{
+			{
 				_infPool = _infPoolA;
 				_motPool = _motPoolA;
 				_mechPool = _mechPoolA;
 				_armPool = _armPoolA
-				};
+			};
 				
 			case (1) :
-				{
+			{
 				_infPool = _infPoolB;
 				_motPool = _motPoolB;
 				_mechPool = _mechPoolB;
 				_armPool = _armPoolB				
-				};
 			};
+		};
 
 		_amount = switch (_foreachIndex) do
-			{
+		{
 			case (0) : {_amountA};
 			case (1) : {_amountB};
-			};
+		};
 			
 		_mpl = 1;
 		
 		if (_mode == _foreachIndex) then
-			{
+		{
 			if ((random 100) < 90) then
-				{
+			{
 				_mpl = 0.75
-				};
+			};
 				
 			if ((random 100) < 85) then
-				{
+			{
 				if (((_foreachIndex == 0) and ((_amount * 1.5) > _amountB)) or ((_foreachIndex == 1) and ((_amount * 1.5) > _amountA))) then
-					{
+				{
 					_amount = ceil ((_amount/(1 + (random 0.75) + (random 0.75))));
-					}
 				}
-			};
+			}
+		};
 			
 		//diag_log format ["am: %1 sc: %2",_amount,_scale];
 		
 		_notEmpty = [];
 		_fcs = [_inf,_mot,_mech,_arm];
 		
-			{
+		{
 			if ((count _x) > 0) then
-				{
+			{
 				_notEmpty set [(count _notEmpty),[_x,_fcs select _foreachIndex]]
-				}
 			}
-		foreach [_infPool,_motPool,_mechPool,_armPool];
+		} foreach [_infPool,_motPool,_mechPool,_armPool];
 		
 		if ((count _notEmpty) > 0) then
-			{	
+		{	
 			for "_ixA" from 1 to _amount do
-				{
+			{
 				_rnd = (random 100) * _mpl;
 				
 				_infC = (50 * (((_topoCoeff * _HSratio) min 1.9) max 0.1));
@@ -2601,92 +2933,90 @@ RYD_WS_Forces =
 				//diag_log format ["tcoeff: %1 ratio: %2 infc: %3 motc: %4 mechc: %5 rnd: %6",_topoCoeff,_HSratio,_infC,_motC,_mechC,_rnd];
 				
 				switch (true) do
-					{
+				{
 					case (_rnd < _infC) :
-						{
+					{
 						_gps = _infPool;
 						_arr = _inf;
 						//diag_log format ["inf: %1",count _gps];
 						if ((count _gps) < 1) then
-							{
+						{
 							_sec = _notEmpty select (floor (random (count _notEmpty)));
 							_gps = _sec select 0;
 							_arr = _sec select 1
-							}
-						};
+						}
+					};
 						
 					case (_rnd < _motC) :
-						{
+					{
 						_gps = _motPool;
 						_arr = _mot;
 						//diag_log format ["mot: %1",count _gps];
 						if ((count _gps) < 1) then
-							{
+						{
 							_sec = _notEmpty select (floor (random (count _notEmpty)));
 							_gps = _sec select 0;
 							_arr = _sec select 1
-							}
-						};
+						}
+					};
 						
 					default
-						{
+					{
 						_rnd = (random 100) * _mpl;
 						
 						if (_rnd < _mechC) then
-							{
+						{
 							_gps = _mechPool;
 							_arr = _mech;
 							//diag_log format ["mech: %1",count _gps];
 							if ((count _gps) < 1) then
-								{
+							{
 								_sec = _notEmpty select (floor (random (count _notEmpty)));
 								_gps = _sec select 0;
 								_arr = _sec select 1
-								}							
-							}
+							}							
+						}
 						else
-							{
+						{
 							_gps = +_armPool;
 							_arr = _arm;
 							
 							if (0.5 < (random (1 + (_artyC^2)))) then
+							{
 								{
-									{
 									if (_x select 2) then
-										{
+									{
 										_gps set [_foreachIndex,0]
-										}
 									}
-								foreach _gps;
+								} foreach _gps;
 								
 								_gps = _gps - [0]
-								};
+							};
 							//diag_log format ["tank: %1",count _gps];
 							if ((count _gps) < 1) then
-								{
+							{
 								_sec = _notEmpty select (floor (random (count _notEmpty)));
 								_gps = _sec select 0;
 								_arr = _sec select 1
-								}
 							}
 						}
-					};
-					
+					}
+				};
+				
 				_gp = _gps select (floor (random (count _gps)));
 
 				if (_gp select 2) then
-					{
+				{
 					_artyC = _artyC + 1
-					};
+				};
 				
 				_arr set [(count _arr),[_gp select 0,_gp select 1,_gp select 3,_gp select 2]]
-				};
-			}
+			};
 		}
-	foreach [0,1];
+	} foreach [0,1];
 
 	_forces
-	};
+};
 	
 RYD_WS_FindLandPos = 
 	{
@@ -2888,101 +3218,139 @@ RYD_WS_SpawnGroupSafe =
 	_types = [];
 	
 	for "_ia" from 0 to ((count _chars) - 1) do 
-		{
+	{
 		_item = _chars select _ia;
 		
 		if (isClass _item) then 
-			{
+		{
 			_types set [(count _types),getText(_item >> "vehicle")];
 			_ranks set [(count _ranks),getText(_item >> "rank")];
 			
 			/*if (_ia > 0) then
-				{
+			{
 				_safePos = [_pos,0,100,12,0,4,0] call BIS_fnc_findSafePos;
 				_rP = [(_safePos select 0) - (_pos select 0),(_safePos select 1) - (_pos select 1),0.5];
 				_positions set [(count _positions),_rP]
-				}*/
-			};
+			}*/
 		};
+	};
 	
 	_grp = createGroup _side;
 	_ourVehs = [];
 	_azimuth = _this select 3;
 	
 	for "_ib" from 0 to ((count _types) - 1) do
-		{
+	{
 		_type = _types select _ib;
 		_itemPos0 = +_pos;
 		_itemPos = +_itemPos0;
 		_foundPos = false;
 		
 		if (getNumber(configFile >> "CfgVehicles" >> _type >> "isMan") == 1) then 
-			{
+		{
 			_itemPos0 = [_pos,0,160,10,0,4,0] call BIS_fnc_findSafePos;
 			_fe = not ((isOnRoad _itemPos0) or not ([_itemPos0] call RYD_WS_isOnMap));
 			_nR = _itemPos0 nearRoads 50;
-			if ((count _nR) > 0) then {_fe = false};
+			if ((count _nR) > 0) then 
+			{
+				_fe = false;
+			};
 			
 			if (_fe) then
-				{
+			{
 				_cl = [_itemPos0,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
-				if (((_cl distance _itemPos0) < 10) or ((_pos distance _itemPos0) > 5000)) then {_fe = false} else {_foundPos = true;_itemPos = _itemPos0}
-				};
+				if (((_cl distance _itemPos0) < 10) or ((_pos distance _itemPos0) > 5000)) then 
+				{
+					_fe = false;
+				} 
+				else 
+				{
+					_foundPos = true;
+					_itemPos = _itemPos0;
+				}
+			};
 			
 			_ct = 0;
 			
 			while {(not _fe)} do
-				{
+			{
 				_ct = _ct + 1;
 				if (_ct > 20) exitWith {};
 				_itemPos = [_itemPos0,10,100 + (_ct * 5)] call RYD_RandomAroundMM;
 				_itemPos = [_itemPos,0,160,10,0,4,0] call BIS_fnc_findSafePos;
 				_fe = not ((isOnRoad _itemPos) or not ([_itemPos] call RYD_WS_isOnMap));
 				_nR = _itemPos nearRoads 50;
-				if ((count _nR) > 0) then {_fe = false};
-				if (_fe) then
-					{
-					_cl = [_itemPos,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
-					if (((_cl distance _itemPos) < 10) or ((_pos distance _itemPos) > 5000)) then {_fe = false} else {_foundPos = true}
-					};
+				if ((count _nR) > 0) then 
+				{
+					_fe = false
 				};
-			}
+				if (_fe) then
+				{
+					_cl = [_itemPos,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
+					if (((_cl distance _itemPos) < 10) or ((_pos distance _itemPos) > 5000)) then 
+					{
+						_fe = false;
+					} 
+					else 
+					{
+						_foundPos = true;
+					}
+				};
+			};
+		}
 		else
-			{
+		{
 			_itemPos0 = [_pos,0,200,20,0,6,0] call BIS_fnc_findSafePos;
 			_fe = not ((isOnRoad _itemPos0) or not ([_itemPos0] call RYD_WS_isOnMap));
 			_nR = _itemPos0 nearRoads 300;
-			if ((count _nR) < 1) then {_fe = false};
+			if ((count _nR) < 1) then 
+			{
+				_fe = false
+			};
 			
 			if (_fe) then
-				{
+			{
 				_cl = [_itemPos0,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
-				if (((_cl distance _itemPos0) < 12) or ((_pos distance _itemPos0) > 5000)) then {_fe = false} else {_foundPos = true;_itemPos = _itemPos0}
-				};
+				if (((_cl distance _itemPos0) < 12) or ((_pos distance _itemPos0) > 5000)) then 
+				{
+					_fe = false;
+				} 
+				else 
+				{
+					_foundPos = true;
+					_itemPos = _itemPos0;
+				}
+			};
 			
 			_ct = 0;
 			
 			while {(not _fe)} do
-				{
+			{
 				_ct = _ct + 1;
 				if (_ct > 50) exitWith {};
 				_itemPos = [_itemPos0,10,100 + (_ct * 5)] call RYD_RandomAroundMM;
 				_itemPos = [_itemPos,0,200,20 - (_ct/10),0,6,0] call BIS_fnc_findSafePos;
 				_fe = not ((isOnRoad _itemPos) or not ([_itemPos] call RYD_WS_isOnMap));
 				_nR = _itemPos nearRoads (300 +_ct);
-				if ((count _nR) < 1) then {_fe = false};
+				if ((count _nR) < 1) then 
+				{
+					_fe = false
+				};
 				if (_fe) then
-					{
+				{
 					_cl = [_itemPos,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
 					if (((_cl distance _itemPos) < 12) or ((_pos distance _itemPos) > 5000)) then {_fe = false} else {_foundPos = true}
-					};
 				};
+			};
 				
 			//diag_log format ["ct: %1",_ct];
-			};
+		};
 			
-		 if not (_foundPos) exitWith {grpNull};
-				
+		if not (_foundPos) exitWith 
+		{
+			grpNull
+		};
+			
 		/*if ((count _positions) > 0) then 
 			{
 			_relPos = _positions select _ib;
@@ -2996,29 +3364,29 @@ RYD_WS_SpawnGroupSafe =
 		RYD_WS_SpawnPositions set [(count RYD_WS_SpawnPositions),_itemPos];
 
 		if (getNumber(configFile >> "CfgVehicles" >> _type >> "isMan") == 1) then 
-			{	
+		{	
 			_unit = _grp createUnit [_type, _itemPos, [], 0, "NONE"];
 			_unit setDir _azimuth;
-			} 
+		} 
 		else 
-			{
+		{
 			_unit = ([_itemPos, _azimuth, _type, _grp] call BIS_fnc_spawnVehicle) select 0;
 			
 			_isTurret = isClass (configfile >> "CfgVehicles" >> _type >> "Turrets" >> "MainTurret");
 			
 			if (_isTurret) then
-				{
+			{
 				_unit allowCrewInImmobile true
-				};
+			};
 			
 			_ourVehs set [(count _ourVehs),_unit];
-			};
+		};
 
 		if ((count _ranks) > 0) then 
-			{
+		{
 			[_unit,_ranks select _ib] call bis_fnc_setRank;
-			};
 		};
+	};
 		
 	_grp setFormDir _azimuth;
 		
@@ -3028,25 +3396,24 @@ RYD_WS_SpawnGroupSafe =
 	_ct = 0;
 	_am = {alive _x} count (units _grp);
 	while {(({alive _x} count (units _grp)) > 0)} do 
-		{
+	{
 		_maxRank = -1;
 		_unit = objnull;
 		
-			{
+		{
 			_rank = rankid _x;
 			if (_rank > _maxRank) then 
-				{
+			{
 				_maxRank = _rank;
 				_unit = _x
-				};
-			} 
-		foreach units _grp;
+			};
+		} foreach units _grp;
 		
 		[_unit] joinsilent _newGrp;
 		
 		_ct = _ct + 1;
 		if (_ct > (_am + 1)) exitWith {}
-		};
+	};
 		
 	_newGrp selectleader (units _newGrp select 0);
 	deletegroup _grp;
@@ -3054,56 +3421,55 @@ RYD_WS_SpawnGroupSafe =
 	if ((count (units _newGrp)) < 1) exitWith {grpNull};
 	
 	if ((random 100) < 30) then
-		{
+	{
 		_pItems = assignedItems (leader _newGrp);
-			
+
 		if not (({(toLower _x) in ["nvgoggles","nvgoggles_indep","nvgoggles_opfor"]} count _pItems) > 0) then
-			{
-			(leader _newGrp) linkItem "NVGoggles_INDEP"
-			};
-		};
-	
 		{
+			(leader _newGrp) linkItem "NVGoggles_INDEP"
+		};
+	};
+	
+	{
 		if ((random 100) < 100) then
-			{
+		{
 			_pItems = assignedItems _x;
 			
 			if not (({(toLower _x) in ["nvgoggles","nvgoggles_indep","nvgoggles_opfor"]} count _pItems) > 0) then
-				{
+			{
 				_pItems = primaryWeaponItems _x;
 				if not (({(toLower _x) in ["acc_flashlight","acc_pointer_ir"]} count _pItems) > 0) then
-					{
+				{
 					_x addPrimaryWeaponItem "acc_flashlight"
-					}
 				}
 			}
 		}
-	foreach (units _newGrp);
+	} foreach (units _newGrp);
 	
 	_newGrp setVariable ["RYD_WS_OurVehs",_ourVehs];
 		
 	if ((count _ourVehs) > 0) then
-		{
+	{
 		_out = [];
 
-			{
+		{
 			if (_x == (vehicle _x)) then
-				{
+			{
 				_out set [(count _out),_x]
-				}
 			}
+		}
 		foreach (units _newGrp);
 		
 		_imp = [+_out] call RYD_WS_SelectImportant;
-				
+
 		_unit = objNull;
 		_eD = 0;
 		_eG = 0;
 		_eC = 0;
 		
 		if ((count _out) > 0) then
-			{			
-				{
+		{			
+			{
 				_vh = _x;
 				
 				_eD = _vh emptyPositions "Driver";
@@ -3113,59 +3479,59 @@ RYD_WS_SpawnGroupSafe =
 				_vh setVariable ["RYD_WS_InitCrew",[_eD,_eG,_eC]];
 				
 				if (_eD > 0) then
-					{
+				{
 					if (_imp > 0) then
-						{
+					{
 						_unit = _imp select 0;
 						_imp = _imp - [_unit];
 						_out = _out - [_unit];
-						}
+					}
 					else
-						{
+					{
 						_unit = _out select 0;
 						_out = _out - [_unit];						
-						};
+					};
 						
 					_unit moveInDriver _vh				
-					};
+				};
 					
 				if not ((count _out) > 0) exitWith {};
 				
 				if (_eG > 0) then
-					{
+				{
 					if ((count _imp) > 0) then
-						{
+					{
 						_unit = _imp select 0;
 						_imp = _imp - [_unit];
 						_out = _out - [_unit];
-						}
+					}
 					else
-						{
+					{
 						_unit = _out select 0;
 						_out = _out - [_unit];						
-						};
+					};
 						
 					_unit moveInGunner _vh				
-					};
+				};
 				
 				if not ((count _out) > 0) exitWith {};
 				
 				if (_eC > 0) then
-					{
+				{
 					if ((count _imp) > 0) then
-						{
+					{
 						_unit = _imp select 0;
 						_imp = _imp - [_unit];
 						_out = _out - [_unit];
-						}
+					}
 					else
-						{
+					{
 						_unit = _out select 0;
 						_out = _out - [_unit];						
-						};
-						
-					_unit moveInCommander _vh				
 					};
+
+					_unit moveInCommander _vh				
+				};
 				
 				if not ((count _out) > 0) exitWith {};
 				
@@ -3173,18 +3539,18 @@ RYD_WS_SpawnGroupSafe =
 				_ct = _eP;
 
 				while {(_eP > 0)} do
-					{
+				{
 					if ((count _imp) > 0) then
-						{
+					{
 						_unit = _imp select 0;
 						_imp = _imp - [_unit];
 						_out = _out - [_unit];
-						}
+					}
 					else
-						{
+					{
 						_unit = _out select (floor (random (count _out)));
 						_out = _out - [_unit];						
-						};
+					};
 					
 					_unit moveInCargo _vh;
 					
@@ -3193,93 +3559,91 @@ RYD_WS_SpawnGroupSafe =
 					_eP = _vh emptyPositions "Cargo";
 					_ct = _ct - 1;
 					if (_ct < -2) exitWith {}		
-					};
+				};
 					
 				if not ((count _out) > 0) exitWith {};
-				}
+			}
 			foreach _ourVehs;
-				
+
 			if ((count _imp) > 0) then
+			{
 				{
-					{
 					_vh = _x;
 					
 					_iC = _vh getVariable ["RYD_WS_InitCrew",[0,0,0]];
 					_eD = _iC select 0;
 					_eG = _iC select 1;
 					_eC = _iC select 2;
-										
+
 					if (_eG == 0) then
-						{
+					{
 						_crw = gunner _vh;
 						if not (isNull _crw) then
-							{
+						{
 							if not (_crw == (leader _newGrp)) then
-								{
+							{
 								_unit = _imp select 0;
 								_imp = _imp - [_unit];
 								deleteVehicle _crw;
 								_unit moveInGunner _vh
-								}
-							}					
-						};
-						
+							}
+						}					
+					};
+
 					if not ((count _imp) > 0) exitWith {};
 
 					if (_eC == 0) then
-						{
+					{
 						_crw = commander _vh;
 						if not (isNull _crw) then
-							{
+						{
 							if not (_crw == (leader _newGrp)) then
-								{
+							{
 								_unit = _imp select 0;
 								_imp = _imp - [_unit];
 								deleteVehicle _crw;
 								_unit moveInCommander _vh
-								}
-							}							
-						};
-						
+							}
+						}							
+					};
+
 					if not ((count _imp) > 0) exitWith {};
 					
 					if (_eD == 0) then
-						{
+					{
 						_crw = driver _vh;
 						if not (isNull _crw) then
-							{
+						{
 							if not (_crw == (leader _newGrp)) then
-								{
+							{
 								_unit = _imp select 0;
 								_imp = _imp - [_unit];
 								deleteVehicle _crw;
 								_unit moveInDriver _vh;
 								_newGrp addVehicle _vh 
-								}
-							}					
-						};
-						
-					if not ((count _imp) > 0) exitWith {};
-					}
-				foreach _ourVehs
-				};
-			
-				{
-				if (_x == (vehicle _x)) then
-					{
-					deleteVehicle _x
-					}
-				}
-			foreach (units _newGrp)
+							}
+						}					
+					};
+
+				if not ((count _imp) > 0) exitWith {};
+				} foreach _ourVehs
 			};
+
+			{
+				if (_x == (vehicle _x)) then
+				{
+					deleteVehicle _x
+				}
+			} foreach (units _newGrp)
 		};
-				
+	};
+
 	_newGrp setVariable ["RYD_WS_GroupCount",{alive _x} count (units _newGrp)];
 	
 	[_newGrp] call RYD_WPdel;
 	
 	if (RYD_WS_Debug) then
-		{
+	{
 		_ic = "EMark_" + (str _newGrp);
 		_ic = createMarker [_ic,position (leader _newGrp)];
 		_ic setMarkerColor "colorBlue";
@@ -3288,37 +3652,36 @@ RYD_WS_SpawnGroupSafe =
 		_ic setMarkerSize [0.6,0.6];
 		_newGrp setVariable ["mymarker",_ic];
 		_ic setMarkerText (str _azimuth);
-		};
+	};
 		
 	if ((count _this) < 5) then
-		{	
+	{	
 		_checked = [];
 		
-			{
+		{
 			_vh = vehicle _x;
 			
 			if not (_vh in _checked) then
-				{
+			{
 				_checked set [(count _checked),_vh];
 				
 				if not (_vh == _x) then
+				{
 					{
-						{
 						_x enableSimulation false;
 						_x hideObject true
-						}
+					}
 					foreach (crew _vh)
-					};
+				};
 				
 				_vh enableSimulation false;
 				_vh hideObject true
-				}
 			}
-		foreach (units _newGrp);
-		};
+		} foreach (units _newGrp);
+	};
 
 	_newGrp
-	};
+};
 	
 RYD_WS_SelectImportant = 
 	{
@@ -3371,12 +3734,13 @@ RYD_WS_WindRose =
 	};
 	
 RYD_WS_SpawnAir = 
-	{
-	private ["_pos","_angle","_classPool","_gp","_dst","_checkPos","_fe","_ct","_vh","_posS","_class","_cl"];
+{
+	private ["_pos","_angle","_classPool","_side","_gp","_dst","_checkPos","_fe","_ct","_vh","_posS","_class","_cl"];
 	
 	_pos = _this select 0;
 	_angle = _this select 1;
 	_classPool = _this select 2;
+	_side = _this select 3;
 	
 	_gp = grpNull;
 	
@@ -3386,25 +3750,28 @@ RYD_WS_SpawnAir =
 
 	_fe = (count (_checkPos isflatempty [20,0,0.1,10,0,false,objNull])) > 0;
 	_nR = _checkPos nearRoads 50;
-	if ((count _nR) > 0) then {_fe = false};
+	if ((count _nR) > 0) then 
+	{
+		_fe = false;
+	};
 	
 	if (_fe) then
-		{
+	{
 		_cl = [_checkPos,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
 		if ((_cl distance _checkPos) < 12) then 
-			{
+		{
 			_fe = false
-			}
+		}
 		else
-			{
+		{
 			_fe = [_checkPos] call RYD_WS_isOnMap;
-			}
-		};
+		}
+	};
 	
 	_ct = 0;
 	
 	while {(not (_fe) or {isOnRoad _checkPos})} do
-		{
+	{
 		_ct = _ct + 1;
 		if (_ct > 50) exitWith {};
 		_dst = _dst + 5;
@@ -3412,24 +3779,27 @@ RYD_WS_SpawnAir =
 
 		_fe = (count (_checkPos isflatempty [20,0,0.1,10,0,false,objNull])) > 0;
 		_nR = _checkPos nearRoads 50;
-		if ((count _nR) > 0) then {_fe = false};
-		
-		if (_fe) then
-			{
-			_cl = [_checkPos,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
-			if ((_cl distance _checkPos) < 12) then 
-				{
-				_fe = false
-				}
-			else
-				{
-				_fe = [_checkPos] call RYD_WS_isOnMap;
-				}
-			};
+		if ((count _nR) > 0) then 
+		{
+			_fe = false;
 		};
 		
-	if (_fe) then
+		if (_fe) then
 		{
+			_cl = [_checkPos,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
+			if ((_cl distance _checkPos) < 12) then 
+			{
+				_fe = false;
+			}
+			else
+			{
+				_fe = [_checkPos] call RYD_WS_isOnMap;
+			}
+		};
+	};
+
+	if (_fe) then
+	{
 		_class = _classPool select (floor (random (count _classPool)));
 		
 		_vh = createVehicle [_class, _checkPos, [], 0, "FLY"];
@@ -3440,20 +3810,21 @@ RYD_WS_SpawnAir =
 		_vh setPos _checkPos;
 		_vh setVectorUP (surfaceNormal [_checkPos select 0,_checkPos select 1]);
 		
-		createVehicleCrew _vh;
+		_side createVehicleCrew _vh;
 		_gp = (group _vh) 
-		};
+	};
 		
 	_gp
-	};
+};
 	
 RYD_WS_SpawnStatic = 
-	{
-	private ["_pos","_angle","_classPool","_gp","_dst","_checkPos","_LOSpos","_isLOS","_fe","_ct","_vh","_posS","_class","_ep","_bags","_cl"];
+{
+	private ["_pos","_angle","_classPool","_side","_gp","_dst","_checkPos","_LOSpos","_isLOS","_fe","_ct","_vh","_posS","_class","_ep","_bags","_cl"];
 	
 	_pos = _this select 0;
 	_angle = _this select 1;
 	_classPool = _this select 2;
+	_side = _this select 3;
 	
 	_gp = grpNull;
 	
@@ -3466,22 +3837,22 @@ RYD_WS_SpawnStatic =
 	_fe = (count (_checkPos isflatempty [3,0,0.5,3,0,false,objNull])) > 0;
 	
 	if (_fe) then
-		{
+	{
 		_cl = [_checkPos,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
 		if ((_cl distance _checkPos) < 12) then 
-			{
+		{
 			_fe = false
-			}
+		}
 		else
-			{
+		{
 			_fe = [_checkPos] call RYD_WS_isOnMap;
-			}
-		};
+		}
+	};
 	
 	_ct = 0;
 	
 	while {(not (_isLOS) or not (_fe) or {isOnRoad _checkPos})} do
-		{
+	{
 		_ct = _ct + 1;
 		if (_ct > 50) exitWith {};
 		_dst = _dst + 5;
@@ -3492,23 +3863,23 @@ RYD_WS_SpawnStatic =
 		_fe = (count (_checkPos isFlatEmpty [3,0,0.5,3,0,false,objNull])) > 0;
 		
 		if (_fe) then
-			{
+		{
 			_cl = [_checkPos,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
 			if ((_cl distance _checkPos) < 12) then 
-				{
-				_fe = false
-				}
-			else
-				{
-				_fe = [_checkPos] call RYD_WS_isOnMap;
-				}
-			};
-		};
-		
-	if (_isLOS) then
-		{
-		if (_fe) then
 			{
+				_fe = false
+			}
+			else
+			{
+				_fe = [_checkPos] call RYD_WS_isOnMap;
+			}
+		};
+	};
+
+	if (_isLOS) then
+	{
+		if (_fe) then
+		{
 			_vh = createVehicle ["Land_BagFence_Round_F", _checkPos, [], 0, "NONE"];
 			_bags = _vh;
 			_vh setDir (_angle + 180);
@@ -3532,31 +3903,31 @@ RYD_WS_SpawnStatic =
 			_vh setPos _posS;
 			_vh setVectorUP (surfaceNormal [_posS select 0,_posS select 1]);
 			
-			createVehicleCrew _vh;
+			_side createVehicleCrew _vh;
 			
-				{
+			{
 				_x doWatch _LOSpos
-				}
-			foreach (crew _vh);
+			} foreach (crew _vh);
 			
 			_gp = (group _vh);
 			
 			_ep = (ASLtoATL (eyePos _vh)) select 2;
 			
-			if (_ep < 0.8) then {deleteVehicle _bags};
-			}
-		};
-		
-	_gp
+			deleteVehicle _bags;
+		}
 	};
+
+	_gp
+};
 	
 RYD_WS_SpawnSupport =
-	{
-	private ["_pos","_angle","_classPool","_gp","_dst","_checkPos","_fe","_ct","_vh","_posS","_class","_cl"];
+{
+	private ["_pos","_angle","_classPool","_side","_gp","_dst","_checkPos","_fe","_ct","_vh","_posS","_class","_cl"];
 	
 	_pos = _this select 0;
 	_angle = _this select 1;
 	_classPool = _this select 2;
+	_side = _this select 3;
 	
 	_gp = grpNull;
 	
@@ -3567,22 +3938,22 @@ RYD_WS_SpawnSupport =
 	_fe = (count (_checkPos isflatempty [6,0,2,10,0,false,objNull])) > 0;
 	
 	if (_fe) then
-		{
+	{
 		_cl = [_checkPos,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
 		if ((_cl distance _checkPos) < 12) then 
-			{
+		{
 			_fe = false
-			}
+		}
 		else
-			{
+		{
 			_fe = [_checkPos] call RYD_WS_isOnMap;
-			}
-		};
+		}
+	};
 	
 	_ct = 0;
 	
 	while {(not (_fe) or {isOnRoad _checkPos})} do
-		{
+	{
 		_ct = _ct + 1;
 		if (_ct > 50) exitWith {};
 		_dst = _dst + 5;
@@ -3591,88 +3962,76 @@ RYD_WS_SpawnSupport =
 		_fe = (count (_checkPos isflatempty [6,0,2,10,0,false,objNull])) > 0;
 		
 		if (_fe) then
-			{
+		{
 			_cl = [_checkPos,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
 			if ((_cl distance _checkPos) < 12) then 
-				{
+			{
 				_fe = false
-				}
+			}
 			else
-				{
+			{
 				_fe = [_checkPos] call RYD_WS_isOnMap;
-				}
-			};
+			}
 		};
-		
+	};
+
 	if (_fe) then
-		{
+	{
 		_class = _classPool select (floor (random (count _classPool)));
 		
 		_vh = createVehicle [_class, _checkPos, [], 0, "NONE"];
 		
 		if ((toLower _class) in (RYD_WS_ammo + RHQ_Ammo)) then
-			{
-			_side = getNumber (configFile >> "CfgVehicles" >> _class >> "side");
-			
-			_side = switch (_side) do
-				{
-				case (0) : {east};
-				case (1) : {west};
-				case (2) : {resistance};
-				};
-
+		{
 			_magsP = ["1Rnd_HE_Grenade_shell","HandGrenade"];
 			_magsS = [];
 			_wpClass = configFile >> "CfgWeapons";
 			
-				{
+			{
 				if ((side _x) == _side) then
-					{
+				{
 					_wpn = primaryWeapon _x;
 					if not (_wpn in [""]) then
-						{
+					{
 						_mgs = getArray (_wpClass >> _wpn >> "magazines");
 						
 						if ((count _mgs) > 0) then
-							{
+						{
 							_mg = _mgs select 0;
 							
 							if not (_mg in _magsP) then
-								{
+							{
 								_magsP set [(count _magsP),_mg]
-								}
 							}
-						};
-						
+						}
+					};
+
 					_wpn = secondaryWeapon _x;
 					if not (_wpn in [""]) then
-						{
+					{
 						_mgs = getArray (_wpClass >> _wpn >> "magazines");
 						
 						if ((count _mgs) > 0) then
-							{
+						{
 							_mg = _mgs select 0;
 							
 							if not (_mg in _magsS) then
-								{
+							{
 								_magsS set [(count _magsS),_mg]
-								}
 							}
 						}
 					}
 				}
-			foreach allUnits;
+			} foreach allUnits;
 			
-				{
+			{
 				_vh addMagazineCargo [_x, 100 + (random 40)];
-				}
-			foreach _magsP;
+			} foreach _magsP;
 			
-				{
+			{
 				_vh addMagazineCargo [_x, 32 + (random 24)];
-				}
-			foreach _magsS;
-			};
+			} foreach _magsS;
+		};
 		
 		RYD_WS_SpawnPositions set [(count RYD_WS_SpawnPositions),_checkPos];
 
@@ -3680,12 +4039,12 @@ RYD_WS_SpawnSupport =
 		_vh setPos _checkPos;
 		_vh setVectorUP (surfaceNormal [_checkPos select 0,_checkPos select 1]);
 		
-		createVehicleCrew _vh;
+		_side createVehicleCrew _vh;
 		_gp = (group _vh); 
-		};
-		
-	_gp
 	};
+
+	_gp
+};
 	
 RYD_WS_LOSCheck = 
 	{

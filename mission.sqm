@@ -5,17 +5,17 @@ class EditorData
 	angleGridStep=0.2617994;
 	scaleGridStep=1;
 	autoGroupingDist=10;
-	toggles=1;
+	toggles=5;
 	class ItemIDProvider
 	{
-		nextID=38;
+		nextID=72;
 	};
 	class Camera
 	{
-		pos[]={8649.8311,110.56296,23457.242};
-		dir[]={-0.0079746172,-0.9861964,0.16538784};
-		up[]={-0.047496874,0.16557571,0.98505259};
-		aside[]={0.99883991,-1.9645086e-09,0.048161667};
+		pos[]={8144.5352,283.19806,25001.982};
+		dir[]={0.77944309,-0.59860224,-0.18478106};
+		up[]={0.58245856,0.80104637,-0.13808233};
+		aside[]={-0.23067459,-7.4505806e-09,-0.97303104};
 	};
 };
 binarizationWanted=0;
@@ -23,7 +23,6 @@ sourceName="HWS_ALTIS";
 addons[]=
 {
 	"A3_Structures_F_Civ_Camping",
-	"ace_dragging",
 	"A3_Structures_F_EPC_Civ_Camping",
 	"A3_Structures_F_Items_Food",
 	"A3_Characters_F",
@@ -35,7 +34,7 @@ class AddonsMetaData
 {
 	class List
 	{
-		items=6;
+		items=5;
 		class Item0
 		{
 			className="A3_Structures_F";
@@ -45,33 +44,26 @@ class AddonsMetaData
 		};
 		class Item1
 		{
-			className="ace_dragging";
-			name="ACE3 - Dragging";
-			author="ACE-Team";
-			url="https://ace3.acemod.org/";
-		};
-		class Item2
-		{
 			className="A3_Structures_F_EPC";
 			name="Arma 3 Win Episode - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item3
+		class Item2
 		{
 			className="A3_Characters_F";
 			name="Arma 3 Alpha - Characters and Clothing";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item4
+		class Item3
 		{
 			className="A3_Modules_F";
 			name="Arma 3 Alpha - Scripted Modules";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item5
+		class Item4
 		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
