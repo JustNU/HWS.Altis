@@ -49,9 +49,6 @@ RydHQ_Add_OtherArty = [
 	[["B_Ship_MRLS_01_F"],["magazine_Missiles_Cruise_01_x18","magazine_Missiles_Cruise_01_x18","magazine_Missiles_Cruise_01_Cluster_x18","",""]]
 ];
 
-RydHQ_CargoFind = 100;   
-RydHQB_CargoFind = 100;
-
 RydHQ_SimpleMode = false;   
 RydHQB_SimpleMode = false;   
 
@@ -117,16 +114,16 @@ RYD_WS_FreeChoice =
 	
 	_code = 
 	{
-		params ["_units", "_pos", "_alt", "_shift"];
-		
-		if not (surfaceIsWater _pos) then
+		params ["_units", "_pos", "_alt", "_shift"];	
+
+		if (_alt) then
 		{
-			if (_alt) then
-			{
-				deleteMarker RYD_WS_BPMarker;
-				RYD_WS_BattlePosition = []
-			}
-			else
+			deleteMarker RYD_WS_BPMarker;
+			RYD_WS_BattlePosition = []
+		}
+		else
+		{
+			if (not (surfaceIsWater _pos) and {(isNil "RydBB_MC") or {(_pos inArea RydBB_MC)}}) then
 			{
 				RYD_WS_BattlePosition = _pos;
 				deleteMarker RYD_WS_BPMarker;
@@ -193,18 +190,44 @@ resistance setFriend [west, 0];
 east setFriend [resistance, 0];
 resistance setFriend [east, 0];
 
+if not (isNil "RydBB_MC") then
+{
+	_pos = position RydBB_MC;
+	_size = triggerArea RydBB_MC;
+	_size = [(_size select 0),(_size select 1)];
+	
+	RYD_WS_bMark = "BfdMark_" + (str _pos);
+	RYD_WS_bMark = createMarker [RYD_WS_bMark,_pos];
+	RYD_WS_bMark setMarkerColor "colorRed";
+	RYD_WS_bMark setMarkerShape "RECTANGLE";
+	RYD_WS_bMark setMarkerBrush "Border";
+	RYD_WS_bMark setMarkerSize _size;
+};
+
 RYD_WS_SpawnPositions = [[0,0,0]];
 
 RydBB_Debug = false;
 
 RydHQ_Debug = false;
 RydHQB_Debug = false;
+RydHQC_Debug = false;
+RydHQD_Debug = false;
+RydHQE_Debug = false;
+RydHQF_Debug = false;
 
 RydHQ_DebugII = false;
 RydHQB_DebugII = false;
+RydHQC_DebugII = false;
+RydHQD_DebugII = false;
+RydHQE_DebugII = false;
+RydHQF_DebugII = false;
 
 RydHQ_CargoFind = 100;
 RydHQB_CargoFind = 100;
+RydHQC_CargoFind = 100;
+RydHQD_CargoFind = 100;
+RydHQE_CargoFind = 100;
+RydHQF_CargoFind = 100;
 
 RydHQ_PathFinding = 100;
 
@@ -216,23 +239,58 @@ RydHQB_GetHQInside = true;
 
 RydHQ_IDChance = 15;
 RydHQB_IDChance = 15;
+RydHQC_IDChance = 15;
+RydHQD_IDChance = 15;
+RydHQE_IDChance = 15;
+RydHQF_IDChance = 15;
 
 RydHQ_DynForm = true;
 RydHQB_DynForm = true;
+RydHQC_DynForm = true;
+RydHQD_DynForm = true;
+RydHQE_DynForm = true;
+RydHQF_DynForm = true;
 
 RydHQ_AirEvac = true;
 RydHQB_AirEvac = true;
+RydHQC_AirEvac = true;
+RydHQD_AirEvac = true;
+RydHQE_AirEvac = true;
+RydHQF_AirEvac = true;
 
 RydHQ_AAO = true;
 RydHQB_AAO = true;
+RydHQC_AAO = true;
+RydHQD_AAO = true;
+RydHQE_AAO = true;
+RydHQF_AAO = true;
 
-RydHQ_Surr = true;
-RydHQB_Surr = true;
+RydHQ_Surr = false;
+RydHQB_Surr = false;
+RydHQC_Surr = false;
+RydHQD_Surr = false;
+RydHQE_Surr = false;
+RydHQF_Surr = false;
 
 RydHQ_Rush = true;
 RydHQB_Rush = true;
+RydHQC_Rush = true;
+RydHQD_Rush = true;
+RydHQE_Rush = true;
+RydHQF_Rush = true;
 
 RydHQ_ChatDebug = true;
+
+RydHQ_ExcludedG = [];
+RydHQB_ExcludedG = [];
+RydHQC_ExcludedG = [];
+RydHQD_ExcludedG = [];
+
+fakeLeaderHQ = objNull;
+fakeLeaderHQB = objNull;
+fakeLeaderHQC = objNull;
+fakeLeaderHQD = objNull;
+
 //RydHQ_GroupMarks = [west,east,resistance,civilian];
 
 RydHQ_SubAll = true;
@@ -267,9 +325,17 @@ RydHQ_Wait = 20;
 
 RydHQ_MoraleConst = 1.1;
 RydHQB_MoraleConst = 1.1;
+RydHQC_MoraleConst = 1.1;
+RydHQD_MoraleConst = 1.1;
+RydHQE_MoraleConst = 1.1;
+RydHQF_MoraleConst = 1.1;
 
 RydHQ_OffTend = 1.1;
 RydHQB_OffTend = 1.1;
+RydHQC_OffTend = 1.1;
+RydHQD_OffTend = 1.1;
+RydHQE_OffTend = 1.1;
+RydHQF_OffTend = 1.1;
 
 RYD_WS_Debug = false;
 
@@ -290,10 +356,32 @@ RYD_WS_Wounded_A = [];
 RYD_WS_HSRatio_A = 1;
 RYD_WS_HSRatio_B = 1;
 
+RYD_WS_MoraleObjCoeffL = 1;
+RYD_WS_MoraleObjCoeffG = 1;
+
+RYD_WS_ObjToTakeA = 0;
+RYD_WS_ObjToTakeB = 0;
+
+RYD_WS_ObjTakenA = 0;
+RYD_WS_ObjTakenB = 0;
+
+RYD_WS_TakeToWinA = -1;
+RYD_WS_TakeToWinB = -1;
+
 RYD_WS_Reset = true;
 RYD_WS_B_Factions = [["blu_f","NATO","BLUFOR"],["blu_g_f","FIA","BLUFOR"]];
 RYD_WS_O_Factions = [["opf_f","CSAT","OPFOR"]];
 RYD_WS_I_Factions = [["ind_f","AAF","INDEP"]];
+
+RYD_WS_HQGuardsA = [];
+RYD_WS_HQGuardsB = [];
+RYD_WS_LeadersPoofItsMagic = false;
+
+RYD_WS_wholeMap = false;
+RYD_WS_mixFactions = 0;
+
+RYD_WS_selFactionsA = profileNamespace getVariable ["RYD_WS_selFactionsA",[]];
+RYD_WS_selFactionsB = profileNamespace getVariable ["RYD_WS_selFactionsB",[]];
 
 RYD_WS_Fatigue = true;
 
@@ -418,11 +506,62 @@ RYD_WS_TakeValues =
 	
 	RYD_WS_FacA = missionNamespace getVariable [(str _ix)+"_fl_21000",[0,"NATO","blu_f","BLUFOR"]];
 	
+	RYD_WS_selFactionsA = [];
+	if ((RYD_WS_FacA select 1) isEqualTo "MULTI") then
+	{
+		_factions = switch (lbCurSel 2100) do
+		{		
+			case (RYD_ix_SideA_B) : {RYD_WS_B_Factions2};
+			case (RYD_ix_SideB_B) : {RYD_WS_B_Factions2};		
+			case (RYD_ix_SideA_I) : {RYD_WS_I_Factions2};
+			case (RYD_ix_SideB_I) : {RYD_WS_I_Factions2};
+			case (RYD_ix_SideA_O) : {RYD_WS_O_Factions2};
+			case (RYD_ix_SideB_O) : {RYD_WS_O_Factions2};
+		};	
+
+		_ctrl = (findDisplay 2500) displayCtrl 122;
+		if not ((count _factions) > 32) then
+		{
+			for "_i" from 0 to ((count _factions) - 1) do
+			{
+				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
+				{
+					RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
+				};
+			};
+		}
+		else
+		{
+			_ctrl2 = (findDisplay 2500) displayCtrl 124;			
+			for "_i" from 0 to 31 do
+			{
+				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
+				{
+					RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
+				};
+			};
+
+			for "_i" from 32 to ((count _factions) min 63) do
+			{
+				if ((_ctrl2 ctrlChecked (_i - 32)) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
+				{
+					RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
+				};
+			};
+		};
+	}
+	else
+	{
+		RYD_WS_selFactionsA = [[[(RYD_WS_FacA select 2),(RYD_WS_FacA select 1)], 0]]
+	};
+
+	if ((count RYD_WS_selFactionsA) < 1) exitWith {};
+	
 	//diag_log format ["RYD_WS_FacA: %1",RYD_WS_FacA];
 	
-	switch (_ix) do
+	switch (RYD_WS_FacA select 1) do
 	{
-		case (RYD_ix_FacA_FullR): 
+		case ("RANDOM FULLY"): 
 		{
 			_randomFactionFull = selectRandom RYD_WS_B_Factions2;
 			_randomFactionFull = [_ix, _randomFactionFull select 1, _randomFactionFull select 0, _randomFactionFull select 2];
@@ -434,9 +573,8 @@ RYD_WS_TakeValues =
 			//diag_log format ["_txt: %1",_txt];
 			//diag_log format ["RYD_WS_FacA select 2: %1",RYD_WS_FacA select 2];
 		};
-		case (RYD_ix_FacA_SideR):
+		case ("RANDOM BY SIDE"):
 		{
-
 			switch (RYD_WS_SideA) do
 			{
 				case (west):
@@ -465,7 +603,9 @@ RYD_WS_TakeValues =
 		};
 	};
 	
-	profileNamespace setVariable ["RYD_ix_FacA", RYD_WS_FacA select 0];
+	profileNamespace setVariable ["RYD_ix_FacA",(RYD_WS_FacA select 0)];
+	profileNamespace setVariable ["RYD_WS_selFactionsA",RYD_WS_selFactionsA];
+	
 	_txt = RYD_WS_FacA select 1;
 	
 	diag_log format ["RYD_WS_FacA: %1",RYD_WS_FacA];
@@ -498,9 +638,61 @@ RYD_WS_TakeValues =
 	
 	RYD_WS_FacB = missionNamespace getVariable [(str _ix)+"_fl_21010",[0,"CSAT","opf_f"]];
 	
-	switch (_ix) do
+	RYD_WS_selFactionsB = [];//profileNamespace getVariable ["RYD_WS_selFactionsB",[]];
+	if ((RYD_WS_FacB select 1) isEqualTo "MULTI") then
+	{		
+		_factions = switch (lbCurSel 2101) do
+		{		
+			case (RYD_ix_SideA_B) : {RYD_WS_B_Factions2};
+			case (RYD_ix_SideB_B) : {RYD_WS_B_Factions2};		
+			case (RYD_ix_SideA_I) : {RYD_WS_I_Factions2};
+			case (RYD_ix_SideB_I) : {RYD_WS_I_Factions2};
+			case (RYD_ix_SideA_O) : {RYD_WS_O_Factions2};
+			case (RYD_ix_SideB_O) : {RYD_WS_O_Factions2};
+		};	
+
+		_ctrl = (findDisplay 2500) displayCtrl 123;		
+		if not ((count _factions) > 32) then
+		{
+			for "_i" from 0 to ((count _factions) - 1) do
+			{
+				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
+				{
+					RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
+				};
+			};
+		}
+		else
+		{
+			_ctrl2 = (findDisplay 2500) displayCtrl 125;
+
+			for "_i" from 0 to 31 do
+			{
+				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
+				{
+					RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
+				};
+			};
+
+			for "_i" from 32 to ((count _factions) min 63) do
+			{
+				if ((_ctrl2 ctrlChecked (_i - 32)) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
+				{
+					RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
+				};
+			};
+		};
+	}
+	else
 	{
-		case (RYD_ix_FacB_FullR): 
+		RYD_WS_selFactionsB = [[[(RYD_WS_FacB select 2),(RYD_WS_FacB select 1)],0]]
+	};
+
+	if ((count RYD_WS_selFactionsB) < 1) exitWith {};
+	
+	switch (RYD_WS_FacB select 1) do
+	{
+		case ("RANDOM FULLY"): 
 		{
 			_randomFactionFull = selectRandom RYD_WS_B_Factions2;
 			_randomFactionFull = [_ix, _randomFactionFull select 1, _randomFactionFull select 0, _randomFactionFull select 2];
@@ -512,9 +704,8 @@ RYD_WS_TakeValues =
 			//diag_log format ["_txt: %1",_txt];
 			//diag_log format ["RYD_WS_FacA select 2: %1",RYD_WS_FacA select 2];
 		};
-		case (RYD_ix_FacB_SideR):
+		case ("RANDOM BY SIDE"):
 		{
-
 			_factionPool = [];
 			
 			switch (RYD_WS_SideB) do
@@ -550,7 +741,8 @@ RYD_WS_TakeValues =
 	
 	diag_log format ["RYD_WS_FacB: %1",RYD_WS_FacB];
 	
-	profileNamespace setVariable ["RYD_ix_FacB",RYD_WS_FacB select 0];
+	profileNamespace setVariable ["RYD_ix_FacB",(RYD_WS_FacB select 0)];
+	profileNamespace setVariable ["RYD_WS_selFactionsB",RYD_WS_selFactionsB];
 	
 	_txt = RYD_WS_FacB select 1;
 	
@@ -615,6 +807,7 @@ RYD_WS_TakeValues =
 
 	switch (_ix) do
 	{
+		case (RYD_ix_HSRA_0) : {RYD_WS_HSRatio_A = 0;_txt = "NONE"};
 		case (RYD_ix_HSRA_VL) : {RYD_WS_HSRatio_A = 2;_txt = "VERY LOW"};
 		case (RYD_ix_HSRA_L) : {RYD_WS_HSRatio_A = 1.5;_txt = "LOW"};
 		case (RYD_ix_HSRA_N) : {RYD_WS_HSRatio_A = 1;_txt = "NORMAL"};
@@ -622,14 +815,15 @@ RYD_WS_TakeValues =
 		case (RYD_ix_HSRA_VH) : {RYD_WS_HSRatio_A = 0.5;_txt = "VERY HIGH"};
 		case (RYD_ix_HSRA_R) :
 		{
-			_ix2 = floor (random 5);
+			_ix2 = floor (random 6);
 			switch (_ix2) do
 			{
-				case (0) : {RYD_WS_HSRatio_A = 2;_txt = "VERY LOW"};
-				case (1) : {RYD_WS_HSRatio_A = 1.5;_txt = "LOW"};
-				case (2) : {RYD_WS_HSRatio_A = 1;_txt = "NORMAL"};
-				case (3) : {RYD_WS_HSRatio_A = 0.75;_txt = "HIGH"};
-				case (4) : {RYD_WS_HSRatio_A = 0.5;_txt = "VERY HIGH"};
+				case (0) : {RYD_WS_HSRatio_A = 0;_txt = "NONE"};
+				case (1) : {RYD_WS_HSRatio_A = 2;_txt = "VERY LOW"};
+				case (2) : {RYD_WS_HSRatio_A = 1.5;_txt = "LOW"};
+				case (3) : {RYD_WS_HSRatio_A = 1;_txt = "NORMAL"};
+				case (4) : {RYD_WS_HSRatio_A = 0.75;_txt = "HIGH"};
+				case (5) : {RYD_WS_HSRatio_A = 0.5;_txt = "VERY HIGH"};
 			};
 		}
 	};
@@ -642,6 +836,7 @@ RYD_WS_TakeValues =
 
 	switch (_ix) do
 	{
+		case (RYD_ix_HSRB_0) : {RYD_WS_HSRatio_B = 0;_txt = "NONE"};
 		case (RYD_ix_HSRB_VL) : {RYD_WS_HSRatio_B = 2;_txt = "VERY LOW"};
 		case (RYD_ix_HSRB_L) : {RYD_WS_HSRatio_B = 1.5;_txt = "LOW"};
 		case (RYD_ix_HSRB_N) : {RYD_WS_HSRatio_B = 1;_txt = "NORMAL"};
@@ -649,14 +844,15 @@ RYD_WS_TakeValues =
 		case (RYD_ix_HSRB_VH) : {RYD_WS_HSRatio_B = 0.5;_txt = "VERY HIGH"};
 		case (RYD_ix_HSRB_R) :
 		{
-			_ix2 = floor (random 5);
+			_ix2 = floor (random 6);
 			switch (_ix2) do
 			{
-				case (0) : {RYD_WS_HSRatio_B = 2;_txt = "VERY LOW"};
-				case (1) : {RYD_WS_HSRatio_B = 1.5;_txt = "LOW"};
-				case (2) : {RYD_WS_HSRatio_B = 1;_txt = "NORMAL"};
-				case (3) : {RYD_WS_HSRatio_B = 0.75;_txt = "HIGH"};
-				case (4) : {RYD_WS_HSRatio_B = 0.5;_txt = "VERY HIGH"};
+				case (0) : {RYD_WS_HSRatio_B = 0;_txt = "NONE"};
+				case (1) : {RYD_WS_HSRatio_B = 2;_txt = "VERY LOW"};
+				case (2) : {RYD_WS_HSRatio_B = 1.5;_txt = "LOW"};
+				case (3) : {RYD_WS_HSRatio_B = 1;_txt = "NORMAL"};
+				case (4) : {RYD_WS_HSRatio_B = 0.75;_txt = "HIGH"};
+				case (5) : {RYD_WS_HSRatio_B = 0.5;_txt = "VERY HIGH"};
 			};
 		}
 	};
@@ -719,11 +915,37 @@ RYD_WS_TakeValues =
 		case (RYD_ix_Campaign_C) : {RYD_WS_CReset = false;RYD_WS_CAdd = true;_txt = "INCLUDE"};
 		case (RYD_ix_Campaign_O) : {RYD_WS_CReset = false;RYD_WS_CAdd = false;_txt = "EXCLUDE"};
 		case (RYD_ix_Campaign_R) : {RYD_WS_CReset = true;RYD_WS_CAdd = true;_txt = "RESET"};
+		//case (RYD_ix_Campaign_WM) : {RYD_WS_CReset = false;RYD_WS_CAdd = false;RYD_WS_WholeMap = true;RYD_WS_Scale = RYD_WS_Scale * 1.25;RYD_WS_LeadersPoofItsMagic = true;_txt = "WHOLE MAP"};
 	};
-		
+
 	profileNamespace setVariable ["RYD_ix_Campaign",_ix];
 	
 	_txtM = _txtM + (format ["<font size=13><br /><br />CAMPAIGN:</font><font color='#d0a900' size=12><br />%1</font>",_txt]);
+	
+	_ix = lbCurSel 2109;
+
+	switch (_ix) do
+	{
+		case (RYD_ix_FIS_0) : {RYD_WS_mixFactions = 0;_txt = "NONE"};
+		case (RYD_ix_FIS_L) : {RYD_WS_mixFactions = 0.25;_txt = "LOW"};
+		case (RYD_ix_FIS_N) : {RYD_WS_mixFactions = 0.5;_txt = "MEDIUM"};
+		case (RYD_ix_FIS_H) : {RYD_WS_mixFactions = 1;_txt = "WIDE"};
+		case (RYD_ix_FIS_R) :
+		{
+			_ix2 = floor (random 4);
+			switch (_ix2) do
+			{
+				case (0) : {RYD_WS_mixFactions = 0;_txt = "NONE"};
+				case (1) : {RYD_WS_mixFactions = 0.25;_txt = "LOW"};
+				case (2) : {RYD_WS_mixFactions = 0.5;_txt = "MEDIUM"};
+				case (3) : {RYD_WS_mixFactions = 1;_txt = "WIDE"};
+			};
+		}
+	};
+		
+	profileNamespace setVariable ["RYD_ix_FIS",_ix];
+	
+	_txtM = _txtM + (format ["<font size=13><br /><br />FACTIONS INTERSPACE:</font><font color='#d0a900' size=12><br />%1</font>",_txt]);
 	
 	RYD_WS_txtM = _txtM;	
 	
@@ -736,6 +958,8 @@ RYD_WS_TakeValues =
 	saveProfileNamespace;
 	
 	RYD_WS_Reset = false;
+	
+	closeDialog 1;
 };
 	
 finishMissionInit;
@@ -777,22 +1001,23 @@ RYD_FactionFill =
 	private ["_ctrl","_ix","_ctrlA","_ctrlB","_ctrlFill","_fac","_name","_factions","_newIx"];
 	
 	disableSerialization;
-	
+
 	_ctrl = _this select 0;
 	_ix = _this select 1;
 	
 	_ctrlA = (findDisplay 2500) displayCtrl 2100;
 	_ctrlB = (findDisplay 2500) displayCtrl 2101;
 	
+	_varSel = "RYD_ix_FacA";
+
 	_ctrlFill = switch (_ctrl) do
 	{
 		case (_ctrlA) : {21000};
-		case (_ctrlB) : {21010};
+		case (_ctrlB) : {_varSel = "RYD_ix_FacB";21010};
 	};
 
-
 	lbClear _ctrlFill;
-
+	
 	_factions = switch (_ix) do
 	{		
 		case (RYD_ix_SideA_B) : {RYD_WS_B_Factions2};
@@ -804,7 +1029,7 @@ RYD_FactionFill =
 		case (RYD_ix_SideB_O) : {RYD_WS_O_Factions2};
 		case (RYD_ix_SideB_R) : {RYD_WS_B_Factions2};
 	};
-	
+
 	{
 		_fac = _x select 0;
 		_name = _x select 1;
@@ -815,9 +1040,167 @@ RYD_FactionFill =
 		missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill), [_newIx, _name, toLower _fac, _side]];
 	} foreach _factions;
 	
-	lbSetCurSel [_ctrlFill, profileNamespace getVariable ["RYD_ix_FacA",0]];
+	_newIx = lbAdd [_ctrlFill, "MULTI"];
+	missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,"MULTI",""]];	
 	
+	_newIx = lbAdd [_ctrlFill, "RANDOM FULLY"];
+	missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,"RANDOM FULLY",""]];
+	
+	_newIx = lbAdd [_ctrlFill, "RANDOM BY SIDE"];
+	missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,"RANDOM BY SIDE",""]];
+
+	lbSetCurSel [_ctrlFill,(profileNamespace getVariable [_varSel,0])];
+
 	true
+};
+
+RYD_FactionFill_M = 
+{
+	private ["_ctrl","_ix","_sIx","_ctrlA","_ctrlB","_ctrlFill","_fac","_name","_factions","_myCtrl","_newIx","_facSel"];
+	
+	disableSerialization;
+
+	_ctrl = _this select 0;
+	_ix = _this select 1;
+	_sIx = _this select 2;
+	
+	_ctrlA = (findDisplay 2500) displayCtrl 21000;
+	_ctrlB = (findDisplay 2500) displayCtrl 21010;
+	
+	_facSel = RYD_WS_selFactionsA;
+	_ctrlFill = switch (_ctrl) do
+	{
+		case (_ctrlA) : {122};
+		case (_ctrlB) : {_facSel = RYD_WS_selFactionsB;123};
+	};
+		
+	_ctrlFill2 = switch (_ctrl) do
+	{
+		case (_ctrlA) : {124};
+		case (_ctrlB) : {125};
+	};
+
+	lbClear _ctrlFill;
+	lbClear _ctrlFill2;
+
+	_factions = switch (_sIx) do
+	{		
+		case (RYD_ix_SideA_B) : {RYD_WS_B_Factions2};
+		case (RYD_ix_SideB_B) : {RYD_WS_B_Factions2};		
+		case (RYD_ix_SideA_I) : {RYD_WS_I_Factions2};
+		case (RYD_ix_SideB_I) : {RYD_WS_I_Factions2};
+		case (RYD_ix_SideA_O) : {RYD_WS_O_Factions2};
+		case (RYD_ix_SideB_O) : {RYD_WS_O_Factions2};
+		case (RYD_ix_SideB_R) : {RYD_WS_B_Factions2};
+	};
+
+	_myCtrl = (findDisplay 2500) displayCtrl _ctrlFill;
+	_myCtrl2 = (findDisplay 2500) displayCtrl _ctrlFill2;
+	_myCtrl2 ctrlShow false;
+	
+	if not (_ix isEqualTo (count _factions)) exitwith 
+	{
+		//ctrlShow [_ctrlFill,false]
+		_myCtrl ctrlShow false;
+	}; 
+
+	if not ((count _factions) > 32)	then
+	{
+		{
+			//if (_foreachIndex > 31) exitWith {};
+			_fac = _x select 0;
+			_name = _x select 1;
+			
+			_newIx = lbAdd [_ctrlFill, _name];
+
+			missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,_name,toLower _fac]];
+		} foreach _factions;
+	}
+	else
+	{
+		for "_i" from 0 to 31 do
+		{
+			//if (_foreachIndex > 31) exitWith {};
+			_arr = _factions select _i;
+			_fac = _arr select 0;
+			_name = _arr select 1;
+			
+			_newIx = lbAdd [_ctrlFill, _name];
+
+			missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,_name,toLower _fac]];
+		};
+
+		for "_i" from 32 to (((count _factions) - 1) min 63) do
+		{
+			//if (_foreachIndex > 31) exitWith {};
+			_arr = _factions select _i;
+			_fac = _arr select 0;
+			_name = _arr select 1;
+			
+			_newIx = lbAdd [_ctrlFill2, _name];
+
+			missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill2),[_newIx,_name,toLower _fac]];
+		};				
+		
+		_myCtrl2 ctrlShow true;
+	};
+
+	//ctrlShow [_ctrlFill,true];
+	
+	if not ((count _factions) > 32)	then
+	{
+		_myCtrl ctrlShow true;
+		waitUntil
+		{
+			(ctrlShown _myCtrl)
+		};
+		
+		{
+			_myCtrl ctrlSetChecked [(_x select 1),true];
+		}
+		foreach _facSel;
+	}
+	else
+	{
+		_myCtrl ctrlShow true;
+		_myCtrl2 ctrlShow true;
+		
+		waitUntil
+		{
+			((ctrlShown _myCtrl) and {(ctrlShown _myCtrl2)})
+		};
+
+		{
+			_ix = _x select 1;
+			if not (_ix > 31) then
+			{
+				_myCtrl ctrlSetChecked [_ix,true];
+			}
+			else
+			{
+				_myCtrl2 ctrlSetChecked [(_ix - 32),true];
+			};
+		} foreach _facSel;		
+	};
+
+	true
+};
+	
+RYD_WS_ModeChange = 
+{
+	private ["_ctrl","_ix"];
+	
+	_ctrl = _this select 0;
+	_ix = _this select 1;
+	
+	if (_ix in [RYD_ix_Campaign_WM]) then
+	{
+		ctrlEnable [127, false]
+	}
+	else
+	{
+		ctrlEnable [127, true]
+	};
 };
 	
 RYD_SideFill = 
@@ -949,6 +1332,9 @@ RYD_WS_Dialog =
 	waitUntil {dialog};
 
 	ctrlShow [1, false];
+	ctrlShow [122,false];
+	ctrlShow [123,false];
+	
 	RYD_ix_SideA_B = lbAdd [2100, "BLUFOR"];
 	RYD_ix_SideA_I = lbAdd [2100, "INDEP"];
 	RYD_ix_SideA_O = lbAdd [2100, "OPFOR"];
@@ -967,16 +1353,12 @@ RYD_WS_Dialog =
 	
 	[((findDisplay 2500) displayCtrl 2100),profileNamespace getVariable ["RYD_ix_SideA",RYD_ix_SideA_B]] call RYD_FactionFill;
 	
-	RYD_ix_FacA_FullR = lbAdd [21000, "Fully Random"];
-	RYD_ix_FacA_SideR = lbAdd [21000, "Random By Side"];
-	
+	RYD_eh_FA = ((findDisplay 2500) displayCtrl 21000) ctrlAddEventHandler ["LBSelChanged","nul = (_this + [(lbCurSel 2100)]) spawn RYD_FactionFill_M"];
 	lbSetCurSel [21000, profileNamespace getVariable ["RYD_ix_FacA",0]];
 	
 	[((findDisplay 2500) displayCtrl 2101),profileNamespace getVariable ["RYD_ix_SideB",RYD_ix_SideB_O]] call RYD_FactionFill;
 	
-	RYD_ix_FacB_FullR = lbAdd [21010, "Fully Random"];
-	RYD_ix_FacB_SideR = lbAdd [21010, "Random By Side"];
-	
+	RYD_eh_FB = ((findDisplay 2500) displayCtrl 21010) ctrlAddEventHandler ["LBSelChanged","nul = (_this + [(lbCurSel 2101)]) spawn RYD_FactionFill_M"];
 	lbSetCurSel [21010, profileNamespace getVariable ["RYD_ix_FacB",0]];	
 	
 	RYD_ix_Scale_S = lbAdd [2102, "SMALL"];
@@ -1021,10 +1403,12 @@ RYD_WS_Dialog =
 	RYD_ix_Campaign_C = lbAdd [2106, "INCLUDE"];
 	RYD_ix_Campaign_O = lbAdd [2106, "EXCLUDE"];
 	RYD_ix_Campaign_R = lbAdd [2106, "RESET"];
+	//RYD_ix_Campaign_WM = lbAdd [2106, "WHOLE MAP"];
 
+	RYD_eh_FreeC = ((findDisplay 2500) displayCtrl 2106) ctrlAddEventHandler ["LBSelChanged","_this call RYD_WS_ModeChange;_this call RYD_WS_ModeChange"];
 	lbSetCurSel [2106, profileNamespace getVariable ["RYD_ix_Campaign",RYD_ix_Campaign_C]];
 	
-	
+	RYD_ix_HSRA_0 = lbAdd [2107, "NONE"];
 	RYD_ix_HSRA_VL = lbAdd [2107, "VERY LOW"];
 	RYD_ix_HSRA_L = lbAdd [2107, "LOW"];
 	RYD_ix_HSRA_N = lbAdd [2107, "NORMAL"];
@@ -1034,7 +1418,7 @@ RYD_WS_Dialog =
 
 	lbSetCurSel [2107, profileNamespace getVariable ["RYD_ix_HSRA",RYD_ix_HSRA_N]];
 	
-	
+	RYD_ix_HSRB_0 = lbAdd [2108, "NONE"];
 	RYD_ix_HSRB_VL = lbAdd [2108, "VERY LOW"];
 	RYD_ix_HSRB_L = lbAdd [2108, "LOW"];
 	RYD_ix_HSRB_N = lbAdd [2108, "NORMAL"];
@@ -1044,11 +1428,22 @@ RYD_WS_Dialog =
 
 	lbSetCurSel [2108, profileNamespace getVariable ["RYD_ix_HSRB",RYD_ix_HSRB_N]];
 	
+	RYD_ix_FIS_0 = lbAdd [2109, "NONE"];
+	RYD_ix_FIS_L = lbAdd [2109, "LOW"];
+	RYD_ix_FIS_N = lbAdd [2109, "MEDIUM"];
+	RYD_ix_FIS_H = lbAdd [2109, "WIDE"];
+	RYD_ix_FIS_R = lbAdd [2109, "RANDOM"];
+
+	lbSetCurSel [2109, profileNamespace getVariable ["RYD_ix_FIS",RYD_ix_FIS_0]];
+	
 	_code = profileNamespace getVariable ["RYD_ix_Code",""];
 	
 	ctrlSetText [120, _code];
 	
-	waitUntil {not (dialog)};
+	waitUntil 
+	{
+		not (dialog);
+	};
 	
 	if (RYD_WS_Reset) then
 	{
@@ -1056,7 +1451,7 @@ RYD_WS_Dialog =
 		
 		{
 			profileNamespace setVariable [_x,nil]
-		} foreach ["RYD_ix_SideA","RYD_ix_SideB","RYD_ix_FacA","RYD_ix_FacB","RYD_ix_Scale","RYD_ix_Daytime","RYD_ix_Weather","RYD_ix_Ratio","RYD_ix_Campaign","RYD_ix_HSRA","RYD_ix_HSRB","RYD_ix_Code"];
+		} 		foreach ["RYD_ix_SideA","RYD_ix_SideB","RYD_ix_FacA","RYD_ix_FacB","RYD_ix_Scale","RYD_ix_Daytime","RYD_ix_Weather","RYD_ix_Ratio","RYD_ix_Campaign","RYD_ix_HSRA","RYD_ix_HSRB","RYD_ix_FIS","RYD_ix_Code"];
 		
 		saveProfileNamespace;
 		
@@ -1082,107 +1477,6 @@ call compile preprocessFile "SC\CamManip.sqf";
 call RYD_WS_DynamicRHQ;
 call RYD_WS_MapAnalyze;
 
-_sectors = RydBB_Sectors;
-
-_sumAll = {(_x getVariable "Topo_SeaP") < 50} count _sectors;
-
-if (_sumAll < 1) exitWith 
-{
-	endLoadingScreen;
-	hintC "Initialization failed: No sufficient landmass";
-	sleep 0.1;
-	failMission "END1";
-};
-
-if (RYD_WS_CReset) then 
-{
-	{
-		deleteMarker _x
-	} foreach _cpMarks;
-	profileNamespace setVariable ["RYD_WS_MapColors" + worldName,[]];
-	saveProfileNamespace
-};
-
-_sumA = switch (RYD_WS_SideA) do
-{
-	case (west) : {_sumB};
-	case (east) : {_sumO};
-	case (resistance) : {_sumI};
-};
-	
-_sumB = switch (RYD_WS_SideB) do
-{
-	case (west) : {_sumB};
-	case (east) : {_sumO};
-	case (resistance) : {_sumI};
-};
-	
-_takenA = switch (RYD_WS_SideA) do
-{
-	case (west) : {_bTaken};
-	case (east) : {_oTaken};
-	case (resistance) : {_iTaken};
-};
-	
-_takenB = switch (RYD_WS_SideB) do
-{
-	case (west) : {_bTaken};
-	case (east) : {_oTaken};
-	case (resistance) : {_iTaken};
-};
-
-_rnd = random 1;
-
-_fA = (_sumA/(_sumAll max 1));
-_fB = (_sumB/(_sumAll max 1));
-
-_dAdv = _fA - _fB;
-
-_dAdef = _dAdv;
-if (_dAdef > 0) then 
-{
-	_dAdef = _dAdef/5
-};
-
-_dAatt = _dAdv;
-if (_dAatt < 0) then 
-{
-	_dAatt = _dAatt/5
-};
-
-_defChance = ((0.2 - _dAdef) max 0.05) min 0.75;
-_attChance = ((0.2 + _dAatt) max 0.05) min 0.75;
-
-//diag_log format ["defc: %1 attc: %2 fA: %3 fB: %4",_defChance,_attChance,_fA,_fB];
-
-_bType = switch (true) do
-{
-	case ((_rnd < _defChance) and ((_sumA > 0) or ((random 100) < 50))) : {0};//player def
-	case ((_rnd < (_defChance + _attChance)) and ((_sumB > 0) or ((random 100) < 50))) : {1};//AI def
-	default {2};// meeting engagement
-};
-	
-_battlefield = [_bType,[_takenB,_takenA]] call RYD_WS_Battlefield;
-
-_bfPos = _battlefield select 2;
-RYD_WS_BFPos = +_bfPos;
-RYD_WS_BFPos set [2,0];
-
-	/*{
-	_mark = "battlef" + str (random 1000);
-	_mark = [_mark,_x,"ColorBlue","ICON",[1.5,1.5],0,1,"mil_dot",(str ([_x,600] call RYD_WS_NearSea))] call RYD_Marker;
-	}
-foreach _battlefield;*/
-
-RYD_WS_BFRadius = (_battlefield select 0) distance (_battlefield select 1);
-
-_topo = [(_battlefield select 2),RYD_WS_BFRadius] call RYD_WS_Topo;
-
-_infFr = ((_topo select 0) + (_topo select 1) + (_topo select 2) + (_topo select 4))/100;
-
-_sideA = RYD_WS_SideA;
-_sideB = RYD_WS_SideB;
-
 if not (RYD_WS_Weather < 0) then
 {
 	0 setOvercast RYD_WS_Weather;
@@ -1191,26 +1485,11 @@ if not (RYD_WS_Weather < 0) then
 
 setDate [2030, 6, 24, RYD_WS_Daytime, 0];
 
-_percA = 1 + (_sumA/_sumAll);
-_percB = 1 + (_sumB/_sumAll);
 
-_sAdvantageA = _percA/_percB;
-_sAdvantageB = _percB/_percA;
-
-RYD_WS_AdvantageA = _sAdvantageA;
-RYD_WS_AdvantageB = _sAdvantageB;
-
-//diag_log format ["all: %1 adv: %2",_sumAll,_sAdvantageA];
-
-if (isNil "RydHQ_Muu") then {RydHQ_Muu = _sAdvantageB};
-if (isNil "RydHQB_Muu") then {RydHQB_Muu = _sAdvantageA};
-
-_forces = [_bType,RYD_WS_Scale,[_sideA,_sideB],_infFr] call RYD_WS_Forces;
-
-	/*{
-	diag_log format ["st: %1",_x];
-	}
-foreach RHQ_Static;*/
+_battlefield = [];
+_sideA = RYD_WS_SideA;
+_sideB = RYD_WS_SideB;
+_vehClass = configFile >> "CfgVehicles";
 
 _gpsA = [];
 _gpsB = [];
@@ -1218,580 +1497,940 @@ _gpsB = [];
 _fcsA = [];
 _fcsB = [];
 
-//_forces = [[_forcesA_inf,_forcesA_mot,_forcesA_mech,_forcesA_arm],[_forcesB_inf,_forcesB_mot,_forcesB_mech,_forcesB_arm]];
+_bType = 3;
 
-_sum = 0;
-
-	{
-		{
-			{
-			_sum = _sum + 1
-			}
-		foreach _x	
-		}
-	foreach _x
-	}
-foreach _forces;
-
-//diag_log format ["sum: %1",_sum];
-
-_sum = 2 * _sum;
-
-if (_sum == 0) then {_sum = 1};
+RYD_WS_AdvantageA = 1;
+RYD_WS_AdvantageB = 1;
 
 _prog = 0;
+_sum = 0;
 
+RydHQ_Obj1 = createTrigger ["EmptyDetector",[0,0,0]];
+RydHQ_Obj2 = createTrigger ["EmptyDetector",[0,0,0]];
+RydHQ_Obj3 = createTrigger ["EmptyDetector",[0,0,0]];
+RydHQ_Obj4 = createTrigger ["EmptyDetector",[0,0,0]];
+
+RydHQB_Obj1 = createTrigger ["EmptyDetector",[0,0,0]];
+RydHQB_Obj2 = createTrigger ["EmptyDetector",[0,0,0]];
+RydHQB_Obj3 = createTrigger ["EmptyDetector",[0,0,0]];
+RydHQB_Obj4 = createTrigger ["EmptyDetector",[0,0,0]];
+
+if not (RYD_WS_WholeMap) then
 {
-	_mainIx = _foreachIndex;
-	_mainPos = _battlefield select _foreachIndex;
-	_eyeOfBattle = _battlefield select 2;
+	_sectors = RydBB_Sectors;
 
-	if ((_mainPos distance _eyeOfBattle) < 500) then
+	_sumAll = {(_x getVariable "Topo_SeaP") < 50} count _sectors;
+
+	if (_sumAll < 1) exitWith 
 	{
-		_ix = 0;
-		if (_foreachIndex == 0) then
+		endLoadingScreen;
+		hintC "Initialization failed: No sufficient landmass";
+		sleep 0.1;
+		failMission "END1";
+	};
+
+	if (RYD_WS_CReset) then 
+	{
 		{
-			_ix = 1
-		};
-			
-		_eyeOfBattle = _battlefield select _ix
+			deleteMarker _x
+		} foreach _cpMarks;
+		profileNamespace setVariable ["RYD_WS_MapColors" + worldName,[]];
+		saveProfileNamespace
+	};
+
+	_sumA = switch (RYD_WS_SideA) do
+	{
+		case (west) : {_sumB};
+		case (east) : {_sumO};
+		case (resistance) : {_sumI};
 	};
 		
-	_dst = _mainPos distance _eyeOfBattle;
+	_sumB = switch (RYD_WS_SideB) do
+	{
+		case (west) : {_sumB};
+		case (east) : {_sumO};
+		case (resistance) : {_sumI};
+	};
+		
+	_takenA = switch (RYD_WS_SideA) do
+	{
+		case (west) : {_bTaken};
+		case (east) : {_oTaken};
+		case (resistance) : {_iTaken};
+	};
+		
+	_takenB = switch (RYD_WS_SideB) do
+	{
+		case (west) : {_bTaken};
+		case (east) : {_oTaken};
+		case (resistance) : {_iTaken};
+	};
+
+	_rnd = random 1;
+
+	_fA = (_sumA/(_sumAll max 1));
+	_fB = (_sumB/(_sumAll max 1));
+
+	_dAdv = _fA - _fB;
+
+	_dAdef = _dAdv;
+	if (_dAdef > 0) then {_dAdef = _dAdef/5};
+
+	_dAatt = _dAdv;
+	if (_dAatt < 0) then {_dAatt = _dAatt/5};
+
+	_defChance = ((0.2 - _dAdef) max 0.05) min 0.75;
+	_attChance = ((0.2 + _dAatt) max 0.05) min 0.75;
+
+	//diag_log format ["defc: %1 attc: %2 fA: %3 fB: %4",_defChance,_attChance,_fA,_fB];
+
+	_bType = switch (true) do
+	{
+		case ((_rnd < _defChance) and ((_sumA > 0) or ((random 100) < 50))) : {0};//player def
+		case ((_rnd < (_defChance + _attChance)) and ((_sumB > 0) or ((random 100) < 50))) : {1};//AI def
+		default {2};// meeting engagement
+	};	
+
+	_battlefield = [_bType,[_takenB,_takenA]] call RYD_WS_Battlefield;
+
+	_bfPos = _battlefield select 2;
+	RYD_WS_BFPos = +_bfPos;
+	RYD_WS_BFPos set [2,0];
+
+	/*{
+		_mark = "battlef" + str (random 1000);
+		_mark = [_mark,_x,"ColorBlue","ICON",[1.5,1.5],0,1,"mil_dot",(str ([_x,600] call RYD_WS_NearSea))] call RYD_Marker;
+	} foreach _battlefield;*/
+
+	RYD_WS_BFRadius = (_battlefield select 0) distance (_battlefield select 1);
+
+	_topo = [(_battlefield select 2),RYD_WS_BFRadius] call RYD_WS_Topo;
+
+	_infFr = ((_topo select 0) + (_topo select 1) + (_topo select 2) + (_topo select 4))/100;
 	
+	_forces = [_bType,RYD_WS_Scale,[_sideA,_sideB],_infFr] call RYD_WS_Forces;
+
+	//diag_log format ["all: %1 adv: %2",_sumAll,_sAdvantageA];
+	
+	_percA = 1 + (_sumA/_sumAll);
+	_percB = 1 + (_sumB/_sumAll);
+
+	_sAdvantageA = _percA/_percB;
+	_sAdvantageB = _percB/_percA;
+
+	RYD_WS_AdvantageA = _sAdvantageA;
+	RYD_WS_AdvantageB = _sAdvantageB;
+	
+	if (isNil "RydHQ_Muu") then {RydHQ_Muu = _sAdvantageB};
+	if (isNil "RydHQB_Muu") then {RydHQB_Muu = _sAdvantageA};
+
+	/*{
+		diag_log format ["st: %1",_x];
+	} foreach RHQ_Static;*/
+
+	//_forces = [[_forcesA_inf,_forcesA_mot,_forcesA_mech,_forcesA_arm],[_forcesB_inf,_forcesB_mot,_forcesB_mech,_forcesB_arm]];
+
 	{
 		{
-			//diag_log format ["GP: %1",_x];
-			_posL = _mainPos;
-			_dir = [_mainPos,_eyeOfBattle,10] call RYD_AngTowards;
-			
-			if (_x select 3) then
 			{
-				_posL = [_posL,_dir + 190 - (random 20),(((random (_dst/3)) + (random (_dst/3))) min 2000) max 1000] call RYD_PosTowards2D
-			};	
+				_sum = _sum + 1
+			} foreach _x	
+		} foreach _x
+	} foreach _forces;
 
-			_posL = [_posL,50,350,100,50] call RYD_WS_FindLandPos;
+	//diag_log format ["sum: %1",_sum];
 
-			_spawnPos = [_posL,0,300,12,0,5,0] call BIS_fnc_findSafePos;
-			
-			_spawnPos set [2,0];	
-			
-			_type = _x select 1;
-			_side = _x select 0;
-			
-			_gp = [_spawnPos,_side,_type,_dir,true] call RYD_WS_SpawnGroupSafe;
-			
-			_gp setVariable ["RYD_WS_myKind",_x select 2];
-			
-			_prog = _prog + 1;
-			
-			progressLoadingScreen (0.5 + (_prog/_sum));
-			
-			if not (isNull _gp) then
+	_sum = 2 * _sum;
+
+	if (_sum == 0) then {_sum = 1};
+
+	{
+		_mainIx = _foreachIndex;
+		_mainPos = _battlefield select _foreachIndex;
+		_eyeOfBattle = _battlefield select 2;
+
+		if ((_mainPos distance _eyeOfBattle) < 500) then
+		{
+			_ix = 0;
+			if (_foreachIndex == 0) then
 			{
-				switch (_mainIx) do
+				_ix = 1
+			};
+
+			_eyeOfBattle = _battlefield select _ix
+		};
+
+		_dst = _mainPos distance _eyeOfBattle;
+		
+		{
+			{
+				_type = _x select 1;
+				
+				_faction = _type >> "faction";
+
+				_faction = if (isText _faction) then 
 				{
-					case (0) : 
+					(toLower (getText _faction))
+				}
+				else
+				{
+					""
+				};
+					
+				//diag_log format ["GP: %1",_x];
+				_posL = _mainPos;
+				
+				_dir = [_mainPos,_eyeOfBattle,10] call RYD_AngTowards;
+				
+				if (_x select 3) then
+				{
+					_posL = [_posL,_dir + 190 - (random 20),(((random (_dst/3)) + (random (_dst/3))) min 2000) max 1000] call RYD_PosTowards2D
+				};
+
+				if not (RYD_WS_mixFactions == 0) then
+				{
+					_offset = 0;
+
+					if not (_faction isEqualTo "") then
 					{
-						_gpsA set [(count _gpsA),_gp];
-						_fcsA = _fcsA + (units _gp)
-					};
-						
-					case (1) : 
-					{
-						_gpsB set [(count _gpsB),_gp];
-						_fcsB = _fcsB + (units _gp)
+						_cntF = 0;
+						_ixF = -1;
+
+						{						
+							{
+								if (((_x select 0) select 0) isEqualTo _faction) exitWith
+								{
+									_ixF = _foreachIndex
+								};
+									
+								if not (_ixF < 0) exitWith {};
+							}
+							foreach _x;
+							
+							if not (_ixF < 0) exitWith {_cntF = count _x};
+						} foreach [RYD_WS_selFactionsA,RYD_WS_selFactionsB];
+
+						if (_cntF > 0) then
+						{
+							_val = _ixF - (_cntF/2);
+							_sgn = if (_val == 0) then
+							{
+								1
+							}
+							else
+							{
+								(_val/(abs _val))
+							};
+								
+							_offset = ((_dst/3) + 100) * (abs _val) * RYD_WS_mixFactions;
+							_offDir = if (_sgn < 0) then
+							{
+								(_dir - 90)
+							}
+							else
+							{
+								(_dir + 90)
+							};
+							
+							_posL = _posL getPos [_offset,_offDir];
+
+							/*_ic = "offMark_" + (str _posL);
+							_ic = createMarker [_ic,_posL];
+							_ic setMarkerColor "colorBlue";
+							_ic setMarkerShape "ICON";
+							_ic setMarkerType "mil_box";
+							_ic setMarkerSize [0.8,0.8];
+							_ic setMarkerText (str [_faction,_cntF,_ixF,_offset,round _offDir]);*/
+						}
 					};
 				};
-			}
-		} foreach _x	
-	} foreach _x
-} foreach _forces;
 
-_vehClass = configFile >> "CfgVehicles";
+				_posL = [_posL,50,350,100,50] call RYD_WS_FindLandPos;
 
-{
-	_sec = [RydHQ_Sec1,RydHQ_Sec2,RydHQ_IdleDecoy];
-	if (_foreachIndex == 1) then 
-	{
-		_sec = [RydHQB_Sec1,RydHQB_Sec2,RydHQB_IdleDecoy]
-	};
+				_spawnPos = [_posL,0,300,12,0,5,0,[],[_posL,_posL]] call BIS_fnc_findSafePos;
+				
+				_spawnPos set [2,0];	
+				
+				_side = _x select 0;
+				
+				_gp = [_spawnPos,_side,_type,_dir,true] call RYD_WS_SpawnGroupSafe;
+
+				_gp setVariable ["RYD_WS_myKind",_x select 2];
+				
+				_prog = _prog + 1;
+				
+				progressLoadingScreen (0.5 + (_prog/_sum));
+				
+				if not (isNull _gp) then
+				{
+					switch (_mainIx) do
+					{
+						case (0) : 
+						{
+							_gpsA set [(count _gpsA),_gp];
+							_fcsA = _fcsA + (units _gp)
+						};
+						case (1) : 
+						{
+							_gpsB set [(count _gpsB),_gp];
+							_fcsB = _fcsB + (units _gp)
+						};
+					};
+				}
+			} foreach _x	
+		} foreach _x
+	} foreach _forces;
 	
-	_mainIx = _foreachIndex;
-	_mainPos = switch (_foreachIndex) do
+	RydHQ_Sec1 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQ_Sec2 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQB_Sec1 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQB_Sec2 = createTrigger ["EmptyDetector",[0,0,0]];
+	
+	RydHQ_IdleDecoy = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQB_IdleDecoy = createTrigger ["EmptyDetector",[0,0,0]];
+	
+	[] spawn
 	{
-		case (0) : {(_battlefield select 0)};
-		case (1) : {(_battlefield select 1)};
+		sleep 5;
+		
+		RydHQ_IdleDecoy setTriggerArea [150,150,0,true];
+		RydHQB_IdleDecoy setTriggerArea [150,150,0,true];
 	};
-		
-	_opPos = switch (_foreachIndex) do
+
 	{
-		case (0) : {(_battlefield select 1)};
-		case (1) : {(_battlefield select 0)};
-	};
-		
-	_perc = switch (_foreachIndex) do
-	{
-		case (0) : {_percA};
-		case (1) : {_percB};
-	};
-		
-	_eyeOfBattle = _battlefield select 2;
-		
-	if ((_mainPos distance _eyeOfBattle) < 500) then
-	{
-		_ix = 0;
-		if (_foreachIndex == 0) then
+		_sec = [RydHQ_Sec1,RydHQ_Sec2,RydHQ_IdleDecoy];
+		if (_foreachIndex == 1) then 
 		{
-			_ix = 1
+			_sec = [RydHQB_Sec1,RydHQB_Sec2,RydHQB_IdleDecoy]
+		};
+		
+		_mainIx = _foreachIndex;
+		_mainPos = switch (_foreachIndex) do
+		{
+			case (0) : {(_battlefield select 0)};
+			case (1) : {(_battlefield select 1)};
 		};
 			
-		_eyeOfBattle = _battlefield select _ix
-	};
-		
-	_dir = [_mainPos,_eyeOfBattle,10] call RYD_AngTowards;
-	_dirL = [_mainPos,_opPos,10] call RYD_AngTowards;
-	_dst = _mainPos distance _eyeOfBattle;
-	
-	_ldrClassArr = [];
-	
-	switch (_x) do
-	{
-		case (west) : 
+		_opPos = switch (_foreachIndex) do
 		{
-			_ldrClassArr = RYD_WS_B_Officers_G2;
-			if ((count _ldrClassArr) < 1) then
+			case (0) : {(_battlefield select 1)};
+			case (1) : {(_battlefield select 0)};
+		};
+			
+		_perc = switch (_foreachIndex) do
+		{
+			case (0) : {_percA};
+			case (1) : {_percB};
+		};
+			
+		_eyeOfBattle = _battlefield select 2;
+			
+		if ((_mainPos distance _eyeOfBattle) < 500) then
+		{
+			_ix = 0;
+			if (_foreachIndex == 0) then
 			{
-				_ldrClassArr = ["B_officer_F"];
-			}
+				_ix = 1
+			};
+
+			_eyeOfBattle = _battlefield select _ix
+		};
+			
+		_dir = [_mainPos,_eyeOfBattle,10] call RYD_AngTowards;
+		_dirL = [_mainPos,_opPos,10] call RYD_AngTowards;
+		_dst = _mainPos distance _eyeOfBattle;
+		
+		_ldrClassArr = [];
+		
+		switch (_x) do
+		{
+			case (west) : 
+			{
+				_ldrClassArr = RYD_WS_B_Officers_G2;
+				if ((count _ldrClassArr) < 1) then
+				{
+					_ldrClassArr = ["B_officer_F"];
+				}
+			};
+
+			case (east) : 
+			{
+				_ldrClassArr = RYD_WS_O_Officers_G2;
+				if ((count _ldrClassArr) < 1) then
+				{
+					_ldrClassArr = ["O_officer_F"];
+				}
+			};
+
+			case (resistance) : 
+			{
+				_ldrClassArr = RYD_WS_I_Officers_G2;
+				if ((count _ldrClassArr) < 1) then
+				{
+					_ldrClassArr = ["I_officer_F"];
+				}
+			};
 		};
 
-		case (east) : 
-		{
-			_ldrClassArr = RYD_WS_O_Officers_G2;
-			if ((count _ldrClassArr) < 1) then
-			{
-				_ldrClassArr = ["O_officer_F"];
-			}
-		};
+		_ldrClass = _ldrClassArr select (floor (random (count _ldrClassArr)));
 
-		case (resistance) : 
-		{
-			_ldrClassArr = RYD_WS_I_Officers_G2;
-			if ((count _ldrClassArr) < 1) then
-			{
-				_ldrClassArr = ["I_officer_F"];
-			}
-		};
-	};
+		_ldrGp = createGroup _x;
+		_ldrPos0 = +_mainPos;
 		
-	_ldrClass = _ldrClassArr select (floor (random (count _ldrClassArr)));
+		_ldrPos0 = [_ldrPos0,_dirL + 180,((_dst/3) min 800) max 500] call RYD_PosTowards2D;
 		
-	_ldrGp = createGroup _x;
-	
-	_ldrPos0 = +_mainPos;
-	
-	_ldrPos0 = [_ldrPos0,_dirL + 180,((_dst/3) min 800) max 500] call RYD_PosTowards2D;
-	
-	_ldrPos = [_ldrPos0,0,160,5,0,1.5,0] call BIS_fnc_findSafePos;
-	_fe = not (isOnRoad _ldrPos);
-	_nR = _ldrPos nearRoads 50;
-	if (((count _nR) > 0) or ((_ldrPos0 distance _ldrPos) > 5000)) then {_fe = false};
-	_ct = 0;
-	
-	while {(not _fe)} do
-	{
-		_ldrPos = [_ldrPos0,10,100 + (_ct * 5)] call RYD_RandomAroundMM;
-		_ldrPos = [_ldrPos,0,160,5,0,1.5,0] call BIS_fnc_findSafePos;
-		_ct = _ct + 1;
-		if (_ct > 20) exitWith {};
+		_ldrPos = [_ldrPos0,0,160,5,0,1.5,0,[],[_ldrPos0,_ldrPos0]] call BIS_fnc_findSafePos;
 		_fe = not (isOnRoad _ldrPos);
 		_nR = _ldrPos nearRoads 50;
 		if (((count _nR) > 0) or ((_ldrPos0 distance _ldrPos) > 5000)) then {_fe = false};
-	};
-
-//_mark = [str (random 1000),_ldrPos,"ColorPink","ICON",[1.25,1.25],0,1,"mil_triangle",""] call RYD_Marker;
-	
-	switch (_foreachIndex) do
-	{
-		case (0) :
+		_ct = 0;
+		
+		while {(not _fe)} do
 		{
-			leaderHQ = _ldrGp createUnit [_ldrClass, _ldrPos, [], 0, "NONE"];
-			leaderHQ setDir _dir;
-			[leaderHQ] joinSilent _ldrGp;
-			(group leaderHQ) setVariable ["RydHQ_MyDir",_dir]
+			_ldrPos = [_ldrPos0,10,100 + (_ct * 5)] call RYD_RandomAroundMM;
+			_ldrPos = [_ldrPos,0,160,5,0,1.5,0,[],[_ldrPos,_ldrPos]] call BIS_fnc_findSafePos;
+			_ct = _ct + 1;
+			if (_ct > 20) exitWith {};
+			_fe = not (isOnRoad _ldrPos);
+			_nR = _ldrPos nearRoads 50;
+			if (((count _nR) > 0) or ((_ldrPos0 distance _ldrPos) > 5000)) then {_fe = false};
 		};
 			
-		case (1) :
-		{
-			leaderHQB = _ldrGp createUnit [_ldrClass, _ldrPos, [], 0, "NONE"];
-			leaderHQB setDir _dir;
-			[leaderHQB] joinSilent _ldrGp;
-			(group leaderHQB) setVariable ["RydHQ_MyDir",_dir]
-		};
-	};
+		//_mark = [str (random 1000),_ldrPos,"ColorPink","ICON",[1.25,1.25],0,1,"mil_triangle",""] call RYD_Marker;
 
-	_middlePos = [_mainPos,_dir,_dst * 0.6] call RYD_PosTowards2D;
-	
-	_range = (((_middlePos distance _eyeOfBattle)/1.5) max 400) min 600;
-	
-	//diag_log format ["range: %1",_range];
-	
-	{
-		_fPos = [_middlePos,0,_range] call RYD_RandomAroundMM;
-		_x setPos _fPos;
-		//_mark = [str (random 100),_fPos,"ColorBlack","ICON",[1,1],0,1,"mil_box",(str _x)] call RYD_Marker;
-	} foreach _sec;
-	
-	_airClasses = switch (_x) do
-	{
-		case (west) : {RYD_WS_B_Air_G2 + RYD_WS_Air_class_B};
-		case (east) : {RYD_WS_O_Air_G2 + RYD_WS_Air_class_O};
-		case (resistance) : {RYD_WS_I_Air_G2 + RYD_WS_Air_class_I};
-	};
-		
-	_facM = switch (_foreachIndex) do
-	{
-		case (0) : {RYD_WS_FacA select 2};
-		case (1) : {RYD_WS_FacB select 2};
-	};
-		
-	{
-		_fac = toLower (getText (_vehClass >> _x >> "faction"));
-		
-		if not (_fac == _facM) then
+		switch (_foreachIndex) do
 		{
-			_airClasses set [_foreachIndex,0]
-		}
-	} foreach _airClasses;
-	
-	_airClasses = _airClasses - [0];
-		
-	_staticClasses = switch (_x) do
-	{
-		case (west) : {RYD_WS_B_Static_G2 + RYD_WS_Static_class_B};
-		case (east) : {RYD_WS_O_Static_G2 + RYD_WS_Static_class_O};
-		case (resistance) : {RYD_WS_I_Static_G2 + RYD_WS_Static_class_I};
-	};
-		
-	{
-		_fac = toLower (getText (_vehClass >> _x >> "faction"));
-		
-		if not (_fac == _facM) then
-		{
-			_staticClasses set [_foreachIndex,0]
-		}
-	} foreach _staticClasses;
-	
-	_staticClasses = _staticClasses - [0];
-		
-	_supportClasses = switch (_x) do
-	{
-		case (west) : {RYD_WS_B_Support_G2 + RYD_WS_Support_class_B};
-		case (east) : {RYD_WS_O_Support_G2 + RYD_WS_Support_class_O};
-		case (resistance) : {RYD_WS_I_Support_G2 + RYD_WS_Support_class_I};
-	};
-		
-	{
-		_fac = toLower (getText (_vehClass >> _x >> "faction"));
-		
-		if not (_fac == _facM) then
-		{
-			_supportClasses set [_foreachIndex,0]
-		}
-	} foreach _supportClasses;
-	
-	_supportClasses = _supportClasses - [0];
-	
-	_cargoClasses = switch (_x) do
-	{
-		case (west) : {RYD_WS_B_NCCargo_G2 + RYD_WS_NCCargo_class_B};
-		case (east) : {RYD_WS_O_NCCargo_G2 + RYD_WS_NCCargo_class_O};
-		case (resistance) : {RYD_WS_I_NCCargo_G2 + RYD_WS_NCCargo_class_I};
-	};
-		
-	{
-		_fac = toLower (getText (_vehClass >> _x >> "faction"));
-		
-		if not (_fac == _facM) then
-		{
-			_cargoClasses set [_foreachIndex,0]
-		}
-	} foreach _cargoClasses;
-	
-	_cargoClasses = _cargoClasses - [0];
-	diag_log format ["[side,faction]: %1",[_x,_facM]];
-	
-	_side = _x;
-	
-	{
-		_amnt = 1 + (floor (random (2 * RYD_WS_Scale))) * _perc;
-		
-		if (_foreachIndex == 3) then
-		{
-			_amnt = 2 + ((ceil (random (3 * RYD_WS_Scale))) * _perc)
-		};
-			
-		//diag_log format ["classes: %1",[_foreachindex,count _x]];
-		
-		for "_i" from 1 to _amnt do
-		{
-			switch (_foreachIndex) do
+			case (0) :
 			{
-				case (0) :
+				leaderHQ = _ldrGp createUnit [_ldrClass, _ldrPos, [], 0, "NONE"];
+
+				leaderHQ setDir _dir;
+				
+				[leaderHQ] joinSilent _ldrGp;
+				(group leaderHQ) setVariable ["RydHQ_MyDir",_dir];
+				
+				_myFactions = [];
+				
 				{
-					if ((count _airClasses) > 0) then
-					{
-						_gp = [_mainPos,_dir,_airClasses,_side] call RYD_WS_SpawnAir;
-						
-						//diag_log format ["_airClasses: %1",[_airClasses]];
-						diag_log format ["air _amnt: %1",[_amnt]];
-						
-						if not (isNull _gp) then
-						{
-							_vh = assignedVehicle (leader _gp);
-							_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
-							_gp setVariable ["RYD_WS_myKind",_name + " crew"];
-							switch (_mainIx) do
-							{
-								case (0) : 
-								{
-									_gpsA set [(count _gpsA),_gp];
-									_fcsA = _fcsA + (units _gp)
-								};
-
-								case (1) : 
-								{
-									_gpsB set [(count _gpsB),_gp];
-									_fcsB = _fcsB + (units _gp)
-								};
-							};
-						}
-					}
-				};
-
-				case (1) :
+					_myFactions pushBack ((_x select 0) select 0) 
+				} foreach RYD_WS_selFactionsA;
+				
+				(group leaderHQ) setVariable ["RydHQ_MyFactions",_myFactions];
+				
+				if (RYD_WS_LeadersPoofItsMagic) then
 				{
-					if ((count _staticClasses) > 0) then
-					{
-						_stPos = +_mainPos;
-						if (_bType == _mainIx) then
-						{
-							_stPos = +_ldrPos;
-						};
-							
-						//diag_log format ["_staticClasses: %1",[_staticClasses]];
-						diag_log format ["static _amnt: %1",[_amnt]];
-
-						_gp = [_stPos,_dir,_staticClasses,_side] call RYD_WS_SpawnStatic;
-
-						if not (isNull _gp) then
-						{
-							_vh = assignedVehicle (leader _gp);
-							_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
-							_gp setVariable ["RYD_WS_myKind",_name + " crew"];
-							
-							switch (_mainIx) do
-							{
-								case (0) : 
-								{
-									_gpsA set [(count _gpsA),_gp];
-									_fcsA = _fcsA + (units _gp)
-								};
-									
-								case (1) : 
-								{
-									_gpsB set [(count _gpsB),_gp];
-									_fcsB = _fcsB + (units _gp)
-								};
-							};
-						}
-					}
-				};
-
-				case (2) :
+					removeAllWeapons leaderHQ;
+					leaderHQ hideObject true;
+					leaderHQ allowDamage false;
+					leaderHQ addEventHandler ["HandleDamage",{0}];
+					
+					_fldrGp = createGroup _x;
+					RydHQ_ExcludedG pushback _fldrGp;
+					fakeLeaderHQ = _fldrGp createUnit [_ldrClass, _ldrPos, [], 0, "NONE"];
+					fakeLeaderHQ setDir _dir;
+					[fakeLeaderHQ] joinSilent _fldrGp;
+					(group fakeLeaderHQ) setVariable ["RydHQ_MyDir",_dir];
+					
+					[fakeLeaderHQ] call RYD_WS_HQGuard;
+				}
+				else
 				{
-					if ((count _supportClasses) > 0) then
-					{
-						_gp = [_mainPos,_dir,_supportClasses,_side] call RYD_WS_SpawnSupport;
-						
-						//diag_log format ["_supportClasses: %1",[_supportClasses]];
-						diag_log format ["support _amnt: %1",[_amnt]];
-						
-						if not (isNull _gp) then
-						{
-							_vh = assignedVehicle (leader _gp);
-							_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
-							_gp setVariable ["RYD_WS_myKind",_name + " crew"];
-							
-							switch (_mainIx) do
-							{
-								case (0) : 
-								{
-									_gpsA set [(count _gpsA),_gp];
-									_fcsA = _fcsA + (units _gp)
-								};
-									
-								case (1) : 
-								{
-									_gpsB set [(count _gpsB),_gp];
-									_fcsB = _fcsB + (units _gp)
-								};
-							}
-						}
-					};				
-				};
+					[leaderHQ] call RYD_WS_HQGuard;
+				}
+			};
+			case (1) :
+			{
+				leaderHQB = _ldrGp createUnit [_ldrClass, _ldrPos, [], 0, "NONE"];
 
-				case (3) :
+				leaderHQB setDir _dir;
+				[leaderHQB] joinSilent _ldrGp;
+				(group leaderHQB) setVariable ["RydHQ_MyDir",_dir];
+				
+				_myFactions = [];
+				
 				{
-					if ((count _cargoClasses) > 0) then
-					{
-						_gp = [_mainPos,_dir,_cargoClasses,_side] call RYD_WS_SpawnSupport;
-						
-						//diag_log format ["_cargoClasses: %1",[_cargoClasses]];
-						diag_log format ["cargo _amnt: %1",[_amnt]];
-						
-						if not (isNull _gp) then
-						{
-							_vh = assignedVehicle (leader _gp);
-							_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
-							_gp setVariable ["RYD_WS_myKind",_name + " crew"];
-							
-							switch (_mainIx) do
-							{
-								case (0) : 
-								{
-									_gpsA set [(count _gpsA),_gp];
-									_fcsA = _fcsA + (units _gp)
-								};
+					_myFactions pushBack ((_x select 0) select 0) 
+				} foreach RYD_WS_selFactionsB;
+				
+				(group leaderHQB) setVariable ["RydHQ_MyFactions",_myFactions];
+				
+				if (RYD_WS_LeadersPoofItsMagic) then
+				{
+					removeAllWeapons leaderHQB;
+					leaderHQB hideObject true;
+					leaderHQB allowDamage false;
+					leaderHQB addEventHandler ["HandleDamage",{0}];
+					
+					_fldrGp = createGroup _x;
+					RydHQB_ExcludedG pushback _fldrGp;
+					fakeLeaderHQB = _fldrGp createUnit [_ldrClass, _ldrPos, [], 0, "NONE"];
+					fakeLeaderHQB setDir _dir;
+					[fakeLeaderHQ] joinSilent _fldrGp;
+					(group fakeLeaderHQB) setVariable ["RydHQ_MyDir",_dir];
 
-								case (1) : 
-								{
-									_gpsB set [(count _gpsB),_gp];
-									_fcsB = _fcsB + (units _gp)
-								};
-							}
-						}
-					};				
-				};
+					[fakeLeaderHQB] call RYD_WS_HQGuard;
+				}
+				else
+				{
+					[leaderHQB] call RYD_WS_HQGuard;
+				}
+			};
+		};
+
+		_middlePos = [_mainPos,_dir,_dst * 0.6] call RYD_PosTowards2D;
+		
+		_range = (((_middlePos distance _eyeOfBattle)/1.5) max 400) min 600;
+		
+		//diag_log format ["range: %1",_range];
+		
+		{
+			_fPos = [_middlePos,0,_range] call RYD_RandomAroundMM;
+			_x setPos _fPos;
+			//_mark = [str (random 100),_fPos,"ColorBlack","ICON",[1,1],0,1,"mil_box",(str _x)] call RYD_Marker;
+		} foreach _sec;
+
+		_airClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Air_G2 + RYD_WS_Air_class_B};
+			case (east) : {RYD_WS_O_Air_G2 + RYD_WS_Air_class_O};
+			case (resistance) : {RYD_WS_I_Air_G2 + RYD_WS_Air_class_I};
+		};
+
+		_facM = switch (_foreachIndex) do
+		{
+			case (0) : {RYD_WS_selFactionsA};
+			case (1) : {RYD_WS_selFactionsB};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+			
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_airClasses set [_foreachIndex,0]
 			}
-		}
-	} foreach [_airClasses,_staticClasses,_supportClasses,_cargoClasses];
-} foreach [_sideA,_sideB];
+		} foreach _airClasses;
 
-if (((count _fcsA) < 1) or {((count _fcsB) < 1)}) exitWith
+		_airClasses = _airClasses - [0];
+
+		_staticClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Static_G2 + RYD_WS_Static_class_B};
+			case (east) : {RYD_WS_O_Static_G2 + RYD_WS_Static_class_O};
+			case (resistance) : {RYD_WS_I_Static_G2 + RYD_WS_Static_class_I};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+			
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_staticClasses set [_foreachIndex,0]
+			}
+		} foreach _staticClasses;
+		
+		_staticClasses = _staticClasses - [0];
+
+		_supportClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Support_G2 + RYD_WS_Support_class_B};
+			case (east) : {RYD_WS_O_Support_G2 + RYD_WS_Support_class_O};
+			case (resistance) : {RYD_WS_I_Support_G2 + RYD_WS_Support_class_I};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_supportClasses set [_foreachIndex,0]
+			}
+		} foreach _supportClasses;
+
+		_supportClasses = _supportClasses - [0];
+
+		_cargoClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_NCCargo_G2 + RYD_WS_NCCargo_class_B};
+			case (east) : {RYD_WS_O_NCCargo_G2 + RYD_WS_NCCargo_class_O};
+			case (resistance) : {RYD_WS_I_NCCargo_G2 + RYD_WS_NCCargo_class_I};
+		};
+		
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+			
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_cargoClasses set [_foreachIndex,0]
+			}
+		} foreach _cargoClasses;
+		
+		_cargoClasses = _cargoClasses - [0];
+		
+		diag_log format ["[side,faction]: %1",[_x,_facM]];
+		
+		_side = _x;
+		
+		_ldrs = if (_foreachIndex == 0) then
+		{
+			[LeaderHQ]
+		}
+		else
+		{
+			[LeaderHQB]
+		};			
+		
+		{
+			_amnt = 1 + (floor (random (2 * RYD_WS_Scale))) * _perc;
+
+			if (_foreachIndex == 3) then
+			{
+				_amnt = 2 + ((ceil (random (3 * RYD_WS_Scale))) * _perc)
+			};
+
+			//diag_log format ["classes: %1",[_foreachindex,count _x]];
+
+			for "_i" from 1 to _amnt do
+			{
+				switch (_foreachIndex) do
+				{
+					case (0) :
+					{
+						if ((count _airClasses) > 0) then
+						{
+							_gp = [_mainPos,_dir,_airClasses,_ldrs,_side] call RYD_WS_SpawnAir;
+							
+							diag_log format ["air _amnt: %1",[_amnt]];
+
+							if not (isNull _gp) then
+							{
+								_vh = assignedVehicle (leader _gp);
+								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+								switch (_mainIx) do
+								{
+									case (0) : 
+									{
+										_gpsA set [(count _gpsA),_gp];
+										_fcsA = _fcsA + (units _gp)
+									};
+									case (1) : 
+									{
+										_gpsB set [(count _gpsB),_gp];
+										_fcsB = _fcsB + (units _gp)
+									};
+								};
+							}
+						}
+					};
+					case (1) :
+					{
+						if ((count _staticClasses) > 0) then
+						{
+							_stPos = +_mainPos;
+							if (_bType == _mainIx) then
+							{
+								_stPos = +_ldrPos;
+							};
+
+							_gp = [_stPos,_dir,_staticClasses,_ldrs,_side] call RYD_WS_SpawnStatic;
+							
+							diag_log format ["static _amnt: %1",[_amnt]];
+
+							if not (isNull _gp) then
+							{
+								_vh = assignedVehicle (leader _gp);
+								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+								
+								switch (_mainIx) do
+								{
+									case (0) : 
+									{
+										_gpsA set [(count _gpsA),_gp];
+										_fcsA = _fcsA + (units _gp)
+									};
+									case (1) : 
+									{
+										_gpsB set [(count _gpsB),_gp];
+										_fcsB = _fcsB + (units _gp)
+									};
+								};
+							}
+						}
+					};
+					case (2) :
+					{
+						if ((count _supportClasses) > 0) then
+						{
+							_gp = [_mainPos,_dir,_supportClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
+							
+							diag_log format ["support _amnt: %1",[_amnt]];
+
+							if not (isNull _gp) then
+							{
+								_vh = assignedVehicle (leader _gp);
+								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+								
+								switch (_mainIx) do
+								{
+									case (0) : 
+									{
+										_gpsA set [(count _gpsA),_gp];
+										_fcsA = _fcsA + (units _gp)
+									};
+									case (1) : 
+									{
+										_gpsB set [(count _gpsB),_gp];
+										_fcsB = _fcsB + (units _gp)
+									};
+								}
+							}
+						};				
+					};
+					case (3) :
+					{
+						if ((count _cargoClasses) > 0) then
+						{
+							_gp = [_mainPos,_dir,_cargoClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
+							
+							diag_log format ["cargo _amnt: %1",[_amnt]];
+							
+							if not (isNull _gp) then
+							{
+								_vh = assignedVehicle (leader _gp);
+								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+								
+								switch (_mainIx) do
+								{
+									case (0) : 
+									{
+										_gpsA set [(count _gpsA),_gp];
+										_fcsA = _fcsA + (units _gp)
+									};
+									case (1) : 
+									{
+										_gpsB set [(count _gpsB),_gp];
+										_fcsB = _fcsB + (units _gp)
+									};
+								}
+							}
+						};				
+					};
+				}
+			}
+		} foreach [_airClasses,_staticClasses,_supportClasses,_cargoClasses];
+	} foreach [_sideA,_sideB];
+
+	if (((count _fcsA) < 1) or {((count _fcsB) < 1)}) exitWith
+	{
+		endLoadingScreen;
+		hintC "Initialization failed: no forces to use";
+		sleep 0.1;
+		failMission "END1";
+	};
+
+	_dirL = [(_battlefield select 0),(_battlefield select 1),10] call RYD_AngTowards;
+	_dst = (_battlefield select 0) distance (_battlefield select 2);
+
+	_ldrPosA = [(_battlefield select 0),_dirL + 180,((_dst/3) min 800) max 500] call RYD_PosTowards2D;
+
+	_ldrPosA = [_ldrPosA,0,200,50,200] call RYD_WS_FindLandPos;
+
+	_ldrPosA set [2,0];
+
+	_dirL2 = [(_battlefield select 1),(_battlefield select 0),10] call RYD_AngTowards;
+
+	_dst2 = (_battlefield select 1) distance (_battlefield select 2);
+
+	_ldrPosB = [(_battlefield select 1),_dirL2 + 180,((_dst2/3) min 800) max 500] call RYD_PosTowards2D;
+
+	_ldrPosB = [_ldrPosB,0,200,50,200] call RYD_WS_FindLandPos;
+
+	_ldrPosB set [2,0];
+
+	_set1 = [RydHQ_Obj1,RydHQ_Obj2,RydHQB_Obj1,RydHQB_Obj2];
+	_set2 = [RydHQ_Obj3,RydHQ_Obj4];
+	_set3 = [RydHQB_Obj3,RydHQB_Obj4];
+
+	{
+		_x setPos (_battlefield select 2)
+	} foreach _set1;
+
+	switch (_bType) do
+		{
+		case (0) : 
+		{
+			{
+				_x setPos (_battlefield select 2)
+			} foreach _set2;
+			
+			{
+				_x setPos _ldrPosA
+			} foreach _set3;		
+		};
+
+		case (1) : 
+		{
+			{
+				_x setPos _ldrPosB
+			} foreach _set2;
+			
+			{
+				_x setPos (_battlefield select 2)
+			} foreach _set3;	
+		};
+
+		default
+		{
+			{
+				_x setPos _ldrPosB
+			} foreach _set2;
+
+			{
+				_x setPos _ldrPosA
+			} foreach _set3;				
+		}
+	};
+		
+	/*{
+		diag_log format ["pos: %1",position _x];
+		_i = str _x;
+		_i = createMarker [_i,(position _x)];
+		_i setMarkerColor "colorBrown";
+		_i setMarkerShape "ICON";
+		_i setMarkerType "mil_box";
+		_i setMarkerSize [0.8,0.8];
+		_i setMarkerText (str _foreachIndex);
+	} foreach (_set1 + _set2 + _set3);*/
+
+	{
+		addSwitchableUnit _x;
+		_x setVariable ["MARTA_showRules",[(RYD_WS_FacA select 1),1,(RYD_WS_FacB select 1),0]];
+		_x setVariable ["RYD_WS_Aside",true];
+	} foreach _fcsA;
+
+	_player = _fcsA select (floor (random (count _fcsA)));
+
+	_player setVariable ["WS_myName",name _player];
+
+	selectPlayer _player;
+
+	RYD_WS_ForcesA = _fcsA;
+	RYD_WS_ForcesB = _fcsB;
+
+	RYD_WS_GroupsA = _gpsA;
+	RYD_WS_GroupsB = _gpsB;
+
+	player setName profileName;
+}
+else
 {
-	endLoadingScreen;
-	hintC "Initialization failed: no forces to use";
-	sleep 0.1;
-	failMission "END1";
+	RydBBa_Str = [];
+	RydBBb_Str = [];
+
+	RydHQ_Included = [];
+	RydHQB_Included = [];
+	RydHQC_Included = [];
+	RydHQD_Included = [];
+	RydHQE_Included = [];
+	RydHQF_Included = [];	
+	
+	RydBB_Active = true;
+	
+	RydHQ_SubAll = false;
+	RydHQB_SubAll = false;
+	RydHQC_SubAll = false;
+	RydHQD_SubAll = false;
+	RydHQE_SubAll = false;
+	RydHQF_SubAll = false;
+		
+	RydHQ_LRelocating = false;
+	RydHQ_GetHQInside = false;
+
+	RydHQB_LRelocating = false;
+	RydHQB_GetHQInside = false;		
+	
+	RydHQ_Wait = 20;
+	
+	RydHQ_CaptLimit = 1;
+	RydHQB_CaptLimit = 1;
+	RydHQC_CaptLimit = 1;
+	RydHQD_CaptLimit = 1;
+	RydHQE_CaptLimit = 1;
+	RydHQF_CaptLimit = 1;
+	
+	RydHQ_NoRec = 10000;
+	RydHQ_RapidCapt = 10000;
+	RydHQ_Berserk = true;
+	RydHQ_Rush = true;
+	RydHQ_DynForm = true;
+	RydHQ_ObjHoldTime = 60;
+	
+	RydHQB_NoRec = 10000;
+	RydHQB_RapidCapt = 10000;
+	RydHQB_Berserk = true;
+	RydHQB_Rush = true;
+	RydHQB_DynForm = true;
+	RydHQB_ObjHoldTime = 60;
+	
+	RydHQC_NoRec = 10000;
+	RydHQC_RapidCapt = 10000;
+	RydHQC_Berserk = true;
+	RydHQC_Rush = true;
+	RydHQC_DynForm = true;
+	RydHQC_ObjHoldTime = 60;
+	
+	RydHQD_NoRec = 10000;
+	RydHQD_RapidCapt = 10000;
+	RydHQD_Berserk = true;
+	RydHQD_Rush = true;
+	RydHQD_DynForm = true;
+	RydHQD_ObjHoldTime = 60;
+	
+	[] call RYD_WS_WholeMapPlacement;
+	
+	RydBBa_HQs = [LeaderHQ,LeaderHQB];
+	RydBBb_HQs = [LeaderHQC,LeaderHQD];
+	
+	//RydBB_Debug = true;
+	RydBBa_SimpleDebug = true;
+	RydBB_CustomObjOnly = true;
+	RydBB_MainInterval = 2;
+	
+	RydHQC_Obj1 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQC_Obj2 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQC_Obj3 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQC_Obj4 = createTrigger ["EmptyDetector",[0,0,0]];
+	
+	RydHQD_Obj1 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQD_Obj2 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQD_Obj3 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQD_Obj4 = createTrigger ["EmptyDetector",[0,0,0]];
+	
+	RydHQE_Obj1 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQE_Obj2 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQE_Obj3 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQE_Obj4 = createTrigger ["EmptyDetector",[0,0,0]];
+	
+	RydHQF_Obj1 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQF_Obj2 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQF_Obj3 = createTrigger ["EmptyDetector",[0,0,0]];
+	RydHQF_Obj4 = createTrigger ["EmptyDetector",[0,0,0]];
+	
+	_gp = createGroup sideLogic;		
+	RydBBa_SAL = _gp createUnit ["Logic",[0,0,0], [], 0, "NONE"];
+	
+	_gp = createGroup sideLogic;		
+	RydBBb_SAL = _gp createUnit ["Logic",[0,0,0], [], 0, "NONE"];
 };
 
-_dirL = [(_battlefield select 0),(_battlefield select 1),10] call RYD_AngTowards;
-_dst = (_battlefield select 0) distance (_battlefield select 2);
-
-_ldrPosA = [(_battlefield select 0),_dirL + 180,((_dst/3) min 800) max 500] call RYD_PosTowards2D;
-
-_ldrPosA = [_ldrPosA,0,200,50,200] call RYD_WS_FindLandPos;
-
-_ldrPosA set [2,0];
-
-_dirL2 = [(_battlefield select 1),(_battlefield select 0),10] call RYD_AngTowards;
-
-_dst2 = (_battlefield select 1) distance (_battlefield select 2);
-
-_ldrPosB = [(_battlefield select 1),_dirL2 + 180,((_dst2/3) min 800) max 500] call RYD_PosTowards2D;
-
-_ldrPosB = [_ldrPosB,0,200,50,200] call RYD_WS_FindLandPos;
-
-_ldrPosB set [2,0];
-
-_set1 = [RydHQ_Obj1,RydHQ_Obj2,RydHQB_Obj1,RydHQB_Obj2];
-_set2 = [RydHQ_Obj3,RydHQ_Obj4];
-_set3 = [RydHQB_Obj3,RydHQB_Obj4];
-
-	{
-	_x setPos (_battlefield select 2)
-	}
-foreach _set1;
-
-switch (_bType) do
-	{
-	case (0) : 
-		{
-			{
-			_x setPos (_battlefield select 2)
-			}
-		foreach _set2;
-		
-			{
-			_x setPos _ldrPosA
-			}
-		foreach _set3;		
-		};
-		
-	case (1) : 
-		{
-			{
-			_x setPos _ldrPosB
-			}
-		foreach _set2;
-		
-			{
-			_x setPos (_battlefield select 2)
-			}
-		foreach _set3;	
-		};
-		
-	default
-		{
-			{
-			_x setPos _ldrPosB
-			}
-		foreach _set2;
-		
-			{
-			_x setPos _ldrPosA
-			}
-		foreach _set3;				
-		}
-	};
-	
-	/*{
-	diag_log format ["pos: %1",position _x];
-	_i = str _x;
-	_i = createMarker [_i,(position _x)];
-	_i setMarkerColor "colorBrown";
-	_i setMarkerShape "ICON";
-	_i setMarkerType "mil_box";
-	_i setMarkerSize [0.8,0.8];
-	_i setMarkerText (str _foreachIndex);
-	}
-foreach (_set1 + _set2 + _set3);*/
-	
-
-
+if (isNil "RYD_Path") then 
 {
-	addSwitchableUnit _x;
-	_x setVariable ["MARTA_showRules",[(RYD_WS_FacA select 1),1,(RYD_WS_FacB select 1),0]];
-	_x setVariable ["RYD_WS_Aside",true];
-} foreach _fcsA;
-
-_player = _fcsA select (floor (random (count _fcsA)));
-
-_player setVariable ["WS_myName",name _player];
-
-selectPlayer _player;
-
-RYD_WS_ForcesA = _fcsA;
-RYD_WS_ForcesB = _fcsB;
-
-RYD_WS_GroupsA = _gpsA;
-RYD_WS_GroupsB = _gpsB;
-
-player setName profileName;
-
-if (isNil "RYD_Path") then {RYD_Path = "RYD_HAL\"};
+	RYD_Path = "RYD_HAL\";
+};
 
 call compile preprocessfile (RYD_Path + "VarInit.sqf");
 call compile preprocessfile (RYD_Path + "HAC_fnc.sqf");
@@ -1807,21 +2446,21 @@ if ((dayTime <= 22) and (dayTime > 18)) then {_dayTimedescr = "evening"};
 if ((dayTime > 22) or (dayTime < 5)) then {_dayTimedescr = "night"};
 
 _weather = switch (true) do
-	{
+{
 	case (overCast < 0.25) : {"Serene"};
 	case (overCast < 0.4) : {"Slightly cloudy"};
 	case (overCast < 0.7) : {"Cloudy"};
 	default {"Gloomy"};
-	};
+};
 
 _rain = switch (true) do
-	{
+{
 	case (rain < 0.05) : {""};
 	case (rain < 0.2) : {" and wet"};
 	case (rain < 0.4) : {" and rainy"};
 	case (rain < 0.7) : {" and very rainy"};
 	default {" and stormy"};
-	};
+};
 
 _placeA = (nearestLocations [_battlefield select 0, ["Hill","NameCityCapital","NameCity","NameVillage","NameLocal"], 1500]) select 0;
 _placeB = (nearestLocations [_battlefield select 1, ["Hill","NameCityCapital","NameCity","NameVillage","NameLocal"], 1500]) select 0;
@@ -1838,124 +2477,124 @@ _typeA = "";
 _posA = _battlefield select 0;
 
 if not (isNil "_placeA") then
-	{
+{
 	_typeA = toLower (type _placeA);
 	_nameA = text _placeA;
 	_posA = position _placeA;
 	_posA set [2,0]
-	};
+};
 
 _mNameA = "_markA";
 _markA = [_mNameA,_posA,"ColorBlack","ICON",[1,1],0,1,"Empty",""] call RYD_Marker;
 
 switch (_typeA) do
-	{
+{
 	case ("mount") : 
-		{
+	{
 		_locS = "";
 		if not (_nameA in [""]) then
-			{
+		{
 			_locS = format ["%1",_nameA];
 			_locS0 = _locS;
 			
 			if ((random 100) > 80) then
-				{
+			{
 				_locS = format ["the mountain called %1",_nameA]
-				}
 			}
-		};
-		
+		}
+	};
+
 	case ("hill") : 
-		{
+	{
 		_locS = format ["the hill called %1",_nameA];
 			
 		if ((random 100) < 80) then
-			{
+		{
 			_locS = format ["%1",_nameA];
-			};
+		};
 		
 		if (_nameA in [""]) then
-			{
+		{
 			_hgt = getTerrainHeightASL _posA;
 			_nameA = str (ceil _hgt);
 			_locS = format ["the hill %1",_nameA]
-			};
+		};
 			
 		_locS0 = _nameA;	
-		};
-		
+	};
+
 	case ("namecitycapital") : 
-		{
+	{
 		_locS = "the city";
 		if not (_nameA in [""]) then
-			{
+		{
 			_locS = format ["%1",_nameA];
 			_locS0 = _locS;
 			
 			if ((random 100) > 80) then
-				{
+			{
 				_locS = format ["the city of %1",_nameA]
-				}
 			}
-		};
-		
+		}
+	};
+
 	case ("namecity") : 
-		{
+	{
 		_locS = "the town";
 		if not (_nameA in [""]) then
-			{
+		{
 			_locS = format ["%1",_nameA];
 			_locS0 = _locS;
 			
 			if ((random 100) > 80) then
-				{
+			{
 				_locS = format ["the town of %1",_nameA]
-				}
 			}
-		};
-		
+		}
+	};
+
 	case ("namevillage") : 
-		{
+	{
 		_locS = "the village";
 		if not (_nameA in [""]) then
-			{
+		{
 			_locS = format ["%1",_nameA];
 			_locS0 = _locS;
 			
 			if ((random 100) > 80) then
-				{
+			{
 				_locS = format ["the village named %1",_nameA]
-				}
 			}
-		};
-		
+		}
+	};
+
 	case ("namelocal") : 
-		{
+	{
 		_locS = "";
 		if not (_nameA in [""]) then
-			{
+		{
 			_locS0 = _nameA;
 			_locS = format ["the %1 area",_nameA]
-			}
-		};
+		}
 	};
+};
 
 _howFarS = _posA distance (_battlefield select 0);
 
 _distanceDescrS = switch (true) do
-	{
+{
 	case (_locS in [""]) : {""};
 	case (_howFarS < 200) : {"at "};
 	case (_howFarS < 500) : {"near "};
 	default {"not far from "};
-	};
+};
 
 if (_locS in [""]) then
-	{
+{
 	_dir = [(_battlefield select 2),(_battlefield select 0),0] call RYD_AngTowards;
 	_locS = [_dir] call RYD_WS_WindRose;
 	_locS0 = _locS;
-	};
+};
 	
 _locT = "";
 _locT0 = "";
@@ -1966,124 +2605,124 @@ _nameT = "";
 _posT = _battlefield select 2;
 
 if not (isNil "_target") then
-	{
+{
 	_typeT = toLower (type _target);
 	_nameT = text _target;
 	_posT = position _target;
 	_posT set [2,0];
-	};
+};
 
 _mNameT = "_markT";
 _markT = [_mNameT,_posT,"ColorBlack","ICON",[1,1],0,1,"Empty",""] call RYD_Marker;
 
 switch (_typeT) do
-	{
+{
 	case ("mount") : 
-		{
+	{
 		_locT = "";
 		if not (_nameT in [""]) then
-			{
+		{
 			_locT = format ["%1",_nameT];
 			_locT0 = _locT;
 			
 			if ((random 100) > 80) then
-				{
+			{
 				_locT = format ["the mountain called %1",_nameT]
-				}
 			}
-		};
-		
+		}
+	};
+
 	case ("hill") : 
-		{
+	{
 		_locT = format ["the hill called %1",_nameT];
 		
 		if ((random 100) < 80) then
-			{
+		{
 			_locT = format ["%1",_nameT];
-			};		
+		};		
 		
 		if (_nameT in [""]) then
-			{
+		{
 			_hgt = getTerrainHeightASL _posT;
 			_nameT = str (ceil _hgt);
 			_locT = format ["the hill %1",_nameT]
-			};
-			
-		_locT0 = _nameT;	
 		};
+
+		_locT0 = _nameT;	
+	};
 		
 	case ("namecitycapital") : 
-		{
+	{
 		_locT = "the city";
 		if not (_nameT in [""]) then
-			{
+		{
 			_locT = format ["%1",_nameT];
 			_locT0 = _locT;
 			
 			if ((random 100) > 80) then
-				{
+			{
 				_locT = format ["the city of %1",_nameT]
-				}
 			}
-		};
-		
+		}
+	};
+
 	case ("namecity") : 
-		{
+	{
 		_locT = "the town";
 		if not (_nameT in [""]) then
-			{
+		{
 			_locT = format ["%1",_nameT];
 			_locT0 = _locT;
 			
 			if ((random 100) > 80) then
-				{
+			{
 				_locT = format ["the town of %1",_nameT]
-				}
 			}
-		};
+		}
+	};
 		
 	case ("namevillage") : 
-		{
+	{
 		_locT = "the village";
 		if not (_nameT in [""]) then
-			{
+		{
 			_locT = format ["%1",_nameT];
 			_locT0 = _locT;
 			
 			if ((random 100) > 80) then
-				{
+			{
 				_locT = format ["the village named %1",_nameT]
-				}
 			}
-		};
-		
+		}
+	};
+
 	case ("namelocal") : 
-		{
+	{
 		_locT = "";
 		if not (_nameT in [""]) then
-			{
+		{
 			_locT0 = _nameT;
 			_locT = format ["the %1 area",_nameT]
-			}
-		};
+		}
 	};
+};
 	
 _howFarT = _posT distance (_battlefield select 0);
 
 _distanceDescrT = switch (true) do
-	{
+{
 	case (_locT in [""]) : {""};
 	case (_howFarT < 200) : {"at "};
 	case (_howFarT < 500) : {"near "};
 	default {"not far from "};
-	};
+};
 
 if (_locT in [""]) then
-	{
+{
 	_dir = [(_battlefield select 0),(_battlefield select 2),0] call RYD_AngTowards;
 	_locT = [_dir] call RYD_WS_WindRose;
 	_locT0 = _locT;
-	};
+};
 	
 _locB = "";
 _locB0 = "";
@@ -2094,12 +2733,12 @@ _nameB = "";
 _posB = _battlefield select 2;
 
 if not (isNil "_placeB") then
-	{
+{
 	_typeB = toLower (type _placeB);
 	_nameB = text _placeB;
 	_posB = position _placeB;
 	_posB set [2,0];
-	};
+};
 
 _mNameB = "_markB";
 _markB = [_mNameB,_posB,"ColorBlack","ICON",[1,1],0,1,"Empty",""] call RYD_Marker;
@@ -2107,135 +2746,135 @@ _markB = [_mNameB,_posB,"ColorBlack","ICON",[1,1],0,1,"Empty",""] call RYD_Marke
 //diag_log format ["nameA: %1 (%2) nameT: %3 (%4) nameB: %5 (%6) %7-%8-%9",_nameA,_placeA,_nameT,_target,_nameB,_placeB,(type _placeA),(type _target),(type _placeB)];
 
 switch (_typeB) do
-	{
+{
 	case ("mount") : 
-		{
+	{
 		_locB = "";
 		if not (_nameB in [""]) then
-			{
+		{
 			_locB = format ["%1",_nameB];
 			_locB0 = _locB;
 			
 			if ((random 100) > 80) then
-				{
+			{
 				_locB = format ["the mountain called %1",_nameB]
-				}
 			}
-		};
+		}
+	};
 		
 	case ("hill") : 
-		{
+	{
 		_locB = format ["the hill called %1",_nameB];
 		
 		if ((random 100) < 80) then
-			{
+		{
 			_locB = format ["%1",_nameB];
-			};
-					
+		};
+
 		if (_nameB in [""]) then
-			{
+		{
 			_hgt = getTerrainHeightASL _posB;
 			_nameB = str (ceil _hgt);
 			_locB = format ["the hill %1",_nameB]
-			};
+		};
 			
 		_locB0 = _nameB;		
-		};
-		
+	};
+
 	case ("namecitycapital") : 
-		{
+	{
 		_locB = "the city";
 		if not (_nameB in [""]) then
-			{
+		{
 			_locB = format ["%1",_nameB];
 			_locB0 = _locB;
 			
 			if ((random 100) > 80) then
-				{
+			{
 				_locB = format ["the city of %1",_nameB]
-				}
 			}
-		};
+		}
+	};
 		
 	case ("namecity") : 
-		{
+	{
 		_locB = "the town";
 		if not (_nameB in [""]) then
-			{
+		{
 			_locB = format ["%1",_nameB];
 			_locB0 = _locB;
 			
 			if ((random 100) > 80) then
-				{
+			{
 				_locB = format ["the town of %1",_nameB]
-				}
 			}
-		};
+		}
+	};
 		
 	case ("namevillage") : 
-		{
+	{
 		_locB = "the village";
 		if not (_nameB in [""]) then
-			{
+		{
 			_locB = format ["%1",_nameB];
 			_locB0 = _locB;
 			
 			if ((random 100) > 80) then
-				{
+			{
 				_locB = format ["the village named %1",_nameB]
-				}
 			}
-		};
-		
+		}
+	};
+
 	case ("namelocal") : 
-		{
+	{
 		_locB = "";
 		if not (_nameB in [""]) then
-			{
+		{
 			_locB0 = _nameB;
 			_locB = format ["the %1 area",_nameB]
-			}
-		};
+		}
 	};
+};
 	
 _howFarB = _posB distance (_battlefield select 1);
 
 _distanceDescrB = switch (true) do
-	{
+{
 	case (_locB in [""]) : {""};
 	case (_howFarB < 200) : {"at "};
 	case (_howFarB < 500) : {"near "};
 	default {"not far from "};
-	};
+};
 
 if (_locB in [""]) then
-	{
+{
 	_dir = [(_battlefield select 0),(_battlefield select 1),0] call RYD_AngTowards;
 	_locB = [_dir] call RYD_WS_WindRose;
 	_locB0 = _locB;
-	};
+};
 	
 //diag_log format ["locS: %1 (%6) locB: %2 (%7) locT: %3 (%8) dst: %4 type: %5",_locS,_locB,_locT,_distanceDescrT,_bType,_locS0,_locB0,_locT0];
 
 _clA = switch (RYD_WS_SideA) do
-	{
+{
 	case (west) : {"ColorWEST"};
 	case (east) : {"ColorEAST"};
 	case (resistance) : {"ColorGUER"};
-	};
+};
 	
 _clB = switch (RYD_WS_SideB) do
-	{
+{
 	case (west) : {"ColorWEST"};
 	case (east) : {"ColorEAST"};
 	case (resistance) : {"ColorGUER"};
-	};
+};
 
 _markPerA = [_gpsA,_clA,"FDiagonal"] call RYD_WS_ClusterMark;
 _markPerB = [_gpsB,_clB,"FDiagonal"] call RYD_WS_ClusterMark;
 
 if not (_bType == 0) then
-	{
+{
 	_posM = getMarkerPos _markPerA;	
 	_dst = _posM distance _posT;
 	_angle = [_posM,_posT,0] call RYD_AngTowards;
@@ -2243,13 +2882,13 @@ if not (_bType == 0) then
 	_center = [((_posM select 0) + (_posT select 0))/2,((_posM select 1) + (_posT select 1))/2,0];
 	
 	if (_dst > 500) then
-		{
-		_markArrA = ["Arrow_" + (str RYD_WS_SideA),_center,_clA,"ICON",[_dst/2400,_dst/1250],_angle,1,"mil_arrow2",""] call RYD_Marker;
-		}
-	};
+	{
+		_markArrA = ["Arrow_" + (str RYD_WS_SideA),_center,_clA,"ICON",[(_dst/2400) min 4,(_dst/1250) min 8],_angle,0.2,"mil_arrow2",""] call RYD_Marker;
+	}
+};
 	
 if not (_bType == 1) then
-	{
+{
 	_posM = getMarkerPos _markPerB;	
 	_dst = _posM distance _posT;
 	_angle = [_posM,_posT,0] call RYD_AngTowards;
@@ -2257,50 +2896,50 @@ if not (_bType == 1) then
 	_center = [((_posM select 0) + (_posT select 0))/2,((_posM select 1) + (_posT select 1))/2,0];
 	
 	if (_dst > 500) then
-		{
-		_markArrB = ["Arrow_" + (str RYD_WS_SideB),_center,_clB,"ICON",[_dst/2400,_dst/1250],_angle,1,"mil_arrow2",""] call RYD_Marker;
-		}
-	};
+	{
+		_markArrB = ["Arrow_" + (str RYD_WS_SideB),_center,_clB,"ICON",[(_dst/2400) min 4,(_dst/1250) min 8],_angle,0.2,"mil_arrow2",""] call RYD_Marker;
+	}
+};
 
 _mission = "";
 _missionB = "";
 
 switch (_bType) do
-	{
+{
 	case (0) :
-		{
+	{
 		_mission = format ["Our job was to hold the ground %1%2. Enemy came from %3.",_distanceDescrT,_locT,_locB];
 		_missionB = format ["Our job was to hold the ground %1<marker name = '_markT'>%2</marker>. Enemy came from <marker name = '_markB'>%3</marker>.",_distanceDescrT,_locT,_locB];
 		
 		if (_locT0 == _locB0) then
-			{
+		{
 			_mission = format ["Our job was to hold the ground %1%2. Enemy already was here though.",_distanceDescrT,_locT];
 			_missionB = format ["Our job was to hold the ground %1<marker name = '_markT'>%2</marker>. Enemy already was here though.",_distanceDescrT,_locT];
-			};
+		};
 		
 		RydHQ_Order = "DEFEND";
 		RydHQ_Taken = [RydHQ_Obj1,RydHQ_Obj2,RydHQ_Obj3,RydHQ_Obj4];
 		RydHQB_Order = "ATTACK";
-		};
-		
+	};
+
 	case (1) :
-		{
+	{
 		_mission = format ["That day we were tasked to take area held by enemy forces %1%2. We've launched the attack from %3.",_distanceDescrT,_locT,_locS];
 		_missionB = format ["That day we were tasked to take area held by enemy forces %1<marker name = '_markT'>%2</marker>. We've launched the attack from <marker name = '_markA'>%3</marker>.",_distanceDescrT,_locT,_locS];
 		
 		if (_locT0 == _locS0) then
-			{
+		{
 			_mission = format ["That day we were tasked to take area held by enemy forces %1%2. We've launched the attack by surprise.",_distanceDescrT,_locT];
 			_missionB = format ["That day we were tasked to take area held by enemy forces %1<marker name = '_markT'>%2</marker>. We've launched the attack by surprise.",_distanceDescrT,_locT];
-			};		
+		};		
 		
 		RydHQ_Order = "ATTACK";
 		RydHQB_Order = "DEFEND";
 		RydHQ_Taken = [RydHQB_Obj1,RydHQB_Obj2,RydHQB_Obj3,RydHQB_Obj4];
-		};
-		
+	};
+
 	case (2) :
-		{				
+	{				
 		_part1 = format ["We're heading from %1 towards %2. ",_locS,_locT];
 		_part2 = format ["Enemy came from %1.",_locB];
 		
@@ -2308,52 +2947,68 @@ switch (_bType) do
 		_part2B = format ["Enemy came from <marker name = '_markB'>%1</marker>.",_locB];
 		
 		if (_locS0 == _locT0) then
-			{
+		{
 			_part1 = format ["We approached %1. ",_locT];
 			_part1B = format ["We approached <marker name = '_markT'>%1</marker>. ",_locT]
-			};
+		};
 			
 		if (_locB0 == _locT0) then
-			{
+		{
 			_part2 = "Enemy was there already.";
 			_part2B = "Enemy was there already."
-			};
+		};
 			
 		if (_locS0 == _locB0) then
-			{
+		{
 			_part2 = "It was one big mess.";
 			_part2B = "It was one big mess."
-			};
+		};
 		
 		_mission = _part1 + _part2;
 		_missionB = _part1B + _part2B;
 		
 		RydHQ_Order = "ATTACK";
 		RydHQB_Order = "ATTACK";
-		};		
+	};	
+
+	case (3) :
+	{				
+		_locS = [(LeaderHQB getDir LeaderHQE)] call RYD_WS_WindRose;
+		
+		_mission = format ["Our offensive is coming from %1. Goal: to gain control over whole region.",_locS];
+		_missionB = _mission;
+		
+		RydHQ_Order = "ATTACK";
+		RydHQB_Order = "ATTACK";
+		RydHQC_Order = "ATTACK";
+		
+		RydHQD_Order = "ATTACK";
+		RydHQE_Order = "ATTACK";
+		RydHQF_Order = "ATTACK";
 	};
+};
 	
 _plName = (getText (configFile >> "CfgVehicles" >> (typeOf player) >> "displayName"));
 _asVh = assignedVehicle player;
 
 if not (isNull _asVh) then
-	{
+{
 	//_vhName = getText (configFile >> "CfgVehicles" >> (typeOf _asVh) >> "displayName");
 	switch (true) do
-		{
+	{
 		case (player == (commander _asVh)) : {_plName = "Commander"};
 		case (player == (driver _asVh)) : {_plName = "Driver"};
 		case (player == (gunner _asVh)) : {_plName = "Gunner"};
-		};
 	};
+};
 	
 _plName = _plName + ", "  + (toLower (rank player));
 _gpName = (group player) getVariable ["RYD_WS_myKind",""];
 
 if not (_gpName in [""]) then
-	{
+{
 	_gpName = " (" + _gpName + ")"
-	};
+};
 
 _briefing = format ["%1. %4%5 %6. %7",_where,_date,_daytime,_weather,_rain,_dayTimedescr,_mission];
 _briefingB = format ["%1. %4%5 %6. %7<br /><br />%8<br />%9%10",_where,_date,_daytime,_weather,_rain,_dayTimedescr,_missionB,player getVariable ["WS_myName",""],_plName,_gpName];
@@ -2368,6 +3023,11 @@ _briefingB = format ["%1. %4%5 %6. %7<br /><br />%8<br />%9%10",_where,_date,_da
 
 RydxHQ_AllLeaders = [];
 RydxHQ_AllHQ = [];
+
+if (isNil "leaderHQC") then {leaderHQC = objNull};
+if (isNil "leaderHQD") then {leaderHQD = objNull};
+if (isNil "leaderHQE") then {leaderHQE = objNull};
+if (isNil "leaderHQF") then {leaderHQF = objNull};
 
 if not (isNull leaderHQ) then {RydxHQ_AllLeaders set [(count RydxHQ_AllLeaders),leaderHQ];RydxHQ_AllHQ set [(count RydxHQ_AllHQ),(group leaderHQ)];(group leaderHQ) setVariable ["RydHQ_CodeSign","A"];if not (isNil ("HET_FA")) then {(group leaderHQ) setVariable ["RydHQ_Front",HET_FA]}};
 if not (isNull leaderHQB) then {RydxHQ_AllLeaders set [(count RydxHQ_AllLeaders),leaderHQB];RydxHQ_AllHQ set [(count RydxHQ_AllHQ),(group leaderHQB)];(group leaderHQB) setVariable ["RydHQ_CodeSign","B"];if not (isNil ("HET_FB")) then {(group leaderHQB) setVariable ["RydHQ_Front",HET_FB]}};
@@ -2402,44 +3062,42 @@ _stepsC = floor (_dst/50);
 _step = 50;
 
 if (_stepsC < 1) then
-	{
+{
 	_stepsC = 1;
 	_step = _dst/2 
-	};
+};
 
 _dst = 0;
 
 for "_i" from 1 to _stepsC do
-	{
+{
 	_dst = _dst + _step;
 	_posStep = [_lastPos,_angle,_dst] call RYD_PosTowards2D;
 	_actHeight = getTerrainHeightASL [(_posStep select 0),(_posStep select 1)];
 	if (_actHeight > _maxHeight) then
-		{
+	{
 		_maxHeight = _actHeight
-		}
-	};
+	}
+};
 	
 if ((dayTime < 6) or (dayTime > 20)) then
-	{
-	 camUseNVG true 
-	}
+{
+	camUseNVG true 
+}
 else
-	{
-	 camUseNVG false 
-	};
-		
-	{
+{
+	camUseNVG false 
+};
+
+{
 	_eh = _x addEventHandler ["Hit",{_this call RYD_WS_onHit}];
 	_eh2 = _x addEventHandler ["Killed",{_this call RYD_WS_onDeathA}];
 	_x setVariable ["WS_myName",name _x]
-	}
-foreach (_fcsA - [player]);
+} foreach (_fcsA - [player]);
 
-	{
+{
 	_eh = _x addEventHandler ["Killed",{_this call RYD_WS_onDeathB}]
-	}
-foreach _fcsB;
+} foreach _fcsB;
 
 //player allowdamage false;
 	
@@ -2454,16 +3112,7 @@ RYD_init_cam camCommit 5;
 
 RYD_WS_Typed = false;
 
-	[
-		[
-			[_briefing,nil]
-		],
-		
-		nil,
-		nil,
-		nil
-
-	] spawn RYD_BIS_fnc_typeText;
+[[[_briefing,nil]],nil,nil,nil] spawn RYD_BIS_fnc_typeText;
 	
 sleep 5;
 
@@ -2475,18 +3124,17 @@ RYD_init_cam camCommit 10;
 
 sleep 10;
 
-	{
+{
 	deleteVehicle _x
-	}
-foreach [sc3,dummyPlayer,dummyPlayer_1,sc2,sc1];
+} foreach [sc3,dummyPlayer,dummyPlayer_1,sc2,sc1];
 
 enableSentences true;
 
 waitUntil
-	{
+{
 	sleep 0.1;
 	RYD_WS_Typed
-	};
+};
 	
 sleep 1;
 
@@ -2513,7 +3161,7 @@ sleep 2;
 
 sleep 2;
 
-	{
+{
 	_spectate = [_x,"HWSSpectator","","","CommunicationMenuItemAdded"] call BIS_fnc_addCommMenuItem;
 	_newRole = [_x,"HWSNewRole","","","CommunicationMenuItemAdded"] call BIS_fnc_addCommMenuItem;
 	_marta = [_x,"HWSMarta","","","CommunicationMenuItemAdded"] call BIS_fnc_addCommMenuItem;
@@ -2521,11 +3169,24 @@ sleep 2;
 	
 	_x createDiaryRecord ["Diary", ["Settings review",RYD_WS_txtM]];
 	_x createDiaryRecord ["Diary", ["Situation",_briefingB]];
-	}
-foreach switchableUnits;
+} foreach switchableUnits;
+
+if (RYD_WS_LeadersPoofItsMagic) then
+{
+	_gps = [(group leaderHQ),(group leaderHQB)];
+	if (RYD_WS_WholeMap) then
+	{
+		_gps = [(group leaderHQ),(group leaderHQB),(group leaderHQC),(group leaderHQD)];
+	};
+	
+	{
+		_x setVariable ["MARTA_hide",_gps]
+	}  foreach allUnits;
+};
+
 
 [] spawn
-	{
+{
 	_panic_A = false;
 	_panic_B = false;
 	_noEnemy = false;
@@ -2535,46 +3196,84 @@ foreach switchableUnits;
 	_moraleB = 0;
 	_lossesA = false;
 	_lossesB = false;
-		
+	_dominationA = false;
+	_dominationB = false;
+
 	waitUntil
-		{
+	{
 		sleep 15;
 
-		_noEnemy = (({(((side _x) in [RYD_WS_SideB]) and (((leader _x) distance RYD_WS_BFPos) < 5000))} count AllGroups) < 1);
-		_noAlly = (({(((side _x) in [RYD_WS_SideA]) and (((leader _x) distance RYD_WS_BFPos) < 5000))} count AllGroups) < 1);
+		if not (RYD_WS_WholeMap) then
+		{
+			_noEnemy = (({(((side _x) in [RYD_WS_SideB]) and (((leader _x) distance RYD_WS_BFPos) < 5000))} count AllGroups) < 1);
+			_noAlly = (({(((side _x) in [RYD_WS_SideA]) and (((leader _x) distance RYD_WS_BFPos) < 5000))} count AllGroups) < 1);
+		};
 		_noLeaders = (({alive _x} count [leaderHQ,leaderHQB]) < 1);
+		
+		if (RYD_WS_WholeMap) then
+		{
+			_noLeaders = (({alive _x} count [LeaderHQ,LeaderHQB,LeaderHQC,LeaderHQD]) < 1);
+			
+			if (RYD_WS_LeadersPoofItsMagic) then
+			{
+				_noLeaders = (({alive _x} count [fakeLeaderHQ,fakeLeaderHQB,fakeLeaderHQC,fakeLeaderHQD]) < 1);
+			}
+		};
 		
 		_HQa = group leaderHQ;
 		_HQb = group leaderHQB;
 
 		_moraleA_new = _HQa getVariable "RydHQ_Morale";
 
-		if (isNil "_moraleA_new") then 
+		if (RYD_WS_WholeMap) then
+		{
+			_moraleA_newA = _HQa getVariable "RydHQ_Morale";
+			_moraleA_newB = _HQb getVariable "RydHQ_Morale";
+			
+			if not (isNil "_moraleA_newA") then
 			{
-			_moraleA = _moraleA - (random 1)
+				_moraleA_new = _moraleA_newA;
+				if not (isNil "_moraleA_newB") then
+				{
+					_moraleA_new = _moraleA_new max _moraleA_newB;
+				}
 			}
+		};
+		
+		if (isNil "_moraleA_new") then 
+		{
+			_moraleA = _moraleA - (random 1)
+		}
 		else
-			{
+		{
 			_combatAvG = (_HQa getVariable ["RydHQ_Friends",RYD_WS_GroupsA]) - ((_HQa getVariable ["RydHQ_Exhausted",[]]) + ((_HQa getVariable ["RydHQ_AirG",[]]) - (_HQa getVariable ["RydHQ_NCrewInfG",[]])) + (_HQa getVariable ["RydHQ_SpecForG",[]]) + (_HQa getVariable ["RydHQ_CargoOnly",[]]) + (_HQa getVariable ["RydHQ_NavalG",[]]) + (_HQa getVariable ["RydHQ_StaticG",[]]) + (_HQa getVariable ["RydHQ_SupportG",[]]) + (_HQa getVariable ["RydHQ_ArtG",[]]) + (_HQa getVariable ["RydHQ_Garrison",[]]) + ((_HQa getVariable ["RydHQ_NCCargoG",[]]) - ((_HQa getVariable ["RydHQ_NCrewInfG",[]]) - (_HQa getVariable ["RydHQ_SupportG",[]]))));		
 			
+			if (RYD_WS_WholeMap) then
+			{
+				_combatAvG = [];
+				
 				{
+					_combatAvG = _combatAvG + (_x getVariable ["RydHQ_Friends",RYD_WS_GroupsA]) - ((_x getVariable ["RydHQ_Exhausted",[]]) + ((_x getVariable ["RydHQ_AirG",[]]) - (_x getVariable ["RydHQ_NCrewInfG",[]])) + (_x getVariable ["RydHQ_SpecForG",[]]) + (_x getVariable ["RydHQ_CargoOnly",[]]) + (_x getVariable ["RydHQ_NavalG",[]]) + (_x getVariable ["RydHQ_StaticG",[]]) + (_x getVariable ["RydHQ_SupportG",[]]) + (_x getVariable ["RydHQ_ArtG",[]]) + (_x getVariable ["RydHQ_Garrison",[]]) + ((_x getVariable ["RydHQ_NCCargoG",[]]) - ((_x getVariable ["RydHQ_NCrewInfG",[]]) - (_x getVariable ["RydHQ_SupportG",[]]))));
+				}
+				foreach [_HQa,_HQb]
+			};
+			
+			{
 				switch (true) do
-					{
+				{
 					case (isNil {_x}) : {_combatAvG set [_foreachIndex,grpNull]};
 					case not ((typeName _x) in [(typeName grpNull)]) : {_combatAvG set [_foreachIndex,grpNull]};
 					case (isNull _x) : {_combatAvG set [_foreachIndex,grpNull]};
-					};
-				}
-			foreach _combatAvG;
+				};
+			} foreach _combatAvG;
 			
 			_combatAvG = _combatAvG - [grpNull];
 			
 			_combatAv = 0;
 			
-				{
+			{
 				_combatAv = _combatAv + ({alive _x} count (units _x))
-				}
-			foreach _combatAvG;
+			} foreach _combatAvG;
 			
 			//diag_log format ["_combatAv A: %1",_combatAv];
 			
@@ -2582,44 +3281,94 @@ foreach switchableUnits;
 			
 			_lossesA = ((_HQa getVariable ["RydHQ_LTotal",0]) > 0.75) or (_combatAv < _minimalEff);
 			
-			if (({alive _x} count (units _HQa)) < 1) then 
+			if (RYD_WS_WholeMap) then
+			{
+				_lossesA = true;
+				
 				{
-				_moraleA = _moraleA - (random 1)
-				}
-			else
-				{
-				_moraleA = _moraleA_new
-				}
+					_lossesA = ((_x getVariable ["RydHQ_LTotal",0]) > 0.75);
+					if not (_lossesA) exitWith {};
+				} foreach [_HQa,_HQb]
 			};
 			
+			_leadUnits = (units _HQa);
+			
+			if (RYD_WS_WholeMap) then
+			{
+				_leadUnits = [];
+				
+				{
+					_leadUnits = _leadUnits + (units _x)
+				} foreach [_HQa,_HQb];
+				
+				if (RYD_WS_LeadersPoofItsMagic) then
+				{
+					_leadUnits = [fakeLeaderHQ,fakeLeaderHQB];
+				}
+			};			
+
+			if (({alive _x} count _leadUnits) < 1) then 
+			{
+				_moraleA = _moraleA - (random 1)
+			}
+			else
+			{
+				_moraleA = _moraleA_new
+			}
+		};
+
 		_moraleB_new = _HQb getVariable "RydHQ_Morale";
+		_HQc = group leaderHQC;		
+		_HQd = group leaderHQD;
+
+		if (RYD_WS_WholeMap) then
+		{
+			_moraleB_newC = _HQc getVariable "RydHQ_Morale";
+			_moraleB_newD = _HQd getVariable "RydHQ_Morale";
+			
+			if not (isNil "_moraleB_newC") then
+			{
+				_moraleB_new = _moraleB_newC;
+				if not (isNil "_moraleB_newD") then
+				{
+					_moraleB_new = _moraleB_new max _moraleB_newD;
+				}
+			}
+		};
 
 		if (isNil "_moraleB_new") then 
-			{
+		{
 			_moraleB = _moraleB - (random 1)
-			}
+		}
 		else
-			{
+		{
 			_combatAvG = (_HQb getVariable ["RydHQ_Friends",RYD_WS_GroupsB]) - ((_HQb getVariable ["RydHQ_Exhausted",[]]) + ((_HQb getVariable ["RydHQ_AirG",[]]) - (_HQb getVariable ["RydHQ_NCrewInfG",[]])) + (_HQb getVariable ["RydHQ_SpecForG",[]]) + (_HQb getVariable ["RydHQ_CargoOnly",[]]) + (_HQb getVariable ["RydHQ_NavalG",[]]) + (_HQb getVariable ["RydHQ_StaticG",[]]) + (_HQb getVariable ["RydHQ_SupportG",[]]) + (_HQb getVariable ["RydHQ_ArtG",[]]) + (_HQb getVariable ["RydHQ_Garrison",[]]) + ((_HQb getVariable ["RydHQ_NCCargoG",[]]) - ((_HQb getVariable ["RydHQ_NCrewInfG",[]]) - (_HQb getVariable ["RydHQ_SupportG",[]]))));					
 
+			if (RYD_WS_WholeMap) then
+			{
+				_combatAvG = [];
+				
 				{
+					_combatAvG = _combatAvG + (_x getVariable ["RydHQ_Friends",RYD_WS_GroupsB]) - ((_x getVariable ["RydHQ_Exhausted",[]]) + ((_x getVariable ["RydHQ_AirG",[]]) - (_x getVariable ["RydHQ_NCrewInfG",[]])) + (_x getVariable ["RydHQ_SpecForG",[]]) + (_x getVariable ["RydHQ_CargoOnly",[]]) + (_x getVariable ["RydHQ_NavalG",[]]) + (_x getVariable ["RydHQ_StaticG",[]]) + (_x getVariable ["RydHQ_SupportG",[]]) + (_x getVariable ["RydHQ_ArtG",[]]) + (_x getVariable ["RydHQ_Garrison",[]]) + ((_x getVariable ["RydHQ_NCCargoG",[]]) - ((_x getVariable ["RydHQ_NCrewInfG",[]]) - (_x getVariable ["RydHQ_SupportG",[]]))));
+				} foreach [_HQc,_HQd]
+			};
+
+			{
 				switch (true) do
-					{
+				{
 					case (isNil {_x}) : {_combatAvG set [_foreachIndex,grpNull]};
 					case not ((typeName _x) in [(typeName grpNull)]) : {_combatAvG set [_foreachIndex,grpNull]};
 					case (isNull _x) : {_combatAvG set [_foreachIndex,grpNull]};
-					};
-				}
-			foreach _combatAvG;
+				};
+			} foreach _combatAvG;
 			
 			_combatAvG = _combatAvG - [grpNull];
 			
 			_combatAv = 0;
 			
-				{
+			{
 				_combatAv = _combatAv + ({alive _x} count (units _x))
-				}
-			foreach _combatAvG;
+			} foreach _combatAvG;
 			
 			//diag_log format ["_combatAv B: %1",_combatAv];
 			
@@ -2627,43 +3376,72 @@ foreach switchableUnits;
 			
 			_lossesB = ((_HQb getVariable ["RydHQ_LTotal",0]) > 0.75) or (_combatAv < _minimalEff);
 			
-			if (({alive _x} count (units _HQb)) < 1) then 
+			if (RYD_WS_WholeMap) then
+			{
+				_lossesB = true;
+				
 				{
-				_moraleB = _moraleB - (random 1)
+					_lossesB = ((_x getVariable ["RydHQ_LTotal",0]) > 0.75);
+					if not (_lossesB) exitWith {};
 				}
-			else
+				foreach [_HQc,_HQd]
+			};
+
+			_leadUnits = (units _HQb);
+			if (RYD_WS_WholeMap) then
+			{
+				_leadUnits = [];
+				
 				{
-				_moraleB = _moraleB_new
+					_leadUnits = _leadUnits + (units _x)
+				} foreach [_HQc,_HQd];
+				
+				if (RYD_WS_LeadersPoofItsMagic) then
+				{
+					_leadUnits = [fakeLeaderHQC,fakeLeaderHQD];
 				}
 			};
+				
+			if (({alive _x} count _leadUnits) < 1) then 
+			{
+				_moraleB = _moraleB - (random 1)
+			}
+			else
+			{
+				_moraleB = _moraleB_new
+			}
+		};
 		
 		_panic_A = (_moraleA < -49);
 		_panic_B = (_moraleB < -49);
 		
+		_dominationA = (RYD_WS_wholeMap) and {(RYD_WS_TakeToWinA >= 0) and {((RYD_WS_ObjTakenA/(RYD_WS_ObjToTakeA max 1)) >= RYD_WS_TakeToWinA)}};
+		_dominationB = (RYD_WS_wholeMap) and {(RYD_WS_TakeToWinB >= 0) and {((RYD_WS_ObjTakenB/(RYD_WS_ObjToTakeB max 1)) >= RYD_WS_TakeToWinB)}};
+		
 		//diag_log format ["ma: %1 mb: %2 noen: %3 nol: %4 noa: %5",_moraleA,_moraleB,_noEnemy,_noLeaders,_noAlly];
 		
-		((_noEnemy) or (_noLeaders) or (_panic_A) or (_panic_B) or (_noAlly) or (_lossesA) or (_lossesB))
-		};
+		((_noEnemy) or {(_noLeaders) or {(_panic_A) or {(_panic_B) or {(_noAlly) or {(_lossesA) or {(_lossesB) or {(_dominationA) or {(_dominationB)}}}}}}}})
+	};
 		
 	diag_log "END OF BATTLE";
-		
+
 	_cl = "";
 	_clA = switch (RYD_WS_SideA) do
-		{
+	{
 		case (west) : {"ColorWEST"};
 		case (east) : {"ColorEAST"};
 		case (resistance) : {"ColorGUER"};
-		};
+	};
 		
 	_clB = switch (RYD_WS_SideB) do
-		{
+	{
 		case (west) : {"ColorWEST"};
 		case (east) : {"ColorEAST"};
 		case (resistance) : {"ColorGUER"};
-		};
+	};
 		
 	switch (true) do
-		{
+	{
 		case ((_noEnemy) and (_noAlly)) : {TitleText ["Both armies withdrew!","PLAIN",5];missionNamespace setVariable ["RYD_WS_Reason","<t align='center' size='2.0'>BOTH ARMIES WITHDREW</t>"]};
 		case (_noEnemy) : {TitleText ["Enemy withdrew!","PLAIN",5];_cl = _clA;missionNamespace setVariable ["RYD_WS_Reason","<t align='center' size='2.0'>ENEMY WITHDREW</t>"]};
 		case (_noAlly) : {TitleText ["Our forces withdrew!","PLAIN",5];_cl = _clB;missionNamespace setVariable ["RYD_WS_Reason","<t align='center' size='2.0'>OUR FORCES WITHDREW</t>"]};
@@ -2674,56 +3452,55 @@ foreach switchableUnits;
 		case ((_lossesA) and (_lossesB)) : {TitleText ["Both armies sustained too heavy losses to continue the fight!","PLAIN",5];missionNamespace setVariable ["RYD_WS_Reason","<t align='center' size='2.0'>BOTH ARMIES LOST FIGHTING CAPACITY</t>"]};
 		case (_lossesA) : {TitleText ["Your commander-in-chief gave the order to surrender due to massive losses!","PLAIN",5];_cl = _clB;missionNamespace setVariable ["RYD_WS_Reason","<t align='center' size='2.0'>OUR ARMY LOST FIGHTING CAPACITY AND SURRENDERED</t>"]};
 		case (_lossesB) : {TitleText ["Enemy commander-in-chief gave the order to surrender due to massive losses!","PLAIN",5];_cl = _clA;missionNamespace setVariable ["RYD_WS_Reason","<t align='center' size='2.0'>ENEMY ARMY LOST FIGHTING CAPACITY AND SURRENDERED</t>"]};
-		};
-		
+		case (_dominationA) : {TitleText ["Faced with your progress, the enemy retreated!","PLAIN",5];_cl = _clA;missionNamespace setVariable ["RYD_WS_Reason","<t align='center' size='2.0'>ENEMY ARMY WITHDREW</t>"]};
+		case (_dominationB) : {TitleText ["Faced with enemy progress, your forces retreated!","PLAIN",5];_cl = _clB;missionNamespace setVariable ["RYD_WS_Reason","<t align='center' size='2.0'>YOUR ARMY WITHDREW</t>"]};
+	};
+
 	sleep 10;
 	
 	TitleText ["","PLAIN",0];
 	
 	if (RYD_WS_CAdd) then
-		{
+	{
 		if not (_cl == "") then
-			{
+		{
 			_colors = profileNamespace getVariable ["RYD_WS_MapColors" + worldName,[]];
 			_ns = [RYD_WS_BFPos,RYD_WS_NearSectors,0,RYD_WS_BFRadius * 0.55] call RYD_WS_FindSectorInRange;
 			
-				{
+			{
 				if ((_x getvariable "Topo_SeaP") < 50) then
-					{
+				{
 					_posL = position _x;
 					_posL set [2,0];
 					
-						{
+					{
 						_pos = _x select 0;
 						
 						if ((_pos distance _posL) < 50) exitWith {_colors set [_foreachIndex,0]}
-						}
-					foreach _colors;
+					} foreach _colors;
 					
 					_colors = _colors - [0];
 					
 					_colors set [(count _colors),[_posL,_cl]]
-					}
 				}
-			foreach _ns;
+			} foreach _ns;
 			
 			profileNamespace setVariable ["RYD_WS_MapColors" + worldName,_colors];
 			
 			saveProfileNamespace;
-			}
-		};
-		
+		}
+	};
+
 	_KIAs = missionNamespace getVariable ["WS_KIA_A",[]];
 	
 	_KIAlist = "";
 	
-		{
+	{
 		_KIAlist = _KIAlist + _x + "<br/>"
-		}
-	foreach _KIAs;
+	} foreach _KIAs;
 	
 	//_KIAlist = composeText _KIAlist;
-		
+
 	missionNameSpace setVariable ["RYD_WS_KIA_list",_KIAlist];
 	
 	RYD_WS_Wounded_A = RYD_WS_Wounded_A - RYD_WS_Killed_A;
@@ -2732,13 +3509,12 @@ foreach switchableUnits;
 	
 	_woundList = "";
 	
-		{
+	{
 		if not (isNull _x) then
-			{			
+		{			
 			_woundList = _woundList + (_x getVariable ["WS_myName",name _x]) + "<br/>"
-			}
 		}
-	foreach RYD_WS_Wounded_A;
+	} foreach RYD_WS_Wounded_A;
 	
 	missionNameSpace setVariable ["RYD_WS_WIA_list",_woundList];
 	
@@ -2747,66 +3523,64 @@ foreach switchableUnits;
 	
 	_indictedList = "";
 	
-		{
+	{
 		if not (isNull _x) then
-			{
+		{
 			_acc = "";
 			_gp = group _x;
 			
 			if (_x getVariable ["RYD_WS_Indicted",false]) then
-				{
+			{
 				_acc = "MANSLAUGHTER"
-				};
+			};
 			
 			if (_gp getVariable ("isCaptive" + (str _gp))) then
-				{
+			{
 				if not (_gp in _gpsSurr) then 
-					{
+				{
 					_gpsSurr set [(count _gpsSurr),_gp];
 					
 					if not (_acc in [""]) then
-						{
+					{
 						_acc = _acc + " AND COWARDICE"
-						}
+					}
 					else
-						{
+					{
 						_acc = "COWARDICE" 
-						}
-					};
+					}
 				};
+			};
 				
 			if (_acc in [""]) exitWith {};
 			_indicted set [(count _indicted),_x];
 				
 			_indictedList = _indictedList + (name _x) + " - " + _acc + "<br/>"
-			};
-		}
-	foreach (RYD_WS_ForcesA - RYD_WS_Killed_A);
+		};
+	} foreach (RYD_WS_ForcesA - RYD_WS_Killed_A);
 	
 	missionNameSpace setVariable ["RYD_WS_Indicted_list",_indictedList];
 	
 	_killers = [];
 	
-		{
+	{
 		_name = _x getVariable ["WS_myName",name _x];
 		_kills = (missionNamespace getVariable ["WS_KIA_B" + _name,[_name,0]]) select 1;
-				
+
 		if (_kills > 0) then
-			{			
+		{			
 			_killers set [(count _killers),[_x,_kills]]
-			}
 		}
-	foreach RYD_WS_ForcesA;
+	} foreach RYD_WS_ForcesA;
 	
 	_killers = [_killers] call RYD_WS_SortByKills;
 	
 	_killsList = "";
 	_awardedList = "";
 	
-		{
+	{
 		_sd = _x select 0;
 		if not (isNull _sd) then
-			{
+		{
 			_name = _sd getVariable ["WS_myName",name _sd];
 			
 			_kills = missionNamespace getVariable ["WS_KIA_B" + _name,[_name,0]];
@@ -2815,19 +3589,18 @@ foreach switchableUnits;
 			_killsList = _killsList + (_kills select 0) + " - " + (str _amnt) + "<br/>";
 			
 			if not (_x in _indicted) then
-				{
+			{
 				if (_amnt > 9) then
-					{
+				{
 					_awardedList = _awardedList + _name + "<br/>"
-					}
-				};
-			}
+				}
+			};
 		}
-	foreach _killers;
+	} foreach _killers;
 	
 	missionNameSpace setVariable ["RYD_WS_Kills_list",_killsList];
 	missionNameSpace setVariable ["RYD_WS_Awarded_list",_awardedList];
-				
+
 	["END1",true,true,true] call BIS_fnc_endMission;
-	};
+};
 

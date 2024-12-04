@@ -569,6 +569,38 @@ class HWS_RscMapControl
 	showMarkers = 1;
 };
 
+class RscCheckBoxes
+{
+	onLoad = "";
+
+	idc = -1;
+	type = 7; // CT_CHECKBOXES
+	style = 2; // ST_CENTER
+
+	x = 0.25;
+	y = 0.25;
+	w = 0.5;
+	h = 0.5;
+
+	colorText[] = {0, 1, 0, 1};
+	colorTextSelect[] = {1, 0, 0, 1};
+
+	colorBackground[] = {0, 0, 1, 0.3};
+	colorSelectedBg[] = {0, 0, 0, 0.2};
+	
+	font = "RobotoCondensed";
+	sizeEx = 0.04;
+	
+	onCheckBoxesSelChanged = "";
+	
+	columns = 8;
+	rows = 4;
+
+	strings[] = {"0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+	checked_strings[] = {"[0]","[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]","[13]","[14]","[15]","[16]","[17]","[18]","[19]","[20]","[21]","[22]","[23]","[24]","[25]","[26]","[27]","[28]","[29]","[30]","[31]"};
+	values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+	tooltips[] = {"tip0","tip1","tip2","tip3","tip4","tip5","tip6","tip7","tip8","tip9","tip10","tip11","tip12","tip13","tip14","tip15","tip16","tip17","tip18","tip19","tip20","tip21","tip22","tip23","tip24","tip25","tip26","tip27","tip28","tip29","tip30","tip31"};	
+};
 ////////////////////////////////////////////////////////
 // GUI EDITOR OUTPUT START (by Rydygier, v1.063, #Syfezo)
 ////////////////////////////////////////////////////////
@@ -595,7 +627,7 @@ class RscHWS
 		class RscFrame_HWS: HWS_RscFrame
 		{
 			idc = 1799;
-			text = "HETMAN: WAR STORIES version 1.09-Custom";
+			text = "HETMAN: WAR STORIES version 1.10a - Custom";
 			x = 5.5 * GUI_GRID_W + GUI_GRID_X;
 			y = -2.5 * GUI_GRID_H + GUI_GRID_Y;
 			w = 29 * GUI_GRID_W;
@@ -760,7 +792,7 @@ class RscHWS
 			y = 6 * GUI_GRID_H + GUI_GRID_Y;
 			w = 7 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
-			tooltip = "Whether include next battle result in the campaign score, exclude it or reset whole progress";
+			tooltip = "Whether include next battle result in the campaign score, exclude it, reset whole progress or play in whole map mode";
 		};			
 
 		class Scale_Frame: HWS_RscFrame
@@ -822,14 +854,35 @@ class RscHWS
 			h = 1 * GUI_GRID_H;
 			tooltip = "Select overcast";
 		};
+		
+		class FSEP_Frame: HWS_RscFrame
+		{
+			idc = 1809;
+			text = "Factions interspace";
+			x = 6 * GUI_GRID_W + GUI_GRID_X;
+			y = 11 * GUI_GRID_H + GUI_GRID_Y;
+			w = 8 * GUI_GRID_W;
+			h = 2.5 * GUI_GRID_H;
+		};
+			
+		class FSEP_Combo: HWS_RscCombo
+		{
+			idc = 2109;
+			x = 6.5 * GUI_GRID_W + GUI_GRID_X;
+			y = 12 * GUI_GRID_H + GUI_GRID_Y;
+			w = 7 * GUI_GRID_W;
+			h = 1 * GUI_GRID_H;
+			tooltip = "Select interspace between factions, NONE - factions intermixed";
+		};
+			
 
 		class RscBack2: HWS_RscPicture
 		{
 			idc = 121;
 			x = 6.5 * GUI_GRID_W + GUI_GRID_X;
-			y = 12 * GUI_GRID_H + GUI_GRID_Y;
+			y = 15 * GUI_GRID_H + GUI_GRID_Y;
 			w = 27 * GUI_GRID_W;
-			h = 10 * GUI_GRID_H;
+			h = 7 * GUI_GRID_H;
 			//text = "#(argb,8,8,3)color(0.1,0.1,0.2,0.2)";			
 		};
 
@@ -838,25 +891,77 @@ class RscHWS
 			idc = 1805;
 			text = "Advanced setup";
 			x = 6 * GUI_GRID_W + GUI_GRID_X;
-			y = 11 * GUI_GRID_H + GUI_GRID_Y;
+			y = 14 * GUI_GRID_H + GUI_GRID_Y;
 			w = 28 * GUI_GRID_W;
-			h = 11.5 * GUI_GRID_H;
+			h = 8.5 * GUI_GRID_H;
 		};
 
 		class ED_Edit: RscEdit
 		{
 			idc = 120;
 			x = 6.5 * GUI_GRID_W + GUI_GRID_X;
-			y = 12 * GUI_GRID_H + GUI_GRID_Y;
+			y = 15 * GUI_GRID_H + GUI_GRID_Y;
 			w = 27 * GUI_GRID_W;
-			h = 10 * GUI_GRID_H;
+			h = 7 * GUI_GRID_H;
 			text = "";
 			autocomplete = "scripting";
+		};
+		
+		class Fac_A: RscCheckBoxes
+		{
+			onLoad = "";
+
+			idc = 122;
+			style = 2; // ST_CENTER
+
+			x = -6 * GUI_GRID_W + GUI_GRID_X;
+			y = -2.5 * GUI_GRID_H + GUI_GRID_Y;
+			w = 10 * GUI_GRID_W;
+			h = 32 * GUI_GRID_H;
+			
+			colorText[] = {0.75,0.75,0.75,0.75};
+			colorTextSelect[] = {1,1,1,1};
+			colorBackground[] = {0,0,0,0.75};
+			colorSelectedBg[] = {0,0,0,0.75};
+			
+			font = "RobotoCondensed";
+			sizeEx = 0.03921;
+			
+			onCheckBoxesSelChanged = "";
+			
+			columns = 1;
+			rows = 32;
+
+			strings[] = {};//{"0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+			checked_strings[] = {};//{"[0]","[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]","[13]","[14]","[15]","[16]","[17]","[18]","[19]","[20]","[21]","[22]","[23]","[24]","[25]","[26]","[27]","[28]","[29]","[30]","[31]"};
+			values[] = {};//{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+			tooltips[] = {};//{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
+		};
+			
+		class Fac_B: Fac_A
+		{
+			idc = 123;
+
+			x = 36 * GUI_GRID_W + GUI_GRID_X;
+		};
+			
+		class Fac_A2: Fac_A
+		{
+			idc = 124;
+
+			x = -16.5 * GUI_GRID_W + GUI_GRID_X;
+		};
+			
+		class Fac_B2: Fac_A
+		{
+			idc = 125;
+
+			x = 46.5 * GUI_GRID_W + GUI_GRID_X;
 		};
 
 		class RscButton_HWS: HWS_RscButton
 		{
-			idc = -1;
+			idc = 126;
 			text = "TELL ME A STORY";
 			x = 13 * GUI_GRID_W + GUI_GRID_X;
 			y = 23.5 * GUI_GRID_H + GUI_GRID_Y;
@@ -864,12 +969,12 @@ class RscHWS
 			h = 2.5 * GUI_GRID_H;
 			colorText[] = {0.9,0.9,1,1};
 			sizeEx = 1 * GUI_GRID_H;
-			action = "[] call RYD_WS_TakeValues;closeDialog 1";
+			action = "[] call RYD_WS_TakeValues";
 		};
 
 		class RscButton_MC: HWS_RscButton
 		{
-			idc = -1;
+			idc = 127;
 			text = "MANUAL LOCATION";
 			x = 16 * GUI_GRID_W + GUI_GRID_X;
 			y = -0.625 * GUI_GRID_H + GUI_GRID_Y;

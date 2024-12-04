@@ -12,10 +12,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={8144.5352,283.19806,25001.982};
-		dir[]={0.77944309,-0.59860224,-0.18478106};
-		up[]={0.58245856,0.80104637,-0.13808233};
-		aside[]={-0.23067459,-7.4505806e-09,-0.97303104};
+		pos[]={8534.3193,208.07854,25150.66};
+		dir[]={0.68901569,-0.69162583,0.21658984};
+		up[]={0.65979517,0.72225595,0.20740446};
+		aside[]={0.29987958,0,-0.95397705};
 	};
 };
 binarizationWanted=0;
@@ -121,183 +121,8 @@ class Mission
 	};
 	class Entities
 	{
-		items=22;
+		items=8;
 		class Item0
-		{
-			dataType="Trigger";
-			position[]={8143.4204,97.53466,23043.859};
-			class Attributes
-			{
-				name="RydHQ_Obj1";
-				interuptable=1;
-			};
-			id=0;
-			type="EmptyDetector";
-		};
-		class Item1
-		{
-			dataType="Trigger";
-			position[]={8235.4287,104.86682,23043.859};
-			class Attributes
-			{
-				name="RydHQ_Obj2";
-				interuptable=1;
-			};
-			id=1;
-			type="EmptyDetector";
-		};
-		class Item2
-		{
-			dataType="Trigger";
-			position[]={8316.6133,103.0266,23054.686};
-			class Attributes
-			{
-				name="RydHQ_Obj3";
-				interuptable=1;
-			};
-			id=2;
-			type="EmptyDetector";
-		};
-		class Item3
-		{
-			dataType="Trigger";
-			position[]={8403.209,85.592735,23051.979};
-			class Attributes
-			{
-				name="RydHQ_Obj4";
-				interuptable=1;
-			};
-			id=3;
-			type="EmptyDetector";
-		};
-		class Item4
-		{
-			dataType="Trigger";
-			position[]={8165.0698,103.91283,22938.32};
-			class Attributes
-			{
-				name="RydHQB_Obj1";
-				interuptable=1;
-			};
-			id=4;
-			type="EmptyDetector";
-			atlOffset=-7.6293945e-06;
-		};
-		class Item5
-		{
-			dataType="Trigger";
-			position[]={8257.0771,82.375969,22938.32};
-			class Attributes
-			{
-				name="RydHQB_Obj2";
-				interuptable=1;
-			};
-			id=5;
-			type="EmptyDetector";
-		};
-		class Item6
-		{
-			dataType="Trigger";
-			position[]={8338.2617,73.187393,22949.146};
-			class Attributes
-			{
-				name="RydHQB_Obj3";
-				interuptable=1;
-			};
-			id=6;
-			type="EmptyDetector";
-		};
-		class Item7
-		{
-			dataType="Trigger";
-			position[]={8424.8584,49.405704,22946.439};
-			class Attributes
-			{
-				name="RydHQB_Obj4";
-				interuptable=1;
-			};
-			id=7;
-			type="EmptyDetector";
-		};
-		class Item8
-		{
-			dataType="Trigger";
-			position[]={8150.0068,81.029602,22690.846};
-			class Attributes
-			{
-				name="RydHQ_Sec1";
-				interuptable=1;
-			};
-			id=8;
-			type="EmptyDetector";
-		};
-		class Item9
-		{
-			dataType="Trigger";
-			position[]={8171.6563,76.565498,22585.307};
-			class Attributes
-			{
-				name="RydHQB_Sec1";
-				interuptable=1;
-			};
-			id=9;
-			type="EmptyDetector";
-		};
-		class Item10
-		{
-			dataType="Trigger";
-			position[]={8292.2656,79.269363,22717.191};
-			class Attributes
-			{
-				name="RydHQ_Sec2";
-				interuptable=1;
-			};
-			id=10;
-			type="EmptyDetector";
-		};
-		class Item11
-		{
-			dataType="Trigger";
-			position[]={8313.916,63.043835,22611.652};
-			class Attributes
-			{
-				name="RydHQB_Sec2";
-				interuptable=1;
-			};
-			id=11;
-			type="EmptyDetector";
-		};
-		class Item12
-		{
-			dataType="Trigger";
-			position[]={8638.2227,38.362831,22647.98};
-			class Attributes
-			{
-				name="RydHQ_IdleDecoy";
-				sizeA=150;
-				sizeB=150;
-				interuptable=1;
-				isRectangle=1;
-			};
-			id=12;
-			type="EmptyDetector";
-		};
-		class Item13
-		{
-			dataType="Trigger";
-			position[]={8993.7363,30.636681,22636.809};
-			class Attributes
-			{
-				name="RydHQB_IdleDecoy";
-				sizeA=150;
-				sizeB=150;
-				interuptable=1;
-				isRectangle=1;
-			};
-			id=13;
-			type="EmptyDetector";
-		};
-		class Item14
 		{
 			dataType="Object";
 			class PositionInfo
@@ -316,7 +141,7 @@ class Mission
 			type="Land_Sun_chair_F";
 			atlOffset=7.6293945e-06;
 		};
-		class Item15
+		class Item1
 		{
 			dataType="Object";
 			class PositionInfo
@@ -335,7 +160,7 @@ class Mission
 			type="Land_Sunshade_04_F";
 			atlOffset=0.0053634644;
 		};
-		class Item16
+		class Item2
 		{
 			dataType="Object";
 			class PositionInfo
@@ -354,7 +179,7 @@ class Mission
 			id=16;
 			type="Land_Can_V2_F";
 		};
-		class Item17
+		class Item3
 		{
 			dataType="Group";
 			side="West";
@@ -418,7 +243,7 @@ class Mission
 			id=17;
 			atlOffset=1.5258789e-05;
 		};
-		class Item18
+		class Item4
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -430,7 +255,7 @@ class Mission
 			type="MartaManager";
 			atlOffset=39.475388;
 		};
-		class Item19
+		class Item5
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -442,7 +267,7 @@ class Mission
 			type="Logic";
 			atlOffset=36.591557;
 		};
-		class Item20
+		class Item6
 		{
 			dataType="Group";
 			side="West";
@@ -508,7 +333,7 @@ class Mission
 			id=21;
 			atlOffset=7.6293945e-06;
 		};
-		class Item21
+		class Item7
 		{
 			dataType="Logic";
 			class PositionInfo

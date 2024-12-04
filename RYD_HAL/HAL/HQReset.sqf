@@ -60,7 +60,7 @@ switch (_nObj) do
 	default {_trg = _HQ getVariable ["RydHQ_Obj4",(leader _HQ)];_HQ setVariable ["RydHQ_Obj",(_HQ getVariable ["RydHQ_Obj4",(leader _HQ)])]};
 	};
 
-_mLoss = 10;
+_mLoss = 10 * RYD_WS_MoraleObjCoeffL;
 if ((_HQ getVariable ["leaderHQ",(leader _HQ)]) in (RydBBa_HQs + RydBBb_HQs)) then {_mLoss = 0};
 
 _lastObj = _HQ getVariable ["RydHQ_NObj",1];

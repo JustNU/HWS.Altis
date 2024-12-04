@@ -785,7 +785,7 @@ switch (_nObj) do
 	default {_trg = (_HQ getVariable ["RydHQ_Obj4",(leader _HQ)])};
 	};
 */
-_mGain = 20;
+_mGain = 20 * RYD_WS_MoraleObjCoeffG;
 
 if ((leader _HQ) in (RydBBa_HQs + RydBBb_HQs)) then {_mGain = 0};
 

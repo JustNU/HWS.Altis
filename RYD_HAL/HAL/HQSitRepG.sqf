@@ -424,8 +424,8 @@ while {true} do
 	if (isNil "RydHQG_InfoMarkers") then {RydHQG_InfoMarkers = false};
 	_HQ setVariable ["RydHQ_InfoMarkers",RydHQG_InfoMarkers];
 	
-	if (isNil "RydHQG_ArtyMarks") then {RydHQG_ArtyMarks = false};
-	_HQ setVariable ["RydHQ_ArtyMarks",RydHQG_ArtyMarks];
+	/*if (isNil "RydHQG_ArtyMarks") then {RydHQG_ArtyMarks = false};
+	_HQ setVariable ["RydHQ_ArtyMarks",RydHQG_ArtyMarks];*/
 	
 	if (isNil ("RydHQG_ResetNow")) then {RydHQG_ResetNow = false};
 	_HQ setVariable ["RydHQ_ResetNow",RydHQG_ResetNow];

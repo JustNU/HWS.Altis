@@ -4623,6 +4623,23 @@ RYD_AIChatter =
 
 	_unit = _this select 0;
 	
+	_exitNow = false;
+	if (RYD_WS_LeadersPoofItsMagic) then
+		{
+		_unit = switch (true) do
+			{
+			case ((_unit in [leaderHQ]) and {not (isNil "fakeLeaderHQ") and {not (isNull fakeLeaderHQ) and {(alive fakeLeaderHQ)}}}) :  {fakeLeaderHQ};
+			case ((_unit in [leaderHQB]) and {not (isNil "fakeLeaderHQB") and {not (isNull fakeLeaderHQB) and {(alive fakeLeaderHQB)}}}) :  {fakeLeaderHQB};
+			case ((_unit in [leaderHQC]) and {not (isNil "fakeLeaderHQC") and {not (isNull fakeLeaderHQC) and {(alive fakeLeaderHQC)}}}) :  {fakeLeaderHQC};
+			case ((_unit in [leaderHQD]) and {not (isNil "fakeLeaderHQD") and {not (isNull fakeLeaderHQD) and {(alive fakeLeaderHQD)}}}) :  {fakeLeaderHQD};
+			default {objNull}
+			};
+			
+		_exitNow = (isNil "_unit") or {(isNull _unit)};
+		};
+		
+	if (_exitNow) exitWith {};
+	
 	_gp = group _unit;
 	
 	_lastComm = _gp getVariable "HAC_LastComm";
