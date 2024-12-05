@@ -6354,6 +6354,7 @@ RYD_WS_HQGuard =
 		deleteGroup _gp
 	};
 
+	/*
 	_vehG = [];
 	_vehArr = _gArr select 2;
 	//_vehArr appEnd (_gArr select 3);
@@ -6378,6 +6379,7 @@ RYD_WS_HQGuard =
 	//_gp = [_spawnPos,_side,_type,_dir,true] call RYD_WS_SpawnGroupSafe;
 	_gp = [_spawnPos,_side,_type] call BIS_fnc_spawnGroup;	
 	_excl pushBack _gp;
+	*/
 	
 	/*_mk = "PMark_" + (str (position (leader _gp)));
 	_mk = createMarker [_mk,(position (leader _gp))];
