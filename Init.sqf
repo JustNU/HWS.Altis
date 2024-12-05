@@ -507,6 +507,100 @@ RYD_WS_TakeValues =
 	RYD_WS_FacA = missionNamespace getVariable [(str _ix)+"_fl_21000",[0,"NATO","blu_f","BLUFOR"]];
 	
 	RYD_WS_selFactionsA = [];
+	_randomFactionSideBool = false;
+	
+	if ((RYD_WS_FacA select 1) isEqualTo "RANDOM FULLY") then
+	{
+		_randomFactionFull = selectRandom RYD_WS_B_Factions2;
+		_randomFactionFull = [_ix, _randomFactionFull select 1, _randomFactionFull select 0, _randomFactionFull select 2];
+
+		RYD_WS_FacA = _randomFactionFull;
+		
+		//diag_log format ["RYD_WS_FacA: %1",RYD_WS_FacA];
+		//diag_log format ["_randomFactionFull: %1",_randomFactionFull];
+		//diag_log format ["_txt: %1",_txt];
+		//diag_log format ["RYD_WS_FacA select 2: %1",RYD_WS_FacA select 2];
+	};
+	if ((RYD_WS_FacA select 1) isEqualTo "RANDOM BY SIDE") then
+	{
+		_factionPool = [];
+		
+		switch (RYD_WS_SideA) do
+		{
+			case (west):
+			{
+				_factionPool = RYD_WS_B_Factions;
+			};
+			case (resistance):
+			{
+				_factionPool = RYD_WS_I_Factions;
+			};
+			case (east):
+			{
+				_factionPool = RYD_WS_O_Factions;
+			};
+		};
+		
+		//diag_log format ["_factionPool: %1",_factionPool];
+		
+		_randomFactionSide = selectRandom _factionPool;
+		_randomFactionSide = [_ix, _randomFactionSide select 1, _randomFactionSide select 0, _randomFactionSide select 2];
+		
+		RYD_WS_FacA = _randomFactionSide;
+		
+		//diag_log format ["_txt: %1",_txt];
+		//diag_log format ["RYD_WS_FacA select 2: %1",RYD_WS_FacA select 2];
+	};
+	if ((RYD_WS_FacA select 1) isEqualTo "RANDOM FROM CHOSEN") then
+	{
+		_factions = switch (lbCurSel 2100) do
+		{		
+			case (RYD_ix_SideA_B) : {RYD_WS_B_Factions2};
+			case (RYD_ix_SideB_B) : {RYD_WS_B_Factions2};		
+			case (RYD_ix_SideA_I) : {RYD_WS_I_Factions2};
+			case (RYD_ix_SideB_I) : {RYD_WS_I_Factions2};
+			case (RYD_ix_SideA_O) : {RYD_WS_O_Factions2};
+			case (RYD_ix_SideB_O) : {RYD_WS_O_Factions2};
+		};	
+
+		_ctrl = (findDisplay 2500) displayCtrl 122;
+		if not ((count _factions) > 32) then
+		{
+			for "_i" from 0 to ((count _factions) - 1) do
+			{
+				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
+				{
+					RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
+				};
+			};
+		}
+		else
+		{
+			_ctrl2 = (findDisplay 2500) displayCtrl 124;			
+			for "_i" from 0 to 31 do
+			{
+				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
+				{
+					RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
+				};
+			};
+
+			for "_i" from 32 to ((count _factions) min 63) do
+			{
+				if ((_ctrl2 ctrlChecked (_i - 32)) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
+				{
+					RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
+				};
+			};
+		};
+		
+		_randomFactionChosen = selectRandom RYD_WS_selFactionsA;
+		_randomFactionChosen = _randomFactionChosen select 0;
+		_randomFactionChosen = [_ix, _randomFactionChosen select 1, _randomFactionChosen select 0, _randomFactionChosen select 2];
+		
+		RYD_WS_FacA = _randomFactionChosen;
+		_randomFactionSideBool = true;
+	};
 	if ((RYD_WS_FacA select 1) isEqualTo "MULTI") then
 	{
 		_factions = switch (lbCurSel 2100) do
@@ -549,62 +643,32 @@ RYD_WS_TakeValues =
 				};
 			};
 		};
-	}
-	else
-	{
-		RYD_WS_selFactionsA = [[[(RYD_WS_FacA select 2),(RYD_WS_FacA select 1)], 0]]
 	};
+	if (((RYD_WS_FacA select 1) isNotEqualTo "MULTI") and (_randomFactionSideBool == false)) then
+	{
+		//diag_log format ["RYD_WS_selFactionsA: %1",RYD_WS_selFactionsA];
+		//diag_log format ["_randomFactionSideBool: %1",_randomFactionSideBool];
+		
+		RYD_WS_selFactionsA = [[[(RYD_WS_FacA select 2),(RYD_WS_FacA select 1)], 0]];
+		
+		//diag_log format ["RYD_WS_selFactionsA: %1",RYD_WS_selFactionsA];
+	};
+	
+	//diag_log format ["RYD_WS_selFactionsA: %1",RYD_WS_selFactionsA];
 
 	if ((count RYD_WS_selFactionsA) < 1) exitWith {};
 	
 	//diag_log format ["RYD_WS_FacA: %1",RYD_WS_FacA];
 	
-	switch (RYD_WS_FacA select 1) do
-	{
-		case ("RANDOM FULLY"): 
-		{
-			_randomFactionFull = selectRandom RYD_WS_B_Factions2;
-			_randomFactionFull = [_ix, _randomFactionFull select 1, _randomFactionFull select 0, _randomFactionFull select 2];
-
-			RYD_WS_FacA = _randomFactionFull;
-			
-			//diag_log format ["RYD_WS_FacA: %1",RYD_WS_FacA];
-			//diag_log format ["_randomFactionFull: %1",_randomFactionFull];
-			//diag_log format ["_txt: %1",_txt];
-			//diag_log format ["RYD_WS_FacA select 2: %1",RYD_WS_FacA select 2];
-		};
-		case ("RANDOM BY SIDE"):
-		{
-			switch (RYD_WS_SideA) do
-			{
-				case (west):
-				{
-					_factionPool = selectRandom RYD_WS_B_Factions;
-				};
-				case (resistance):
-				{
-					_factionPool = selectRandom RYD_WS_I_Factions;
-				};
-				case (east):
-				{
-					_factionPool = selectRandom RYD_WS_O_Factions;
-				};
-			};
-			
-			_randomFactionSide = selectRandom _factionPool;
-			_randomFactionSide = [_ix, _randomFactionSide select 1, _randomFactionSide select 0, _randomFactionSide select 2];
-
-			RYD_WS_FacA = _randomFactionSide;
-			
-			//diag_log format ["RYD_WS_FacA: %1",RYD_WS_FacA];
-			//diag_log format ["_randomFactionSide: %1",_randomFactionSide];
-			//diag_log format ["_txt: %1",_txt];
-			//diag_log format ["RYD_WS_FacA select 2: %1",RYD_WS_FacA select 2];
-		};
-	};
-	
 	profileNamespace setVariable ["RYD_ix_FacA",(RYD_WS_FacA select 0)];
 	profileNamespace setVariable ["RYD_WS_selFactionsA",RYD_WS_selFactionsA];
+	
+	if (_randomFactionSideBool) then
+	{
+		_randomFactionSideBool = false;
+		RYD_WS_selFactionsA = [[[(RYD_WS_FacA select 2),(RYD_WS_FacA select 1)], 0]];
+	};
+	//diag_log format ["RYD_WS_selFactionsA: %1",RYD_WS_selFactionsA];
 	
 	_txt = RYD_WS_FacA select 1;
 	
@@ -639,6 +703,100 @@ RYD_WS_TakeValues =
 	RYD_WS_FacB = missionNamespace getVariable [(str _ix)+"_fl_21010",[0,"CSAT","opf_f"]];
 	
 	RYD_WS_selFactionsB = [];//profileNamespace getVariable ["RYD_WS_selFactionsB",[]];
+	if ((RYD_WS_FacB select 1) isEqualTo "RANDOM FULLY") then
+	{
+		_randomFactionFull = selectRandom RYD_WS_B_Factions2;
+		_randomFactionFull = [_ix, _randomFactionFull select 1, _randomFactionFull select 0, _randomFactionFull select 2];
+		
+		RYD_WS_FacB = _randomFactionFull;
+		
+		//diag_log format ["RYD_WS_FacA: %1",RYD_WS_FacA];
+		//diag_log format ["_randomFactionFull: %1",_randomFactionFull];
+		//diag_log format ["_txt: %1",_txt];
+		//diag_log format ["RYD_WS_FacA select 2: %1",RYD_WS_FacA select 2];
+	};
+	if ((RYD_WS_FacB select 1) isEqualTo "RANDOM BY SIDE") then
+	{
+		_factionPool = [];
+		
+		switch (RYD_WS_SideB) do
+		{
+			case (west):
+			{
+				_factionPool = RYD_WS_B_Factions;
+			};
+			case (resistance):
+			{
+				_factionPool = RYD_WS_I_Factions;
+			};
+			case (east):
+			{
+				_factionPool = RYD_WS_O_Factions;
+			};
+		};
+
+		//diag_log format ["_factionPool: %1",_factionPool];
+
+		_randomFactionSide = selectRandom _factionPool;
+		_randomFactionSide = [_ix, _randomFactionSide select 1, _randomFactionSide select 0, _randomFactionSide select 2];
+
+		RYD_WS_FacB = _randomFactionSide;
+
+		//diag_log format ["RYD_WS_FacA: %1",RYD_WS_FacA];
+		//diag_log format ["_randomFactionSide: %1",_randomFactionSide];
+		//diag_log format ["_txt: %1",_txt];
+		//diag_log format ["RYD_WS_FacA select 2: %1",RYD_WS_FacA select 2];
+	};
+	if ((RYD_WS_FacB select 1) isEqualTo "RANDOM FROM CHOSEN") then
+	{
+		_factions = switch (lbCurSel 2100) do
+		{		
+			case (RYD_ix_SideA_B) : {RYD_WS_B_Factions2};
+			case (RYD_ix_SideB_B) : {RYD_WS_B_Factions2};		
+			case (RYD_ix_SideA_I) : {RYD_WS_I_Factions2};
+			case (RYD_ix_SideB_I) : {RYD_WS_I_Factions2};
+			case (RYD_ix_SideA_O) : {RYD_WS_O_Factions2};
+			case (RYD_ix_SideB_O) : {RYD_WS_O_Factions2};
+		};	
+
+		_ctrl = (findDisplay 2500) displayCtrl 122;
+		if not ((count _factions) > 32) then
+		{
+			for "_i" from 0 to ((count _factions) - 1) do
+			{
+				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
+				{
+					RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
+				};
+			};
+		}
+		else
+		{
+			_ctrl2 = (findDisplay 2500) displayCtrl 124;			
+			for "_i" from 0 to 31 do
+			{
+				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
+				{
+					RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
+				};
+			};
+
+			for "_i" from 32 to ((count _factions) min 63) do
+			{
+				if ((_ctrl2 ctrlChecked (_i - 32)) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
+				{
+					RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
+				};
+			};
+		};
+		
+		_randomFactionChosen = selectRandom RYD_WS_selFactionsB;
+		_randomFactionChosen = _randomFactionChosen select 0;
+		_randomFactionChosen = [_ix, _randomFactionChosen select 1, _randomFactionChosen select 0, _randomFactionChosen select 2];
+		
+		RYD_WS_FacB = _randomFactionChosen;
+		_randomFactionSideBool = true;
+	};
 	if ((RYD_WS_FacB select 1) isEqualTo "MULTI") then
 	{		
 		_factions = switch (lbCurSel 2101) do
@@ -682,67 +840,24 @@ RYD_WS_TakeValues =
 				};
 			};
 		};
-	}
-	else
+	};
+	if (((RYD_WS_FacB select 1) isNotEqualTo "MULTI") and (_randomFactionSideBool == false)) then
 	{
 		RYD_WS_selFactionsB = [[[(RYD_WS_FacB select 2),(RYD_WS_FacB select 1)],0]]
 	};
 
 	if ((count RYD_WS_selFactionsB) < 1) exitWith {};
 	
-	switch (RYD_WS_FacB select 1) do
-	{
-		case ("RANDOM FULLY"): 
-		{
-			_randomFactionFull = selectRandom RYD_WS_B_Factions2;
-			_randomFactionFull = [_ix, _randomFactionFull select 1, _randomFactionFull select 0, _randomFactionFull select 2];
-
-			RYD_WS_FacB = _randomFactionFull;
-			
-			//diag_log format ["RYD_WS_FacA: %1",RYD_WS_FacA];
-			//diag_log format ["_randomFactionFull: %1",_randomFactionFull];
-			//diag_log format ["_txt: %1",_txt];
-			//diag_log format ["RYD_WS_FacA select 2: %1",RYD_WS_FacA select 2];
-		};
-		case ("RANDOM BY SIDE"):
-		{
-			_factionPool = [];
-			
-			switch (RYD_WS_SideB) do
-			{
-				case (west):
-				{
-					_factionPool = RYD_WS_B_Factions;
-				};
-				case (resistance):
-				{
-					_factionPool = RYD_WS_I_Factions;
-				};
-				case (east):
-				{
-					_factionPool = RYD_WS_O_Factions;
-				};
-			};
-			
-
-			diag_log format ["_factionPool: %1",_factionPool];
-			
-			_randomFactionSide = selectRandom _factionPool;
-			_randomFactionSide = [_ix, _randomFactionSide select 1, _randomFactionSide select 0, _randomFactionSide select 2];
-
-			RYD_WS_FacB = _randomFactionSide;
-			
-			//diag_log format ["RYD_WS_FacA: %1",RYD_WS_FacA];
-			//diag_log format ["_randomFactionSide: %1",_randomFactionSide];
-			//diag_log format ["_txt: %1",_txt];
-			//diag_log format ["RYD_WS_FacA select 2: %1",RYD_WS_FacA select 2];
-		};
-	};
-	
 	diag_log format ["RYD_WS_FacB: %1",RYD_WS_FacB];
 	
 	profileNamespace setVariable ["RYD_ix_FacB",(RYD_WS_FacB select 0)];
 	profileNamespace setVariable ["RYD_WS_selFactionsB",RYD_WS_selFactionsB];
+	
+	if (_randomFactionSideBool) then
+	{
+		_randomFactionSideBool = false;
+		RYD_WS_selFactionsB = [[[(RYD_WS_FacB select 2),(RYD_WS_FacB select 1)], 0]];
+	};
 	
 	_txt = RYD_WS_FacB select 1;
 	
@@ -1048,6 +1163,9 @@ RYD_FactionFill =
 	
 	_newIx = lbAdd [_ctrlFill, "RANDOM BY SIDE"];
 	missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,"RANDOM BY SIDE",""]];
+	
+	_newIx = lbAdd [_ctrlFill, "RANDOM FROM CHOSEN"];
+	missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,"RANDOM FROM CHOSEN",""]];
 
 	lbSetCurSel [_ctrlFill,(profileNamespace getVariable [_varSel,0])];
 
@@ -1098,7 +1216,7 @@ RYD_FactionFill_M =
 	_myCtrl2 = (findDisplay 2500) displayCtrl _ctrlFill2;
 	_myCtrl2 ctrlShow false;
 	
-	if not (_ix isEqualTo (count _factions)) exitwith 
+	if not ((_ix isEqualTo (count _factions)) or (_ix isEqualTo ((count _factions) + 3))) exitwith
 	{
 		//ctrlShow [_ctrlFill,false]
 		_myCtrl ctrlShow false;
@@ -1639,6 +1757,8 @@ if not (RYD_WS_WholeMap) then
 	} foreach _forces;
 
 	//diag_log format ["sum: %1",_sum];
+	
+	diag_log format ["_forces: %1",_forces];
 
 	_sum = 2 * _sum;
 
@@ -3126,7 +3246,7 @@ sleep 10;
 
 {
 	deleteVehicle _x
-} foreach [sc3,dummyPlayer,dummyPlayer_1,sc2,sc1];
+} foreach [sc3,dummyPlayer_1,sc2,sc1];
 
 enableSentences true;
 
