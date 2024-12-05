@@ -40,6 +40,15 @@ _pool = +RYD_WS_ForcesA;
 _pool = _pool - [0,oldPlayer];
 
 _squadPool = units oldPlayer;
+{
+	switch (true) do
+	{
+		case (isNil {_x}) : {_squadPool set [_foreachIndex,0]};
+		case not ((typeName _x) in [typename objNull]) : {_squadPool set [_foreachIndex,0]};
+		case (isNull _x) : {_squadPool set [_foreachIndex,0]};
+		case not (alive _x) : {_squadPool set [_foreachIndex,0]};
+	}
+} foreach _squadPool;
 _squadPool = _squadPool - [0,oldPlayer];
 
 if ((count _squadPool) > 0) then

@@ -313,7 +313,7 @@ RYD_WS_Cars_class = [
 	"b_mrap_01_gmg_f",
 	"b_mrap_01_hmg_f",
 	"b_quadbike_01_f",
-	"b_truck_01_box_f",
+	"B_Truck_01_Repair_F",
 	"b_truck_01_covered_f",
 	"b_truck_01_mover_f",
 	"b_truck_01_transport_f",
@@ -416,7 +416,20 @@ RYD_WS_NCAir_class = [
 	"o_uav_01_f",
 	"o_uav_02_f",
 	"b_uav_01_f",
-	"b_uav_02_f"	
+	"b_uav_02_f"
+];
+
+RYD_WS_AirCargo_class = [
+	"i_heli_transport_02_f",
+	"o_heli_attack_02_black_f",
+	"o_heli_attack_02_f",
+	"o_heli_light_02_f",
+	"o_heli_light_02_unarmed_f",
+	"b_heli_light_01_f",
+	"b_heli_transport_01_camo_f",
+	"b_heli_transport_01_f",
+	"i_heli_light_03_f",
+	"i_heli_light_03_unarmed_f"
 ];
 
 RYD_WS_Naval_class = [
@@ -535,6 +548,32 @@ RYD_WS_Support_class = [
 	"b_truck_01_fuel_f",
 	"b_truck_01_medical_f"
 ];
+
+RYD_WS_Ammo_class = [
+	"i_truck_02_ammo_f",
+	"o_truck_02_ammo_f",
+	"o_truck_03_ammo_f",
+	"b_apc_tracked_01_crv_f",
+	"b_truck_01_ammo_f"
+];
+
+RYD_WS_Repair_class = [
+	"i_truck_02_box_f",
+	"o_truck_02_box_f",
+	"o_truck_03_repair_f",
+	"b_g_offroad_01_repair_f",
+	"b_apc_tracked_01_crv_f",
+	"b_truck_01_repair_f"
+];
+
+RYD_WS_Fuel_class = [
+	"i_truck_02_fuel_f",
+	"o_truck_02_fuel_f",
+	"o_truck_03_fuel_f",
+	"b_g_van_01_fuel_f",
+	"b_apc_tracked_01_crv_f",
+	"b_truck_01_fuel_f"
+];
 	
 RYD_WS_Support_class_B = [
 	"b_g_van_01_fuel_f",
@@ -543,6 +582,13 @@ RYD_WS_Support_class_B = [
 	"b_truck_01_ammo_f",
 	"b_truck_01_repair_f",
 	"b_truck_01_fuel_f",
+	"b_truck_01_medical_f"
+];
+
+RYD_WS_Medical_class = [
+	"i_truck_02_medical_f",
+	"o_truck_02_medical_f",
+	"o_truck_03_medical_f",
 	"b_truck_01_medical_f"
 ];
 	
@@ -573,54 +619,22 @@ RYD_WS_Cargo_class = [
 	"b_heli_light_01_f",
 	"b_heli_transport_01_camo_f",
 	"b_heli_transport_01_f",
-	"i_truck_02_medical_f",
-	"o_truck_02_medical_f",
-	"b_truck_01_medical_f",
-	"o_truck_03_medical_f",
-	"i_boat_armed_01_minigun_f",
-	"i_boat_transport_01_f",
-	"o_boat_armed_01_hmg_f",
-	"o_boat_transport_01_f",
-	"o_lifeboat",
-	"b_g_boat_transport_01_f",
-	"b_boat_armed_01_minigun_f",
-	"b_boat_transport_01_f",
-	"b_lifeboat",
-	"i_sdv_01_f",
-	"o_sdv_01_f",
-	"b_sdv_01_f",
 	"b_mbt_01_cannon_f",
 	"i_apc_wheeled_03_cannon_f",
 	"o_apc_tracked_02_cannon_f",
 	"o_apc_wheeled_02_rcws_f",
 	"b_apc_tracked_01_rcws_f",
 	"b_apc_wheeled_01_cannon_f",
-	"i_mrap_03_f",
-	"i_mrap_03_gmg_f",
-	"i_mrap_03_hmg_f",
-	"i_quadbike_01_f",
 	"i_truck_02_covered_f",
 	"i_truck_02_transport_f",
 	"o_mrap_02_f",
-	"o_mrap_02_gmg_f",
-	"o_mrap_02_hmg_f",
-	"o_quadbike_01_f",
 	"o_truck_02_covered_f",
 	"o_truck_02_transport_f",
-	"o_truck_03_device_f",
 	"o_truck_03_transport_f",
 	"o_truck_03_covered_f",
-	"b_g_offroad_01_armed_f",
 	"b_g_offroad_01_f",
-	"b_g_quadbike_01_f",
 	"b_g_van_01_transport_f",
-	"b_mrap_01_f",
-	"b_mrap_01_gmg_f",
-	"b_mrap_01_hmg_f",
-	"b_quadbike_01_f",
-	"b_truck_01_box_f",
 	"b_truck_01_covered_f",
-	"b_truck_01_mover_f",
 	"b_truck_01_transport_f",
 	"i_heli_light_03_f",
 	"i_heli_light_03_unarmed_f",
@@ -628,41 +642,20 @@ RYD_WS_Cargo_class = [
 ];
 	
 RYD_WS_NCCargo_class = [
-	"i_heli_transport_02_f",
-	"o_heli_light_02_unarmed_f",
-	"b_heli_light_01_f",
-	"b_heli_transport_01_camo_f",
-	"b_heli_transport_01_f",
-	"i_heli_light_03_unarmed_f",
 	"i_truck_02_medical_f",
 	"o_truck_02_medical_f",
 	"b_truck_01_medical_f",
 	"o_truck_03_medical_f",
-	"i_boat_transport_01_f",
-	"o_boat_transport_01_f",
-	"o_lifeboat",
-	"b_g_boat_transport_01_f",
-	"b_boat_transport_01_f",
-	"b_lifeboat",
-	"i_mrap_03_f",
-	"i_quadbike_01_f",
 	"i_truck_02_covered_f",
 	"i_truck_02_transport_f",
 	"o_mrap_02_f",
-	"o_quadbike_01_f",
 	"o_truck_02_covered_f",
 	"o_truck_02_transport_f",
-	"o_truck_03_device_f",
 	"o_truck_03_transport_f",
 	"o_truck_03_covered_f",
 	"b_g_offroad_01_f",
-	"b_g_quadbike_01_f",
 	"b_g_van_01_transport_f",
-	"b_mrap_01_f",
-	"b_quadbike_01_f",
-	"b_truck_01_box_f",
 	"b_truck_01_covered_f",
-	"b_truck_01_mover_f",
 	"b_truck_01_transport_f"	
 ];
 	
@@ -673,7 +666,7 @@ RYD_WS_NCCargo_class_B = [
 	"b_g_offroad_01_f",
 	"b_g_van_01_transport_f",
 	"b_mrap_01_f",
-	"b_truck_01_box_f",
+	"B_Truck_01_Repair_F",
 	"b_truck_01_covered_f",
 	"b_truck_01_mover_f",
 	"b_truck_01_transport_f"	
@@ -795,6 +788,28 @@ RYD_WS_ammo_I = [
 RYD_WS_ammo_O = [
 	"o_truck_03_ammo_f",
 	"o_truck_02_ammo_f"
+];
+
+Fake_Weapons_ARR = [
+	"CMFlareLauncher",
+	"FakeHorn",
+	"Laserdesignator_mounted",
+	"AmbulanceHorn",
+	"BikeHorn",
+	"CarHorn",
+	"CMFlareLauncher_Singles",
+	"CMFlareLauncher_Triples",
+	"FlareLauncher",
+	"Laserdesignator_pilotCamera",
+	"Laserdesignator_vehicle",
+	"MiniCarHorn",
+	"PoliceHorn",
+	"ProbingLaser_01_F",
+	"SEARCHLIGHT",
+	"SportCarHorn",
+	"TruckHorn",
+	"TruckHorn2",
+	"TruckHorn3"
 ];
 	
 RYD_WS_AllClasses = RYD_WS_Inf_class + RYD_WS_Art_class + RYD_WS_HArmor_class + RYD_WS_MArmor_class + RYD_WS_LArmor_class + RYD_WS_Cars_class + RYD_WS_Air_class + RYD_WS_Naval_class + RYD_WS_Static_class + RYD_WS_Support_class + RYD_WS_Other_class;			
@@ -970,6 +985,16 @@ RYD_WS_DynamicRHQ =
 											if (isText _veh) then
 											{
 												_veh = toLower (getText _veh);
+												
+												// true transport cargo
+												// thanks to ravenleg on bi forums!
+												_totalSeats = [_veh, true] call BIS_fnc_crewCount; // Number of total seats: crew + non-FFV cargo/passengers + FFV cargo/passengers
+												_crewSeats = [_veh, false] call BIS_fnc_crewCount; // Number of crew seats only
+												_cargoSeats = _totalSeats - _crewSeats; // Number of total cargo/passenger seats: non-FFV + FFV
+												
+												// set minimum cargo count to a regular fire team of 4, not a lot of factinos have groups smaller
+												_isCargo = (_cargoSeats >= 4);
+												
 												_base = _veh;
 												_wrong = false;
 												
@@ -1131,7 +1156,7 @@ RYD_WS_DynamicRHQ =
 																};
 																
 																// remove not actual weapons such as flares and etc
-																_wpnsArr = _wpnsArr - ["CMFlareLauncher", "FakeHorn", "Laserdesignator_mounted"];
+																_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
 																
 																if (count(_wpnsArr) isEqualTo 0) then
 																{
@@ -1156,10 +1181,20 @@ RYD_WS_DynamicRHQ =
 															_mainT = _turrets >> "MainTurret";
 															_isMainT = isClass _mainT;
 															
-															if ((getNumber (_vehClass2 >> "transportSoldier")) > 1) then 
+															// get all possible weapons (more or less, doesnt count pylons yet)
+															_wpnsArr = getArray (_vehClass2 >> "Weapons");
+															if (_isMainT) then
+															{
+																_wpnsArr = _wpnsArr + (getArray(_mainT >> "Weapons"));
+															};
+															
+															// remove not actual weapons such as flares and etc
+															_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
+															
+															if (_isCargo) then 
 															{
 																RHQ_Cargo set [(count RHQ_Cargo),_veh];
-																if not (_isMainT) then
+																if (count(_wpnsArr) isEqualTo 0) then
 																{
 																	RHQ_NCCargo set [(count RHQ_NCCargo),_veh];
 																}
@@ -1587,9 +1622,17 @@ RYD_WS_DynamicRHQ =
 						_vehClass2 = _vehClass >> _class;
 						_side = getNumber (_vehClass2 >> "side");
 						_hasD = (getNumber (_vehClass2 >> "hasDriver")) > 0;
-						_isCargo = (getNumber (_vehClass2 >> "transportSoldier")) > 1;
-						_sim = toLower (getText (_vehClass2 >> "simulation"));
 						
+						// true transport cargo
+						// thanks to ravenleg on bi forums!
+						_totalSeats = [_class, true] call BIS_fnc_crewCount; // Number of total seats: crew + non-FFV cargo/passengers + FFV cargo/passengers
+						_crewSeats = [_class, false] call BIS_fnc_crewCount; // Number of crew seats only
+						_cargoSeats = _totalSeats - _crewSeats; // Number of total cargo/passenger seats: non-FFV + FFV
+						
+						// set minimum cargo count to a regular fire team of 4, not a lot of factinos have groups smaller
+						_isCargo = (_cargoSeats >= 4);
+						
+						_sim = toLower (getText (_vehClass2 >> "simulation"));
 						_turrets = _vehClass2 >> "Turrets";
 						_mainT = _turrets >> "MainTurret";
 						_isMainT = isClass _mainT;
@@ -1915,11 +1958,11 @@ RYD_WS_DynamicRHQ =
 												};
 
 												// remove not actual weapons such as flares and etc
-												_wpnsArr = _wpnsArr - ["CMFlareLauncher", "FakeHorn", "Laserdesignator_mounted"];
+												_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
 
 												//diag_log format ["%1, %2, %3, %4", [_wpnsArr], [count(_wpnsArr)], [count(_wpnsArr) isEqualTo 0], _class];
 
-												if ((getNumber (_vehClass2 >> "transportSoldier")) > 1) then 
+												if (_isCargo) then 
 												{
 													RHQ_Cargo set [(count RHQ_Cargo),_class];
 
@@ -2028,7 +2071,18 @@ RYD_WS_DynamicRHQ =
 
 									if not (_class in (RYD_WS_NCCargo_class + RHQ_NCCargo)) then
 									{
-										if not (_isMainT) then
+										// get all possible weapons (more or less, doesnt count pylons yet)
+										_wpnsArr = getArray (_vehClass2 >> "Weapons");
+										
+										if (_isMainT) then
+										{
+											_wpnsArr = _wpnsArr + (getArray(_mainT >> "Weapons"));
+										};
+
+										// remove not actual weapons such as flares and etc
+										_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
+										
+										if (count(_wpnsArr) isEqualTo 0) then
 										{
 											if (_isCargo) then
 											{
@@ -5731,9 +5785,9 @@ RYD_WS_WholeMapPlacement =
 		
 		_airClasses = switch (_x) do
 		{
-			case (west) : {RYD_WS_B_Air_G2 + RYD_WS_Air_class_B};
-			case (east) : {RYD_WS_O_Air_G2 + RYD_WS_Air_class_O};
-			case (resistance) : {RYD_WS_I_Air_G2 + RYD_WS_Air_class_I};
+			case (west) : {RYD_WS_B_Air_G2 + RYD_WS_Air_class};
+			case (east) : {RYD_WS_O_Air_G2 + RYD_WS_Air_class};
+			case (resistance) : {RYD_WS_I_Air_G2 + RYD_WS_Air_class};
 		};
 
 		{
@@ -5749,9 +5803,9 @@ RYD_WS_WholeMapPlacement =
 
 		_staticClasses = switch (_x) do
 		{
-			case (west) : {RYD_WS_B_Static_G2 + RYD_WS_Static_class_B};
-			case (east) : {RYD_WS_O_Static_G2 + RYD_WS_Static_class_O};
-			case (resistance) : {RYD_WS_I_Static_G2 + RYD_WS_Static_class_I};
+			case (west) : {RYD_WS_B_Static_G2 + RYD_WS_Static_class};
+			case (east) : {RYD_WS_O_Static_G2 + RYD_WS_Static_class};
+			case (resistance) : {RYD_WS_I_Static_G2 + RYD_WS_Static_class};
 		};
 			
 		{
@@ -5767,9 +5821,9 @@ RYD_WS_WholeMapPlacement =
 
 		_supportClasses = switch (_x) do
 		{
-			case (west) : {RYD_WS_B_Support_G2 + RYD_WS_Support_class_B};
-			case (east) : {RYD_WS_O_Support_G2 + RYD_WS_Support_class_O};
-			case (resistance) : {RYD_WS_I_Support_G2 + RYD_WS_Support_class_I};
+			case (west) : {RYD_WS_B_Support_G2 + RYD_WS_Support_class};
+			case (east) : {RYD_WS_O_Support_G2 + RYD_WS_Support_class};
+			case (resistance) : {RYD_WS_I_Support_G2 + RYD_WS_Support_class};
 		};
 			
 		{
@@ -5785,9 +5839,9 @@ RYD_WS_WholeMapPlacement =
 		
 		_cargoClasses = switch (_x) do
 		{
-			case (west) : {RYD_WS_B_NCCargo_G2 + RYD_WS_NCCargo_class_B};
-			case (east) : {RYD_WS_O_NCCargo_G2 + RYD_WS_NCCargo_class_O};
-			case (resistance) : {RYD_WS_I_NCCargo_G2 + RYD_WS_NCCargo_class_I};
+			case (west) : {RYD_WS_B_NCCargo_G2 + RYD_WS_NCCargo_class};
+			case (east) : {RYD_WS_O_NCCargo_G2 + RYD_WS_NCCargo_class};
+			case (resistance) : {RYD_WS_I_NCCargo_G2 + RYD_WS_NCCargo_class};
 		};
 			
 		{
@@ -6590,10 +6644,28 @@ RYD_PresentRHQ =
 			_isRepS = (getNumber (_vehClass2 >> "transportRepair")) > 0;
 			_isMedS = (getNumber (_vehClass2 >> "attendant")) > 0;
 			_mags = getArray (_vehClass2 >> "magazines") + _tMags;			
-			_isArmed = (count (_mags - _flareMags)) > 0;
-			_isCargo = ((getNumber (_vehClass2 >> "transportSoldier")) > 1) and {((getNumber (_vehClass2 >> "transportAmmo")) + (getNumber (_vehClass2 >> "transportFuel")) + (getNumber (_vehClass2 >> "transportRepair")) + (getNumber (_vehClass2 >> "attendant"))) < 1};
+			
+			// get all possible weapons (more or less, doesnt count pylons yet)
+			_wpnsArr = getArray (_vehClass2 >> "Weapons");
+			if (_isMainT) then
+			{
+				_wpnsArr = _wpnsArr + (getArray(_mainT >> "Weapons"));
+			};
+
+			// remove not actual weapons such as flares and etc
+			_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
+			_isArmed = ((count _wpnsArr) > 0);
+			
+			// true transport cargo
+			// thanks to ravenleg on bi forums!
+			_totalSeats = [_veh, true] call BIS_fnc_crewCount; // Number of total seats: crew + non-FFV cargo/passengers + FFV cargo/passengers
+			_crewSeats = [_veh, false] call BIS_fnc_crewCount; // Number of crew seats only
+			_cargoSeats = _totalSeats - _crewSeats; // Number of total cargo/passenger seats: non-FFV + FFV
+
+			// set minimum cargo count to a regular fire team of 4, not a lot of factinos have groups smaller
+			_isCargo = (_cargoSeats >= 4) and {((getNumber (_vehClass2 >> "transportAmmo")) + (getNumber (_vehClass2 >> "transportFuel")) + (getNumber (_vehClass2 >> "transportRepair")) + (getNumber (_vehClass2 >> "attendant"))) < 1};
 			_isArty = (getNumber (_vehClass2 >> "artilleryScanner")) > 0;
-						
+			
 			_type = "inf";
 
 			_base = _veh;
@@ -6790,7 +6862,7 @@ RYD_PresentRHQ =
 						RHQ_NCCargo pushBack _veh;
 						}
 					};
-										
+				
 				RHQ_HArmor = RHQ_HArmor - RHQ_Art;
 				
 				if (_isArmed) then

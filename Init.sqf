@@ -2111,9 +2111,9 @@ if not (RYD_WS_WholeMap) then
 
 		_airClasses = switch (_x) do
 		{
-			case (west) : {RYD_WS_B_Air_G2 + RYD_WS_Air_class_B};
-			case (east) : {RYD_WS_O_Air_G2 + RYD_WS_Air_class_O};
-			case (resistance) : {RYD_WS_I_Air_G2 + RYD_WS_Air_class_I};
+			case (west) : {RYD_WS_B_Air_G2 + RYD_WS_Air_class};
+			case (east) : {RYD_WS_O_Air_G2 + RYD_WS_Air_class};
+			case (resistance) : {RYD_WS_I_Air_G2 + RYD_WS_Air_class};
 		};
 
 		_facM = switch (_foreachIndex) do
@@ -2135,9 +2135,9 @@ if not (RYD_WS_WholeMap) then
 
 		_staticClasses = switch (_x) do
 		{
-			case (west) : {RYD_WS_B_Static_G2 + RYD_WS_Static_class_B};
-			case (east) : {RYD_WS_O_Static_G2 + RYD_WS_Static_class_O};
-			case (resistance) : {RYD_WS_I_Static_G2 + RYD_WS_Static_class_I};
+			case (west) : {RYD_WS_B_Static_G2 + RYD_WS_Static_class};
+			case (east) : {RYD_WS_O_Static_G2 + RYD_WS_Static_class};
+			case (resistance) : {RYD_WS_I_Static_G2 + RYD_WS_Static_class};
 		};
 			
 		{
@@ -2153,9 +2153,9 @@ if not (RYD_WS_WholeMap) then
 
 		_supportClasses = switch (_x) do
 		{
-			case (west) : {RYD_WS_B_Support_G2 + RYD_WS_Support_class_B};
-			case (east) : {RYD_WS_O_Support_G2 + RYD_WS_Support_class_O};
-			case (resistance) : {RYD_WS_I_Support_G2 + RYD_WS_Support_class_I};
+			case (west) : {RYD_WS_B_Support_G2 + RYD_WS_Support_class};
+			case (east) : {RYD_WS_O_Support_G2 + RYD_WS_Support_class};
+			case (resistance) : {RYD_WS_I_Support_G2 + RYD_WS_Support_class};
 		};
 			
 		{
@@ -2171,9 +2171,9 @@ if not (RYD_WS_WholeMap) then
 
 		_cargoClasses = switch (_x) do
 		{
-			case (west) : {RYD_WS_B_NCCargo_G2 + RYD_WS_NCCargo_class_B};
-			case (east) : {RYD_WS_O_NCCargo_G2 + RYD_WS_NCCargo_class_O};
-			case (resistance) : {RYD_WS_I_NCCargo_G2 + RYD_WS_NCCargo_class_I};
+			case (west) : {RYD_WS_B_NCCargo_G2 + RYD_WS_NCCargo_class};
+			case (east) : {RYD_WS_O_NCCargo_G2 + RYD_WS_NCCargo_class};
+			case (resistance) : {RYD_WS_I_NCCargo_G2 + RYD_WS_NCCargo_class};
 		};
 		
 		{
@@ -2311,6 +2311,9 @@ if not (RYD_WS_WholeMap) then
 					};
 					case (3) :
 					{
+						//diag_log format ["cargo _amnt: %1",[_amnt]];
+						//diag_log format ["_cargoClasses: %1",[_cargoClasses]];
+						
 						if ((count _cargoClasses) > 0) then
 						{
 							_gp = [_mainPos,_dir,_cargoClasses,_ldrs,_side] call RYD_WS_SpawnSupport;

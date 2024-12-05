@@ -1,5 +1,5 @@
 author = "Rydygier";
-onLoadName = "HETMAN: War Stories";
+onLoadName = "HETMAN: War Stories 1.10a";
 onLoadMission = "War has many faces.";
 overviewText = "Easy in use dynamic battle generator powered by HETMAN AI.";
 overviewPicture = "Pic\hws4.paa";
