@@ -49,8 +49,13 @@ RydHQ_Add_OtherArty = [
 	[["B_Ship_MRLS_01_F"],["magazine_Missiles_Cruise_01_x18","magazine_Missiles_Cruise_01_x18","magazine_Missiles_Cruise_01_Cluster_x18","",""]]
 ];
 
-RydHQ_SimpleMode = false;   
-RydHQB_SimpleMode = false;   
+// required or else the entire map mode wont work correctly
+RydHQ_SimpleMode = false;
+RydHQB_SimpleMode = false;
+RydHQC_SimpleMode = false;
+RydHQD_SimpleMode = false;
+RydHQE_SimpleMode = false;
+RydHQF_SimpleMode = false;
 
 _sumB = 0;
 _sumO = 0;
@@ -229,13 +234,30 @@ RydHQD_CargoFind = 100;
 RydHQE_CargoFind = 100;
 RydHQF_CargoFind = 100;
 
-RydHQ_PathFinding = 100;
+RydHQ_PathFinding = 0;
+RydHQB_PathFinding = 0;
+RydHQC_PathFinding = 0;
+RydHQD_PathFinding = 0;
+RydHQE_PathFinding = 0;
+RydHQF_PathFinding = 0;
 
 RydHQ_LRelocating = true;
 RydHQ_GetHQInside = true;
 
 RydHQB_LRelocating = true;
 RydHQB_GetHQInside = true;
+
+RydHQC_LRelocating = true;
+RydHQC_GetHQInside = true;
+
+RydHQD_LRelocating = true;
+RydHQD_GetHQInside = true;
+
+RydHQE_LRelocating = true;
+RydHQE_GetHQInside = true;
+
+RydHQF_LRelocating = true;
+RydHQF_GetHQInside = true;
 
 RydHQ_IDChance = 15;
 RydHQB_IDChance = 15;
@@ -280,42 +302,83 @@ RydHQE_Rush = true;
 RydHQF_Rush = true;
 
 RydHQ_ChatDebug = true;
+RydHQB_ChatDebug = false;
+RydHQC_ChatDebug = false;
+RydHQD_ChatDebug = false;
+RydHQE_ChatDebug = false;
+RydHQF_ChatDebug = false;
 
 RydHQ_ExcludedG = [];
 RydHQB_ExcludedG = [];
 RydHQC_ExcludedG = [];
 RydHQD_ExcludedG = [];
+RydHQE_ExcludedG = [];
+RydHQF_ExcludedG = [];
 
 fakeLeaderHQ = objNull;
 fakeLeaderHQB = objNull;
 fakeLeaderHQC = objNull;
 fakeLeaderHQD = objNull;
+fakeLeaderHQE = objNull;
+fakeLeaderHQF = objNull;
 
 //RydHQ_GroupMarks = [west,east,resistance,civilian];
 
 RydHQ_SubAll = true;
 RydHQB_SubAll = true;
+RydHQC_SubAll = true;
+RydHQD_SubAll = true;
+RydHQE_SubAll = true;
+RydHQF_SubAll = true;
 
 RydHQ_SMed = true;
 RydHQB_SMed = true;
+RydHQC_SMed = true;
+RydHQD_SMed = true;
+RydHQE_SMed = true;
+RydHQF_SMed = true;
 
 RydHQ_SFuel = true;
 RydHQB_SFuel = true;
+RydHQC_SFuel = true;
+RydHQD_SFuel = true;
+RydHQE_SFuel = true;
+RydHQF_SFuel = true;
 
 RydHQ_SAmmo = true;
 RydHQB_SAmmo = true;
+RydHQC_SAmmo = true;
+RydHQD_SAmmo = true;
+RydHQE_SAmmo = true;
+RydHQF_SAmmo = true;
 
 RydHQ_SRep = true;
 RydHQB_SRep = true;
+RydHQC_SRep = true;
+RydHQD_SRep = true;
+RydHQE_SRep = true;
+RydHQF_SRep = true;
 
 RydHQ_Smoke = true;
 RydHQB_Smoke = true;
+RydHQC_Smoke = true;
+RydHQD_Smoke = true;
+RydHQE_Smoke = true;
+RydHQF_Smoke = true;
 
 RydHQ_Flare = true;
 RydHQB_Flare = true;
+RydHQC_Flare = true;
+RydHQD_Flare = true;
+RydHQE_Flare = true;
+RydHQF_Flare = true;
 
 RydHQ_ArtyShells = 1;
 RydHQB_ArtyShells = 1;
+RydHQC_ArtyShells = 1;
+RydHQD_ArtyShells = 1;
+RydHQE_ArtyShells = 1;
+RydHQF_ArtyShells = 1;
 
 RydHQ_KnowTL = true;
 
@@ -1030,7 +1093,7 @@ RYD_WS_TakeValues =
 		case (RYD_ix_Campaign_C) : {RYD_WS_CReset = false;RYD_WS_CAdd = true;_txt = "INCLUDE"};
 		case (RYD_ix_Campaign_O) : {RYD_WS_CReset = false;RYD_WS_CAdd = false;_txt = "EXCLUDE"};
 		case (RYD_ix_Campaign_R) : {RYD_WS_CReset = true;RYD_WS_CAdd = true;_txt = "RESET"};
-		//case (RYD_ix_Campaign_WM) : {RYD_WS_CReset = false;RYD_WS_CAdd = false;RYD_WS_WholeMap = true;RYD_WS_Scale = RYD_WS_Scale * 1.25;RYD_WS_LeadersPoofItsMagic = true;_txt = "WHOLE MAP"};
+		case (RYD_ix_Campaign_WM) : {RYD_WS_CReset = false;RYD_WS_CAdd = false;RYD_WS_WholeMap = true;RYD_WS_Scale = RYD_WS_Scale * 1.25;RYD_WS_LeadersPoofItsMagic = true;_txt = "WHOLE MAP"};
 	};
 
 	profileNamespace setVariable ["RYD_ix_Campaign",_ix];
@@ -1521,7 +1584,7 @@ RYD_WS_Dialog =
 	RYD_ix_Campaign_C = lbAdd [2106, "INCLUDE"];
 	RYD_ix_Campaign_O = lbAdd [2106, "EXCLUDE"];
 	RYD_ix_Campaign_R = lbAdd [2106, "RESET"];
-	//RYD_ix_Campaign_WM = lbAdd [2106, "WHOLE MAP"];
+	RYD_ix_Campaign_WM = lbAdd [2106, "WHOLE MAP"];
 
 	RYD_eh_FreeC = ((findDisplay 2500) displayCtrl 2106) ctrlAddEventHandler ["LBSelChanged","_this call RYD_WS_ModeChange;_this call RYD_WS_ModeChange"];
 	lbSetCurSel [2106, profileNamespace getVariable ["RYD_ix_Campaign",RYD_ix_Campaign_C]];
@@ -2522,22 +2585,34 @@ else
 	RydHQC_Included = [];
 	RydHQD_Included = [];
 	RydHQE_Included = [];
-	RydHQF_Included = [];	
+	RydHQF_Included = [];
 	
 	RydBB_Active = true;
 	
+	/*
 	RydHQ_SubAll = false;
 	RydHQB_SubAll = false;
 	RydHQC_SubAll = false;
 	RydHQD_SubAll = false;
-	RydHQE_SubAll = false;
-	RydHQF_SubAll = false;
-		
+	*/
+	
 	RydHQ_LRelocating = false;
 	RydHQ_GetHQInside = false;
 
 	RydHQB_LRelocating = false;
-	RydHQB_GetHQInside = false;		
+	RydHQB_GetHQInside = false;	
+	
+	RydHQC_LRelocating = false;
+	RydHQC_GetHQInside = false;	
+	
+	RydHQD_LRelocating = false;
+	RydHQD_GetHQInside = false;
+	
+	RydHQE_LRelocating = false;
+	RydHQE_GetHQInside = false;
+	
+	RydHQF_LRelocating = false;
+	RydHQF_GetHQInside = false;
 	
 	RydHQ_Wait = 20;
 	
