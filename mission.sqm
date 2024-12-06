@@ -8,14 +8,14 @@ class EditorData
 	toggles=5;
 	class ItemIDProvider
 	{
-		nextID=79;
+		nextID=83;
 	};
 	class Camera
 	{
-		pos[]={7856.8843,86.67778,21079.049};
-		dir[]={0,-0.70710683,0.70710671};
-		up[]={0,0.70710677,0.70710677};
-		aside[]={0.99999994,0,-0};
+		pos[]={8465.3643,229.41035,25011.604};
+		dir[]={0.11991918,-0.59782016,0.79260999};
+		up[]={0.089430384,0.8016302,0.59109324};
+		aside[]={0.98874754,0,-0.14959413};
 	};
 };
 binarizationWanted=0;
@@ -25,10 +25,10 @@ addons[]=
 	"A3_Structures_F_Civ_Camping",
 	"A3_Structures_F_EPC_Civ_Camping",
 	"A3_Structures_F_Items_Food",
-	"A3_Characters_F",
 	"A3_Modules_F_Marta",
 	"A3_Modules_F",
-	"A3_Modules_F_Curator_Environment"
+	"A3_Modules_F_Curator_Environment",
+	"A3_Characters_F"
 };
 class AddonsMetaData
 {
@@ -51,22 +51,22 @@ class AddonsMetaData
 		};
 		class Item2
 		{
-			className="A3_Characters_F";
-			name="Arma 3 Alpha - Characters and Clothing";
-			author="Bohemia Interactive";
-			url="https://www.arma3.com";
-		};
-		class Item3
-		{
 			className="A3_Modules_F";
 			name="Arma 3 Alpha - Scripted Modules";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item4
+		class Item3
 		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item4
+		{
+			className="A3_Characters_F";
+			name="Arma 3 Alpha - Characters and Clothing";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
@@ -181,70 +181,6 @@ class Mission
 		};
 		class Item3
 		{
-			dataType="Group";
-			side="West";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8487.4883,107.12177,25143.396};
-						angles[]={0.10758209,0,0.13386676};
-					};
-					side="West";
-					flags=6;
-					class Attributes
-					{
-						skill=0.60000002;
-						init="this linkItem ""itemMap"";this setCaptive true;this allowdamage false";
-						name="dummyPlayer";
-					};
-					id=18;
-					type="B_Survivor_F";
-					atlOffset=1.5258789e-05;
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="STRING";
-									value="Male10ENG";
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="SCALAR";
-									value=0.98000002;
-								};
-							};
-						};
-						nAttributes=2;
-					};
-				};
-			};
-			class Attributes
-			{
-			};
-			id=17;
-			atlOffset=1.5258789e-05;
-		};
-		class Item4
-		{
 			dataType="Logic";
 			class PositionInfo
 			{
@@ -255,7 +191,7 @@ class Mission
 			type="MartaManager";
 			atlOffset=39.475388;
 		};
-		class Item5
+		class Item4
 		{
 			dataType="Logic";
 			class PositionInfo
@@ -267,10 +203,38 @@ class Mission
 			type="Logic";
 			atlOffset=36.591557;
 		};
+		class Item5
+		{
+			dataType="Logic";
+			class PositionInfo
+			{
+				position[]={8496.7275,63.108215,22390.449};
+			};
+			id=23;
+			type="ModuleTimeMultiplier_F";
+			atlOffset=3.8146973e-06;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ModuleTimeMultiplier_F_TimeMultiplier";
+					expression="_this setVariable ['TimeMultiplier',_value,true];";
+					class Value
+					{
+						class data
+						{
+							singleType="SCALAR";
+							value=6;
+						};
+					};
+				};
+				nAttributes=1;
+			};
+		};
 		class Item6
 		{
 			dataType="Group";
-			side="West";
+			side="Civilian";
 			class Entities
 			{
 				items=1;
@@ -282,7 +246,7 @@ class Mission
 						position[]={8475.9727,107.30682,25133.27};
 						angles[]={0.21145752,0,0.030656165};
 					};
-					side="West";
+					side="Civilian";
 					flags=6;
 					class Attributes
 					{
@@ -330,36 +294,72 @@ class Mission
 			class Attributes
 			{
 			};
-			id=21;
+			id=81;
 			atlOffset=7.6293945e-06;
 		};
 		class Item7
 		{
-			dataType="Logic";
-			class PositionInfo
+			dataType="Group";
+			side="Civilian";
+			class Entities
 			{
-				position[]={8496.7275,63.108215,22390.449};
-			};
-			id=23;
-			type="ModuleTimeMultiplier_F";
-			atlOffset=3.8146973e-06;
-			class CustomAttributes
-			{
-				class Attribute0
+				items=1;
+				class Item0
 				{
-					property="ModuleTimeMultiplier_F_TimeMultiplier";
-					expression="_this setVariable ['TimeMultiplier',_value,true];";
-					class Value
+					dataType="Object";
+					class PositionInfo
 					{
-						class data
+						position[]={8487.4883,107.12177,25143.396};
+						angles[]={0.10758209,0,0.13386676};
+					};
+					side="Civilian";
+					flags=6;
+					class Attributes
+					{
+						skill=0.60000002;
+						init="this linkItem ""itemMap"";this setCaptive true;this allowdamage false";
+						name="dummyPlayer";
+					};
+					id=18;
+					type="B_Survivor_F";
+					atlOffset=1.5258789e-05;
+					class CustomAttributes
+					{
+						class Attribute0
 						{
-							singleType="SCALAR";
-							value=6;
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
 						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.98000002;
+								};
+							};
+						};
+						nAttributes=2;
 					};
 				};
-				nAttributes=1;
 			};
+			class Attributes
+			{
+			};
+			id=82;
+			atlOffset=1.5258789e-05;
 		};
 	};
 };

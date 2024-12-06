@@ -2271,7 +2271,6 @@ if not (RYD_WS_WholeMap) then
 		} foreach _airCargoClasses;
 		
 		_airCargoClasses = _airCargoClasses - [0];
-		
 		diag_log format ["_airCargoClasses: %1",_airCargoClasses];
 		
 		diag_log format ["[side,faction]: %1",[_x,_facM]];
@@ -3369,7 +3368,7 @@ endLoadingScreen;
 sleep 0.5;
 
 RYD_init_cam camSetRelPos [0,100,1000];
-RYD_init_cam camCommit 5;
+RYD_init_cam camCommit 3;
 
 RYD_WS_Typed = false;
 
@@ -3381,7 +3380,7 @@ sleep 5;
 
 RYD_init_cam camSetTarget _vh;
 RYD_init_cam camSetPos ((_vh modelToWorld [0,-35 - (_maxHeight - _targetHeight),_maxHeight - _targetHeight + 10]));
-RYD_init_cam camCommit 10;
+RYD_init_cam camCommit 5;
 
 sleep 10;
 
