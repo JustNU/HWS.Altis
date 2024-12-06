@@ -342,24 +342,7 @@ RYD_WS_Cars_class = [
 	"b_ugv_01_rcws_f"
 ];
 	
-RYD_WS_Air_class = [
-	"i_heli_transport_02_f",
-	"i_plane_fighter_03_aa_f",
-	"i_plane_fighter_03_cas_f",
-	"b_plane_cas_01_f",
-	"o_plane_cas_02_f",
-	"o_heli_attack_02_black_f",
-	"o_heli_attack_02_f",
-	"o_heli_light_02_f",
-	"o_heli_light_02_unarmed_f",
-	"b_heli_attack_01_f",
-	"b_heli_light_01_armed_f",
-	"b_heli_light_01_f",
-	"b_heli_transport_01_camo_f",
-	"b_heli_transport_01_f",
-	"i_heli_light_03_f",
-	"i_heli_light_03_unarmed_f"
-];
+RYD_WS_Air_class = [];
 	
 RYD_WS_Air_class_B = [
 	//"b_plane_cas_01_f",
@@ -851,6 +834,7 @@ RYD_WS_B_Mechanized_G = [];
 RYD_WS_B_Armored_G = [];
 RYD_WS_B_Air_G = [];
 RYD_WS_B_Air_G2 = [];
+RYD_WS_B_AirCargo_G2 = [];
 RYD_WS_B_Static_G2 = [];
 RYD_WS_B_Support_G2 = [];
 RYD_WS_B_NCCargo_G2 = [];
@@ -866,6 +850,7 @@ RYD_WS_I_Mechanized_G = [];
 RYD_WS_I_Armored_G = [];
 RYD_WS_I_Air_G = [];
 RYD_WS_I_Air_G2 = [];
+RYD_WS_I_AirCargo_G2 = [];
 RYD_WS_I_Static_G2 = [];
 RYD_WS_I_Support_G2 = [];
 RYD_WS_I_NCCargo_G2 = [];
@@ -881,6 +866,7 @@ RYD_WS_O_Mechanized_G = [];
 RYD_WS_O_Armored_G = [];
 RYD_WS_O_Air_G = [];
 RYD_WS_O_Air_G2 = [];
+RYD_WS_O_AirCargo_G2 = [];
 RYD_WS_O_Static_G2 = [];
 RYD_WS_O_Support_G2 = [];
 RYD_WS_O_NCCargo_G2 = [];
@@ -1962,31 +1948,76 @@ RYD_WS_DynamicRHQ =
 
 												//diag_log format ["%1, %2, %3, %4", [_wpnsArr], [count(_wpnsArr)], [count(_wpnsArr) isEqualTo 0], _class];
 
+												RHQ_Air set [(count RHQ_Air),_class];
+												
 												if (_isCargo) then 
 												{
 													RHQ_Cargo set [(count RHQ_Cargo),_class];
 
+													if ((_fac) == (RYD_WS_FacA select 2)) then 
+													{
+														switch (RYD_WS_SideA) do
+														{
+															case (west):
+															{
+																RYD_WS_B_AirCargo_G2 set [(count RYD_WS_B_AirCargo_G2),_class];
+															};
+															case (resistance):
+															{
+																RYD_WS_I_AirCargo_G2 set [(count RYD_WS_I_AirCargo_G2),_class];
+															};
+															case (east):
+															{
+																RYD_WS_O_AirCargo_G2 set [(count RYD_WS_O_AirCargo_G2),_class];
+															};
+														};
+													};
+
+													if ((_fac) == (RYD_WS_FacB select 2)) then 
+													{
+														switch (RYD_WS_SideB) do
+														{
+															case (west):
+															{
+																RYD_WS_B_AirCargo_G2 set [(count RYD_WS_B_AirCargo_G2),_class];
+															};
+															case (resistance):
+															{
+																RYD_WS_I_AirCargo_G2 set [(count RYD_WS_I_AirCargo_G2),_class];
+															};
+															case (east):
+															{
+																RYD_WS_O_AirCargo_G2 set [(count RYD_WS_O_AirCargo_G2),_class];
+															};
+														};
+													};
+													
 													if (count(_wpnsArr) isEqualTo 0) then
 													{
 														RHQ_NCCargo set [(count RHQ_NCCargo),_class];
-
+													};
+												}
+												else
+												{
+													if (count(_wpnsArr) > 0) then
+													{
 														if ((_fac) == (RYD_WS_FacA select 2)) then 
 														{
 															switch (RYD_WS_SideA) do
 															{
 																case (west):
 																{
-																	RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
+																	RYD_WS_B_Air_G2 set [(count RYD_WS_B_Air_G2),_class];
 																};
 																case (resistance):
 																{
-																	RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
+																	RYD_WS_I_Air_G2 set [(count RYD_WS_I_Air_G2),_class];
 																};
 																case (east):
 																{
-																	RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
+																	RYD_WS_O_Air_G2 set [(count RYD_WS_O_Air_G2),_class];
 																};
-															}
+															};
 														};
 
 														if ((_fac) == (RYD_WS_FacB select 2)) then 
@@ -1995,65 +2026,25 @@ RYD_WS_DynamicRHQ =
 															{
 																case (west):
 																{
-																	RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
+																	RYD_WS_B_Air_G2 set [(count RYD_WS_B_Air_G2),_class];
 																};
 																case (resistance):
 																{
-																	RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
+																	RYD_WS_I_Air_G2 set [(count RYD_WS_I_Air_G2),_class];
 																};
 																case (east):
 																{
-																	RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
+																	RYD_WS_O_Air_G2 set [(count RYD_WS_O_Air_G2),_class];
 																};
 															}
 														};
-													}
-												};
+													};
 
-												RHQ_Air set [(count RHQ_Air),_class];
-
-												if ((_fac) == (RYD_WS_FacA select 2)) then 
-												{
-													switch (RYD_WS_SideA) do
+													if (count(_wpnsArr) isEqualTo 0) then
 													{
-														case (west):
-														{
-															RYD_WS_B_Air_G2 set [(count RYD_WS_B_Air_G2),_class];
-														};
-														case (resistance):
-														{
-															RYD_WS_I_Air_G2 set [(count RYD_WS_I_Air_G2),_class];
-														};
-														case (east):
-														{
-															RYD_WS_O_Air_G2 set [(count RYD_WS_O_Air_G2),_class];
-														};
-													}
+														RHQ_NCAir set [(count RHQ_NCAir),_class];
+													};
 												};
-
-												if ((_fac) == (RYD_WS_FacB select 2)) then 
-												{
-													switch (RYD_WS_SideB) do
-													{
-														case (west):
-														{
-															RYD_WS_B_Air_G2 set [(count RYD_WS_B_Air_G2),_class];
-														};
-														case (resistance):
-														{
-															RYD_WS_I_Air_G2 set [(count RYD_WS_I_Air_G2),_class];
-														};
-														case (east):
-														{
-															RYD_WS_O_Air_G2 set [(count RYD_WS_O_Air_G2),_class];
-														};
-													}
-												};
-
-												if (count(_wpnsArr) isEqualTo 0) then
-												{
-													RHQ_NCAir set [(count RHQ_NCAir),_class];
-												}
 											};
 
 											if (_isUAV) then
@@ -2086,7 +2077,7 @@ RYD_WS_DynamicRHQ =
 										{
 											if (_isCargo) then
 											{
-												if (_sim in ["carx","helicopterx","helicopterrtd"]) then
+												if (_sim in ["carx"]) then
 												{
 													if (({_x} count [_isAmmoS,_isFuelS,_isRepS,_isMedS]) < 1) then
 													{
@@ -2106,7 +2097,7 @@ RYD_WS_DynamicRHQ =
 																{
 																	RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
 																};
-															}
+															};
 														};
 
 														if (_fac in _bFactions) then 
@@ -2124,6 +2115,50 @@ RYD_WS_DynamicRHQ =
 																case (east):
 																{
 																	RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
+																};
+															}
+														};
+													};
+												};
+												
+												if (_sim in ["helicopterx","helicopterrtd"]) then
+												{
+													if (({_x} count [_isAmmoS,_isFuelS,_isRepS,_isMedS]) < 1) then
+													{
+														if (_fac in _aFactions) then 
+														{
+															switch (RYD_WS_SideA) do
+															{
+																case (west):
+																{
+																	RYD_WS_B_AirCargo_G2 set [(count RYD_WS_B_AirCargo_G2),_class];
+																};
+																case (resistance):
+																{
+																	RYD_WS_I_AirCargo_G2 set [(count RYD_WS_I_AirCargo_G2),_class];
+																};
+																case (east):
+																{
+																	RYD_WS_O_AirCargo_G2 set [(count RYD_WS_O_AirCargo_G2),_class];
+																};
+															};
+														};
+
+														if (_fac in _bFactions) then 
+														{
+															switch (RYD_WS_SideB) do
+															{
+																case (west):
+																{
+																	RYD_WS_B_AirCargo_G2 set [(count RYD_WS_B_AirCargo_G2),_class];
+																};
+																case (resistance):
+																{
+																	RYD_WS_I_AirCargo_G2 set [(count RYD_WS_I_AirCargo_G2),_class];
+																};
+																case (east):
+																{
+																	RYD_WS_O_AirCargo_G2 set [(count RYD_WS_O_AirCargo_G2),_class];
 																};
 															}
 														};
@@ -3802,19 +3837,16 @@ RYD_WS_SpawnAir =
 	_angle = _this select 1;
 	_classPool = _this select 2;
 	_side = _this select 4;
+	_oppositeAngle = (_angle + 180) % 360;
 	
 	_gp = grpNull;
 	
-	_dst = 300 - (random 200);
+	_dst = 500 - (random 200);
 
 	_checkPos = [_pos,0,_dst] call RYD_RandomAroundMM;
+	_checkPos = [_checkPos, 2000, _oppositeAngle] call BIS_fnc_relPos;
 
-	_fe = (count (_checkPos isflatempty [20,0,0.1,10,0,false,objNull])) > 0;
-	_nR = _checkPos nearRoads 50;
-	if ((count _nR) > 0) then 
-	{
-		_fe = false;
-	};
+	_fe = true;
 	
 	if (_fe) then
 	{
@@ -3831,19 +3863,15 @@ RYD_WS_SpawnAir =
 	
 	_ct = 0;
 	
-	while {(not (_fe) or {isOnRoad _checkPos})} do
+	while {(not _fe)} do
 	{
 		_ct = _ct + 1;
 		if (_ct > 50) exitWith {};
 		_dst = _dst + 5;
 		_checkPos = [_pos,0,_dst] call RYD_RandomAroundMM;
+		_checkPos = [_checkPos, 2000, _oppositeAngle] call BIS_fnc_relPos;
 
-		_fe = (count (_checkPos isflatempty [20,0,0.1,10,0,false,objNull])) > 0;
-		_nR = _checkPos nearRoads 50;
-		if ((count _nR) > 0) then 
-		{
-			_fe = false;
-		};
+		_fe = true;
 		
 		if (_fe) then
 		{
@@ -3862,6 +3890,7 @@ RYD_WS_SpawnAir =
 	if (_fe) then
 	{
 		_class = selectRandom _classPool;
+		diag_log format ["_class: %1",[_class]];
 		
 		_ldrs = +(_this select 3);
 		
@@ -3892,13 +3921,12 @@ RYD_WS_SpawnAir =
 		} foreach _ldrs;
 
 		_ldr = selectRandomWeighted _ldrArr;
-		_vh = createVehicle [_class, _checkPos, [], 0, "FLY"];
+		_vh = createVehicle [_class, [_checkPos select 0, _checkPos select 1, 150], [], 0, "FLY"];
 		
 		RYD_WS_SpawnPositions set [(count RYD_WS_SpawnPositions),_checkPos];
 
 		_vh setDir _angle;
-		_vh setPos _checkPos;
-		_vh setVectorUP (surfaceNormal [_checkPos select 0,_checkPos select 1]);
+		_vh setPos [_checkPos select 0, _checkPos select 1, 150];
 		
 		_side createVehicleCrew _vh;
 		_gp = (group _vh);
@@ -3999,6 +4027,7 @@ RYD_WS_SpawnStatic =
 			_LOSpos set [2,1.5];
 
 			_class = selectRandom _classPool;
+			diag_log format ["_class: %1",[_class]];
 			
 			_ldrs = +(_this select 3);
 			
@@ -4130,6 +4159,7 @@ RYD_WS_SpawnSupport =
 	{
 		_class = _classPool select (floor (random (count _classPool)));
 		_class = selectRandom _classPool;
+		diag_log format ["_class: %1",[_class]];
 		
 		_ldrs = +(_this select 3);
 		
