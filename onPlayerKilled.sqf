@@ -11,14 +11,8 @@ _cou = 0;
 //titletext ["","black in",1];
 _0 = [] spawn 
 {
-	sleep 1;
+	sleep 4;
 	//titleText ["","black out", 2];
-};
-while {_cou < 100} do {
-	_camera camSetPos [(position oldPlayer select 0)+10, position oldPlayer select 1,_cou / 10];
-	_camera camcommit 0;
-	_cou = _cou + 1;
-	sleep 0.01;
 };
 //1 fadeSound 1;	titletext ["","black in",1];
 _camera cameraeffect ["terminate","back"];          //stop using custom camera

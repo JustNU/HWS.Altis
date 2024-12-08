@@ -2291,7 +2291,83 @@ if not (RYD_WS_WholeMap) then
 		} foreach _uavClasses;
 		
 		_uavClasses = _uavClasses - [0];
-		diag_log format ["_uavClasses: %1",_uavClasses];
+		//diag_log format ["_uavClasses: %1",_uavClasses];
+		
+		_supportMedClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Supp_Med_G2 + RYD_WS_Medical_class};
+			case (east) : {RYD_WS_O_Supp_Med_G2 + RYD_WS_Medical_class};
+			case (resistance) : {RYD_WS_I_Supp_Med_G2 + RYD_WS_Medical_class};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_supportMedClasses set [_foreachIndex,0]
+			}
+		} foreach _supportMedClasses;
+
+		_supportMedClasses = _supportMedClasses - [0];
+		diag_log format ["_supportMedClasses: %1",_supportMedClasses];
+		
+		_supportAmmoClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Supp_Ammo_G2 + RYD_WS_Ammo_class};
+			case (east) : {RYD_WS_O_Supp_Ammo_G2 + RYD_WS_Ammo_class};
+			case (resistance) : {RYD_WS_I_Supp_Ammo_G2 + RYD_WS_Ammo_class};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_supportAmmoClasses set [_foreachIndex,0]
+			}
+		} foreach _supportAmmoClasses;
+
+		_supportAmmoClasses = _supportAmmoClasses - [0];
+		diag_log format ["_supportAmmoClasses: %1",_supportAmmoClasses];
+		
+		_supportFuelClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Supp_Fuel_G2 + RYD_WS_Fuel_class};
+			case (east) : {RYD_WS_O_Supp_Fuel_G2 + RYD_WS_Fuel_class};
+			case (resistance) : {RYD_WS_I_Supp_Fuel_G2 + RYD_WS_Fuel_class};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_supportFuelClasses set [_foreachIndex,0]
+			}
+		} foreach _supportFuelClasses;
+
+		_supportFuelClasses = _supportFuelClasses - [0];
+		diag_log format ["_supportFuelClasses: %1",_supportFuelClasses];
+		
+		_supportRepairClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Supp_Repair_G2 + RYD_WS_Repair_class};
+			case (east) : {RYD_WS_O_Supp_Repair_G2 + RYD_WS_Repair_class};
+			case (resistance) : {RYD_WS_I_Supp_Repair_G2 + RYD_WS_Repair_class};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_supportRepairClasses set [_foreachIndex,0]
+			}
+		} foreach _supportRepairClasses;
+
+		_supportRepairClasses = _supportRepairClasses - [0];
+		diag_log format ["_supportRepairClasses: %1",_supportRepairClasses];
 		
 		diag_log format ["[side,faction]: %1",[_x,_facM]];
 		
@@ -2307,11 +2383,31 @@ if not (RYD_WS_WholeMap) then
 		};			
 		
 		{
-			_amnt = 1 + (floor (random (2 * RYD_WS_Scale))) * _perc;
+			_amnt = 0;
 
-			if (_foreachIndex == 3) then
+			//
+			switch (_foreachIndex) do
 			{
-				_amnt = 2 + ((ceil (random (3 * RYD_WS_Scale))) * _perc)
+				case (0) :
+				{
+					_amnt = ((floor (random (1 * RYD_WS_Scale))) * _perc);
+				};
+				case (1) :
+				{
+					_amnt = ((floor (random (1 * RYD_WS_Scale))) * _perc);
+				};
+				case (2) :
+				{
+					_amnt = 2 + ((ceil (random (3 * RYD_WS_Scale))) * _perc);
+				};
+				case (3) :
+				{
+					_amnt = ((floor (random (2 * RYD_WS_Scale))) * _perc);
+				};
+				default
+				{
+					_amnt = 1 + (floor (random (1 * RYD_WS_Scale))) * _perc;
+				};
 			};
 			
 			diag_log format ["_amnt: %1",[_amnt]];
@@ -2386,6 +2482,7 @@ if not (RYD_WS_WholeMap) then
 							}
 						}
 					};
+					/*
 					case (2) :
 					{
 						if ((count _supportClasses) > 0) then
@@ -2415,7 +2512,8 @@ if not (RYD_WS_WholeMap) then
 							}
 						};				
 					};
-					case (3) :
+					*/
+					case (2) :
 					{
 						//diag_log format ["cargo _amnt: %1",[_amnt]];
 						//diag_log format ["_cargoClasses: %1",[_cargoClasses]];
@@ -2448,7 +2546,7 @@ if not (RYD_WS_WholeMap) then
 							}
 						};				
 					};
-					case (4) :
+					case (3) :
 					{
 						if ((count _airCargoClasses) > 0) then
 						{
@@ -2476,6 +2574,122 @@ if not (RYD_WS_WholeMap) then
 								};
 							}
 						}
+					};
+					case (4) :
+					{
+						if ((count _supportMedClasses) > 0) then
+						{
+							diag_log ["_supportMedClasses"];
+							_gp = [_mainPos,_dir,_supportMedClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
+
+							if not (isNull _gp) then
+							{
+								_vh = assignedVehicle (leader _gp);
+								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+								
+								switch (_mainIx) do
+								{
+									case (0) : 
+									{
+										_gpsA set [(count _gpsA),_gp];
+										_fcsA = _fcsA + (units _gp)
+									};
+									case (1) : 
+									{
+										_gpsB set [(count _gpsB),_gp];
+										_fcsB = _fcsB + (units _gp)
+									};
+								}
+							}
+						};				
+					};
+					case (5) :
+					{
+						if ((count _supportAmmoClasses) > 0) then
+						{
+							diag_log ["_supportAmmoClasses"];
+							_gp = [_mainPos,_dir,_supportAmmoClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
+
+							if not (isNull _gp) then
+							{
+								_vh = assignedVehicle (leader _gp);
+								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+								
+								switch (_mainIx) do
+								{
+									case (0) : 
+									{
+										_gpsA set [(count _gpsA),_gp];
+										_fcsA = _fcsA + (units _gp)
+									};
+									case (1) : 
+									{
+										_gpsB set [(count _gpsB),_gp];
+										_fcsB = _fcsB + (units _gp)
+									};
+								}
+							}
+						};				
+					};
+					case (6) :
+					{
+						if ((count _supportFuelClasses) > 0) then
+						{
+							diag_log ["_supportFuelClasses"];
+							_gp = [_mainPos,_dir,_supportFuelClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
+
+							if not (isNull _gp) then
+							{
+								_vh = assignedVehicle (leader _gp);
+								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+								
+								switch (_mainIx) do
+								{
+									case (0) : 
+									{
+										_gpsA set [(count _gpsA),_gp];
+										_fcsA = _fcsA + (units _gp)
+									};
+									case (1) : 
+									{
+										_gpsB set [(count _gpsB),_gp];
+										_fcsB = _fcsB + (units _gp)
+									};
+								}
+							}
+						};				
+					};
+					case (7) :
+					{
+						if ((count _supportRepairClasses) > 0) then
+						{
+							diag_log ["_supportRepairClasses"];
+							_gp = [_mainPos,_dir,_supportRepairClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
+
+							if not (isNull _gp) then
+							{
+								_vh = assignedVehicle (leader _gp);
+								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+								
+								switch (_mainIx) do
+								{
+									case (0) : 
+									{
+										_gpsA set [(count _gpsA),_gp];
+										_fcsA = _fcsA + (units _gp)
+									};
+									case (1) : 
+									{
+										_gpsB set [(count _gpsB),_gp];
+										_fcsB = _fcsB + (units _gp)
+									};
+								}
+							}
+						};				
 					};
 					/*
 					case (5) :
@@ -2510,7 +2724,7 @@ if not (RYD_WS_WholeMap) then
 					*/
 				}
 			}
-		} foreach [_airClasses,_staticClasses,_supportClasses,_cargoClasses,_airCargoClasses];
+		} foreach [_airClasses,_staticClasses,_cargoClasses,_airCargoClasses,_supportMedClasses,_supportAmmoClasses,_supportFuelClasses,_supportRepairClasses];
 	} foreach [_sideA,_sideB];
 
 	if (((count _fcsA) < 1) or {((count _fcsB) < 1)}) exitWith

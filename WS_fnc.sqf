@@ -696,7 +696,6 @@ RYD_WS_rep = [
 	"b_truck_01_repair_f",
 	"b_g_offroad_01_repair_f"
 ];
-
 RYD_WS_rep_B = [
 	"b_apc_tracked_01_crv_f",
 	"b_truck_01_repair_f",
@@ -887,7 +886,6 @@ RYD_WS_DynamicRHQ =
 		_aFactions pushBack ((_x select 0) select 0)
 	} foreach RYD_WS_selFactionsA;
 	
-	
 	_bFactions = [];
 	{
 		_bFactions pushBack ((_x select 0) select 0)
@@ -951,6 +949,8 @@ RYD_WS_DynamicRHQ =
 									if ((toLower _name) in ["diver team"]) exitWith {};
 									
 									_cnt = count _path4;
+									_countOfunits = 0;
+									_hasTroops = false;
 									_gpType = "inf";
 									_typeC = false;
 									_vehs = [];
@@ -961,6 +961,8 @@ RYD_WS_DynamicRHQ =
 										_type = "inf";
 										_class = _path4 select _m;
 										
+										diag_log format ["_m: %1",_m];
+										
 										if (isClass _class) then
 										{
 											_unit = configName _class;
@@ -970,6 +972,7 @@ RYD_WS_DynamicRHQ =
 											if (isText _veh) then
 											{
 												_veh = toLower (getText _veh);
+												_countOfunits = _countOfunits + 1;
 												
 												// true transport cargo
 												// thanks to ravenleg on bi forums!
@@ -980,6 +983,8 @@ RYD_WS_DynamicRHQ =
 												// set minimum cargo count to a regular fire team of 4, not a lot of factinos have groups smaller
 												_isCargo = (_cargoSeats >= 4);
 												
+												diag_log format ["_veh: %1",_veh];
+												
 												_base = _veh;
 												_wrong = false;
 												
@@ -988,6 +993,10 @@ RYD_WS_DynamicRHQ =
 													_base = inheritsFrom (_vehClass >> _base);
 													if not (isClass _base) exitWith {};
 													_base = toLower (configName _base);
+													if (_base in ["man"]) then 
+													{
+														_hasTroops = true;
+													};
 													if (_base in ["allvehicles","all"]) exitWith {};
 												};
 
@@ -1379,104 +1388,102 @@ RYD_WS_DynamicRHQ =
 										
 										switch (true) do
 										{
-											case (_gpType in ["tank"]) : 
+											case (_gpType in ["wheeled_apc_f", "tank"]) : 
 											{
 												_added = false;
 												
 												{
-													if ((_x select 1) in [_path4]) exitWith {_added = true}
-												} foreach (RYD_WS_B_Armored_G + RYD_WS_I_Armored_G + RYD_WS_O_Armored_G);
-												
-												if not (_added) then
-												{
-													if ((toLower _fac) in _aFactions) then 
-													{
-														switch (RYD_WS_SideA) do
-														{
-															case (west): 
-															{
-																RYD_WS_B_Armored_G set [(count RYD_WS_B_Armored_G),[west, _gp select 1, _gp select 2]];
-															};
-															case (resistance): 
-															{
-																RYD_WS_I_Armored_G set [(count RYD_WS_I_Armored_G),[resistance, _gp select 1, _gp select 2]];
-															};
-															case (east): 
-															{
-																RYD_WS_O_Armored_G set [(count RYD_WS_O_Armored_G),[east, _gp select 1, _gp select 2]];
-															};
-														}
-													};
-													
-													if ((toLower _fac) in _bFactions) then 
-													{
-														switch (RYD_WS_SideB) do
-														{
-															case (west): 
-															{
-																RYD_WS_B_Armored_G set [(count RYD_WS_B_Armored_G),[west, _gp select 1, _gp select 2]];
-															};
-															case (resistance): 
-															{
-																RYD_WS_I_Armored_G set [(count RYD_WS_I_Armored_G),[resistance, _gp select 1, _gp select 2]];
-															};
-															case (east): 
-															{
-																RYD_WS_O_Armored_G set [(count RYD_WS_O_Armored_G),[east, _gp select 1, _gp select 2]];
-															};
-														}
-													};
-												}
-											};
-											
-											case (_gpType in ["wheeled_apc_f"]) : 
-											{
-												_added = false;
-												
-												{
-													if ((_x select 1) in [_path4]) exitWith {_added = true}
+													if ((_x select 1) in [_path4] and _hasTroops) exitWith {_added = true}
 												} foreach (RYD_WS_B_Mechanized_G + RYD_WS_I_Mechanized_G + RYD_WS_O_Mechanized_G);
 												
+												{
+													if (((_x select 1) in [_path4]) and (_hasTroops == false)) exitWith {_added = true}
+												} foreach (RYD_WS_B_Armored_G + RYD_WS_I_Armored_G + RYD_WS_O_Armored_G);
+												
 												diag_log format ["gp: %1",_gp];
+												diag_log format ["_hasTroops: %1",_hasTroops];
 												
 												if not (_added) then
 												{
-													if ((toLower _fac) in _aFactions) then 
+													if (_hasTroops) then
 													{
-														switch (RYD_WS_SideA) do
+														if ((toLower _fac) in _aFactions) then 
 														{
-															case (west): 
+															switch (RYD_WS_SideA) do
 															{
-																RYD_WS_B_Mechanized_G set [(count RYD_WS_B_Mechanized_G),[west, _gp select 1, _gp select 2]];
-															};
-															case (resistance): 
+																case (west): 
+																{
+																	RYD_WS_B_Mechanized_G set [(count RYD_WS_B_Mechanized_G),[west, _gp select 1, _gp select 2]];
+																};
+																case (resistance): 
+																{
+																	RYD_WS_I_Mechanized_G set [(count RYD_WS_I_Mechanized_G),[resistance, _gp select 1, _gp select 2]];
+																};
+																case (east): 
+																{
+																	RYD_WS_O_Mechanized_G set [(count RYD_WS_O_Mechanized_G),[east, _gp select 1, _gp select 2]];
+																};
+															}
+														};
+														
+														if ((toLower _fac) in _bFactions) then 
+														{
+															switch (RYD_WS_SideB) do
 															{
-																RYD_WS_I_Mechanized_G set [(count RYD_WS_I_Mechanized_G),[resistance, _gp select 1, _gp select 2]];
-															};
-															case (east): 
-															{
-																RYD_WS_O_Mechanized_G set [(count RYD_WS_O_Mechanized_G),[east, _gp select 1, _gp select 2]];
-															};
-														}
-													};
-													
-													if ((toLower _fac) in _bFactions) then 
+																case (west): 
+																{
+																	RYD_WS_B_Mechanized_G set [(count RYD_WS_B_Mechanized_G),[west, _gp select 1, _gp select 2]];
+																};
+																case (resistance): 
+																{
+																	RYD_WS_I_Mechanized_G set [(count RYD_WS_I_Mechanized_G),[resistance, _gp select 1, _gp select 2]];
+																};
+																case (east): 
+																{
+																	RYD_WS_O_Mechanized_G set [(count RYD_WS_O_Mechanized_G),[east, _gp select 1, _gp select 2]];
+																};
+															}
+														};
+													}
+													else
 													{
-														switch (RYD_WS_SideB) do
+														if ((toLower _fac) in _aFactions) then 
 														{
-															case (west): 
+															switch (RYD_WS_SideA) do
 															{
-																RYD_WS_B_Mechanized_G set [(count RYD_WS_B_Mechanized_G),[west, _gp select 1, _gp select 2]];
-															};
-															case (resistance): 
+																case (west): 
+																{
+																	RYD_WS_B_Armored_G set [(count RYD_WS_B_Armored_G),[west, _gp select 1, _gp select 2]];
+																};
+																case (resistance): 
+																{
+																	RYD_WS_I_Armored_G set [(count RYD_WS_I_Armored_G),[resistance, _gp select 1, _gp select 2]];
+																};
+																case (east): 
+																{
+																	RYD_WS_O_Armored_G set [(count RYD_WS_O_Armored_G),[east, _gp select 1, _gp select 2]];
+																};
+															}
+														};
+														
+														if ((toLower _fac) in _bFactions) then 
+														{
+															switch (RYD_WS_SideB) do
 															{
-																RYD_WS_I_Mechanized_G set [(count RYD_WS_I_Mechanized_G),[resistance, _gp select 1, _gp select 2]];
-															};
-															case (east): 
-															{
-																RYD_WS_O_Mechanized_G set [(count RYD_WS_O_Mechanized_G),[east, _gp select 1, _gp select 2]];
-															};
-														}
+																case (west): 
+																{
+																	RYD_WS_B_Armored_G set [(count RYD_WS_B_Armored_G),[west, _gp select 1, _gp select 2]];
+																};
+																case (resistance): 
+																{
+																	RYD_WS_I_Armored_G set [(count RYD_WS_I_Armored_G),[resistance, _gp select 1, _gp select 2]];
+																};
+																case (east): 
+																{
+																	RYD_WS_O_Armored_G set [(count RYD_WS_O_Armored_G),[east, _gp select 1, _gp select 2]];
+																};
+															}
+														};
 													};
 												}
 											};
@@ -1541,43 +1548,47 @@ RYD_WS_DynamicRHQ =
 												
 												if not (_added) then
 												{
-													if ((toLower _fac) in _aFactions) then 
+													// only allow fire teams and above
+													if (_countOfunits > 3) then
 													{
-														switch (RYD_WS_SideA) do
+														if ((toLower _fac) in _aFactions) then 
 														{
-															case (west): 
+															switch (RYD_WS_SideA) do
 															{
-																RYD_WS_B_Infantry_G set [(count RYD_WS_B_Infantry_G),[west, _gp select 1, _gp select 2]];
-															};
-															case (resistance): 
-															{
-																RYD_WS_I_Infantry_G set [(count RYD_WS_I_Infantry_G),[resistance, _gp select 1, _gp select 2]];
-															};
-															case (east): 
-															{
-																RYD_WS_O_Infantry_G set [(count RYD_WS_O_Infantry_G),[east, _gp select 1, _gp select 2]];
-															};
-														}
-													};
-													
-													if ((toLower _fac) in _bFactions) then 
-													{
-														switch (RYD_WS_SideB) do
+																case (west): 
+																{
+																	RYD_WS_B_Infantry_G set [(count RYD_WS_B_Infantry_G),[west, _gp select 1, _gp select 2]];
+																};
+																case (resistance): 
+																{
+																	RYD_WS_I_Infantry_G set [(count RYD_WS_I_Infantry_G),[resistance, _gp select 1, _gp select 2]];
+																};
+																case (east): 
+																{
+																	RYD_WS_O_Infantry_G set [(count RYD_WS_O_Infantry_G),[east, _gp select 1, _gp select 2]];
+																};
+															}
+														};
+														
+														if ((toLower _fac) in _bFactions) then 
 														{
-															case (west):
+															switch (RYD_WS_SideB) do
 															{
-																RYD_WS_B_Infantry_G set [(count RYD_WS_B_Infantry_G),[west, _gp select 1, _gp select 2]];
-															};
-															case (resistance):
-															{
-																RYD_WS_I_Infantry_G set [(count RYD_WS_I_Infantry_G),[resistance, _gp select 1, _gp select 2]];
-															};
-															case (east):
-															{
-																RYD_WS_O_Infantry_G set [(count RYD_WS_O_Infantry_G),[east, _gp select 1, _gp select 2]];
-															};
-														}
-													};
+																case (west):
+																{
+																	RYD_WS_B_Infantry_G set [(count RYD_WS_B_Infantry_G),[west, _gp select 1, _gp select 2]];
+																};
+																case (resistance):
+																{
+																	RYD_WS_I_Infantry_G set [(count RYD_WS_I_Infantry_G),[resistance, _gp select 1, _gp select 2]];
+																};
+																case (east):
+																{
+																	RYD_WS_O_Infantry_G set [(count RYD_WS_O_Infantry_G),[east, _gp select 1, _gp select 2]];
+																};
+															}
+														};
+													}
 												}										
 											}
 										}										
@@ -1636,7 +1647,7 @@ RYD_WS_DynamicRHQ =
 								{
 									RHQ_Static set [(count RHQ_Static),_class];
 									
-									if ((_fac) == (RYD_WS_FacA select 2)) then 
+									if ((toLower _fac) in _aFactions) then 
 									{
 										switch (RYD_WS_SideA) do
 										{
@@ -1655,7 +1666,7 @@ RYD_WS_DynamicRHQ =
 										}
 									};
 
-									if ((_fac) == (RYD_WS_FacB select 2)) then 
+									if ((toLower _fac) in _bFactions) then 
 									{
 										switch (RYD_WS_SideB) do
 										{
@@ -1833,6 +1844,44 @@ RYD_WS_DynamicRHQ =
 									if (_isAmmoS) then 
 									{
 										RHQ_Ammo set [(count RHQ_Ammo),_class];
+										
+										if ((toLower _fac) in _aFactions) then 
+										{
+											switch (RYD_WS_SideA) do
+											{
+												case (west):
+												{
+													RYD_WS_B_Supp_Ammo_G2 set [(count RYD_WS_B_Supp_Ammo_G2),_class];
+												};
+												case (resistance):
+												{
+													RYD_WS_I_Supp_Ammo_G2 set [(count RYD_WS_I_Supp_Ammo_G2),_class];
+												};
+												case (east):
+												{
+													RYD_WS_O_Supp_Ammo_G2 set [(count RYD_WS_O_Supp_Ammo_G2),_class];
+												};
+											}
+										};
+
+										if ((toLower _fac) in _bFactions) then 
+										{
+											switch (RYD_WS_SideB) do
+											{
+												case (west):
+												{
+													RYD_WS_B_Supp_Ammo_G2 set [(count RYD_WS_B_Supp_Ammo_G2),_class];
+												};
+												case (resistance):
+												{
+													RYD_WS_I_Supp_Ammo_G2 set [(count RYD_WS_I_Supp_Ammo_G2),_class];
+												};
+												case (east):
+												{
+													RYD_WS_O_Supp_Ammo_G2 set [(count RYD_WS_O_Supp_Ammo_G2),_class];
+												};
+											}
+										};
 
 										if not (_class in RHQ_Support) then
 										{
@@ -1843,6 +1892,44 @@ RYD_WS_DynamicRHQ =
 									if (_isFuelS) then 
 									{
 										RHQ_Fuel set [(count RHQ_Fuel),_class];
+										
+										if ((toLower _fac) in _aFactions) then 
+										{
+											switch (RYD_WS_SideA) do
+											{
+												case (west):
+												{
+													RYD_WS_B_Supp_Fuel_G2 set [(count RYD_WS_B_Supp_Fuel_G2),_class];
+												};
+												case (resistance):
+												{
+													RYD_WS_I_Supp_Fuel_G2 set [(count RYD_WS_I_Supp_Fuel_G2),_class];
+												};
+												case (east):
+												{
+													RYD_WS_O_Supp_Fuel_G2 set [(count RYD_WS_O_Supp_Fuel_G2),_class];
+												};
+											}
+										};
+
+										if ((toLower _fac) in _bFactions) then 
+										{
+											switch (RYD_WS_SideB) do
+											{
+												case (west):
+												{
+													RYD_WS_B_Supp_Fuel_G2 set [(count RYD_WS_B_Supp_Fuel_G2),_class];
+												};
+												case (resistance):
+												{
+													RYD_WS_I_Supp_Fuel_G2 set [(count RYD_WS_I_Supp_Fuel_G2),_class];
+												};
+												case (east):
+												{
+													RYD_WS_O_Supp_Fuel_G2 set [(count RYD_WS_O_Supp_Fuel_G2),_class];
+												};
+											}
+										};
 
 										if not (_class in RHQ_Support) then
 										{
@@ -1853,6 +1940,44 @@ RYD_WS_DynamicRHQ =
 									if (_isRepS) then 
 									{
 										RHQ_Rep set [(count RHQ_Rep),_class];
+										
+										if ((toLower _fac) in _aFactions) then 
+										{
+											switch (RYD_WS_SideA) do
+											{
+												case (west):
+												{
+													RYD_WS_B_Supp_Repair_G2 set [(count RYD_WS_B_Supp_Repair_G2),_class];
+												};
+												case (resistance):
+												{
+													RYD_WS_I_Supp_Repair_G2 set [(count RYD_WS_I_Supp_Repair_G2),_class];
+												};
+												case (east):
+												{
+													RYD_WS_O_Supp_Repair_G2 set [(count RYD_WS_O_Supp_Repair_G2),_class];
+												};
+											}
+										};
+
+										if ((toLower _fac) in _bFactions) then 
+										{
+											switch (RYD_WS_SideB) do
+											{
+												case (west):
+												{
+													RYD_WS_B_Supp_Repair_G2 set [(count RYD_WS_B_Supp_Repair_G2),_class];
+												};
+												case (resistance):
+												{
+													RYD_WS_I_Supp_Repair_G2 set [(count RYD_WS_I_Supp_Repair_G2),_class];
+												};
+												case (east):
+												{
+													RYD_WS_O_Supp_Repair_G2 set [(count RYD_WS_O_Supp_Repair_G2),_class];
+												};
+											}
+										};
 
 										if not (_class in RHQ_Support) then
 										{
@@ -1863,6 +1988,44 @@ RYD_WS_DynamicRHQ =
 									if (_isMedS) then 
 									{
 										RHQ_Med set [(count RHQ_Med),_class];
+										
+										if ((toLower _fac) in _aFactions) then 
+										{
+											switch (RYD_WS_SideA) do
+											{
+												case (west):
+												{
+													RYD_WS_B_Supp_Med_G2 set [(count RYD_WS_B_Supp_Med_G2),_class];
+												};
+												case (resistance):
+												{
+													RYD_WS_I_Supp_Med_G2 set [(count RYD_WS_I_Supp_Med_G2),_class];
+												};
+												case (east):
+												{
+													RYD_WS_O_Supp_Med_G2 set [(count RYD_WS_O_Supp_Med_G2),_class];
+												};
+											}
+										};
+
+										if ((toLower _fac) in _bFactions) then 
+										{
+											switch (RYD_WS_SideB) do
+											{
+												case (west):
+												{
+													RYD_WS_B_Supp_Med_G2 set [(count RYD_WS_B_Supp_Med_G2),_class];
+												};
+												case (resistance):
+												{
+													RYD_WS_I_Supp_Med_G2 set [(count RYD_WS_I_Supp_Med_G2),_class];
+												};
+												case (east):
+												{
+													RYD_WS_O_Supp_Med_G2 set [(count RYD_WS_O_Supp_Med_G2),_class];
+												};
+											}
+										};
 
 										if not (_class in RHQ_Support) then
 										{
@@ -1875,7 +2038,7 @@ RYD_WS_DynamicRHQ =
 										_side = getNumber (_vehClass2 >> "side");
 
 										
-										if ((_fac) == (RYD_WS_FacA select 2)) then 
+										if ((toLower _fac) in _aFactions) then 
 										{
 											switch (RYD_WS_SideA) do
 											{
@@ -1894,7 +2057,7 @@ RYD_WS_DynamicRHQ =
 											}
 										};
 
-										if ((_fac) == (RYD_WS_FacB select 2)) then 
+										if ((toLower _fac) in _bFactions) then 
 										{
 											switch (RYD_WS_SideB) do
 											{
@@ -1964,7 +2127,7 @@ RYD_WS_DynamicRHQ =
 													{
 														RHQ_NCCargo set [(count RHQ_NCCargo),_class];
 
-														if ((_fac) == (RYD_WS_FacA select 2)) then 
+														if ((toLower _fac) in _aFactions) then 
 														{
 															switch (RYD_WS_SideA) do
 															{
@@ -1982,7 +2145,7 @@ RYD_WS_DynamicRHQ =
 																};
 															};
 														};
-														if ((_fac) == (RYD_WS_FacB select 2)) then 
+														if ((toLower _fac) in _bFactions) then 
 														{
 															switch (RYD_WS_SideB) do
 															{
@@ -2005,7 +2168,7 @@ RYD_WS_DynamicRHQ =
 												
 												if (count(_wpnsArr) > 0) then
 												{
-													if ((_fac) == (RYD_WS_FacA select 2)) then 
+													if ((toLower _fac) in _aFactions) then 
 													{
 														switch (RYD_WS_SideA) do
 														{
@@ -2024,7 +2187,7 @@ RYD_WS_DynamicRHQ =
 														};
 													};
 
-													if ((_fac) == (RYD_WS_FacB select 2)) then 
+													if ((toLower _fac) in _bFactions) then 
 													{
 														switch (RYD_WS_SideB) do
 														{
@@ -2050,7 +2213,7 @@ RYD_WS_DynamicRHQ =
 												RHQ_Air set [(count RHQ_Air),_class];
 												RHQ_RAir set [(count RHQ_RAir),_class];
 												
-												if ((_fac) == (RYD_WS_FacA select 2)) then 
+												if ((toLower _fac) in _aFactions) then 
 												{
 													switch (RYD_WS_SideA) do
 													{
@@ -2069,7 +2232,7 @@ RYD_WS_DynamicRHQ =
 													};
 												};
 												
-												if ((_fac) == (RYD_WS_FacB select 2)) then 
+												if ((toLower _fac) in _bFactions) then 
 												{
 													switch (RYD_WS_SideB) do
 													{
