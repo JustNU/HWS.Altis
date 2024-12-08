@@ -11,7 +11,11 @@ _busy = false;
 _busy = _unitG getvariable ("Busy" + _unitvar);
 
 _StartPos = _unitG getvariable ("START" + _unitvar); 
-if (isNil ("_StartPos")) then {_unitG setVariable [("START" + _unitvar),(position (vehicle (leader _unitG)))]};
+if (isNil ("_StartPos")) then 
+{
+	_unitG setVariable [("START" + _unitvar),(position (vehicle (leader _unitG)))];
+	_StartPos = _unitG getvariable ("START" + _unitvar); 
+};
 
 if (isNil ("_busy")) then {_busy = false};
 

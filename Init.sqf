@@ -752,6 +752,7 @@ RYD_WS_TakeValues =
 			_sides = [west, resistance, east] - [RYD_WS_SideA];
 			
 			RYD_WS_SideB = selectRandom _sides;
+			_txt = "RANDOM";
 		};
 	};
 	
@@ -2174,9 +2175,9 @@ if not (RYD_WS_WholeMap) then
 
 		_airClasses = switch (_x) do
 		{
-			case (west) : {RYD_WS_B_Air_G2 + RYD_WS_Air_class - RYD_WS_B_Support_G2 - RYD_WS_Support_class};
-			case (east) : {RYD_WS_O_Air_G2 + RYD_WS_Air_class - RYD_WS_O_Support_G2 - RYD_WS_Support_class};
-			case (resistance) : {RYD_WS_I_Air_G2 + RYD_WS_Air_class - RYD_WS_I_Support_G2 - RYD_WS_Support_class};
+			case (west) : {RYD_WS_B_Air_G2 + RYD_WS_Air_class - RYD_WS_B_Support_G2 - RYD_WS_Support_class - RYD_WS_B_AirCargo_G2};
+			case (east) : {RYD_WS_O_Air_G2 + RYD_WS_Air_class - RYD_WS_O_Support_G2 - RYD_WS_Support_class - RYD_WS_O_AirCargo_G2};
+			case (resistance) : {RYD_WS_I_Air_G2 + RYD_WS_Air_class - RYD_WS_I_Support_G2 - RYD_WS_Support_class - RYD_WS_I_AirCargo_G2};
 		};
 
 		_facM = switch (_foreachIndex) do
@@ -2273,6 +2274,25 @@ if not (RYD_WS_WholeMap) then
 		_airCargoClasses = _airCargoClasses - [0];
 		diag_log format ["_airCargoClasses: %1",_airCargoClasses];
 		
+		_uavClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_RAir_G2 + RYD_WS_RAir_class - RYD_WS_B_Support_G2 - RYD_WS_Support_class};
+			case (east) : {RYD_WS_O_RAir_G2 + RYD_WS_RAir_class - RYD_WS_O_Support_G2 - RYD_WS_Support_class};
+			case (resistance) : {RYD_WS_I_RAir_G2 + RYD_WS_RAir_class - RYD_WS_I_Support_G2 - RYD_WS_Support_class};
+		};
+		
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+			
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_uavClasses set [_foreachIndex,0]
+			}
+		} foreach _uavClasses;
+		
+		_uavClasses = _uavClasses - [0];
+		diag_log format ["_uavClasses: %1",_uavClasses];
+		
 		diag_log format ["[side,faction]: %1",[_x,_facM]];
 		
 		_side = _x;
@@ -2310,8 +2330,6 @@ if not (RYD_WS_WholeMap) then
 							
 							_gp = [_mainPos,_dir,_airClasses,_ldrs,_side] call RYD_WS_SpawnAir;
 							
-							diag_log format ["_gp: %1",[_gp]];
-							
 							if not (isNull _gp) then
 							{
 								_vh = assignedVehicle (leader _gp);
@@ -2345,8 +2363,6 @@ if not (RYD_WS_WholeMap) then
 							
 							diag_log ["static"];
 							_gp = [_stPos,_dir,_staticClasses,_ldrs,_side] call RYD_WS_SpawnStatic;
-							
-							diag_log format ["_gp: %1",[_gp]];
 
 							if not (isNull _gp) then
 							{
@@ -2376,8 +2392,6 @@ if not (RYD_WS_WholeMap) then
 						{
 							diag_log ["support"];
 							_gp = [_mainPos,_dir,_supportClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
-							
-							diag_log format ["_gp: %1",[_gp]];
 
 							if not (isNull _gp) then
 							{
@@ -2408,11 +2422,9 @@ if not (RYD_WS_WholeMap) then
 						
 						if ((count _cargoClasses) > 0) then
 						{
-							diag_log ["cargo"];
+							diag_log ["_cargoClasses"];
 							
 							_gp = [_mainPos,_dir,_cargoClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
-							
-							diag_log format ["_gp: %1",[_gp]];
 							
 							if not (isNull _gp) then
 							{
@@ -2443,8 +2455,6 @@ if not (RYD_WS_WholeMap) then
 							diag_log ["_airCargoClasses"];
 							
 							_gp = [_mainPos,_dir,_airCargoClasses,_ldrs,_side] call RYD_WS_SpawnAir;
-							
-							diag_log format ["_gp: %1",[_gp]];
 
 							if not (isNull _gp) then
 							{
@@ -2467,6 +2477,37 @@ if not (RYD_WS_WholeMap) then
 							}
 						}
 					};
+					/*
+					case (5) :
+					{
+						if ((count _uavClasses) > 0) then
+						{
+							diag_log ["_uavClasses"];
+							
+							_gp = [_mainPos,_dir,_uavClasses,_ldrs,_side] call RYD_WS_SpawnAir;
+
+							if not (isNull _gp) then
+							{
+								_vh = assignedVehicle (leader _gp);
+								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+								switch (_mainIx) do
+								{
+									case (0) : 
+									{
+										_gpsA set [(count _gpsA),_gp];
+										_fcsA = _fcsA + (units _gp)
+									};
+									case (1) : 
+									{
+										_gpsB set [(count _gpsB),_gp];
+										_fcsB = _fcsB + (units _gp)
+									};
+								};
+							}
+						}
+					};
+					*/
 				}
 			}
 		} foreach [_airClasses,_staticClasses,_supportClasses,_cargoClasses,_airCargoClasses];
@@ -2553,14 +2594,20 @@ if not (RYD_WS_WholeMap) then
 		_i setMarkerSize [0.8,0.8];
 		_i setMarkerText (str _foreachIndex);
 	} foreach (_set1 + _set2 + _set3);*/
+	
+	diag_log format ["_fcsA: %1",_fcsA];
 
 	{
-		addSwitchableUnit _x;
+		if not ((_x isKindOf "UAV_AI_base_F") or (_x isKindOf "I_UAV_AI") or (_x isKindOf "O_UAV_AI") or (_x isKindOf "B_UAV_AI")) then
+		{
+			addSwitchableUnit _x;
+		};
+		
 		_x setVariable ["MARTA_showRules",[(RYD_WS_FacA select 1),1,(RYD_WS_FacB select 1),0]];
 		_x setVariable ["RYD_WS_Aside",true];
 	} foreach _fcsA;
 
-	_player = _fcsA select (floor (random (count _fcsA)));
+	_player = selectRandom switchableUnits;
 
 	_player setVariable ["WS_myName",name _player];
 

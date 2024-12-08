@@ -8,25 +8,24 @@ _camera camsetPos position oldPlayer;
 _camera camsetTarget position oldPlayer;
 _camera CamCommit 0;
 _cou = 0;
-titletext ["","black in",1];
+//titletext ["","black in",1];
 _0 = [] spawn 
 {
 	sleep 1;
-	titleText ["","black out", 2];
+	//titleText ["","black out", 2];
 };
-while {_cou < 50} do {
+while {_cou < 100} do {
 	_camera camSetPos [(position oldPlayer select 0)+10, position oldPlayer select 1,_cou / 10];
 	_camera camcommit 0;
 	_cou = _cou + 1;
 	sleep 0.01;
 };
-sleep 1;
-1 fadeSound 1;	titletext ["","black in",1];
+//1 fadeSound 1;	titletext ["","black in",1];
 _camera cameraeffect ["terminate","back"];          //stop using custom camera
 _camera camcommit 0;
 camdestroy _camera;
 
-_pool = +RYD_WS_ForcesA;
+_pool = switchableUnits;
 
 {
 	switch (true) do
