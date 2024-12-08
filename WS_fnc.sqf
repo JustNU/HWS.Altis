@@ -839,6 +839,7 @@ RYD_WS_B_Supp_Ammo_G2 = [];
 RYD_WS_B_Supp_Med_G2 = [];
 RYD_WS_B_Supp_Repair_G2 = [];
 RYD_WS_B_Supp_Fuel_G2 = [];
+RYD_WS_B_Arty_G2 = [];
 
 RYD_WS_I_Infantry_G = [];
 RYD_WS_I_Motorized_G = [];
@@ -856,6 +857,7 @@ RYD_WS_I_Supp_Ammo_G2 = [];
 RYD_WS_I_Supp_Med_G2 = [];
 RYD_WS_I_Supp_Repair_G2 = [];
 RYD_WS_I_Supp_Fuel_G2 = [];
+RYD_WS_I_Arty_G2 = [];
 
 RYD_WS_O_Infantry_G = [];
 RYD_WS_O_Motorized_G = [];
@@ -873,6 +875,7 @@ RYD_WS_O_Supp_Ammo_G2 = [];
 RYD_WS_O_Supp_Med_G2 = [];
 RYD_WS_O_Supp_Repair_G2 = [];
 RYD_WS_O_Supp_Fuel_G2 = [];
+RYD_WS_O_Arty_G2 = [];
 
 RydHQ_Add_OtherArty = [];
 
@@ -961,7 +964,7 @@ RYD_WS_DynamicRHQ =
 										_type = "inf";
 										_class = _path4 select _m;
 										
-										diag_log format ["_m: %1",_m];
+										//diag_log format ["_m: %1",_m];
 										
 										if (isClass _class) then
 										{
@@ -973,6 +976,7 @@ RYD_WS_DynamicRHQ =
 											{
 												_veh = toLower (getText _veh);
 												_countOfunits = _countOfunits + 1;
+												_vehClass2 = configfile >> "CfgVehicles" >> _veh;
 												
 												// true transport cargo
 												// thanks to ravenleg on bi forums!
@@ -982,14 +986,19 @@ RYD_WS_DynamicRHQ =
 												
 												// set minimum cargo count to a regular fire team of 4, not a lot of factinos have groups smaller
 												_isCargo = (_cargoSeats >= 4);
+												if ((getNumber (_vehClass2 >> "artilleryScanner")) > 0) then
+												{
+													_isArty = true
+												};
 												
-												diag_log format ["_veh: %1",_veh];
+												//diag_log format ["_veh: %1",_veh];
 												
 												_base = _veh;
 												_wrong = false;
 												
 												while {not (_base in ["air","ship","tank","car","wheeled_apc_f","ugv_01_base_f"])} do
 												{
+													if (_isArty) exitWith {};
 													_base = inheritsFrom (_vehClass >> _base);
 													if not (isClass _base) exitWith {};
 													_base = toLower (configName _base);
@@ -1021,16 +1030,9 @@ RYD_WS_DynamicRHQ =
 															_typeC = true
 														}
 													};
-														
-													_vehClass2 = configfile >> "CfgVehicles" >> _veh;
 													
 													_myFac = getText (_vehClass2 >> "faction");
-														
-													if ((getNumber (_vehClass2 >> "artilleryScanner")) > 0) then
-													{
-														_isArty = true
-													};
-														
+													
 													if not (_veh in RYD_WS_AllClasses) then
 													{
 														RYD_WS_AllClasses set [(count RYD_WS_AllClasses),_veh];
@@ -1194,6 +1196,7 @@ RYD_WS_DynamicRHQ =
 																}
 															};
 
+															/*
 															if ((getNumber (_vehClass2 >> "artilleryScanner")) > 0) then
 															{
 																RHQ_Art set [(count RHQ_Art),_veh];
@@ -1310,6 +1313,7 @@ RYD_WS_DynamicRHQ =
 																	RydHQ_Add_OtherArty set [(count RydHQ_Add_OtherArty),[[_veh],_arr]]
 																}
 															};
+															*/
 															
 															RHQ_HArmor = RHQ_HArmor - RHQ_Art;
 
@@ -1400,8 +1404,8 @@ RYD_WS_DynamicRHQ =
 													if (((_x select 1) in [_path4]) and (_hasTroops == false)) exitWith {_added = true}
 												} foreach (RYD_WS_B_Armored_G + RYD_WS_I_Armored_G + RYD_WS_O_Armored_G);
 												
-												diag_log format ["gp: %1",_gp];
-												diag_log format ["_hasTroops: %1",_hasTroops];
+												//diag_log format ["gp: %1",_gp];
+												//diag_log format ["_hasTroops: %1",_hasTroops];
 												
 												if not (_added) then
 												{
@@ -1636,18 +1640,176 @@ RYD_WS_DynamicRHQ =
 						_isMainT = isClass _mainT;
 						_crew = toLower (getText (_vehClass2 >> "crew"));
 						//_isAI = not ((_crew find "uav_ai") isEqualTo -1);
+						_isUAV = (toLower (getText (_vehClass2 >> "crew"))) in ["b_uav_ai","i_uav_ai","o_uav_ai"];
 						
 						if (_side in [0,1,2]) then
 						{
 							_fac = toLower (getText (_vehClass2 >> "faction"));
 							
+							// is arty and NOT controlled by uav ai
+							if (((getNumber (_vehClass2 >> "artilleryScanner")) > 0) and {not (_isUAV)}) then
+							{
+								RHQ_Art set [(count RHQ_Art),_class];
+								
+								if ((toLower _fac) in _aFactions) then 
+								{
+									switch (RYD_WS_SideA) do
+									{
+										case (west):
+										{
+											RYD_WS_B_Arty_G2 set [(count RYD_WS_B_Arty_G2),_class];
+										};
+										case (resistance):
+										{
+											RYD_WS_I_Arty_G2 set [(count RYD_WS_I_Arty_G2),_class];
+										};
+										case (east):
+										{
+											RYD_WS_O_Arty_G2 set [(count RYD_WS_O_Arty_G2),_class];
+										};
+									}
+								};
+								
+								if ((toLower _fac) in _bFactions) then 
+								{
+									switch (RYD_WS_SideB) do
+									{
+										case (west):
+										{
+											RYD_WS_B_Arty_G2 set [(count RYD_WS_B_Arty_G2),_class];
+										};
+										case (resistance):
+										{
+											RYD_WS_I_Arty_G2 set [(count RYD_WS_I_Arty_G2),_class];
+										};
+										case (east):
+										{
+											RYD_WS_O_Arty_G2 set [(count RYD_WS_O_Arty_G2),_class];
+										};
+									}
+								};
+
+								_prim = "";
+								_rare = "";
+								_sec = "";
+								_smoke = "";
+								_illum = "";
+
+									if (_isMainT) then
+									{
+										_mags = getArray (_mainT >> "magazines");
+										_maxHit = 10;
+
+										{
+											_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
+											_ammoC = configfile >> "CfgAmmo" >> _ammo;
+
+											_actHit = getNumber (_ammoC >> "hit");
+
+											if (_actHit > _maxHit) then
+											{
+												_maxHit = _actHit;
+												_prim = _x
+											}
+										} foreach _mags;
+
+									_mags = _mags - [_prim];
+									_mags0 = +_mags;
+									_illumChosen = false;
+									_smokeChosen = false;
+									_rareChosen = false;
+									_secChosen = false;
+
+									{
+										_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
+										_ammoC = configfile >> "CfgAmmo" >> _ammo;
+
+										_hit = getNumber (_ammoC >> "hit");
+										_lc = _ammoC >> "lightColor";
+										_sim = toLower (getText (_ammoC >> "simulation"));
+										_subM = toLower (getText (_ammoC >> "submunitionAmmo"));
+
+										if (_hit <= 10) then
+										{
+											if not (_subM in [""]) then
+											{
+												_ammoC = configfile >> "CfgAmmo" >> _subM;
+												_hit = getNumber (_ammoC >> "hit")
+											}
+										};
+
+										switch (true) do
+										{
+											case ((isArray _lc) and not (_illumChosen)) : 
+											{
+												_illum = _x;
+												_mags = _mags - [_x];
+												_illumChosen = true
+											};
+
+											case ((_hit <= 10) and (_subM in ["smokeshellarty"]) and not (_smokeChosen)) : 
+											{
+												_smoke = _x;
+												_mags = _mags - [_x];
+												_smokeChosen = true
+											};
+
+											case ((_sim in ["shotsubmunitions"]) and not (_rareChosen)) : 
+											{
+												_rare = _x;
+												_mags = _mags - [_x];
+												_rareChosen = true
+											};
+
+											case ((_hit > 10) and not ((_secChosen) or (_rare == _x)))  : 
+											{
+												_sec = _x;
+												_mags = _mags - [_x];
+												_secChosen = true
+											}
+										}
+									} foreach _mags0;
+
+									if (_sec in [""]) then
+									{
+										_maxHit = 10;
+
+										{
+											_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
+											_ammoC = configfile >> "CfgAmmo" >> _ammo;
+											_subAmmo = _ammoC >> "subMunitionAmmo";
+
+											if ((isText _subAmmo) and {not ((getText _subAmmo) in [""])}) then
+											{
+												_ammoC = configfile >> "CfgAmmo" >> (getText _subAmmo);
+											};
+													
+											_actHit = getNumber (_ammoC >> "hit");
+											
+											if (_actHit > _maxHit) then
+											{
+												_maxHit = _actHit;
+												_sec = _x
+											}
+										} foreach _mags;
+									}
+								};
+
+								_arr = [_prim,_rare,_sec,_smoke,_illum];
+								if (({_x in [""]} count _arr) < 5) then
+								{
+									RydHQ_Add_OtherArty set [(count RydHQ_Add_OtherArty),[[_class],_arr]]
+								}
+							};
+							
 							if not (_hasD) then
-							{													
+							{											
 								if (_isMainT) then
 								{
 									RHQ_Static set [(count RHQ_Static),_class];
 									
-									if ((toLower _fac) in _aFactions) then 
+									// dont add AI controlled statics into spawn pool
+									if (((toLower _fac) in _aFactions) and {not (_isUAV)}) then 
 									{
 										switch (RYD_WS_SideA) do
 										{
@@ -1666,7 +1828,7 @@ RYD_WS_DynamicRHQ =
 										}
 									};
 
-									if ((toLower _fac) in _bFactions) then 
+									if (((toLower _fac) in _bFactions) and {not (_isUAV)}) then
 									{
 										switch (RYD_WS_SideB) do
 										{
@@ -1706,123 +1868,6 @@ RYD_WS_DynamicRHQ =
 											
 										if ((_isAA) or (_isAT)) exitWith {}
 									} foreach _mags;
-									
-									if ((getNumber (_vehClass2 >> "artilleryScanner")) > 0) then
-									{
-										RHQ_Art set [(count RHQ_Art),_class];
-										
-										_prim = "";
-										_rare = "";
-										_sec = "";
-										_smoke = "";
-										_illum = "";
-
-										if (_isMainT) then
-										{
-											_mags = getArray (_mainT >> "magazines");
-											_maxHit = 10;
-											
-											{
-												_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
-												_ammoC = configfile >> "CfgAmmo" >> _ammo;
-												
-												_actHit = getNumber (_ammoC >> "hit");
-												
-												if (_actHit > _maxHit) then
-												{
-													_maxHit = _actHit;
-													_prim = _x
-												}
-											} foreach _mags;
-											
-											_mags = _mags - [_prim];
-											_mags0 = +_mags;
-											_illumChosen = false;
-											_smokeChosen = false;
-											_rareChosen = false;
-											_secChosen = false;
-											
-											{
-												_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
-												_ammoC = configfile >> "CfgAmmo" >> _ammo;
-												
-												_hit = getNumber (_ammoC >> "hit");
-												_lc = _ammoC >> "lightColor";
-												_sim = toLower (getText (_ammoC >> "simulation"));
-												_subM = toLower (getText (_ammoC >> "submunitionAmmo"));
-												
-												if (_hit <= 10) then
-												{
-													if not (_subM in [""]) then
-													{
-														_ammoC = configfile >> "CfgAmmo" >> _subM;
-														_hit = getNumber (_ammoC >> "hit")
-													}
-												};
-
-												switch (true) do
-												{
-													case ((isArray _lc) and not (_illumChosen)) : 
-													{
-														_illum = _x;
-														_mags = _mags - [_x];
-														_illumChosen = true
-													};
-														
-													case ((_hit <= 10) and (_subM in ["smokeshellarty"]) and not (_smokeChosen)) : 
-													{
-														_smoke = _x;
-														_mags = _mags - [_x];
-														_smokeChosen = true
-													};
-														
-													case ((_sim in ["shotsubmunitions"]) and not (_rareChosen)) : 
-													{
-														_rare = _x;
-														_mags = _mags - [_x];
-														_rareChosen = true
-													};
-														
-													case ((_hit > 10) and not ((_secChosen) or (_rare == _x)))  : 
-													{
-														_sec = _x;
-														_mags = _mags - [_x];
-														_secChosen = true
-													}
-												}
-											} foreach _mags0;
-											
-											if (_sec in [""]) then
-											{
-												_maxHit = 10;
-												
-												{
-													_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
-													_ammoC = configfile >> "CfgAmmo" >> _ammo;
-													_subAmmo = _ammoC >> "subMunitionAmmo";
-													
-													if ((isText _subAmmo) and {not ((getText _subAmmo) in [""])}) then
-													{
-														_ammoC = configfile >> "CfgAmmo" >> (getText _subAmmo);
-													};
-
-													_actHit = getNumber (_ammoC >> "hit");
-													
-													if (_actHit > _maxHit) then
-													{
-														_maxHit = _actHit;
-														_sec = _x
-													}
-												} foreach _mags;
-											}
-										};
-
-										_arr = [_prim,_rare,_sec,_smoke,_illum];
-										if (({_x in [""]} count _arr) < 5) then
-										{
-											RydHQ_Add_OtherArty set [(count RydHQ_Add_OtherArty),[[_class],_arr]]
-										}
-									}
 								}
 							}
 							else
@@ -2091,8 +2136,6 @@ RYD_WS_DynamicRHQ =
 										if (_base in ["air"]) then 
 										{
 											_isChopper = _sim in ["helicopterx","helicopterrtd"];
-
-											_isUAV = (toLower (getText (_vehClass2 >> "crew"))) in ["b_uav_ai","i_uav_ai","o_uav_ai"];
 											//diag_log format ["%1, %2", [_isUAV], _class];
 
 											if ((_isChopper) and (not _isUAV)) then
@@ -4041,7 +4084,7 @@ RYD_WS_SpawnAir =
 	if (_fe) then
 	{
 		_class = selectRandom _classPool;
-		diag_log format ["_class: %1",[_class]];
+		//diag_log format ["_class: %1",[_class]];
 		
 		_ldrs = +(_this select 3);
 		
@@ -4082,7 +4125,7 @@ RYD_WS_SpawnAir =
 		_side createVehicleCrew _vh;
 		_gp = (group _vh);
 		
-		diag_log format ["_gp: %1",[_gp]];
+		//diag_log format ["_gp: %1",[_gp]];
 		
 		_vh land "LAND";
 		
@@ -4183,7 +4226,7 @@ RYD_WS_SpawnStatic =
 			_LOSpos set [2,1.5];
 
 			_class = selectRandom _classPool;
-			diag_log format ["_class: %1",[_class]];
+			//diag_log format ["_class: %1",[_class]];
 			
 			_ldrs = +(_this select 3);
 			
@@ -4315,7 +4358,7 @@ RYD_WS_SpawnSupport =
 	{
 		_class = _classPool select (floor (random (count _classPool)));
 		_class = selectRandom _classPool;
-		diag_log format ["_class: %1",[_class]];
+		//diag_log format ["_class: %1",[_class]];
 		
 		_ldrs = +(_this select 3);
 		
@@ -5728,7 +5771,6 @@ RYD_WS_WholeMapPlacement =
 							
 								_fldrGp = createGroup _side;
 								RydHQ_ExcludedG pushback _fldrGp;
-								RydHQB_ExcludedG pushback _fldrGp;
 								fakeLeaderHQ = _fldrGp createUnit [_ldrClass, _x, [], 0, "NONE"];
 								[fakeLeaderHQ] joinSilent _fldrGp;
 								fakeLeaderHQ setDir _dir;
@@ -5791,7 +5833,6 @@ RYD_WS_WholeMapPlacement =
 								leaderHQB addEventHandler ["HandleDamage",{0}];
 							
 								_fldrGp = createGroup _side;
-								RydHQ_ExcludedG pushback _fldrGp;
 								RydHQB_ExcludedG pushback _fldrGp;
 								fakeLeaderHQB = _fldrGp createUnit [_ldrClass, _x, [], 0, "NONE"];
 								fakeLeaderHQB setDir _dir;
@@ -5862,7 +5903,6 @@ RYD_WS_WholeMapPlacement =
 								
 								_fldrGp = createGroup _side;
 								RydHQC_ExcludedG pushback _fldrGp;
-								RydHQD_ExcludedG pushback _fldrGp;
 								fakeLeaderHQC = _fldrGp createUnit [_ldrClass, _x, [], 0, "NONE"];
 								fakeLeaderHQC setDir _dir;
 								[fakeLeaderHQC] joinSilent _fldrGp;
@@ -5926,7 +5966,6 @@ RYD_WS_WholeMapPlacement =
 								leaderHQD addEventHandler ["HandleDamage",{0}];
 								
 								_fldrGp = createGroup _side;
-								RydHQC_ExcludedG pushback _fldrGp;
 								RydHQD_ExcludedG pushback _fldrGp;
 								fakeLeaderHQD = _fldrGp createUnit [_ldrClass, _x, [], 0, "NONE"];
 								fakeLeaderHQD setDir _dir;
@@ -5973,9 +6012,9 @@ RYD_WS_WholeMapPlacement =
 		
 		_airClasses = switch (_x) do
 		{
-			case (west) : {RYD_WS_B_Air_G2 + RYD_WS_Air_class - RYD_WS_B_Support_G2 - RYD_WS_Support_class};
-			case (east) : {RYD_WS_O_Air_G2 + RYD_WS_Air_class - RYD_WS_O_Support_G2 - RYD_WS_Support_class};
-			case (resistance) : {RYD_WS_I_Air_G2 + RYD_WS_Air_class - RYD_WS_I_Support_G2 - RYD_WS_Support_class};
+			case (west) : {RYD_WS_B_Air_G2 + RYD_WS_Air_class - RYD_WS_B_Support_G2 - RYD_WS_Support_class - RYD_WS_B_AirCargo_G2};
+			case (east) : {RYD_WS_O_Air_G2 + RYD_WS_Air_class - RYD_WS_O_Support_G2 - RYD_WS_Support_class - RYD_WS_O_AirCargo_G2};
+			case (resistance) : {RYD_WS_I_Air_G2 + RYD_WS_Air_class - RYD_WS_I_Support_G2 - RYD_WS_Support_class - RYD_WS_I_AirCargo_G2};
 		};
 
 		{
@@ -5988,13 +6027,13 @@ RYD_WS_WholeMapPlacement =
 		} foreach _airClasses;
 
 		_airClasses = _airClasses - [0];
-		diag_log format ["_airClasses: %1",_airClasses];
+		//diag_log format ["_airClasses: %1",_airClasses];
 
 		_staticClasses = switch (_x) do
 		{
-			case (west) : {RYD_WS_B_Static_G2 + RYD_WS_Static_class};
-			case (east) : {RYD_WS_O_Static_G2 + RYD_WS_Static_class};
-			case (resistance) : {RYD_WS_I_Static_G2 + RYD_WS_Static_class};
+			case (west) : {RYD_WS_B_Static_G2 + RYD_WS_Static_class - RYD_WS_Art_class - RYD_WS_B_Arty_G2};
+			case (east) : {RYD_WS_O_Static_G2 + RYD_WS_Static_class - RYD_WS_Art_class - RYD_WS_O_Arty_G2};
+			case (resistance) : {RYD_WS_I_Static_G2 + RYD_WS_Static_class - RYD_WS_Art_class - RYD_WS_I_Arty_G2};
 		};
 			
 		{
@@ -6007,7 +6046,7 @@ RYD_WS_WholeMapPlacement =
 		} foreach _staticClasses;
 		
 		_staticClasses = _staticClasses - [0];
-		diag_log format ["_staticClasses: %1",_staticClasses];
+		//diag_log format ["_staticClasses: %1",_staticClasses];
 
 		_supportClasses = switch (_x) do
 		{
@@ -6026,7 +6065,7 @@ RYD_WS_WholeMapPlacement =
 		} foreach _supportClasses;
 
 		_supportClasses = _supportClasses - [0];
-		diag_log format ["_supportClasses: %1",_supportClasses];
+		//diag_log format ["_supportClasses: %1",_supportClasses];
 
 		_cargoClasses = switch (_x) do
 		{
@@ -6045,7 +6084,7 @@ RYD_WS_WholeMapPlacement =
 		} foreach _cargoClasses;
 		
 		_cargoClasses = _cargoClasses - [0];		
-		diag_log format ["_cargoClasses: %1",_cargoClasses];
+		//diag_log format ["_cargoClasses: %1",_cargoClasses];
 		
 		_airCargoClasses = switch (_x) do
 		{
@@ -6064,9 +6103,123 @@ RYD_WS_WholeMapPlacement =
 		} foreach _airCargoClasses;
 		
 		_airCargoClasses = _airCargoClasses - [0];
-		diag_log format ["_airCargoClasses: %1",_airCargoClasses];
+		//diag_log format ["_airCargoClasses: %1",_airCargoClasses];
 		
-		diag_log format ["[side,faction]: %1",[_x,_facM]];
+		_uavClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_RAir_G2 + RYD_WS_RAir_class - RYD_WS_B_Support_G2 - RYD_WS_Support_class};
+			case (east) : {RYD_WS_O_RAir_G2 + RYD_WS_RAir_class - RYD_WS_O_Support_G2 - RYD_WS_Support_class};
+			case (resistance) : {RYD_WS_I_RAir_G2 + RYD_WS_RAir_class - RYD_WS_I_Support_G2 - RYD_WS_Support_class};
+		};
+		
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+			
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_uavClasses set [_foreachIndex,0]
+			}
+		} foreach _uavClasses;
+		
+		_uavClasses = _uavClasses - [0];
+		//diag_log format ["_uavClasses: %1",_uavClasses];
+		
+		_supportMedClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Supp_Med_G2 + RYD_WS_Medical_class};
+			case (east) : {RYD_WS_O_Supp_Med_G2 + RYD_WS_Medical_class};
+			case (resistance) : {RYD_WS_I_Supp_Med_G2 + RYD_WS_Medical_class};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_supportMedClasses set [_foreachIndex,0]
+			}
+		} foreach _supportMedClasses;
+
+		_supportMedClasses = _supportMedClasses - [0];
+		//diag_log format ["_supportMedClasses: %1",_supportMedClasses];
+		
+		_supportAmmoClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Supp_Ammo_G2 + RYD_WS_Ammo_class};
+			case (east) : {RYD_WS_O_Supp_Ammo_G2 + RYD_WS_Ammo_class};
+			case (resistance) : {RYD_WS_I_Supp_Ammo_G2 + RYD_WS_Ammo_class};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_supportAmmoClasses set [_foreachIndex,0]
+			}
+		} foreach _supportAmmoClasses;
+
+		_supportAmmoClasses = _supportAmmoClasses - [0];
+		//diag_log format ["_supportAmmoClasses: %1",_supportAmmoClasses];
+		
+		_supportFuelClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Supp_Fuel_G2 + RYD_WS_Fuel_class};
+			case (east) : {RYD_WS_O_Supp_Fuel_G2 + RYD_WS_Fuel_class};
+			case (resistance) : {RYD_WS_I_Supp_Fuel_G2 + RYD_WS_Fuel_class};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_supportFuelClasses set [_foreachIndex,0]
+			}
+		} foreach _supportFuelClasses;
+
+		_supportFuelClasses = _supportFuelClasses - [0];
+		//diag_log format ["_supportFuelClasses: %1",_supportFuelClasses];
+		
+		_supportRepairClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Supp_Repair_G2 + RYD_WS_Repair_class};
+			case (east) : {RYD_WS_O_Supp_Repair_G2 + RYD_WS_Repair_class};
+			case (resistance) : {RYD_WS_I_Supp_Repair_G2 + RYD_WS_Repair_class};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_supportRepairClasses set [_foreachIndex,0]
+			}
+		} foreach _supportRepairClasses;
+
+		_supportRepairClasses = _supportRepairClasses - [0];
+		//diag_log format ["_supportRepairClasses: %1",_supportRepairClasses];
+		
+		_artyClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Arty_G2 + RYD_WS_Art_class};
+			case (east) : {RYD_WS_O_Arty_G2 + RYD_WS_Art_class};
+			case (resistance) : {RYD_WS_I_Arty_G2 + RYD_WS_Art_class};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_artyClasses set [_foreachIndex,0]
+			}
+		} foreach _artyClasses;
+
+		_artyClasses = _artyClasses - [0];
+		//diag_log format ["_artyClasses: %1",_artyClasses];
+		
+		//diag_log format ["[side,faction]: %1",[_x,_facM]];
 		
 		//_gpsA = [];
 		//_gpsB = [];
@@ -6083,15 +6236,6 @@ RYD_WS_WholeMapPlacement =
 				[LeaderHQC,LeaderHQD]
 			};
 
-			_amnt = 1 + (floor (random (2 * RYD_WS_Scale)));
-			
-			if (_foreachIndex == 3) then
-			{
-				_amnt = 2 + (ceil (random (3 * RYD_WS_Scale)))
-			};
-			
-			diag_log format ["_amnt: %1",[_amnt]];
-
 			//diag_log format ["classes: %1",[_foreachindex,count _x]];
 			
 			_mainPos = _battlefield select _sideIx;
@@ -6099,6 +6243,38 @@ RYD_WS_WholeMapPlacement =
 			for "_j" from 1 to 3 do
 			{
 				_myPos = _mainPos getPos [(-1000 + (_j * 500)),(_dirL + 90)];
+				
+				_amnt = 0;
+
+				switch (_foreachIndex) do
+				{
+					case (0) :
+					{
+						_amnt = (ceil (random (2 * RYD_WS_Scale)));
+					};
+					case (1) :
+					{
+						_amnt = (ceil (random (2 * RYD_WS_Scale)));
+					};
+					case (2) :
+					{
+						_amnt = 2 + (ceil (random (3 * RYD_WS_Scale)));
+					};
+					case (3) :
+					{
+						_amnt = (ceil (random (2 * RYD_WS_Scale)));
+					};
+					case (8) :
+					{
+						_amnt = (ceil (random (1.5 * RYD_WS_Scale)));
+					};
+					default
+					{
+						_amnt = (ceil (random (2 * RYD_WS_Scale)));
+					};
+				};
+				
+				//diag_log format ["_amnt: %1",[_amnt]];
 			
 				for "_i" from 1 to _amnt do
 				{
@@ -6108,7 +6284,7 @@ RYD_WS_WholeMapPlacement =
 						{
 							if ((count _airClasses) > 0) then
 							{
-								diag_log ["_supportClasses"];
+								//diag_log ["_airClasses"];
 								
 								_gp = [_myPos,_dir,_airClasses,_ldrs0,_side] call RYD_WS_SpawnAir;
 								
@@ -6124,7 +6300,6 @@ RYD_WS_WholeMapPlacement =
 											_gpsA set [(count _gpsA),_gp];
 											_fcsA = _fcsA + (units _gp)
 										};
-											
 										case (1) : 
 										{
 											_gpsB set [(count _gpsB),_gp];
@@ -6139,9 +6314,8 @@ RYD_WS_WholeMapPlacement =
 							if ((count _staticClasses) > 0) then
 							{
 								_stPos = +_myPos;
-
-								diag_log ["_supportClasses"];
 								
+								//diag_log ["_staticClasses"];
 								_gp = [_stPos,_dir,_staticClasses,_ldrs0,_side] call RYD_WS_SpawnStatic;
 
 								if not (isNull _gp) then
@@ -6157,7 +6331,6 @@ RYD_WS_WholeMapPlacement =
 											_gpsA set [(count _gpsA),_gp];
 											_fcsA = _fcsA + (units _gp)
 										};
-											
 										case (1) : 
 										{
 											_gpsB set [(count _gpsB),_gp];
@@ -6167,6 +6340,7 @@ RYD_WS_WholeMapPlacement =
 								}
 							}
 						};
+						/*
 						case (2) :
 						{
 							if ((count _supportClasses) > 0) then
@@ -6198,14 +6372,15 @@ RYD_WS_WholeMapPlacement =
 								}
 							};				
 						};
-						case (3) :
+						*/
+						case (2) :
 						{
 							//diag_log format ["cargo _amnt: %1",[_amnt]];
 							//diag_log format ["_cargoClasses: %1",[_cargoClasses]];
 							
 							if ((count _cargoClasses) > 0) then
 							{
-								diag_log ["_cargoClasses"];
+								//diag_log ["_cargoClasses"];
 								
 								_gp = [_myPos,_dir,_cargoClasses,_ldrs0,_side] call RYD_WS_SpawnSupport;
 								
@@ -6231,11 +6406,11 @@ RYD_WS_WholeMapPlacement =
 								}
 							};				
 						};
-						case (4) :
+						case (3) :
 						{
 							if ((count _airCargoClasses) > 0) then
 							{
-								diag_log ["_airCargoClasses"];
+								//diag_log ["_airCargoClasses"];
 								
 								_gp = [_myPos,_dir,_airCargoClasses,_ldrs0,_side] call RYD_WS_SpawnAir;
 
@@ -6260,10 +6435,155 @@ RYD_WS_WholeMapPlacement =
 								}
 							}
 						};
+						case (4) :
+						{
+							if ((count _supportMedClasses) > 0) then
+							{
+								//diag_log ["_supportMedClasses"];
+								_gp = [_myPos,_dir,_supportMedClasses,_ldrs0,_side] call RYD_WS_SpawnSupport;
+
+								if not (isNull _gp) then
+								{
+									_vh = assignedVehicle (leader _gp);
+									_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+									_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+									
+									switch (_sideIx) do
+									{
+										case (0) : 
+										{
+											_gpsA set [(count _gpsA),_gp];
+											_fcsA = _fcsA + (units _gp)
+										};
+										case (1) : 
+										{
+											_gpsB set [(count _gpsB),_gp];
+											_fcsB = _fcsB + (units _gp)
+										};
+									}
+								}
+							};				
+						};
+						case (5) :
+						{
+							if ((count _supportAmmoClasses) > 0) then
+							{
+								//diag_log ["_supportAmmoClasses"];
+								_gp = [_myPos,_dir,_supportAmmoClasses,_ldrs0,_side] call RYD_WS_SpawnSupport;
+
+								if not (isNull _gp) then
+								{
+									_vh = assignedVehicle (leader _gp);
+									_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+									_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+									
+									switch (_sideIx) do
+									{
+										case (0) : 
+										{
+											_gpsA set [(count _gpsA),_gp];
+											_fcsA = _fcsA + (units _gp)
+										};
+										case (1) : 
+										{
+											_gpsB set [(count _gpsB),_gp];
+											_fcsB = _fcsB + (units _gp)
+										};
+									}
+								}
+							};				
+						};
+						case (6) :
+						{
+							if ((count _supportFuelClasses) > 0) then
+							{
+								//diag_log ["_supportFuelClasses"];
+								_gp = [_myPos,_dir,_supportFuelClasses,_ldrs0,_side] call RYD_WS_SpawnSupport;
+
+								if not (isNull _gp) then
+								{
+									_vh = assignedVehicle (leader _gp);
+									_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+									_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+									
+									switch (_sideIx) do
+									{
+										case (0) : 
+										{
+											_gpsA set [(count _gpsA),_gp];
+											_fcsA = _fcsA + (units _gp)
+										};
+										case (1) : 
+										{
+											_gpsB set [(count _gpsB),_gp];
+											_fcsB = _fcsB + (units _gp)
+										};
+									}
+								}
+							};				
+						};
+						case (7) :
+						{
+							if ((count _supportRepairClasses) > 0) then
+							{
+								//diag_log ["_supportRepairClasses"];
+								_gp = [_myPos,_dir,_supportRepairClasses,_ldrs0,_side] call RYD_WS_SpawnSupport;
+
+								if not (isNull _gp) then
+								{
+									_vh = assignedVehicle (leader _gp);
+									_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+									_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+									
+									switch (_sideIx) do
+									{
+										case (0) : 
+										{
+											_gpsA set [(count _gpsA),_gp];
+											_fcsA = _fcsA + (units _gp)
+										};
+										case (1) : 
+										{
+											_gpsB set [(count _gpsB),_gp];
+											_fcsB = _fcsB + (units _gp)
+										};
+									}
+								}
+							};				
+						};
+						case (8) :
+						{
+							if ((count _artyClasses) > 0) then
+							{
+								//diag_log ["_artyClasses"];
+								_gp = [_myPos,_dir,_artyClasses,_ldrs0,_side] call RYD_WS_SpawnSupport;
+
+								if not (isNull _gp) then
+								{
+									_vh = assignedVehicle (leader _gp);
+									_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+									_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+									
+									switch (_sideIx) do
+									{
+										case (0) : 
+										{
+											_gpsA set [(count _gpsA),_gp];
+											_fcsA = _fcsA + (units _gp)
+										};
+										case (1) : 
+										{
+											_gpsB set [(count _gpsB),_gp];
+											_fcsB = _fcsB + (units _gp)
+										};
+									}
+								}
+							};
+						};
 					}
 				}
 			}
-		} foreach [_airClasses,_staticClasses,_supportClasses,_cargoClasses,_airCargoClasses];		
+		} foreach [_airClasses,_staticClasses,_cargoClasses,_airCargoClasses,_supportMedClasses,_supportAmmoClasses,_supportFuelClasses,_supportRepairClasses,_artyClasses];
 	} foreach [_sideA,_sideB];
 
 	{

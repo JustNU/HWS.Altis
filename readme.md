@@ -1,0 +1,1 @@
+Based on HETMAN: War Stories scenario, utilizing latest version of NR6 made by NinjaRider600

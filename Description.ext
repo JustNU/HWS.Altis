@@ -1,5 +1,5 @@
-author = "Rydygier";
-onLoadName = "HETMAN: War Stories 1.10a";
+author = "Rydygier (Original Creator), NinjaRider600 (NR6), JustNU (This Scenario Edit)";
+onLoadName = "HETMAN: War Stories 1.10.1 NR6 - Altis";
 onLoadMission = "War has many faces.";
 overviewText = "Easy in use dynamic battle generator powered by HETMAN AI.";
 overviewPicture = "Pic\hws4.paa";

@@ -16,10 +16,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={8701.4658,268.19846,24994.895};
-		dir[]={-0.51042414,-0.74143296,0.43559656};
-		up[]={-0.56397921,0.67102689,0.48130056};
-		aside[]={0.64914912,-2.9802322e-08,0.76066113};
+		pos[]={8477.2529,179.00563,25064.551};
+		dir[]={0.068767563,-0.65069032,0.75622296};
+		up[]={0.058927752,0.75934321,0.64801651};
+		aside[]={0.99589086,-3.7252903e-09,-0.090561897};
 	};
 };
 binarizationWanted=0;
@@ -79,7 +79,11 @@ class AddonsMetaData
 randomSeed=15759129;
 class ScenarioData
 {
-	author="Rydygier";
+	author="Rydygier (Original Creator), NinjaRider600 (NR6), JustNU (This Scenario Edit)";
+	overviewText="Easy in use dynamic battle generator powered by HETMAN AI." \n "Set on Altis.";
+	overViewPicture="Pic\hws4.paa";
+	onLoadMission="War has many faces.";
+	loadScreen="Pic\hws4.paa";
 };
 class Intro
 {
@@ -106,7 +110,7 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="HETMAN: WS - Altis";
+		briefingName="HETMAN: War Stories 1.10.1 NR6 - Altis";
 		overviewText="War has many faces.";
 		startWeather=0.29999998;
 		startWind=0.099999994;
@@ -228,7 +232,7 @@ class Mission
 						class data
 						{
 							singleType="SCALAR";
-							value=6;
+							value=4;
 						};
 					};
 				};

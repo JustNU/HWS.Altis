@@ -2,6 +2,8 @@ oldPlayer = _this select 0;
 
 selectPlayer dummyPlayer;
 
+//comment out camera stuff for now, till i make it pretty
+/*
 _camera = "camera" camcreate position oldPlayer;      //some camera shots for effect
 _camera cameraeffect ["Internal","back"];
 _camera camsetPos position oldPlayer;
@@ -18,6 +20,7 @@ _0 = [] spawn
 _camera cameraeffect ["terminate","back"];          //stop using custom camera
 _camera camcommit 0;
 camdestroy _camera;
+*/
 
 _pool = switchableUnits;
 
@@ -48,12 +51,9 @@ if ((count _squadPool) > 0) then
 {
 	_pool = _squadPool;
 };
+
 if ((count _pool) > 0) then
 {
 	selectPlayer (_pool select (floor (random (count _pool))));
 	player switchcamera "internal";
-}
-else
-{
-	EnableEndDialog;
 }

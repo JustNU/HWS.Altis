@@ -735,7 +735,7 @@ RYD_WS_TakeValues =
 	
 	_txt = RYD_WS_FacA select 1;
 	
-	diag_log format ["RYD_WS_FacA: %1",RYD_WS_FacA];
+	//diag_log format ["RYD_WS_FacA: %1",RYD_WS_FacA];
 	
 	_txtM = _txtM + (format ["<font size=13><br /><br />FACTION A:</font><font color='#d0a900' size=12><br />%1</font>",_txt]);
 	
@@ -756,7 +756,7 @@ RYD_WS_TakeValues =
 		};
 	};
 	
-	diag_log format ["RYD_WS_SideB: %1",RYD_WS_SideB];
+	//diag_log format ["RYD_WS_SideB: %1",RYD_WS_SideB];
 	
 	profileNamespace setVariable ["RYD_ix_SideB",_ix];
 	
@@ -912,7 +912,7 @@ RYD_WS_TakeValues =
 
 	if ((count RYD_WS_selFactionsB) < 1) exitWith {};
 	
-	diag_log format ["RYD_WS_FacB: %1",RYD_WS_FacB];
+	//diag_log format ["RYD_WS_FacB: %1",RYD_WS_FacB];
 	
 	profileNamespace setVariable ["RYD_ix_FacB",(RYD_WS_FacB select 0)];
 	profileNamespace setVariable ["RYD_WS_selFactionsB",RYD_WS_selFactionsB];
@@ -1822,7 +1822,7 @@ if not (RYD_WS_WholeMap) then
 
 	//diag_log format ["sum: %1",_sum];
 	
-	diag_log format ["_forces: %1",_forces];
+	//diag_log format ["_forces: %1",_forces];
 
 	_sum = 2 * _sum;
 
@@ -2196,13 +2196,13 @@ if not (RYD_WS_WholeMap) then
 		} foreach _airClasses;
 
 		_airClasses = _airClasses - [0];
-		diag_log format ["_airClasses: %1",_airClasses];
+		//diag_log format ["_airClasses: %1",_airClasses];
 
 		_staticClasses = switch (_x) do
 		{
-			case (west) : {RYD_WS_B_Static_G2 + RYD_WS_Static_class};
-			case (east) : {RYD_WS_O_Static_G2 + RYD_WS_Static_class};
-			case (resistance) : {RYD_WS_I_Static_G2 + RYD_WS_Static_class};
+			case (west) : {RYD_WS_B_Static_G2 + RYD_WS_Static_class - RYD_WS_Art_class - RYD_WS_B_Arty_G2};
+			case (east) : {RYD_WS_O_Static_G2 + RYD_WS_Static_class - RYD_WS_Art_class - RYD_WS_O_Arty_G2};
+			case (resistance) : {RYD_WS_I_Static_G2 + RYD_WS_Static_class - RYD_WS_Art_class - RYD_WS_I_Arty_G2};
 		};
 			
 		{
@@ -2215,7 +2215,7 @@ if not (RYD_WS_WholeMap) then
 		} foreach _staticClasses;
 		
 		_staticClasses = _staticClasses - [0];
-		diag_log format ["_staticClasses: %1",_staticClasses];
+		//diag_log format ["_staticClasses: %1",_staticClasses];
 
 		_supportClasses = switch (_x) do
 		{
@@ -2234,7 +2234,7 @@ if not (RYD_WS_WholeMap) then
 		} foreach _supportClasses;
 
 		_supportClasses = _supportClasses - [0];
-		diag_log format ["_supportClasses: %1",_supportClasses];
+		//diag_log format ["_supportClasses: %1",_supportClasses];
 
 		_cargoClasses = switch (_x) do
 		{
@@ -2253,7 +2253,7 @@ if not (RYD_WS_WholeMap) then
 		} foreach _cargoClasses;
 		
 		_cargoClasses = _cargoClasses - [0];		
-		diag_log format ["_cargoClasses: %1",_cargoClasses];
+		//diag_log format ["_cargoClasses: %1",_cargoClasses];
 		
 		_airCargoClasses = switch (_x) do
 		{
@@ -2272,7 +2272,7 @@ if not (RYD_WS_WholeMap) then
 		} foreach _airCargoClasses;
 		
 		_airCargoClasses = _airCargoClasses - [0];
-		diag_log format ["_airCargoClasses: %1",_airCargoClasses];
+		//diag_log format ["_airCargoClasses: %1",_airCargoClasses];
 		
 		_uavClasses = switch (_x) do
 		{
@@ -2310,7 +2310,7 @@ if not (RYD_WS_WholeMap) then
 		} foreach _supportMedClasses;
 
 		_supportMedClasses = _supportMedClasses - [0];
-		diag_log format ["_supportMedClasses: %1",_supportMedClasses];
+		//diag_log format ["_supportMedClasses: %1",_supportMedClasses];
 		
 		_supportAmmoClasses = switch (_x) do
 		{
@@ -2329,7 +2329,7 @@ if not (RYD_WS_WholeMap) then
 		} foreach _supportAmmoClasses;
 
 		_supportAmmoClasses = _supportAmmoClasses - [0];
-		diag_log format ["_supportAmmoClasses: %1",_supportAmmoClasses];
+		//diag_log format ["_supportAmmoClasses: %1",_supportAmmoClasses];
 		
 		_supportFuelClasses = switch (_x) do
 		{
@@ -2348,7 +2348,7 @@ if not (RYD_WS_WholeMap) then
 		} foreach _supportFuelClasses;
 
 		_supportFuelClasses = _supportFuelClasses - [0];
-		diag_log format ["_supportFuelClasses: %1",_supportFuelClasses];
+		//diag_log format ["_supportFuelClasses: %1",_supportFuelClasses];
 		
 		_supportRepairClasses = switch (_x) do
 		{
@@ -2367,9 +2367,28 @@ if not (RYD_WS_WholeMap) then
 		} foreach _supportRepairClasses;
 
 		_supportRepairClasses = _supportRepairClasses - [0];
-		diag_log format ["_supportRepairClasses: %1",_supportRepairClasses];
+		//diag_log format ["_supportRepairClasses: %1",_supportRepairClasses];
 		
-		diag_log format ["[side,faction]: %1",[_x,_facM]];
+		_artyClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Arty_G2 + RYD_WS_Art_class};
+			case (east) : {RYD_WS_O_Arty_G2 + RYD_WS_Art_class};
+			case (resistance) : {RYD_WS_I_Arty_G2 + RYD_WS_Art_class};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_artyClasses set [_foreachIndex,0]
+			}
+		} foreach _artyClasses;
+
+		_artyClasses = _artyClasses - [0];
+		//diag_log format ["_artyClasses: %1",_artyClasses];
+		
+		//diag_log format ["[side,faction]: %1",[_x,_facM]];
 		
 		_side = _x;
 		
@@ -2404,13 +2423,17 @@ if not (RYD_WS_WholeMap) then
 				{
 					_amnt = ((floor (random (2 * RYD_WS_Scale))) * _perc);
 				};
+				case (8) :
+				{
+					_amnt = ((floor (random (1.5 * RYD_WS_Scale))) * _perc);
+				};
 				default
 				{
 					_amnt = 1 + (floor (random (1 * RYD_WS_Scale))) * _perc;
 				};
 			};
 			
-			diag_log format ["_amnt: %1",[_amnt]];
+			//diag_log format ["_amnt: %1",[_amnt]];
 
 			//diag_log format ["classes: %1",[_foreachindex,count _x]];
 
@@ -2422,7 +2445,7 @@ if not (RYD_WS_WholeMap) then
 					{
 						if ((count _airClasses) > 0) then
 						{
-							diag_log ["air"];
+							//diag_log ["air"];
 							
 							_gp = [_mainPos,_dir,_airClasses,_ldrs,_side] call RYD_WS_SpawnAir;
 							
@@ -2457,7 +2480,7 @@ if not (RYD_WS_WholeMap) then
 								_stPos = +_ldrPos;
 							};
 							
-							diag_log ["static"];
+							//diag_log ["static"];
 							_gp = [_stPos,_dir,_staticClasses,_ldrs,_side] call RYD_WS_SpawnStatic;
 
 							if not (isNull _gp) then
@@ -2520,7 +2543,7 @@ if not (RYD_WS_WholeMap) then
 						
 						if ((count _cargoClasses) > 0) then
 						{
-							diag_log ["_cargoClasses"];
+							//diag_log ["_cargoClasses"];
 							
 							_gp = [_mainPos,_dir,_cargoClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
 							
@@ -2550,7 +2573,7 @@ if not (RYD_WS_WholeMap) then
 					{
 						if ((count _airCargoClasses) > 0) then
 						{
-							diag_log ["_airCargoClasses"];
+							//diag_log ["_airCargoClasses"];
 							
 							_gp = [_mainPos,_dir,_airCargoClasses,_ldrs,_side] call RYD_WS_SpawnAir;
 
@@ -2579,7 +2602,7 @@ if not (RYD_WS_WholeMap) then
 					{
 						if ((count _supportMedClasses) > 0) then
 						{
-							diag_log ["_supportMedClasses"];
+							//diag_log ["_supportMedClasses"];
 							_gp = [_mainPos,_dir,_supportMedClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
 
 							if not (isNull _gp) then
@@ -2608,7 +2631,7 @@ if not (RYD_WS_WholeMap) then
 					{
 						if ((count _supportAmmoClasses) > 0) then
 						{
-							diag_log ["_supportAmmoClasses"];
+							//diag_log ["_supportAmmoClasses"];
 							_gp = [_mainPos,_dir,_supportAmmoClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
 
 							if not (isNull _gp) then
@@ -2637,7 +2660,7 @@ if not (RYD_WS_WholeMap) then
 					{
 						if ((count _supportFuelClasses) > 0) then
 						{
-							diag_log ["_supportFuelClasses"];
+							//diag_log ["_supportFuelClasses"];
 							_gp = [_mainPos,_dir,_supportFuelClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
 
 							if not (isNull _gp) then
@@ -2666,8 +2689,37 @@ if not (RYD_WS_WholeMap) then
 					{
 						if ((count _supportRepairClasses) > 0) then
 						{
-							diag_log ["_supportRepairClasses"];
+							//diag_log ["_supportRepairClasses"];
 							_gp = [_mainPos,_dir,_supportRepairClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
+
+							if not (isNull _gp) then
+							{
+								_vh = assignedVehicle (leader _gp);
+								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+								
+								switch (_mainIx) do
+								{
+									case (0) : 
+									{
+										_gpsA set [(count _gpsA),_gp];
+										_fcsA = _fcsA + (units _gp)
+									};
+									case (1) : 
+									{
+										_gpsB set [(count _gpsB),_gp];
+										_fcsB = _fcsB + (units _gp)
+									};
+								}
+							}
+						};				
+					};
+					case (8) :
+					{
+						if ((count _artyClasses) > 0) then
+						{
+							//diag_log ["_artyClasses"];
+							_gp = [_mainPos,_dir,_artyClasses,_ldrs,_side] call RYD_WS_SpawnSupport;
 
 							if not (isNull _gp) then
 							{
@@ -2724,7 +2776,7 @@ if not (RYD_WS_WholeMap) then
 					*/
 				}
 			}
-		} foreach [_airClasses,_staticClasses,_cargoClasses,_airCargoClasses,_supportMedClasses,_supportAmmoClasses,_supportFuelClasses,_supportRepairClasses];
+		} foreach [_airClasses,_staticClasses,_cargoClasses,_airCargoClasses,_supportMedClasses,_supportAmmoClasses,_supportFuelClasses,_supportRepairClasses,_artyClasses];
 	} foreach [_sideA,_sideB];
 
 	if (((count _fcsA) < 1) or {((count _fcsB) < 1)}) exitWith
@@ -2809,7 +2861,7 @@ if not (RYD_WS_WholeMap) then
 		_i setMarkerText (str _foreachIndex);
 	} foreach (_set1 + _set2 + _set3);*/
 	
-	diag_log format ["_fcsA: %1",_fcsA];
+	//diag_log format ["_fcsA: %1",_fcsA];
 
 	{
 		if not ((_x isKindOf "UAV_AI_base_F") or (_x isKindOf "I_UAV_AI") or (_x isKindOf "O_UAV_AI") or (_x isKindOf "B_UAV_AI")) then
