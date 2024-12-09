@@ -624,6 +624,7 @@ RYD_WS_TakeValues =
 			case (RYD_ix_SideB_I) : {RYD_WS_I_Factions2};
 			case (RYD_ix_SideA_O) : {RYD_WS_O_Factions2};
 			case (RYD_ix_SideB_O) : {RYD_WS_O_Factions2};
+			case (RYD_ix_SideB_R) : {RYD_WS_B_Factions2};
 		};	
 
 		_ctrl = (findDisplay 2500) displayCtrl 122;
@@ -674,6 +675,7 @@ RYD_WS_TakeValues =
 			case (RYD_ix_SideB_I) : {RYD_WS_I_Factions2};
 			case (RYD_ix_SideA_O) : {RYD_WS_O_Factions2};
 			case (RYD_ix_SideB_O) : {RYD_WS_O_Factions2};
+			case (RYD_ix_SideB_R) : {RYD_WS_B_Factions2};
 		};	
 
 		_ctrl = (findDisplay 2500) displayCtrl 122;
@@ -822,6 +824,7 @@ RYD_WS_TakeValues =
 			case (RYD_ix_SideB_I) : {RYD_WS_I_Factions2};
 			case (RYD_ix_SideA_O) : {RYD_WS_O_Factions2};
 			case (RYD_ix_SideB_O) : {RYD_WS_O_Factions2};
+			case (RYD_ix_SideB_R) : {RYD_WS_B_Factions2};
 		};	
 
 		_ctrl = (findDisplay 2500) displayCtrl 123;		
@@ -875,6 +878,7 @@ RYD_WS_TakeValues =
 			case (RYD_ix_SideB_I) : {RYD_WS_I_Factions2};
 			case (RYD_ix_SideA_O) : {RYD_WS_O_Factions2};
 			case (RYD_ix_SideB_O) : {RYD_WS_O_Factions2};
+			case (RYD_ix_SideB_R) : {RYD_WS_B_Factions2};
 		};	
 
 		_ctrl = (findDisplay 2500) displayCtrl 123;		
