@@ -570,7 +570,7 @@ RYD_WS_TakeValues =
 	RYD_WS_FacA = missionNamespace getVariable [(str _ix)+"_fl_21000",[0,"NATO","blu_f","BLUFOR"]];
 	
 	RYD_WS_selFactionsA = [];
-	_randomFactionSideBool = false;
+	_randomFactionSideABool = false;
 	
 	if ((RYD_WS_FacA select 1) isEqualTo "RANDOM FULLY") then
 	{
@@ -662,7 +662,7 @@ RYD_WS_TakeValues =
 		_randomFactionChosen = [_ix, _randomFactionChosen select 1, _randomFactionChosen select 0, _randomFactionChosen select 2];
 		
 		RYD_WS_FacA = _randomFactionChosen;
-		_randomFactionSideBool = true;
+		_randomFactionSideABool = true;
 	};
 	if ((RYD_WS_FacA select 1) isEqualTo "MULTI") then
 	{
@@ -707,10 +707,10 @@ RYD_WS_TakeValues =
 			};
 		};
 	};
-	if (((RYD_WS_FacA select 1) isNotEqualTo "MULTI") and (_randomFactionSideBool == false)) then
+	if (((RYD_WS_FacA select 1) isNotEqualTo "MULTI") and (_randomFactionSideABool == false)) then
 	{
 		//diag_log format ["RYD_WS_selFactionsA: %1",RYD_WS_selFactionsA];
-		//diag_log format ["_randomFactionSideBool: %1",_randomFactionSideBool];
+		//diag_log format ["_randomFactionSideABool: %1",_randomFactionSideABool];
 		
 		RYD_WS_selFactionsA = [[[(RYD_WS_FacA select 2),(RYD_WS_FacA select 1)], 0]];
 		
@@ -726,9 +726,9 @@ RYD_WS_TakeValues =
 	profileNamespace setVariable ["RYD_ix_FacA",(RYD_WS_FacA select 0)];
 	profileNamespace setVariable ["RYD_WS_selFactionsA",RYD_WS_selFactionsA];
 	
-	if (_randomFactionSideBool) then
+	if (_randomFactionSideABool) then
 	{
-		_randomFactionSideBool = false;
+		_randomFactionSideABool = false;
 		RYD_WS_selFactionsA = [[[(RYD_WS_FacA select 2),(RYD_WS_FacA select 1)], 0]];
 	};
 	//diag_log format ["RYD_WS_selFactionsA: %1",RYD_WS_selFactionsA];
@@ -767,6 +767,7 @@ RYD_WS_TakeValues =
 	RYD_WS_FacB = missionNamespace getVariable [(str _ix)+"_fl_21010",[0,"CSAT","opf_f"]];
 	
 	RYD_WS_selFactionsB = [];//profileNamespace getVariable ["RYD_WS_selFactionsB",[]];
+	_randomFactionSideBBool = false;
 	if ((RYD_WS_FacB select 1) isEqualTo "RANDOM FULLY") then
 	{
 		_randomFactionFull = selectRandom RYD_WS_B_Factions2;
@@ -813,7 +814,7 @@ RYD_WS_TakeValues =
 	};
 	if ((RYD_WS_FacB select 1) isEqualTo "RANDOM FROM CHOSEN") then
 	{
-		_factions = switch (lbCurSel 2100) do
+		_factions = switch (lbCurSel 2101) do
 		{		
 			case (RYD_ix_SideA_B) : {RYD_WS_B_Factions2};
 			case (RYD_ix_SideB_B) : {RYD_WS_B_Factions2};		
@@ -823,7 +824,7 @@ RYD_WS_TakeValues =
 			case (RYD_ix_SideB_O) : {RYD_WS_O_Factions2};
 		};	
 
-		_ctrl = (findDisplay 2500) displayCtrl 122;
+		_ctrl = (findDisplay 2500) displayCtrl 123;		
 		if not ((count _factions) > 32) then
 		{
 			for "_i" from 0 to ((count _factions) - 1) do
@@ -859,7 +860,10 @@ RYD_WS_TakeValues =
 		_randomFactionChosen = [_ix, _randomFactionChosen select 1, _randomFactionChosen select 0, _randomFactionChosen select 2];
 		
 		RYD_WS_FacB = _randomFactionChosen;
-		_randomFactionSideBool = true;
+		_randomFactionSideBBool = true;
+		
+		//diag_log format ["RYD_WS_FacB: %1",RYD_WS_FacB];
+		//diag_log format ["RYD_WS_selFactionsB: %1",RYD_WS_selFactionsB];
 	};
 	if ((RYD_WS_FacB select 1) isEqualTo "MULTI") then
 	{		
@@ -905,21 +909,21 @@ RYD_WS_TakeValues =
 			};
 		};
 	};
-	if (((RYD_WS_FacB select 1) isNotEqualTo "MULTI") and (_randomFactionSideBool == false)) then
+	if (((RYD_WS_FacB select 1) isNotEqualTo "MULTI") and (_randomFactionSideBBool == false)) then
 	{
 		RYD_WS_selFactionsB = [[[(RYD_WS_FacB select 2),(RYD_WS_FacB select 1)],0]]
 	};
+	//diag_log format ["RYD_WS_FacB: %1",RYD_WS_FacB];
+	//diag_log format ["RYD_WS_selFactionsB: %1",RYD_WS_selFactionsB];
 
 	if ((count RYD_WS_selFactionsB) < 1) exitWith {};
-	
-	//diag_log format ["RYD_WS_FacB: %1",RYD_WS_FacB];
 	
 	profileNamespace setVariable ["RYD_ix_FacB",(RYD_WS_FacB select 0)];
 	profileNamespace setVariable ["RYD_WS_selFactionsB",RYD_WS_selFactionsB];
 	
-	if (_randomFactionSideBool) then
+	if (_randomFactionSideBBool) then
 	{
-		_randomFactionSideBool = false;
+		_randomFactionSideBBool = false;
 		RYD_WS_selFactionsB = [[[(RYD_WS_FacB select 2),(RYD_WS_FacB select 1)], 0]];
 	};
 	
