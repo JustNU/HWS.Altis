@@ -1,7 +1,7 @@
 _SCRname = "Boss";
 
 private 
-[
+	[
 	"_cntr","_lng","_nmbr","_sectors","_markers","_mark","_secpos","_sPosX","_sPosY","_sUrban","_sForest","_sHills","_sFlat","_sSea","_samplePos","_topArr","_sRoads","_bbCycle",
 	"_text","_nbr","_sum","_alpha","_count","_strArea","_loc10","_loc5","_loc2","_loc1","_locHill","_topArr","_frstV","_nmbr","_posGrpX","_sGr","_BBHQs","_BBSide","_urgent",
 	"_posGrpY","_posGrp","_valGrp","_armyPos","_ct","_change","_mainPos","_taken","_posStr","_valStr","_posStrX","_posStrY","_amDist","_mDist","_aDist","_gDst","_actDist","_BBStr",
@@ -18,35 +18,36 @@ private
 	"_rightFlankName","_leftName","_rightName","_frontName","_isLeftName","_isFlankName","_isRearName","_centerFrontName","_xPr","_yPr","_objCount","_QH","_initD","_aliveHQ","_objRad",
 	"_goingReserve0","_lastGLeft","_lastGRight","_lastGAhead","_aliveHQ","_newL","_lastGLeftN","_lastGRightN","_lastGAheadN","_fixedInitStatus","_pos","_enAr","_eA","_eP","_eT","_sA","_sP",
 	"_strArea0","_k","_j","_flankOne","_goingOne","_flankTwo","_goingTwo","_resCand","_ctVal","_mapSize","_DEFpoints","_defPointsBB","_AAOPts","_goingOverall"
-];
+	];
 
 _BBHQs = (_this select 0) select 0;
 _BBSide = (_this select 0) select 1;
 _BBHQGrps = _this select 1;
 
 if ((_BBSide == "B") and ((count RydBBa_HQs) > 0)) then 
-{
-	waitUntil
 	{
+	waitUntil
+		{
 		sleep 5;
 		(RydBBa_Init)
-	}
-};
+		}
+	};
 
 if (RydBB_Debug) then
-{
+	{
 	RydBBa_SAL globalChat format ["Big Boss %1 awakes (time: %2)",_BBSide,time];
 	diag_log format ["Big Boss %1 awakes (time: %2)",_BBSide,time]
-};
+	};
 
-{
-	waitUntil
 	{
+	waitUntil
+		{
 		sleep 0.1;
 		_ready = _x getVariable ["RydHQ_readyForBB",false];
 		(_ready)
-	};
-} foreach _BBHQGrps;
+		};
+	}
+foreach _BBHQGrps;
 
 _cntr = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
 
@@ -331,33 +332,6 @@ switch (_BBSide) do
 	case ("B") : {missionNameSpace setVariable ["B_SAreas",_strArea]};
 	};
 	
-_BBStr = [];
-
-if (_BBSide == "A") then {if not (isNil "RydBBa_Str") then {_BBStr = RydBBa_Str}};
-if (_BBSide == "B") then {if not (isNil "RydBBb_Str") then {_BBStr = RydBBb_Str}};
-
-_fixedInitStatus = [];
-
-	{
-	_pos = _x select 0;
-	_pos = (_pos select 0) + (_pos select 1);
-
-	_fixedInitStatus pushBack _pos
-	}
-foreach _BBStr;
-
-_BBSAL = RydBBa_SAL;
-if (_BBSide == "B") then {_BBSAL = RydBBb_SAL};
-
-	{
-	_BBStr pushBack [(position _x),_x getVariable "AreaValue",false]
-	}
-foreach (synchronizedObjects _BBSAL);
-
-_strArea = _strArea + _BBStr;
-
-if (RydBB_CustomObjOnly) then {_strArea = _BBStr};
-
 ////////////////////////////////////////////////////////////////////
 
 _bbCycle = 0;
@@ -682,20 +656,9 @@ while {(RydBB_Active)} do
 
 		_attackAxis = [_ArmyPos,_mainPos,10] call RYD_AngTowards;
 
-		//if (RydBB_Debug) then
-		if (_BBSide == "A") then
-			{
-			[[_strArea,_BBSide,RydBBb_Str],RYD_ObjMark] call RYD_Spawn;
-			}
-		else
-			{
-				{
-				if not (_x select 2) then
-					{
-					RYD_WS_ObjToTakeB = RYD_WS_ObjToTakeB + 1;
-					}
-				}
-			foreach _strArea
+		if (RydBB_Debug) then
+			{			
+			[[_strArea,_BBSide],RYD_ObjMark] call RYD_Spawn
 			};
 			
 		if (RydBB_Debug) then

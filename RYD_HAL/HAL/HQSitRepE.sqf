@@ -109,7 +109,7 @@ _cInitial = 0;
 while {true} do
 	{
 
-	if (RydHQ_RHQAutoFill) then
+	if (RydxHQ_RHQAutoFill) then
 	{
 	[] call RYD_PresentRHQ
 	};
@@ -330,8 +330,8 @@ while {true} do
 	_HQ setVariable ["RydHQ_Subordinated",RydHQE_Subordinated];
 	if (isNil ("RydHQE_Included")) then {RydHQE_Included = []};
 	_HQ setVariable ["RydHQ_Included",RydHQE_Included];
-	if (isNil ("RydHQE_ExcludedG")) then {RydHQE_ExcludedG = []};
-	_HQ setVariable ["RydHQ_ExcludedG",RydHQE_ExcludedG];
+	if (isNil ("RydHQE_Excluded")) then {RydHQE_Excluded = []};
+	_HQ setVariable ["RydHQ_Excluded",RydHQE_Excluded];
 	if (isNil ("RydHQE_SubAll")) then {RydHQE_SubAll = true};
 	_HQ setVariable ["RydHQ_SubAll",RydHQE_SubAll];
 	if (isNil ("RydHQE_SubSynchro")) then {RydHQE_SubSynchro = false};
@@ -453,7 +453,7 @@ while {true} do
 		
 	if (isNil ("RydHQE_RCAS")) then {RydHQE_RCAS = []};
 	_HQ setVariable ["RydHQ_RCAS",RydHQE_RCAS];
-	if (isNil ("RydHQE_RCAP")) then {RydHE_RCAP = []};
+	if (isNil ("RydHQE_RCAP")) then {RydHQE_RCAP = []};
 	_HQ setVariable ["RydHQ_RCAP",RydHQE_RCAP];
 	
 	if (isNil ("RydHQE_SFuel")) then {RydHQE_SFuel = true};

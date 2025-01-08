@@ -109,7 +109,7 @@ _cInitial = 0;
 while {true} do
 	{
 
-	if (RydHQ_RHQAutoFill) then
+	if (RydxHQ_RHQAutoFill) then
 	{
 	[] call RYD_PresentRHQ
 	};
@@ -330,8 +330,8 @@ while {true} do
 	_HQ setVariable ["RydHQ_Subordinated",RydHQ_Subordinated];
 	if (isNil ("RydHQ_Included")) then {RydHQ_Included = []};
 	_HQ setVariable ["RydHQ_Included",RydHQ_Included];
-	if (isNil ("RydHQ_ExcludedG")) then {RydHQ_ExcludedG = []};
-	_HQ setVariable ["RydHQ_ExcludedG",RydHQ_ExcludedG];
+	if (isNil ("RydHQ_Excluded")) then {RydHQ_Excluded = []};
+	_HQ setVariable ["RydHQ_Excluded",RydHQ_Excluded];
 	if (isNil ("RydHQ_SubAll")) then {RydHQ_SubAll = true};
 	_HQ setVariable ["RydHQ_SubAll",RydHQ_SubAll];
 	if (isNil ("RydHQ_SubSynchro")) then {RydHQ_SubSynchro = false};

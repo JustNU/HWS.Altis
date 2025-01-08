@@ -140,14 +140,10 @@ RYD_StatusQuo =
 	_HQ setVariable ["RydHQ_Enemies",_enemies];
 
 	_excl = [];
-
 		{
-		if not ((group _x) in _excl) then 
-			{
-			_excl pushBack (group _x)
-			} 
+		_excl pushBack _x
 		}
-	foreach (_HQ getVariable ["RydHQ_Excluded",[]]);
+		foreach (_HQ getVariable ["RydHQ_Excluded",[]]);
 	
 	_HQ setVariable ["RydHQ_Excl",_excl];
 	
@@ -188,7 +184,7 @@ RYD_StatusQuo =
 		
 	_HQ setVariable ["RydHQ_Subordinated",_subOrd];
 
-	_friends = _friends + _subOrd + (_HQ getVariable ["RydHQ_Included",[]]) - ((_HQ getVariable ["RydHQ_ExcludedG",[]]) + _excl + [_HQ]);
+	_friends = _friends + _subOrd + (_HQ getVariable ["RydHQ_Included",[]]) - ((_HQ getVariable ["RydHQ_Excluded",[]]) + _excl + [_HQ]);
 	_HQ setVariable ["RydHQ_NoWayD",allGroups - (_HQ getVariable ["RydHQ_LastFriends",[]])];
 	
 	_channel = _HQ getVariable ["RydHQ_myChannel",-1];
@@ -225,7 +221,7 @@ RYD_StatusQuo =
 		{
 		[_x] call RYD_WPdel;
 		}
-	foreach (((_HQ getVariable ["RydHQ_ExcludedG",[]]) + _excl) - (_HQ getVariable ["RydHQ_NoWayD",[]]));
+	foreach (((_HQ getVariable ["RydHQ_Excluded",[]]) + _excl) - (_HQ getVariable ["RydHQ_NoWayD",[]]));
 	
 	if (_HQ getVariable ["RydHQ_Init",true]) then 
 		{
@@ -260,7 +256,7 @@ RYD_StatusQuo =
 
 	if (_HQ getVariable ["RydHQ_ExInfo",false]) then 
 		{
-		_Ex = _excl + (_HQ getVariable ["RydHQ_ExcludedG",[]])
+		_Ex = _excl + (_HQ getVariable ["RydHQ_Excluded",[]])
 		};
 		
 	_knownE = [];
@@ -920,8 +916,7 @@ RYD_StatusQuo =
 				if (_HQ getVariable ["RydHQ_Surr",false]) then
 					{
 					if (_dngr < (0.5 + (random 0.5))) exitWith {};
-					
-					if ((random 100) > 50) then
+					if ((random 100) > 0) then
 						{
 						if (_HQ getVariable ["RydHQ_DebugII",false]) then 
 							{
@@ -957,10 +952,11 @@ RYD_StatusQuo =
 										for [{_a = 0},{_a < (count (weapons _unit))},{_a = _a + 1}] do
 											{
 											_weapon = (weapons _unit) select _a;
-											_unit Action ["dropWeapon", _unit, _weapon] 
+											private _weaponHolder = "GroundWeaponHolder" createVehicle getPosATL _unit;
+											_unit Action ["dropWeapon", _weaponHolder, _weapon] 
 											};
 
-										_unit PlayAction "Surrender"
+										_unit PlayAction "Surrender";
 										}
 									}
 								foreach (units _gp)
@@ -2371,7 +2367,7 @@ RYD_PresentRHQ =
 			_isMedS = (getNumber (_vehClass2 >> "attendant")) > 0;
 			_mags = getArray (_vehClass2 >> "magazines") + _tMags;			
 			_isArmed = (count (_mags - _flareMags)) > 0;
-			_isCargo = ((getNumber (_vehClass2 >> "transportSoldier")) > 1) and {((getNumber (_vehClass2 >> "transportAmmo")) + (getNumber (_vehClass2 >> "transportFuel")) + (getNumber (_vehClass2 >> "transportRepair")) + (getNumber (_vehClass2 >> "attendant"))) < 1};
+			_isCargo = ((getNumber (_vehClass2 >> "transportSoldier")) > 0) and {((getNumber (_vehClass2 >> "transportAmmo")) + (getNumber (_vehClass2 >> "transportFuel")) + (getNumber (_vehClass2 >> "transportRepair")) + (getNumber (_vehClass2 >> "attendant"))) < 1};
 			_isArty = (getNumber (_vehClass2 >> "artilleryScanner")) > 0;
 						
 			_type = "inf";
@@ -3111,7 +3107,7 @@ RYD_PresentRHQLoop =
 
 	{
 		sleep 60;
-		while {RydHQ_RHQAutoFill} do {
+		while {RydxHQ_RHQAutoFill} do {
 
 			waitUntil {sleep 5; (({(_x getVariable ["RydHQ_Pending",false])} count RydxHQ_AllHQ) == 0)};
 			[] spawn RYD_PresentRHQ;
@@ -3180,7 +3176,7 @@ RYD_deployUAV =
 						}
 					foreach (units _gpUAV);
 					
-					_excl = _HQ getVariable ["RydHQ_ExcludedG",[]];
+					_excl = _HQ getVariable ["RydHQ_Excluded",[]];
 					_excl pushBack _gpUAV;
 					
 					_alt = _HQ getVariable ["RydHQ_UAVAlt",150];

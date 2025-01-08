@@ -64,6 +64,8 @@ if ((count _landE) > 0) then
 _ReconAv = [];
 _onlyL = (_HQ getVariable ["RydHQ_LArmorG",[]]) - (_HQ getVariable ["RydHQ_MArmorG",[]]);
 
+if not ((_HQ getVariable ["RydHQ_ReconReserve",0]) > 0) then {_HQ setVariable ["RydHQ_ReconG",[]];};
+
 	{
 	if not (isNull _x) then
 		{
@@ -613,7 +615,7 @@ _FPool =
 	[
 	(_HQ getVariable ["RydHQ_snipersG",[]]),
 	(_HQ getVariable ["RydHQ_NCrewInfG",[]]) - (_HQ getVariable ["RydHQ_SpecForG",[]]),
-	(_HQ getVariable ["RydHQ_AirG",[]]) - ((_HQ getVariable ["RydHQ_NCAirG",[]]) + (_HQ getVariable ["RydHQ_NCrewInfG",[]])),
+	(_HQ getVariable ["RydHQ_AirG",[]]) - ((_HQ getVariable ["RydHQ_NCAirG",[]]) + (_HQ getVariable ["RydHQ_NCrewInfG",[]]) + (_HQ getVariable ["RydHQ_AmmoDrop",[]])),
 	(_HQ getVariable ["RydHQ_LArmorG",[]]),
 	(_HQ getVariable ["RydHQ_HArmorG",[]]),
 	(_HQ getVariable ["RydHQ_CarsG",[]]) - ((_HQ getVariable ["RydHQ_ATInfG",[]]) + (_HQ getVariable ["RydHQ_AAInfG",[]]) + (_HQ getVariable ["RydHQ_SupportG",[]]) + (_HQ getVariable ["RydHQ_NCCargoG",[]])),
@@ -629,7 +631,8 @@ _FPool =
 	(_HQ getVariable ["RydHQ_NCVeh",[]]),
 	(_HQ getVariable ["RydHQ_NavalG",[]]),
 	(_HQ getVariable ["RydHQ_RCAS",[]]),
-	(_HQ getVariable ["RydHQ_RCAP",[]])
+	(_HQ getVariable ["RydHQ_RCAP",[]]),
+	(_HQ getVariable ["RydHQ_BAirG",[]])
 	];
 
 _constant = [(_HQ getVariable ["RydHQ_AAthreat",[]]),(_HQ getVariable ["RydHQ_ATthreat",[]]),_HArmorthreat + _LArmorATthreat,_FPool];

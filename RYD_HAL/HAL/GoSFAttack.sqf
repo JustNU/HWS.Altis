@@ -317,7 +317,7 @@ if ((_ammo > 0) and not (_busy)) then
 				case (isNull _unitG) : {_alive = false};
 				case (({alive _x} count (units _unitG)) < 1) : {_alive = false};
 				case ((_this select 0) getVariable ["RydHQ_MIA",false]) : {_alive = false;(_this select 0) setVariable ["RydHQ_MIA",nil]};
-				case (_unitG getVariable ["Break",false]) : {_alive = false; _unitG setVariable ["Break",false]; _unitG setVariable [("Busy" + (str _unitG)),false]}
+				case (_unitG getVariable ["Break",false]) : {_alive = false; _unitG setVariable ["Break",false];}
 				};
 				
 			_cc = false;
@@ -349,7 +349,7 @@ if ((_ammo > 0) and not (_busy)) then
 
 	_DAV = assigneddriver _AV;
 	_GDV = group _DAV;
-	_alive = false;
+	_alive = true;
 	_timer = 0;
 	
 	[_unitG] call RYD_WPdel;
@@ -363,14 +363,15 @@ if ((_ammo > 0) and not (_busy)) then
 		_wp setWaypointCompletionRadius 750;
 		{if (not (isPlayer (leader _unitG)) and not (_GDV == _unitG))  then {_x assignAsCargo _AV; [[_x],true] remoteExecCall ["orderGetIn",0];}} foreach (units _unitG);
 		_cause = [_unitG,1,false,0,300,[],true,false,true,false,false,false] call RYD_Wait;
-		if (_HQ getVariable ["RydHQ_LZ",false]) then {deleteVehicle (_AV getVariable ["TempLZ",objNull])};
 		_timer = _cause select 0;
 		_AV land 'NONE';
 
 		};
 
 
-	if ((isNull (leader (_this select 0))) or (_timer > 300)) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if not (_task isEqualTo taskNull) then {[_task,"CANCELED",true] call BIS_fnc_taskSetState}; if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]};if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 1];_GDV setVariable [("CargoM" + (str _GDV)), false];}};
+	if ((isNull (leader (_this select 0))) or (_timer > 300)) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if not (_task isEqualTo taskNull) then {[_task,"CANCELED",true] call BIS_fnc_taskSetState}; if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]};if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 1];
+	_GDV setVariable [("CargoM" + (str _GDV)), false];
+	}};
 	if not (_task isEqualTo taskNull) then {[_task,"SUCCEEDED",true] call BIS_fnc_taskSetState};
 
 	_AV = assignedVehicle _UL;
@@ -406,29 +407,35 @@ if ((_ammo > 0) and not (_busy)) then
 	_OtherGroup = false;
 	_GDV = group _DAV;
 	_enemy = false;
+	_alive = true;
+	
 
-	if not (((group _DAV) == (group _UL)) or (isNull (group _DAV))) then 
-		{
-		_OtherGroup = true;
+	if not (_IsAPlayer) then {
+		if not (((group _DAV) == (group _UL)) or (isNull (group _DAV))) then 
+			{
+			_OtherGroup = true;
 
-		_cause = [_GDV,6,true,300,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],true] call RYD_Wait;
-		_timer = _cause select 0;
-		_alive = _cause select 1;
-		_enemy = _cause select 2
-		}
-	else 
-		{
-		_cause = [_unitG,6,true,300,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],false] call RYD_Wait;
-		_timer = _cause select 0;
-		_alive = _cause select 1;
-		_enemy = _cause select 2
-		};
+			_cause = [_GDV,6,true,300,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],true] call RYD_Wait;
+			_timer = _cause select 0;
+			_alive = _cause select 1;
+			_enemy = _cause select 2;
+			}
+		else 
+			{
+			if not (_isAPlayer) then {_unitG setVariable ["InfGetinCheck" + (str _unitG),true]};
+			_cause = [_unitG,6,true,300,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],false] call RYD_Wait;
+			_timer = _cause select 0;
+			_alive = _cause select 1;
+			_enemy = _cause select 2;
+			};
+	}:
 
-	_DAV = assigneddriver _AV;
 	if (((_timer > 30) or (_enemy)) and (_OtherGroup)) then {if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle _UL), 1]}};
 	if (((_timer > 30) or (_enemy)) and not (_OtherGroup)) then {[_unitG, (currentWaypoint _unitG)] setWaypointPosition [getPosATL (vehicle _UL), 1]};
+	_GDV setVariable [("CargoM" + (str _GDV)), false];
 	if (not (_alive) and not (_OtherGroup)) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]}};
-	if (isNull (leader (_this select 0))) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]};if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 1];_GDV setVariable [("CargoM" + (str _GDV)), false];}};
+	if (isNull (leader (_this select 0))) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]};if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 1];
+	}};
 
 	if not (_task isEqualTo taskNull) then
 		{
@@ -465,29 +472,34 @@ if ((_ammo > 0) and not (_busy)) then
 	_OtherGroup = false;
 	_GDV = group _DAV;
 	_enemy = false;
+	_alive = true;
 
-	if not (((group _DAV) == (group _UL)) or (isNull (group _DAV))) then 
-		{
-		_OtherGroup = true;
+	if not (_IsAPlayer) then {
+		if not (((group _DAV) == (group _UL)) or (isNull (group _DAV))) then 
+			{
+			_OtherGroup = true;
 
-		_cause = [_GDV,6,true,300,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],true] call RYD_Wait;
-		_timer = _cause select 0;
-		_alive = _cause select 1;
-		_enemy = _cause select 2
-		}
-	else 
-		{
-		_cause = [_unitG,6,true,300,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],false] call RYD_Wait;
-		_timer = _cause select 0;
-		_alive = _cause select 1;
-		_enemy = _cause select 2
-		};
+			_cause = [_GDV,6,true,300,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],true] call RYD_Wait;
+			_timer = _cause select 0;
+			_alive = _cause select 1;
+			_enemy = _cause select 2;
+			}
+		else 
+			{
+			if not (_isAPlayer) then {_unitG setVariable ["InfGetinCheck" + (str _unitG),true]};
+			_cause = [_unitG,6,true,300,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],false] call RYD_Wait;
+			_timer = _cause select 0;
+			_alive = _cause select 1;
+			_enemy = _cause select 2;
+			};
+	}:
 
-	_DAV = assigneddriver _AV;
 	if (((_timer > 30) or (_enemy)) and (_OtherGroup)) then {if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle _UL), 1]}};
 	if (((_timer > 30) or (_enemy)) and not (_OtherGroup)) then {[_unitG, (currentWaypoint _unitG)] setWaypointPosition [getPosATL (vehicle _UL), 1]};
+	_GDV setVariable [("CargoM" + (str _GDV)), false];
 	if (not (_alive) and not (_OtherGroup)) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]}};
-	if (isNull (leader (_this select 0))) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]};if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 1];_GDV setVariable [("CargoM" + (str _GDV)), false];}};
+	if (isNull (leader (_this select 0))) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]};if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 1];
+	}};
 
 	if not (_task isEqualTo taskNull) then
 		{
@@ -520,12 +532,15 @@ if ((_ammo > 0) and not (_busy)) then
 		_beh = "STEALTH";
 		if (_HQ getVariable ["RydHQ_LZ",false]) then
 			{
-			_lz = [[_posXWP3,_posYWP3]] call RYD_LZ;
+			if not (isNull (_GDV getVariable ["tempLZ",objNull])) then {deleteVehicle (_GDV getVariable ["tempLZ",objNull])};
+
+			_lz = [[_posX,_posY]] call RYD_LZ;
+			_GDV setVariable ["TempLZ",_lz];
 			if not (isNull _lz) then
 				{
-				_lzPos = getPosATL _lz;
-				_posXWP3 = _lzPos select 0;
-				_posYWP3 = _lzPos select 1
+				_pos = getPosATL _lz;
+				_posX = _pos select 0;
+				_posY = _pos select 1
 				}
 			}
 		};
@@ -553,29 +568,34 @@ if ((_ammo > 0) and not (_busy)) then
 	_OtherGroup = false;
 	_GDV = group _DAV;
 	_enemy = false;
+	_alive = true;
 
-	if not (((group _DAV) == (group _UL)) or (isNull (group _DAV))) then 
-		{
-		_OtherGroup = true;
+	if not (_IsAPlayer) then {
+		if not (((group _DAV) == (group _UL)) or (isNull (group _DAV))) then 
+			{
+			_OtherGroup = true;
 
-		_cause = [_GDV,6,true,400,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],false] call RYD_Wait;
-		_timer = _cause select 0;
-		_alive = _cause select 1;
-		_enemy = _cause select 2
-		}
-	else 
-		{
-		_cause = [_unitG,6,true,400,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],false] call RYD_Wait;
-		_timer = _cause select 0;
-		_alive = _cause select 1;
-		_enemy = _cause select 2
-		};
+			_cause = [_GDV,6,true,400,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],false] call RYD_Wait;
+			_timer = _cause select 0;
+			_alive = _cause select 1;
+			_enemy = _cause select 2;
+			}
+		else 
+			{
+			if not (_isAPlayer) then {_unitG setVariable ["InfGetinCheck" + (str _unitG),true]};
+			_cause = [_unitG,6,true,400,30,[(_HQ getVariable ["RydHQ_AirG",[]]),(_HQ getVariable ["RydHQ_KnEnemiesG",[]])],false] call RYD_Wait;
+			_timer = _cause select 0;
+			_alive = _cause select 1;
+			_enemy = _cause select 2;
+			};
+	}:
 
-	_DAV = assigneddriver _AV;
 	if (((_timer > 30) or (_enemy)) and (_OtherGroup)) then {if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 1]}};
 	if (((_timer > 30) or (_enemy)) and not (_OtherGroup)) then {[_unitG, (currentWaypoint _unitG)] setWaypointPosition [getPosATL (vehicle _UL), 1]};
+	_GDV setVariable [("CargoM" + (str _GDV)), false];
 	if (not (_alive) and not (_OtherGroup)) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]}};
-	if (isNull (leader (_this select 0))) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]};if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 1];_GDV setVariable [("CargoM" + (str _GDV)), false];}};
+	if (isNull (leader (_this select 0))) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]};if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 1];
+	}};
 
 	_AV = assignedVehicle _UL;
 
@@ -613,11 +633,13 @@ if ((_ammo > 0) and not (_busy)) then
 		};
 
 	if not (_Ctask isEqualTo taskNull) then {[_Ctask,"SUCCEEDED",true] call BIS_fnc_taskSetState};
-	if ((isNull (leader (_this select 0))) or (_timer > 240)) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if not (_Ctask isEqualTo taskNull) then {[_Ctask,"CANCELED",true] call BIS_fnc_taskSetState}; if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]};if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 1];_GDV setVariable [("CargoM" + (str _GDV)), false];}};
+	if ((isNull (leader (_this select 0))) or (_timer > 240)) exitwith {_unitG setVariable [("Busy" + (str _unitG)),false];if not (_Ctask isEqualTo taskNull) then {[_Ctask,"CANCELED",true] call BIS_fnc_taskSetState}; if ((_HQ getVariable ["RydHQ_Debug",false]) or (isPlayer (leader _unitG))) then {{deleteMarker _x} foreach [_i1,_i2,_i3,_i4]};if not (isNull _GDV) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 1];
+	_GDV setVariable [("CargoM" + (str _GDV)), false];
+	}};
 
 	_unitvar = str _GDV;
 	_timer = 0;
-	if (not (isNull _GDV) and (_GDV in (_HQ getVariable ["RydHQ_AirG",[]])) and not (isPlayer (leader _GDV))) then
+	if (not (isNull _GDV) and (_GDV in (_HQ getVariable ["RydHQ_AirG",[]])) and not (isPlayer (leader _GDV)) and not (_IsAPlayer)) then
 		{
 		_wp = [_GDV,[((getPosATL _AV) select 0) + (random 200) - 100,((getPosATL _AV) select 1) + (random 200) - 100,1000],"MOVE","STEALTH","GREEN","NORMAL"] call RYD_WPadd;
 
@@ -627,7 +649,7 @@ if ((_ammo > 0) and not (_busy)) then
 		if (_timer > 8) then {[_GDV, (currentWaypoint _GDV)] setWaypointPosition [getPosATL (vehicle (leader _GDV)), 1]};
 		};
 
-	_GDV setVariable [("CargoM" + _unitvar), false];
+	if not (_IsAPlayer) then {_GDV setVariable [("CargoM" + _unitvar), false]};
 
 	if not (_task isEqualTo taskNull) then
 		{

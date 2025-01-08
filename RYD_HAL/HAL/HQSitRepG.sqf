@@ -109,7 +109,7 @@ _cInitial = 0;
 while {true} do
 	{
 
-	if (RydHQ_RHQAutoFill) then
+	if (RydxHQ_RHQAutoFill) then
 	{
 	[] call RYD_PresentRHQ
 	};
@@ -330,8 +330,8 @@ while {true} do
 	_HQ setVariable ["RydHQ_Subordinated",RydHQG_Subordinated];
 	if (isNil ("RydHQG_Included")) then {RydHQG_Included = []};
 	_HQ setVariable ["RydHQ_Included",RydHQG_Included];
-	if (isNil ("RydHQG_ExcludedG")) then {RydHQG_ExcludedG = []};
-	_HQ setVariable ["RydHQ_ExcludedG",RydHQG_ExcludedG];
+	if (isNil ("RydHQG_Excluded")) then {RydHQG_Excluded = []};
+	_HQ setVariable ["RydHQ_Excluded",RydHQG_Excluded];
 	if (isNil ("RydHQG_SubAll")) then {RydHQG_SubAll = true};
 	_HQ setVariable ["RydHQ_SubAll",RydHQG_SubAll];
 	if (isNil ("RydHQG_SubSynchro")) then {RydHQG_SubSynchro = false};
@@ -424,8 +424,8 @@ while {true} do
 	if (isNil "RydHQG_InfoMarkers") then {RydHQG_InfoMarkers = false};
 	_HQ setVariable ["RydHQ_InfoMarkers",RydHQG_InfoMarkers];
 	
-	/*if (isNil "RydHQG_ArtyMarks") then {RydHQG_ArtyMarks = false};
-	_HQ setVariable ["RydHQ_ArtyMarks",RydHQG_ArtyMarks];*/
+	if (isNil "RydHQG_ArtyMarks") then {RydHQG_ArtyMarks = false};
+	_HQ setVariable ["RydHQ_ArtyMarks",RydHQG_ArtyMarks];
 	
 	if (isNil ("RydHQG_ResetNow")) then {RydHQG_ResetNow = false};
 	_HQ setVariable ["RydHQ_ResetNow",RydHQG_ResetNow];

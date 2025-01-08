@@ -723,7 +723,7 @@ RYD_ExecuteObj =
 		
 
 		_actO = _sortedA select (_BBAOObj - 1);
-		
+
 		//[_actO,_HQ,_side,_BBAOObj,_AAO,_allied,_front,_frPos,_frDir,_frDim,_reserve,_HandledArray,_varName]
 
 		if (_BBAOObj == 1) then {_HQ setVariable ["BBObj1Done",false]};
@@ -745,8 +745,7 @@ RYD_ExecuteObj =
 
 		if ((RydBB_Debug) or ((RydBBa_SimpleDebug) and (_Side == "A")) or ((RydBBb_SimpleDebug) and (_Side == "B"))) then
 			{
-			_m = [(_actO select 0),_HQ,"markBBCurrent",_lColor,"ICON","mil_triangle","Current objective","",[0.5,0.5]] call RYD_Mark;
-			_m setMarkerPos (_actO select 0);
+			if (_i == 0) then {_m = [(_actO select 0),_HQ,"markBBCurrent",_lColor,"ICON","mil_triangle","Current target for " + (str (leader _HQ)),"",[0.5,0.5]] call RYD_Mark} else {_m setMarkerPos (_actO select 0)};
 			};
 				
 		if (_BBAOObj == 1) then {_HQ setVariable ["RydHQ_EyeOfBattle",_actOPos]};
@@ -1643,9 +1642,9 @@ RYD_ObjectivesMon =
 				if (_NearAllies < _NearEnemies) then 
 					{
 					_x set [2,false];
-					if (_BBSide == "A") then {RYD_WS_ObjTakenA = RYD_WS_ObjTakenA - 1;RydBBa_Urgent = true} else {RYD_WS_ObjTakenB = RYD_WS_ObjTakenB - 1;RydBBb_Urgent = true};
-					
-					_mChange = (10 * RYD_WS_MoraleObjCoeffL)/(count _HQs);
+					if (_BBSide == "A") then {RydBBa_Urgent = true} else {RydBBb_Urgent = true};
+
+					_mChange = 10/(count _HQs);
 
 						{
 						_morale = _x getVariable ["RydHQ_Morale",0];
@@ -1698,16 +1697,16 @@ RYD_ObjectivesMon =
 						{
 						_enPos = _x select 0;
 						_enPos = [_enPos select 0,_enPos select 1,0];
-						if (((_enPos distance _trg) < 50) and {(_x select 2)}) exitWith
+						if ((_enPos distance _trg) < 50) exitWith
 							{
-							if (_BBSide == "A") then {RYD_WS_ObjTakenB = RYD_WS_ObjTakenB - 1;} else {RYD_WS_ObjTakenA = RYD_WS_ObjTakenA - 1;};
 							_x set [2,false]
 							}
 						}
 					foreach _enArea;
 
-					if (_BBSide == "A") then {RYD_WS_ObjTakenA = RYD_WS_ObjTakenA + 1;RydBBa_Urgent = true} else {RYD_WS_ObjTakenB = RYD_WS_ObjTakenB + 1;RydBBb_Urgent = true};
-					_mChange = (20 * RYD_WS_MoraleObjCoeffG)/(count _HQs);
+					if (_BBSide == "A") then {RydBBb_Urgent = true} else {RydBBa_Urgent = true};
+
+					_mChange = 20/(count _HQs);
 
 						{
 						_morale = _x getVariable ["RydHQ_Morale",0];
@@ -1727,28 +1726,6 @@ RYD_ObjMark =
 	
 	_strArea = _this select 0;
 	_BBSide = _this select 1;
-	_opStr = _this select 2;
-	
-	_clA = switch (side LeaderHQ) do
-		{
-		case (west) : {"colorBLUFOR"};
-		case (east) : {"colorOPFOR"};
-		default {"colorIndependent"};
-		};
-		
-	_clB = switch (side LeaderHQC) do
-		{
-		case (west) : {"colorBLUFOR"};
-		case (east) : {"colorOPFOR"};
-		default {"colorIndependent"};
-		};
-	
-	_opPositions = [];
-	
-		{
-		_opPositions pushBack (_x select 0)
-		}
-	foreach _opStr;
 	
 	_markers = [];
 
@@ -1757,86 +1734,28 @@ RYD_ObjMark =
 		_valStr = _x select 1;
 		_taken = _x select 2;
 		_mark = "StrArea" + (str (random 1000));
-		_color = "ColorCivilian";
+		_color = "ColorYellow";
 		_alpha = 0.1;
-		if (_taken) then 
-			{
-			_color = _clA;
-			_alpha = 0.65
-			}
-		else
-			{
-			RYD_WS_ObjToTakeA = RYD_WS_ObjToTakeA + 1;
-			_dstMin = 10000;
-			_clIx = 0;
-			
-				{
-				_dstAct = _x distance2D _posStr;
-				if (_dstAct < _dstMin) then
-					{
-					_dstMin = _dstAct;
-					_clIx = _foreachIndex;
-					}
-				}
-			foreach _opPositions;
-			
-			if (_dstMin < 10) then
-				{
-				if ((_opStr select _clIx) select 2) then
-					{
-					_color = _clB;
-					_alpha = 0.65
-					}
-				}
-			};
-		
-		//if ((_taken) and (_BBSide == "B")) then {_color = "colorOPFOR";_alpha = 0.65};
-		_mark = [_mark,_posStr,_color,"ICON",[(sqrt (_valStr/2)),(sqrt (_valStr/2))],0,_alpha,"mil_dot",""] call RYD_Marker;
+		if ((_taken) and (_BBSide == "A")) then {_color = "ColorBlue";_alpha = 0.5};
+		if ((_taken) and (_BBSide == "B")) then {_color = "ColorRed";_alpha = 0.5};
+		_mark = [_mark,_posStr,_color,"ICON",[_valStr/2,_valStr/2],0,_alpha,"mil_dot",(str _valStr)] call RYD_Marker;
 		_markers pushBack _mark			
 		}
 	foreach _strArea;
 
-	while {((RydBB_Active) and (true))} do//RydBB_Debug
+	while {((RydBB_Active) and {(RydBB_Debug)})} do
 		{
 		sleep 10;
 		if not (RydBB_Active) exitWith {};
 
 			{
 			_obj = _x;
-			_posStr = _obj select 0;
 			_taken = _obj select 2;
-			_color = "ColorCivilian";
+			_color = "ColorYellow";
 			_alpha = 0.1;
 
-			if (_taken) then 
-				{
-				_color = _clA;
-				_alpha = 0.65
-				}
-			else
-				{
-				_dstMin = 10000;
-				_clIx = 0;
-				
-					{
-					_dstAct = _x distance2D _posStr;
-					if (_dstAct < _dstMin) then
-						{
-						_dstMin = _dstAct;
-						_clIx = _foreachIndex;
-						}
-					}
-				foreach _opPositions;
-				
-				if (_dstMin < 10) then
-					{
-					if ((_opStr select _clIx) select 2) then
-						{
-						_color = _clB;
-						_alpha = 0.65
-						}
-					}
-				};
+			if ((_taken) and (_BBSide == "A")) then {_color = "ColorBlue";_alpha = 0.5};
+			if ((_taken) and (_BBSide == "B")) then {_color = "ColorRed";_alpha = 0.5};
 
 			_mark = _markers select _foreachIndex;
 
@@ -2081,7 +2000,7 @@ RYD_isOnMap =
 RYD_BBSimpleD = 
 	{
 	private ["_HQs","_BBSide","_clusters","_enPos","_ens","_centers","_center","_amounts","_amount","_midX","_midY","_frs","_frCenters","_frCenter","_lPos","_lng","_angle","_arrow","_colorArr","_mainCenter",
-	"_amounts","_amount","_battles","_battle","_angleBatt","_tooClose","_mPos","_mSize","_dstAct","_colorBatt","_sizeBatt","_oldSize","_HQPosMark","_HQ","_unit","_exitNow"];
+	"_amounts","_amount","_battles","_battle","_angleBatt","_tooClose","_mPos","_mSize","_dstAct","_colorBatt","_sizeBatt","_oldSize","_HQPosMark","_HQ"];
 
 	_HQs = _this select 0;
 	_BBSide = _this select 1;
@@ -2098,22 +2017,6 @@ RYD_BBSimpleD =
 
 			{
 			_HQ = _x;
-			
-			if (RYD_WS_LeadersPoofItsMagic) then
-				{
-				_unit = leader _x;
-				_unit = switch (true) do
-					{
-					case ((_unit in [leaderHQ]) and {not (isNil "fakeLeaderHQ") and {not (isNull fakeLeaderHQ) and {(alive fakeLeaderHQ)}}}) :  {fakeLeaderHQ};
-					case ((_unit in [leaderHQB]) and {not (isNil "fakeLeaderHQB") and {not (isNull fakeLeaderHQB) and {(alive fakeLeaderHQB)}}}) :  {fakeLeaderHQB};
-					case ((_unit in [leaderHQC]) and {not (isNil "fakeLeaderHQC") and {not (isNull fakeLeaderHQC) and {(alive fakeLeaderHQC)}}}) :  {fakeLeaderHQC};
-					case ((_unit in [leaderHQD]) and {not (isNil "fakeLeaderHQD") and {not (isNull fakeLeaderHQD) and {(alive fakeLeaderHQD)}}}) :  {fakeLeaderHQD};
-					default {objNull}
-					};
-					
-				_hQ = group _unit;
-				};	
-			
 			_alive = true;
 			
 			switch (true) do
@@ -2174,26 +2077,22 @@ RYD_BBSimpleD =
 						_angle = [_lPos,_frCenter,5] call RYD_AngTowards;
 
 						_arrow = _x getVariable ["ArrowMark",""];
-						_arrX = (({(({alive _x} count (units _x)) > 0)} count _frs)/10);
-						_arrY = (_lng/500);
 
 						if (_arrow == "") then 
 							{
-							_arrow = [_frCenter,_x,"markArrow",_colorArr,"ICON","mil_arrow","","",[_arrX,_arrY],_angle] call RYD_Mark;
+							_arrow = [_frCenter,_x,"markArrow",_colorArr,"ICON","mil_arrow","","",[({(({alive _x} count (units _x)) > 0)} count _frs)/10,_lng/500],_angle] call RYD_Mark;
 							_x setVariable ["ArrowMark",_arrow];
 							}
 						else
 							{
 							_arrow setMarkerPos _frCenter;
 							_arrow setMarkerDir _angle;
-							_arrow setMarkerSize [_arrX,_arrY]
-							};
-							
-						_arrow setMarkerAlpha ((2/(_arrX max _arrY)) min 1);
+							_arrow setMarkerSize [({(({alive _x} count (units _x)) > 0)} count _frs)/10,_lng/500]
+							}
 						}
 					};
 					
-				/*_HQPosMark = _x getVariable ["HQPosMark",""];
+				_HQPosMark = _x getVariable ["HQPosMark",""];
 				if (_HQPosMark == "") then
 					{
 					_HQPosMark = [(getPosATL (vehicle (leader _x))),_x,"HQMark",_colorArr,"ICON","mil_box","Position of " + (str (leader _x)),"",[0.5,0.5]] call RYD_Mark;
@@ -2202,11 +2101,11 @@ RYD_BBSimpleD =
 				else
 					{
 					_HQPosMark setMarkerPos (getPosATL (vehicle (leader _x)));
-					}*/
+					}
 				}
 			else
 				{
-				//deleteMarker ("HQMark" + (str _x))
+				deleteMarker ("HQMark" + (str _x))
 				}
 			}
 		foreach _HQs;
