@@ -8,7 +8,7 @@ class EditorData
 	toggles=5;
 	class ItemIDProvider
 	{
-		nextID=87;
+		nextID=100;
 	};
 	class MarkerIDProvider
 	{
@@ -16,10 +16,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={8477.2529,179.00563,25064.551};
-		dir[]={0.06876757,-0.65069026,0.75622302};
-		up[]={0.058927745,0.75934327,0.64801645};
-		aside[]={0.99589086,0,-0.090561897};
+		pos[]={8511.5801,141.7218,25098.299};
+		dir[]={-0.39049661,-0.46159804,0.79651719};
+		up[]={-0.20319542,0.88708919,0.4144688};
+		aside[]={0.89789975,-1.4901161e-08,0.44019994};
 	};
 };
 binarizationWanted=0;
@@ -84,6 +84,7 @@ class ScenarioData
 	overViewPicture="Pic\hws4.paa";
 	onLoadMission="War has many faces.";
 	loadScreen="Pic\hws4.paa";
+	briefing=0;
 };
 class Intro
 {
@@ -108,6 +109,7 @@ class Intro
 };
 class Mission
 {
+	assetType="Free";
 	class Intel
 	{
 		briefingName="HETMAN: War Stories 1.10.1 NR6 - Altis";

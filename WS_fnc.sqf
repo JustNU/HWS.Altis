@@ -789,7 +789,147 @@ Fake_Weapons_ARR = [
 	"LMG_Minigun_Transport",
 	"LMG_Minigun_Transport2"
 ];
+
+Callsigns_Arr =
+[
+	"Alpha",
+	"Bravo",
+	"Charlie",
+	"Delta",
+	"Echo",
+	"Foxtrot",
+	"Golf",
+	"Hotel",
+	"India",
+	"Juliett",
+	"Kilo",
+	"Lima",
+	"Mike",
+	"November",
+	"Oscar",
+	"Papa",
+	"Quebec",
+	"Romeo",
+	"Sierra",
+	"Tango",
+	"Uniform",
+	"Victor",
+	"Whiskey",
+	"Xray",
+	"Yankee",
+	"Zulu",
+	"Aegis",
+	"Griffin",
+	"Tiger",
+	"Hydra",
+	"Chimera",
+	"Dragon",
+	"Viper",
+	"Bear",
+	"Omega",
+	"Hawkeye",
+	"Bishop",
+	"Headhunters",
+	"Fox",
+	"Rook",
+	"Nomad",
+	"Swordfish",
+	"Goblin",
+	"Falcon",
+	"Ice",
+	"Kappa",
+	"Gamma",
+	"Sigma",
+	"Avenger",
+	"Eagle",
+	"Guardian",
+	"Serpent",
+	"Raven",
+	"Jester",
+	"Hammer",
+	"Alchemist",
+	"Amber",
+	"Archangel",
+	"Howlite",
+	"Sapphire",
+	"Raider",
+	"Keystone",
+	"Kingfish",
+	"Angel",
+	"Northstar",
+	"Shark",
+	"Rhino",
+	"Dragonfly",
+	"Lion",
+	"Ghost",
+	"Lizard",
+	"Mantis",
+	"Dingo",
+	"Hornet",
+	"Thunder",
+	"Medusa",
+	"Centaur",
+	"Olympos",
+	"Orion",
+	"Hawk",
+	"Sparrow",
+	"Spartan",
+	"Firebrand",
+	"Maverick",
+	"Pariah",
+	"Proteus",
+	"Apollo",
+	"Ares",
+	"Hermes",
+	"Demeter",
+	"Artemis",
+	"Hera",
+	"Athena",
+	"Hades",
+	"Razor",
+	"Sabre",
+	"Sword",
+	"Hazard",
+	"Cruncher",
+	"Lancer",
+	"Warhorse",
+	"Giant",
+	"Hippo",
+	"Flash",
+	"Nightwolf",
+	"Zeus"
+];
 	
+Callsign_AirAttack_Str = "";
+Callsign_AirAttack_Count = 0;
+
+Callsign_AirTransport_Str = "";
+Callsign_AirTransport_Count = 0;
+
+Callsign_Cargo_Str = "";
+Callsign_Cargo_Count = 0;
+
+Callsign_Arty_Str = "";
+Callsign_Arty_Count = 0;
+
+Callsign_SupportMed_Str = "";
+Callsign_SupportMed_Count = 0;
+
+Callsign_SupportRep_Str = "";
+Callsign_SupportRep_Count = 0;
+
+Callsign_SupportFuel_Str = "";
+Callsign_SupportFuel_Count = 0;
+
+Callsign_SupportAmmo_Str = "";
+Callsign_SupportAmmo_Count = 0;
+
+Callsign_Armor_Str = "";
+Callsign_Armor_Count = 0;
+
+Armor_Amount_A = 0;
+Armor_Amount_B = 0;
+
 RYD_WS_AllClasses = RYD_WS_Inf_class + RYD_WS_Art_class + RYD_WS_HArmor_class + RYD_WS_MArmor_class + RYD_WS_LArmor_class + RYD_WS_Cars_class + RYD_WS_Air_class + RYD_WS_Naval_class + RYD_WS_Static_class + RYD_WS_Support_class + RYD_WS_Other_class;			
 	
 RHQ_SpecFor = [];
@@ -840,6 +980,7 @@ RYD_WS_B_Supp_Med_G2 = [];
 RYD_WS_B_Supp_Repair_G2 = [];
 RYD_WS_B_Supp_Fuel_G2 = [];
 RYD_WS_B_Arty_G2 = [];
+RYD_WS_B_Armor_G2 = [];
 
 RYD_WS_I_Infantry_G = [];
 RYD_WS_I_Motorized_G = [];
@@ -858,6 +999,7 @@ RYD_WS_I_Supp_Med_G2 = [];
 RYD_WS_I_Supp_Repair_G2 = [];
 RYD_WS_I_Supp_Fuel_G2 = [];
 RYD_WS_I_Arty_G2 = [];
+RYD_WS_I_Armor_G2 = [];
 
 RYD_WS_O_Infantry_G = [];
 RYD_WS_O_Motorized_G = [];
@@ -876,6 +1018,7 @@ RYD_WS_O_Supp_Med_G2 = [];
 RYD_WS_O_Supp_Repair_G2 = [];
 RYD_WS_O_Supp_Fuel_G2 = [];
 RYD_WS_O_Arty_G2 = [];
+RYD_WS_O_Armor_G2 = [];
 
 RydHQ_Add_OtherArty = [];
 
@@ -1385,10 +1528,11 @@ RYD_WS_DynamicRHQ =
 										if ((toLower _fac) in ["guerilla"]) then {_fac = "blu_g_f"};
 										//diag_log format ["chosen: %1,this: %2",RYD_WS_SelectedFactions,(toLower _fac)];
 										if not ((toLower _fac) in RYD_WS_SelectedFactions) exitWith {};
+										if (_isArty) exitWith {};
 										
 										_gp = [_rSide,_path4,_isArty,_name];
 										
-										//diag_log format ["gp: %1",_gp];
+										//diag_log format ["_gpType: %1",_gpType];
 										
 										switch (true) do
 										{
@@ -1417,15 +1561,15 @@ RYD_WS_DynamicRHQ =
 															{
 																case (west): 
 																{
-																	RYD_WS_B_Mechanized_G set [(count RYD_WS_B_Mechanized_G),[west, _gp select 1, _gp select 2]];
+																	RYD_WS_B_Mechanized_G set [(count RYD_WS_B_Mechanized_G),[west, _gp select 1, _gp select 2, _gp select 3]];
 																};
 																case (resistance): 
 																{
-																	RYD_WS_I_Mechanized_G set [(count RYD_WS_I_Mechanized_G),[resistance, _gp select 1, _gp select 2]];
+																	RYD_WS_I_Mechanized_G set [(count RYD_WS_I_Mechanized_G),[resistance, _gp select 1, _gp select 2, _gp select 3]];
 																};
 																case (east): 
 																{
-																	RYD_WS_O_Mechanized_G set [(count RYD_WS_O_Mechanized_G),[east, _gp select 1, _gp select 2]];
+																	RYD_WS_O_Mechanized_G set [(count RYD_WS_O_Mechanized_G),[east, _gp select 1, _gp select 2, _gp select 3]];
 																};
 															}
 														};
@@ -1436,15 +1580,15 @@ RYD_WS_DynamicRHQ =
 															{
 																case (west): 
 																{
-																	RYD_WS_B_Mechanized_G set [(count RYD_WS_B_Mechanized_G),[west, _gp select 1, _gp select 2]];
+																	RYD_WS_B_Mechanized_G set [(count RYD_WS_B_Mechanized_G),[west, _gp select 1, _gp select 2, _gp select 3]];
 																};
 																case (resistance): 
 																{
-																	RYD_WS_I_Mechanized_G set [(count RYD_WS_I_Mechanized_G),[resistance, _gp select 1, _gp select 2]];
+																	RYD_WS_I_Mechanized_G set [(count RYD_WS_I_Mechanized_G),[resistance, _gp select 1, _gp select 2, _gp select 3]];
 																};
 																case (east): 
 																{
-																	RYD_WS_O_Mechanized_G set [(count RYD_WS_O_Mechanized_G),[east, _gp select 1, _gp select 2]];
+																	RYD_WS_O_Mechanized_G set [(count RYD_WS_O_Mechanized_G),[east, _gp select 1, _gp select 2, _gp select 3]];
 																};
 															}
 														};
@@ -1457,15 +1601,15 @@ RYD_WS_DynamicRHQ =
 															{
 																case (west): 
 																{
-																	RYD_WS_B_Armored_G set [(count RYD_WS_B_Armored_G),[west, _gp select 1, _gp select 2]];
+																	RYD_WS_B_Armored_G set [(count RYD_WS_B_Armored_G),[west, _gp select 1, _gp select 2, _gp select 3]];
 																};
 																case (resistance): 
 																{
-																	RYD_WS_I_Armored_G set [(count RYD_WS_I_Armored_G),[resistance, _gp select 1, _gp select 2]];
+																	RYD_WS_I_Armored_G set [(count RYD_WS_I_Armored_G),[resistance, _gp select 1, _gp select 2, _gp select 3]];
 																};
 																case (east): 
 																{
-																	RYD_WS_O_Armored_G set [(count RYD_WS_O_Armored_G),[east, _gp select 1, _gp select 2]];
+																	RYD_WS_O_Armored_G set [(count RYD_WS_O_Armored_G),[east, _gp select 1, _gp select 2, _gp select 3]];
 																};
 															}
 														};
@@ -1476,15 +1620,15 @@ RYD_WS_DynamicRHQ =
 															{
 																case (west): 
 																{
-																	RYD_WS_B_Armored_G set [(count RYD_WS_B_Armored_G),[west, _gp select 1, _gp select 2]];
+																	RYD_WS_B_Armored_G set [(count RYD_WS_B_Armored_G),[west, _gp select 1, _gp select 2, _gp select 3]];
 																};
 																case (resistance): 
 																{
-																	RYD_WS_I_Armored_G set [(count RYD_WS_I_Armored_G),[resistance, _gp select 1, _gp select 2]];
+																	RYD_WS_I_Armored_G set [(count RYD_WS_I_Armored_G),[resistance, _gp select 1, _gp select 2, _gp select 3]];
 																};
 																case (east): 
 																{
-																	RYD_WS_O_Armored_G set [(count RYD_WS_O_Armored_G),[east, _gp select 1, _gp select 2]];
+																	RYD_WS_O_Armored_G set [(count RYD_WS_O_Armored_G),[east, _gp select 1, _gp select 2, _gp select 3]];
 																};
 															}
 														};
@@ -1508,15 +1652,15 @@ RYD_WS_DynamicRHQ =
 														{
 															case (west): 
 															{
-																RYD_WS_B_Motorized_G set [(count RYD_WS_B_Motorized_G),[west, _gp select 1, _gp select 2]];
+																RYD_WS_B_Motorized_G set [(count RYD_WS_B_Motorized_G),[west, _gp select 1, _gp select 2, _gp select 3]];
 															};
 															case (resistance): 
 															{
-																RYD_WS_I_Motorized_G set [(count RYD_WS_I_Motorized_G),[resistance, _gp select 1, _gp select 2]];
+																RYD_WS_I_Motorized_G set [(count RYD_WS_I_Motorized_G),[resistance, _gp select 1, _gp select 2, _gp select 3]];
 															};
 															case (east): 
 															{
-																RYD_WS_O_Motorized_G set [(count RYD_WS_O_Motorized_G),[east, _gp select 1, _gp select 2]];
+																RYD_WS_O_Motorized_G set [(count RYD_WS_O_Motorized_G),[east, _gp select 1, _gp select 2, _gp select 3]];
 															};
 														}
 													};
@@ -1527,15 +1671,15 @@ RYD_WS_DynamicRHQ =
 														{
 															case (west): 
 															{
-																RYD_WS_B_Motorized_G set [(count RYD_WS_B_Motorized_G),[west, _gp select 1, _gp select 2]];
+																RYD_WS_B_Motorized_G set [(count RYD_WS_B_Motorized_G),[west, _gp select 1, _gp select 2, _gp select 3]];
 															};
 															case (resistance): 
 															{
-																RYD_WS_I_Motorized_G set [(count RYD_WS_I_Motorized_G),[resistance, _gp select 1, _gp select 2]];
+																RYD_WS_I_Motorized_G set [(count RYD_WS_I_Motorized_G),[resistance, _gp select 1, _gp select 2, _gp select 3]];
 															};
 															case (east): 
 															{
-																RYD_WS_O_Motorized_G set [(count RYD_WS_O_Motorized_G),[east, _gp select 1, _gp select 2]];
+																RYD_WS_O_Motorized_G set [(count RYD_WS_O_Motorized_G),[east, _gp select 1, _gp select 2, _gp select 3]];
 															};
 														}
 													};
@@ -1561,15 +1705,15 @@ RYD_WS_DynamicRHQ =
 															{
 																case (west): 
 																{
-																	RYD_WS_B_Infantry_G set [(count RYD_WS_B_Infantry_G),[west, _gp select 1, _gp select 2]];
+																	RYD_WS_B_Infantry_G set [(count RYD_WS_B_Infantry_G),[west, _gp select 1, _gp select 2, _gp select 3]];
 																};
 																case (resistance): 
 																{
-																	RYD_WS_I_Infantry_G set [(count RYD_WS_I_Infantry_G),[resistance, _gp select 1, _gp select 2]];
+																	RYD_WS_I_Infantry_G set [(count RYD_WS_I_Infantry_G),[resistance, _gp select 1, _gp select 2, _gp select 3]];
 																};
 																case (east): 
 																{
-																	RYD_WS_O_Infantry_G set [(count RYD_WS_O_Infantry_G),[east, _gp select 1, _gp select 2]];
+																	RYD_WS_O_Infantry_G set [(count RYD_WS_O_Infantry_G),[east, _gp select 1, _gp select 2, _gp select 3]];
 																};
 															}
 														};
@@ -1580,15 +1724,15 @@ RYD_WS_DynamicRHQ =
 															{
 																case (west):
 																{
-																	RYD_WS_B_Infantry_G set [(count RYD_WS_B_Infantry_G),[west, _gp select 1, _gp select 2]];
+																	RYD_WS_B_Infantry_G set [(count RYD_WS_B_Infantry_G),[west, _gp select 1, _gp select 2, _gp select 3]];
 																};
 																case (resistance):
 																{
-																	RYD_WS_I_Infantry_G set [(count RYD_WS_I_Infantry_G),[resistance, _gp select 1, _gp select 2]];
+																	RYD_WS_I_Infantry_G set [(count RYD_WS_I_Infantry_G),[resistance, _gp select 1, _gp select 2, _gp select 3]];
 																};
 																case (east):
 																{
-																	RYD_WS_O_Infantry_G set [(count RYD_WS_O_Infantry_G),[east, _gp select 1, _gp select 2]];
+																	RYD_WS_O_Infantry_G set [(count RYD_WS_O_Infantry_G),[east, _gp select 1, _gp select 2, _gp select 3]];
 																};
 															}
 														};
@@ -1616,7 +1760,7 @@ RYD_WS_DynamicRHQ =
 
 			if not (_class isKindOf "ugv_01_base_f") then
 			{
-				if not (_class in (RYD_WS_Art_class + RYD_WS_Static_class + RYD_WS_Support_class + RYD_WS_NCCargo_class)) then
+				if not (_class in (RYD_WS_Art_class + RYD_WS_Static_class + RYD_WS_Support_class + RYD_WS_NCCargo_class + RYD_WS_HArmor_class + RYD_WS_LArmor_class)) then
 				{
 					_scope = getNumber (_vehClass >> _class >> "Scope");
 					if (_scope == 2) then
@@ -1641,13 +1785,19 @@ RYD_WS_DynamicRHQ =
 						_crew = toLower (getText (_vehClass2 >> "crew"));
 						//_isAI = not ((_crew find "uav_ai") isEqualTo -1);
 						_isUAV = (toLower (getText (_vehClass2 >> "crew"))) in ["b_uav_ai","i_uav_ai","o_uav_ai"];
+						_isArty = false;
 						
 						if (_side in [0,1,2]) then
 						{
 							_fac = toLower (getText (_vehClass2 >> "faction"));
 							
+							if ((getNumber (_vehClass2 >> "artilleryScanner")) > 0) then
+							{
+								_isArty = true;
+							};
+							
 							// is arty and NOT controlled by uav ai
-							if (((getNumber (_vehClass2 >> "artilleryScanner")) > 0) and {not (_isUAV)}) then
+							if (_isArty and {not (_isUAV)}) then
 							{
 								RHQ_Art set [(count RHQ_Art),_class];
 								
@@ -2297,6 +2447,61 @@ RYD_WS_DynamicRHQ =
 										}
 									};
 									
+									// deal with armor assets
+									if ((_class isKindOf "wheeled_apc_f") or (_class isKindOf "tank")) then
+									{
+										//only proceed if not arty, not AI controlled unit, has a main turret and is not support
+										if (not _isArty and {not (_isUAV)} and (_isMainT) and {not (_class in RHQ_Support)}) then
+										{
+											if (_class isKindOf "wheeled_apc_f") then
+											{
+												RHQ_LArmor set [(count RHQ_LArmor),_class];
+											}
+											else
+											{
+												RHQ_HArmor set [(count RHQ_HArmor),_class];
+											};
+											
+											if ((toLower _fac) in _aFactions) then 
+											{
+												switch (RYD_WS_SideA) do
+												{
+													case (west):
+													{
+														RYD_WS_B_Armor_G2 set [(count RYD_WS_B_Armor_G2),_class];
+													};
+													case (resistance):
+													{
+														RYD_WS_I_Armor_G2 set [(count RYD_WS_I_Armor_G2),_class];
+													};
+													case (east):
+													{
+														RYD_WS_O_Armor_G2 set [(count RYD_WS_O_Armor_G2),_class];
+													};
+												};
+											};
+											
+											if ((toLower _fac) in _bFactions) then 
+											{
+												switch (RYD_WS_SideB) do
+												{
+													case (west):
+													{
+														RYD_WS_B_Armor_G2 set [(count RYD_WS_B_Armor_G2),_class];
+													};
+													case (resistance):
+													{
+														RYD_WS_I_Armor_G2 set [(count RYD_WS_I_Armor_G2),_class];
+													};
+													case (east):
+													{
+														RYD_WS_O_Armor_G2 set [(count RYD_WS_O_Armor_G2),_class];
+													};
+												};
+											};
+										};
+									};
+									
 									if ((_isCargo) and {not (_class in (RYD_WS_Cargo_class + RHQ_Cargo))}) then
 									{
 										RHQ_Cargo pushBack _class;
@@ -2313,7 +2518,10 @@ RYD_WS_DynamicRHQ =
 										};
 
 										// remove not actual weapons such as flares and etc
+										//diag_log format ["%1", _class];
+										//diag_log format ["%1", _wpnsArr];
 										_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
+										//diag_log format ["%1", _wpnsArr];
 										
 										if (count(_wpnsArr) isEqualTo 0) then
 										{
@@ -3223,8 +3431,8 @@ RYD_WS_Forces =
 				}
 			}
 		};
-			
-		//diag_log format ["am: %1 sc: %2",_amount,_scale];
+		
+		diag_log format ["_amount: %1 _scale: %2",_amount,_scale];
 		
 		_notEmpty = [];
 		_fcs = [_inf,_mot,_mech,_arm];
@@ -3245,6 +3453,7 @@ RYD_WS_Forces =
 				_infC = (50 * (((_topoCoeff * _HSratio) min 1.9) max 0.1));
 				_motC = (80 * ((((_topoCoeff max 0.4) * _HSratio) min 1.2)) max 0.1);
 				_mechC = (80 * (((_topoCoeff * _HSratio) min 1.2)) max 0.3);
+				_skip = false;
 				
 				//diag_log format ["tcoeff: %1 ratio: %2 infc: %3 motc: %4 mechc: %5 rnd: %6",_topoCoeff,_HSratio,_infC,_motC,_mechC,_rnd];
 				
@@ -3267,6 +3476,7 @@ RYD_WS_Forces =
 					{
 						_gps = _motPool;
 						_arr = _mot;
+						
 						//diag_log format ["mot: %1",count _gps];
 						if ((count _gps) < 1) then
 						{
@@ -3275,7 +3485,7 @@ RYD_WS_Forces =
 							_arr = _sec select 1
 						}
 					};
-						
+					
 					default
 					{
 						_rnd = (random 100) * _mpl;
@@ -3315,18 +3525,33 @@ RYD_WS_Forces =
 								_gps = _sec select 0;
 								_arr = _sec select 1
 							}
+							else
+							{
+								_skip = true;
+								
+								switch (_foreachIndex) do
+								{
+									case (0) : {Armor_Amount_A = Armor_Amount_A + 1.75};
+									case (1) : {Armor_Amount_B = Armor_Amount_B + 1.75};
+								};
+							};
 						}
 					}
 				};
 				
-				_gp = _gps select (floor (random (count _gps)));
-
-				if (_gp select 2) then
+				if (!_skip) then
 				{
-					_artyC = _artyC + 1
+					_gp = _gps select (floor (random (count _gps)));
+					
+					diag_log format ["_gp: %1",_gp];
+
+					if (_gp select 2) then
+					{
+						_artyC = _artyC + 1
+					};
+					
+					_arr set [(count _arr),[_gp select 0,_gp select 1,_gp select 3,_gp select 2]];
 				};
-				
-				_arr set [(count _arr),[_gp select 0,_gp select 1,_gp select 3,_gp select 2]]
 			};
 		}
 	} foreach [0,1];
@@ -3708,6 +3933,29 @@ RYD_WS_SpawnGroupSafe =
 
 	_newGrp = createGroup _side;
 	
+	// do group locale thingy
+	//diag_log format ["_side: %1", _side];
+	//diag_log format ["RYD_WS_SideA: %1", RYD_WS_SideA];
+	if (_side == RYD_WS_SideA) then
+	{
+
+		//diag_log format ["count Callsigns_Arr: %1", count Callsigns_Arr];
+		
+		// safecheck in case we run out of namespace
+		if (count (Callsigns_Arr) > 0) then
+		{
+			_callsign = selectRandom Callsigns_Arr;
+			
+			Callsigns_Arr = Callsigns_Arr - [_callsign];
+			
+			_newGrp setGroupId [_callsign];
+			
+			//diag_log format ["_callsign: %1", _callsign];
+			//diag_log format ["Callsigns_Arr: %1", Callsigns_Arr];
+			//diag_log format ["_newGrp: %1", _newGrp];
+		};
+	};
+	
 	_newGrp setFormDir _azimuth;
 	_ct = 0;
 	_am = {alive _x} count (units _grp);
@@ -3747,8 +3995,7 @@ RYD_WS_SpawnGroupSafe =
 			{
 				_out set [(count _out),_x]
 			}
-		}
-		foreach (units _newGrp);
+		} foreach (units _newGrp);
 		
 		_imp = [+_out] call RYD_WS_SelectImportant;
 
@@ -3852,8 +4099,7 @@ RYD_WS_SpawnGroupSafe =
 				};
 					
 				if not ((count _out) > 0) exitWith {};
-			}
-			foreach _ourVehs;
+			} foreach _ourVehs;
 
 			if ((count _imp) > 0) then
 			{
@@ -4025,12 +4271,13 @@ RYD_WS_WindRose =
 	
 RYD_WS_SpawnAir = 
 {
-	private ["_pos","_angle","_classPool","_gp","_side","_dst","_checkPos","_fe","_ct","_vh","_posS","_class","_cl"];
+	private ["_pos","_angle","_classPool","_gp","_side","_dst","_checkPos","_fe","_ct","_vh","_posS","_class","_cl","_type"];
 	
 	_pos = _this select 0;
 	_angle = _this select 1;
 	_classPool = _this select 2;
 	_side = _this select 4;
+	_type = _this select 5;
 	_oppositeAngle = (_angle + 180) % 360;
 	
 	_gp = grpNull;
@@ -4038,7 +4285,7 @@ RYD_WS_SpawnAir =
 	_dst = 500 - (random 200);
 
 	_checkPos = [_pos,0,_dst] call RYD_RandomAroundMM;
-	_checkPos = [_checkPos, 1000, _oppositeAngle] call BIS_fnc_relPos;
+	_checkPos = [_checkPos, 400, _oppositeAngle] call BIS_fnc_relPos;
 
 	_fe = true;
 	
@@ -4063,7 +4310,7 @@ RYD_WS_SpawnAir =
 		if (_ct > 50) exitWith {};
 		_dst = _dst + 5;
 		_checkPos = [_pos,0,_dst] call RYD_RandomAroundMM;
-		_checkPos = [_checkPos, 1000, _oppositeAngle] call BIS_fnc_relPos;
+		_checkPos = [_checkPos, 400, _oppositeAngle] call BIS_fnc_relPos;
 
 		_fe = true;
 		
@@ -4124,6 +4371,75 @@ RYD_WS_SpawnAir =
 		
 		_side createVehicleCrew _vh;
 		_gp = (group _vh);
+		
+		// do group locale thingy
+		//diag_log format ["_side: %1", _side];
+		//diag_log format ["RYD_WS_SideA: %1", RYD_WS_SideA];
+		if (_side == RYD_WS_SideA) then
+		{
+
+			//diag_log format ["count Callsigns_Arr: %1", count Callsigns_Arr];
+			
+			switch (_type) do
+			{
+				case (0) : 
+				{
+					if (count (Callsign_AirAttack_Str) > 0) then
+					{
+						Callsign_AirAttack_Count = Callsign_AirAttack_Count + 1;
+						
+						_gp setGroupId [format ["%1-%2", Callsign_AirAttack_Str, Callsign_AirAttack_Count]];
+					}
+					else
+					{
+						if (count (Callsigns_Arr) > 0) then
+						{
+							// type switch and check for already existing support callsign
+							
+							Callsign_AirAttack_Str = selectRandom Callsigns_Arr;
+							
+							Callsigns_Arr = Callsigns_Arr - [Callsign_AirAttack_Str];
+							
+							Callsign_AirAttack_Count = Callsign_AirAttack_Count + 1;
+							
+							_gp setGroupId [format ["%1-%2", Callsign_AirAttack_Str, Callsign_AirAttack_Count]];
+							
+							//diag_log format ["Callsign_AirAttack_Str: %1", Callsign_AirAttack_Str];
+							//diag_log format ["Callsigns_Arr: %1", Callsigns_Arr];
+							//diag_log format ["_gp: %1", _gp];
+						};
+					};
+				};
+				case (3) : 
+				{
+					if (count (Callsign_AirTransport_Str) > 0) then
+					{
+						Callsign_AirTransport_Count = Callsign_AirTransport_Count + 1;
+						
+						_gp setGroupId [format ["%1-%2", Callsign_AirTransport_Str, Callsign_AirTransport_Count]];
+					}
+					else
+					{
+						if (count (Callsigns_Arr) > 0) then
+						{
+							// type switch and check for already existing support callsign
+							
+							Callsign_AirTransport_Str = selectRandom Callsigns_Arr;
+							
+							Callsigns_Arr = Callsigns_Arr - [Callsign_AirTransport_Str];
+							
+							Callsign_AirTransport_Count = Callsign_AirTransport_Count + 1;
+							
+							_gp setGroupId [format ["%1-%2", Callsign_AirTransport_Str, Callsign_AirTransport_Count]];
+							
+							//diag_log format ["Callsign_AirTransport_Str: %1", Callsign_AirTransport_Str];
+							//diag_log format ["Callsigns_Arr: %1", Callsigns_Arr];
+							//diag_log format ["_gp: %1", _gp];
+						};
+					};
+				};
+			};
+		};
 		
 		//diag_log format ["_gp: %1",[_gp]];
 		
@@ -4301,12 +4617,13 @@ RYD_WS_SpawnStatic =
 	
 RYD_WS_SpawnSupport =
 {
-	private ["_pos","_angle","_classPool","_gp","_side","_dst","_checkPos","_fe","_ct","_vh","_posS","_class","_cl"];
+	private ["_pos","_angle","_classPool","_gp","_side","_dst","_checkPos","_fe","_ct","_vh","_posS","_class","_cl","_type"];
 	
 	_pos = _this select 0;
 	_angle = _this select 1;
 	_classPool = _this select 2;
 	_side = _this select 4;
+	_type = _this select 5;
 	
 	_gp = grpNull;
 	
@@ -4453,6 +4770,217 @@ RYD_WS_SpawnSupport =
 		
 		_side createVehicleCrew _vh;
 		_gp = (group _vh);
+		
+		if (_side == RYD_WS_SideA) then
+		{
+
+			//diag_log format ["count Callsigns_Arr: %1", count Callsigns_Arr];
+			
+			switch (_type) do
+			{
+				case (2) : 
+				{
+					if (count (Callsign_Cargo_Str) > 0) then
+					{
+						Callsign_Cargo_Count = Callsign_Cargo_Count + 1;
+						
+						_gp setGroupId [format ["%1-%2", Callsign_Cargo_Str, Callsign_Cargo_Count]];
+						
+						//diag_log format ["Callsign_Cargo_Str: %1", Callsign_Cargo_Str];
+						//diag_log format ["Callsign_Cargo_Count: %1", Callsign_Cargo_Count];
+					}
+					else
+					{
+						if (count (Callsigns_Arr) > 0) then
+						{
+							// type switch and check for already existing support callsign
+							
+							Callsign_Cargo_Str = selectRandom Callsigns_Arr;
+							
+							Callsigns_Arr = Callsigns_Arr - [Callsign_Cargo_Str];
+							
+							Callsign_Cargo_Count = Callsign_Cargo_Count + 1;
+							
+							_gp setGroupId [format ["%1-%2", Callsign_Cargo_Str, Callsign_Cargo_Count]];
+							
+							//diag_log format ["Callsign_Cargo_Str: %1", Callsign_Cargo_Str];
+							//diag_log format ["Callsign_Cargo_Count: %1", Callsign_Cargo_Count];
+							//diag_log format ["Callsigns_Arr: %1", Callsigns_Arr];
+							//diag_log format ["_gp: %1", _gp];
+						};
+					};
+				};
+				case (4) : 
+				{
+					if (count (Callsign_SupportMed_Str) > 0) then
+					{
+						Callsign_SupportMed_Count = Callsign_SupportMed_Count + 1;
+						
+						_gp setGroupId [format ["%1-%2", Callsign_SupportMed_Str, Callsign_SupportMed_Count]];
+					}
+					else
+					{
+						if (count (Callsigns_Arr) > 0) then
+						{
+							// type switch and check for already existing support callsign
+							
+							Callsign_SupportMed_Str = selectRandom Callsigns_Arr;
+							
+							Callsigns_Arr = Callsigns_Arr - [Callsign_SupportMed_Str];
+							
+							Callsign_SupportMed_Count = Callsign_SupportMed_Count + 1;
+							
+							_gp setGroupId [format ["%1-%2", Callsign_SupportMed_Str, Callsign_SupportMed_Count]];
+							
+							//diag_log format ["Callsign_SupportMed_Str: %1", Callsign_SupportMed_Str];
+							//diag_log format ["Callsigns_Arr: %1", Callsigns_Arr];
+							//diag_log format ["_gp: %1", _gp];
+						};
+					};
+				};
+				case (5) : 
+				{
+					if (count (Callsign_SupportAmmo_Str) > 0) then
+					{
+						Callsign_SupportAmmo_Count = Callsign_SupportAmmo_Count + 1;
+						
+						_gp setGroupId [format ["%1-%2", Callsign_SupportAmmo_Str, Callsign_SupportAmmo_Count]];
+					}
+					else
+					{
+						if (count (Callsigns_Arr) > 0) then
+						{
+							// type switch and check for already existing support callsign
+							
+							Callsign_SupportAmmo_Str = selectRandom Callsigns_Arr;
+							
+							Callsigns_Arr = Callsigns_Arr - [Callsign_SupportAmmo_Str];
+							
+							Callsign_SupportAmmo_Count = Callsign_SupportAmmo_Count + 1;
+							
+							_gp setGroupId [format ["%1-%2", Callsign_SupportAmmo_Str, Callsign_SupportAmmo_Count]];
+							
+							//diag_log format ["Callsign_SupportAmmo_Str: %1", Callsign_SupportAmmo_Str];
+							//diag_log format ["Callsigns_Arr: %1", Callsigns_Arr];
+							//diag_log format ["_gp: %1", _gp];
+						};
+					};
+				};
+				case (6) : 
+				{
+					if (count (Callsign_SupportFuel_Str) > 0) then
+					{
+						Callsign_SupportFuel_Count = Callsign_SupportFuel_Count + 1;
+						
+						_gp setGroupId [format ["%1-%2", Callsign_SupportFuel_Str, Callsign_SupportFuel_Count]];
+					}
+					else
+					{
+						if (count (Callsigns_Arr) > 0) then
+						{
+							// type switch and check for already existing support callsign
+							
+							Callsign_SupportFuel_Str = selectRandom Callsigns_Arr;
+							
+							Callsigns_Arr = Callsigns_Arr - [Callsign_SupportFuel_Str];
+							
+							Callsign_SupportFuel_Count = Callsign_SupportFuel_Count + 1;
+							
+							_gp setGroupId [format ["%1-%2", Callsign_SupportFuel_Str, Callsign_SupportFuel_Count]];
+							
+							//diag_log format ["Callsign_SupportFuel_Str: %1", Callsign_SupportFuel_Str];
+							//diag_log format ["Callsigns_Arr: %1", Callsigns_Arr];
+							//diag_log format ["_gp: %1", _gp];
+						};
+					};
+				};
+				case (7) : 
+				{
+					if (count (Callsign_SupportRep_Str) > 0) then
+					{
+						Callsign_SupportRep_Count = Callsign_SupportRep_Count + 1;
+						
+						_gp setGroupId [format ["%1-%2", Callsign_SupportRep_Str, Callsign_SupportRep_Count]];
+					}
+					else
+					{
+						if (count (Callsigns_Arr) > 0) then
+						{
+							// type switch and check for already existing support callsign
+							
+							Callsign_SupportRep_Str = selectRandom Callsigns_Arr;
+							
+							Callsigns_Arr = Callsigns_Arr - [Callsign_SupportRep_Str];
+							
+							Callsign_SupportRep_Count = Callsign_SupportRep_Count + 1;
+							
+							_gp setGroupId [format ["%1-%2", Callsign_SupportRep_Str, Callsign_SupportRep_Count]];
+							
+							//diag_log format ["Callsign_SupportRep_Str: %1", Callsign_SupportRep_Str];
+							//diag_log format ["Callsigns_Arr: %1", Callsigns_Arr];
+							//diag_log format ["_gp: %1", _gp];
+						};
+					};
+				};
+				case (8) : 
+				{
+					if (count (Callsign_Arty_Str) > 0) then
+					{
+						Callsign_Arty_Count = Callsign_Arty_Count + 1;
+						
+						_gp setGroupId [format ["%1-%2", Callsign_Arty_Str, Callsign_Arty_Count]];
+					}
+					else
+					{
+						if (count (Callsigns_Arr) > 0) then
+						{
+							// type switch and check for already existing support callsign
+							
+							Callsign_Arty_Str = selectRandom Callsigns_Arr;
+							
+							Callsigns_Arr = Callsigns_Arr - [Callsign_Arty_Str];
+							
+							Callsign_Arty_Count = Callsign_Arty_Count + 1;
+							
+							_gp setGroupId [format ["%1-%2", Callsign_Arty_Str, Callsign_Arty_Count]];
+							
+							//diag_log format ["Callsign_Arty_Str: %1", Callsign_Arty_Str];
+							//diag_log format ["Callsigns_Arr: %1", Callsigns_Arr];
+							//diag_log format ["_gp: %1", _gp];
+						};
+					};
+				};
+				case (9) : 
+				{
+					if (count (Callsign_Armor_Str) > 0) then
+					{
+						Callsign_Armor_Count = Callsign_Armor_Count + 1;
+						
+						_gp setGroupId [format ["%1-%2", Callsign_Armor_Str, Callsign_Armor_Count]];
+					}
+					else
+					{
+						if (count (Callsigns_Arr) > 0) then
+						{
+							// type switch and check for already existing support callsign
+							
+							Callsign_Armor_Str = selectRandom Callsigns_Arr;
+							
+							Callsigns_Arr = Callsigns_Arr - [Callsign_Armor_Str];
+							
+							Callsign_Armor_Count = Callsign_Armor_Count + 1;
+							
+							_gp setGroupId [format ["%1-%2", Callsign_Armor_Str, Callsign_Armor_Count]];
+							
+							//diag_log format ["Callsign_Armor_Str: %1", Callsign_Armor_Str];
+							//diag_log format ["Callsigns_Arr: %1", Callsigns_Arr];
+							//diag_log format ["_gp: %1", _gp];
+						};
+					};
+				};
+			};
+		};
+		
 		_currentForces = (group _ldr) getVariable ["RYD_WS_mySupport",0];
 		(group _ldr) setVariable ["RYD_WS_mySupport",(_currentForces + 1)];
 		
@@ -5139,7 +5667,7 @@ RYD_WS_onDeathA =
 	if (_kia in RYD_WS_Killed_A) exitWith {};
 	
 	RYD_WS_Killed_A set [(count RYD_WS_Killed_A),_kia];
-		
+	
 	_KIAs = missionNamespace getVariable ["WS_KIA_A",[]];
 	
 	_KIAs set [(count _KIAs),(_kia getVariable ["WS_myName",name _kia])];
@@ -5164,7 +5692,7 @@ RYD_WS_onDeathB =
 	_name = _killer getVariable ["WS_myName",name _killer];
 	
 	_KIAs = missionNamespace getVariable ["WS_KIA_B" + _name,[_name,0]];
-		
+	
 	_amnt = _KIAs select 1;
 	_amnt = _amnt + 1;
 	
@@ -5756,6 +6284,7 @@ RYD_WS_WholeMapPlacement =
 							
 							_ldrClass = selectRandom _classArr;							
 							_ldrGp = createGroup _side;
+							_ldrGp setGroupId ["HQ A"];
 							leaderHQ = _ldrGp createUnit [_ldrClass, _x, [], 0, "NONE"];
 							leaderHQ setDir _dir;
 							[leaderHQ] joinSilent _ldrGp;
@@ -5819,6 +6348,7 @@ RYD_WS_WholeMapPlacement =
 							
 							_ldrClass = selectRandom _classArr;
 							_ldrGp = createGroup _side;
+							_ldrGp setGroupId ["HQ B"];
 							leaderHQB = _ldrGp createUnit [_ldrClass, _x, [], 0, "NONE"];
 							leaderHQB setDir _dir;
 							[leaderHQB] joinSilent _ldrGp;
@@ -5888,6 +6418,7 @@ RYD_WS_WholeMapPlacement =
 							
 							_ldrClass = selectRandom _classArr;
 							_ldrGp = createGroup _side;
+							_ldrGp setGroupId ["HQ C"];
 							leaderHQC = _ldrGp createUnit [_ldrClass, _x, [], 0, "NONE"];
 							leaderHQC setDir _dir;
 							[leaderHQC] joinSilent _ldrGp;
@@ -5952,6 +6483,7 @@ RYD_WS_WholeMapPlacement =
 							
 							_ldrClass = selectRandom _classArr;
 							_ldrGp = createGroup _side;
+							_ldrGp setGroupId ["HQ D"];
 							leaderHQD = _ldrGp createUnit [_ldrClass, _x, [], 0, "NONE"];
 							leaderHQD setDir _dir;
 							[leaderHQD] joinSilent _ldrGp;
@@ -6029,6 +6561,7 @@ RYD_WS_WholeMapPlacement =
 		_airClasses = _airClasses - [0];
 		//diag_log format ["_airClasses: %1",_airClasses];
 
+		/*
 		_staticClasses = switch (_x) do
 		{
 			case (west) : {RYD_WS_B_Static_G2 + RYD_WS_Static_class - RYD_WS_Art_class - RYD_WS_B_Arty_G2};
@@ -6047,6 +6580,7 @@ RYD_WS_WholeMapPlacement =
 		
 		_staticClasses = _staticClasses - [0];
 		//diag_log format ["_staticClasses: %1",_staticClasses];
+		*/
 
 		_supportClasses = switch (_x) do
 		{
@@ -6219,6 +6753,25 @@ RYD_WS_WholeMapPlacement =
 		_artyClasses = _artyClasses - [0];
 		//diag_log format ["_artyClasses: %1",_artyClasses];
 		
+		_armorClasses = switch (_x) do
+		{
+			case (west) : {RYD_WS_B_Armor_G2 + RYD_WS_HArmor_class + RYD_WS_MArmor_class + RYD_WS_LArmor_class};
+			case (east) : {RYD_WS_O_Armor_G2 + RYD_WS_HArmor_class + RYD_WS_MArmor_class + RYD_WS_LArmor_class};
+			case (resistance) : {RYD_WS_I_Armor_G2 + RYD_WS_HArmor_class + RYD_WS_MArmor_class + RYD_WS_LArmor_class};
+		};
+			
+		{
+			_fac = toLower (getText (_vehClass >> _x >> "faction"));
+
+			if not (({_fac == ((_x select 0) select 0)} count _facM) > 0) then
+			{
+				_armorClasses set [_foreachIndex,0]
+			}
+		} foreach _armorClasses;
+
+		_armorClasses = _armorClasses - [0];
+		//diag_log format ["_armorClasses: %1",_armorClasses];
+		
 		//diag_log format ["[side,faction]: %1",[_x,_facM]];
 		
 		//_gpsA = [];
@@ -6240,7 +6793,7 @@ RYD_WS_WholeMapPlacement =
 			
 			_mainPos = _battlefield select _sideIx;
 			
-			for "_j" from 1 to 3 do
+			for "_j" from 1 to 2 do
 			{
 				_myPos = _mainPos getPos [(-1000 + (_j * 500)),(_dirL + 90)];
 				
@@ -6252,25 +6805,35 @@ RYD_WS_WholeMapPlacement =
 					{
 						_amnt = (ceil (random (2 * RYD_WS_Scale)));
 					};
+					/*
 					case (1) :
 					{
 						_amnt = (ceil (random (2 * RYD_WS_Scale)));
 					};
-					case (2) :
+					*/
+					case (1) :
 					{
 						_amnt = 2 + (ceil (random (3 * RYD_WS_Scale)));
 					};
-					case (3) :
+					case (2) :
 					{
 						_amnt = (ceil (random (2 * RYD_WS_Scale)));
 					};
-					case (8) :
+					case (7) :
 					{
 						_amnt = (ceil (random (1.5 * RYD_WS_Scale)));
 					};
+					case (8) :
+					{
+						_amnt = switch (_side) do
+						{
+							case (RYD_WS_SideA) : {ceil(Armor_Amount_A)};
+							case (RYD_WS_SideB) : {ceil(Armor_Amount_B)};
+						}
+					};
 					default
 					{
-						_amnt = (ceil (random (2 * RYD_WS_Scale)));
+						_amnt = (ceil (random (3 * RYD_WS_Scale)));
 					};
 				};
 				
@@ -6286,7 +6849,7 @@ RYD_WS_WholeMapPlacement =
 							{
 								//diag_log ["_airClasses"];
 								
-								_gp = [_myPos,_dir,_airClasses,_ldrs0,_side] call RYD_WS_SpawnAir;
+								_gp = [_myPos,_dir,_airClasses,_ldrs0,_side,0] call RYD_WS_SpawnAir;
 								
 								if not (isNull _gp) then
 								{
@@ -6309,6 +6872,8 @@ RYD_WS_WholeMapPlacement =
 								}
 							}
 						};
+
+						/*
 						case (1) :
 						{
 							if ((count _staticClasses) > 0) then
@@ -6340,7 +6905,6 @@ RYD_WS_WholeMapPlacement =
 								}
 							}
 						};
-						/*
 						case (2) :
 						{
 							if ((count _supportClasses) > 0) then
@@ -6373,7 +6937,7 @@ RYD_WS_WholeMapPlacement =
 							};				
 						};
 						*/
-						case (2) :
+						case (1) :
 						{
 							//diag_log format ["cargo _amnt: %1",[_amnt]];
 							//diag_log format ["_cargoClasses: %1",[_cargoClasses]];
@@ -6382,7 +6946,7 @@ RYD_WS_WholeMapPlacement =
 							{
 								//diag_log ["_cargoClasses"];
 								
-								_gp = [_myPos,_dir,_cargoClasses,_ldrs0,_side] call RYD_WS_SpawnSupport;
+								_gp = [_myPos,_dir,_cargoClasses,_ldrs0,_side,2] call RYD_WS_SpawnSupport;
 								
 								if not (isNull _gp) then
 								{
@@ -6406,19 +6970,20 @@ RYD_WS_WholeMapPlacement =
 								}
 							};				
 						};
-						case (3) :
+						case (2) :
 						{
 							if ((count _airCargoClasses) > 0) then
 							{
 								//diag_log ["_airCargoClasses"];
 								
-								_gp = [_myPos,_dir,_airCargoClasses,_ldrs0,_side] call RYD_WS_SpawnAir;
+								_gp = [_myPos,_dir,_airCargoClasses,_ldrs0,_side,3] call RYD_WS_SpawnAir;
 
 								if not (isNull _gp) then
 								{
 									_vh = assignedVehicle (leader _gp);
 									_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
 									_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+
 									switch (_sideIx) do
 									{
 										case (0) : 
@@ -6435,12 +7000,41 @@ RYD_WS_WholeMapPlacement =
 								}
 							}
 						};
-						case (4) :
+						case (3) :
 						{
 							if ((count _supportMedClasses) > 0) then
 							{
 								//diag_log ["_supportMedClasses"];
-								_gp = [_myPos,_dir,_supportMedClasses,_ldrs0,_side] call RYD_WS_SpawnSupport;
+								_gp = [_myPos,_dir,_supportMedClasses,_ldrs0,_side,4] call RYD_WS_SpawnSupport;
+
+								if not (isNull _gp) then
+								{
+									_vh = assignedVehicle (leader _gp);
+									_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+									_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+									
+									switch (_sideIx) do
+									{
+										case (0) : 
+										{
+											_gpsA set [(count _gpsA),_gp];
+											_fcsA = _fcsA + (units _gp)
+										};
+										case (1) : 
+										{
+											_gpsB set [(count _gpsB),_gp];
+											_fcsB = _fcsB + (units _gp)
+										};
+									}
+								}
+							};				
+						};
+						case (4) :
+						{
+							if ((count _supportAmmoClasses) > 0) then
+							{
+								//diag_log ["_supportAmmoClasses"];
+								_gp = [_myPos,_dir,_supportAmmoClasses,_ldrs0,_side,5] call RYD_WS_SpawnSupport;
 
 								if not (isNull _gp) then
 								{
@@ -6466,10 +7060,10 @@ RYD_WS_WholeMapPlacement =
 						};
 						case (5) :
 						{
-							if ((count _supportAmmoClasses) > 0) then
+							if ((count _supportFuelClasses) > 0) then
 							{
-								//diag_log ["_supportAmmoClasses"];
-								_gp = [_myPos,_dir,_supportAmmoClasses,_ldrs0,_side] call RYD_WS_SpawnSupport;
+								//diag_log ["_supportFuelClasses"];
+								_gp = [_myPos,_dir,_supportFuelClasses,_ldrs0,_side,6] call RYD_WS_SpawnSupport;
 
 								if not (isNull _gp) then
 								{
@@ -6495,10 +7089,10 @@ RYD_WS_WholeMapPlacement =
 						};
 						case (6) :
 						{
-							if ((count _supportFuelClasses) > 0) then
+							if ((count _supportRepairClasses) > 0) then
 							{
-								//diag_log ["_supportFuelClasses"];
-								_gp = [_myPos,_dir,_supportFuelClasses,_ldrs0,_side] call RYD_WS_SpawnSupport;
+								//diag_log ["_supportRepairClasses"];
+								_gp = [_myPos,_dir,_supportRepairClasses,_ldrs0,_side,7] call RYD_WS_SpawnSupport;
 
 								if not (isNull _gp) then
 								{
@@ -6524,39 +7118,10 @@ RYD_WS_WholeMapPlacement =
 						};
 						case (7) :
 						{
-							if ((count _supportRepairClasses) > 0) then
-							{
-								//diag_log ["_supportRepairClasses"];
-								_gp = [_myPos,_dir,_supportRepairClasses,_ldrs0,_side] call RYD_WS_SpawnSupport;
-
-								if not (isNull _gp) then
-								{
-									_vh = assignedVehicle (leader _gp);
-									_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
-									_gp setVariable ["RYD_WS_myKind",_name + " crew"];
-									
-									switch (_sideIx) do
-									{
-										case (0) : 
-										{
-											_gpsA set [(count _gpsA),_gp];
-											_fcsA = _fcsA + (units _gp)
-										};
-										case (1) : 
-										{
-											_gpsB set [(count _gpsB),_gp];
-											_fcsB = _fcsB + (units _gp)
-										};
-									}
-								}
-							};				
-						};
-						case (8) :
-						{
 							if ((count _artyClasses) > 0) then
 							{
 								//diag_log ["_artyClasses"];
-								_gp = [_myPos,_dir,_artyClasses,_ldrs0,_side] call RYD_WS_SpawnSupport;
+								_gp = [_myPos,_dir,_artyClasses,_ldrs0,_side,8] call RYD_WS_SpawnSupport;
 
 								if not (isNull _gp) then
 								{
@@ -6580,10 +7145,45 @@ RYD_WS_WholeMapPlacement =
 								}
 							};
 						};
+						case (8) :
+						{
+							if ((count _armorClasses) > 0) then
+							{
+								//diag_log ["_armorClasses"];
+								_gp = [_myPos,_dir,_armorClasses,_ldrs0,_side,9] call RYD_WS_SpawnSupport;
+								
+								switch (_side) do
+								{
+									case (RYD_WS_SideA) : {Armor_Amount_A = ceil(Armor_Amount_A / 2)};
+									case (RYD_WS_SideB) : {Armor_Amount_B = ceil(Armor_Amount_A / 2)};
+								};
+
+								if not (isNull _gp) then
+								{
+									_vh = assignedVehicle (leader _gp);
+									_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+									_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+									
+									switch (_sideIx) do
+									{
+										case (0) : 
+										{
+											_gpsA set [(count _gpsA),_gp];
+											_fcsA = _fcsA + (units _gp)
+										};
+										case (1) : 
+										{
+											_gpsB set [(count _gpsB),_gp];
+											_fcsB = _fcsB + (units _gp)
+										};
+									}
+								}
+							};				
+						};
 					}
 				}
 			}
-		} foreach [_airClasses,_staticClasses,_cargoClasses,_airCargoClasses,_supportMedClasses,_supportAmmoClasses,_supportFuelClasses,_supportRepairClasses,_artyClasses];
+		} foreach [_airClasses,_cargoClasses,_airCargoClasses,_supportMedClasses,_supportAmmoClasses,_supportFuelClasses,_supportRepairClasses,_artyClasses,_armorClasses];
 	} foreach [_sideA,_sideB];
 
 	{
@@ -6735,11 +7335,11 @@ RYD_WS_WholeMapPlacement =
 	RYD_WS_GroupsA = _gpsA;
 	RYD_WS_GroupsB = _gpsB;
 
-	player setName profileName;
+	//player setName profileName;
 };
 	
 RYD_WS_CigaretteTime = 
-	{
+{
 	_gp = _this select 0;
 	_cTime = param [1, [10,110],[[]],[2]];
 	_pos = position (leader _gp);
@@ -6749,22 +7349,22 @@ RYD_WS_CigaretteTime =
 	if (({(alive _x)} count (units _gp)) < 1) exitWith {};
 	
 	waitUntil
-		{
+	{
 		sleep 5;
-				
+
 		if (isNull _gp) exitWith {true};
 		if (({(alive _x)} count (units _gp)) < 1) exitWith {true};
 		if not (isNull ((leader _gp) findNearestEnemy (leader _gp))) exitWith {true};
 		
 		((({((_x distance2D _pos) > 500)} count (units _gp)) > 0))
-		};
-		
+	};
+
 	if (isNull _gp) exitWith {};
 	if (({(alive _x)} count (units _gp)) < 1) exitWith {};
 	if not (isNull ((leader _gp) findNearestEnemy (leader _gp))) exitWith {true};
 
 	_gp setCurrentWaypoint [_gp,(currentWaypoint _gp) + 1];
-	};
+};
 	
 RYD_WS_HQGuard = 
 {
@@ -7023,42 +7623,40 @@ RYD_WS_HQGuard =
 };
 
 RYD_PresentRHQ = 
-	{
+{
 	private ["_allVehs","_allUnits","_vehClass","_wpClass","_magClass","_ammoClass","_addedU","_addedV","_veh","_vehClass2","_weapons","_hasLaserD","_wpClass2","_type","_mags",
 	"_isDriver","_turrets","_mainT","_isArmed","_isAA","_isAT","_weaps","_trt","_wps","_wp","_muzzles","_ammo","_ammoC","_dam","_isCargo"];
 	
 	RYD_WS_AllClasses = RYD_WS_Inf_class + RYD_WS_Art_class + RYD_WS_HArmor_class + RYD_WS_MArmor_class + RYD_WS_LArmor_class + RYD_WS_Cars_class + RYD_WS_Air_class + RYD_WS_Naval_class + RYD_WS_Static_class + RYD_WS_Support_class + RYD_WS_Other_class;
 	//RYD_WS_AllClasses = [];
-		
+
 	_allVehs = [];
 	
-		{
+	{
 		if ((side _x) in [west,east,resistance]) then
-			{
+		{
 			_vh = toLower (typeOf _x);
 			if not (_vh in RYD_WS_AllClasses) then
-				{
+			{
 				RYD_WS_AllClasses pushBack _vh;
 				_allVehs pushBack _x
-				}
 			}
 		}
-	foreach vehicles;	
+	} foreach vehicles;	
 	
 	_allUnits = [];
 	
-		{
+	{
 		if ((side _x) in [west,east,resistance]) then
-			{
+		{
 			_vh = toLower (typeOf _x);
 			if not (_vh in RYD_WS_AllClasses) then
-				{
+			{
 				RYD_WS_AllClasses pushBack _vh;
 				_allUnits pushBack _x
-				}
 			}
 		}
-	foreach allUnits;
+	} foreach allUnits;
 	
 	_vehClass = configFile >> "CfgVehicles";
 	_wpClass = configFile >> "CfgWeapons";
@@ -7068,71 +7666,70 @@ RYD_PresentRHQ =
 	_addedU = [];
 	_addedV = [];
 	
-		{
+	{
 		_veh = toLower (typeOf _x);
 		if not (_veh in _addedU) then
-			{
+		{
 			_addedU pushBack _veh;
 			RHQ_Inf pushBack _veh;
 			
 			_vehClass2 = _vehClass >> _veh;
 
 			if ((getNumber (_vehClass2 >> "camouflage")) < 1) then
-				{				
+			{				
 				if ((toLower (getText (_vehClass2 >> "textSingular"))) isEqualTo "sniper") then
-					{
+				{
 					RHQ_Snipers pushBack _veh
-					}
+				}
 				else
-					{
+				{
 					_weapons = getArray (_vehClass2 >> "weapons");
 					
 					RHQ_Recon pushBack _veh;
 					
 					_hasLaserD = false;
 					
-						{
+					{
 						_wpClass = configFile >> "CfgWeapons" >> _x;
 						_type = getNumber (_wpClass >> "type");
 						
 						if (_type == 4096) then
-							{
+						{
 							_cursor = toLower (getText (_wpClass >> "cursor"));
 							if (_cursor in ["","emptycursor"]) then 
-								{
+							{
 								_cursor = toLower (getText (_wpClass >> "cursorAim"))
-								};
+							};
 
 							if (_cursor isEqualTo "laserdesignator") exitWith {_hasLaserD = true}
-							};
+						};
 							
 						if (_hasLaserD) exitWith {}
-						}
-					foreach _weapons;
+					} foreach _weapons;
 					
 					if (_hasLaserD) then
-						{
+					{
 						RHQ_FO pushBack _veh
-						}					
-					}
-				};
+					}					
+				}
+			};
 			
 			_wps = getArray (_vehClass2 >> "Weapons");
 
 			if ((count _wps) > 1) then
-				{
+			{
 				_isAT = false;
 				_isAA = false;
 				
-					{
+				{
 					_sWeapon = _x;
 					_mgs = configfile >> "CfgWeapons" >> _sWeapon >> "magazines";
 					if (isArray _mgs) then
-						{
+					{
 						_mgs = getArray _mgs;
 
 						if ((count _mgs) > 0) then
-							{
+						{
 							_mag = _mgs select 0;
 							_ammo = getText (configfile >> "CfgMagazines" >> _mag >> "ammo");
 							_ammoC = configfile >> "CfgAmmo" >> _ammo;
@@ -7140,50 +7737,47 @@ RYD_PresentRHQ =
 							_isAA = ((getNumber (_ammoC >> "airLock")) > 1) or {((getNumber (_ammoC >> "airLock")) > 0) and {((getNumber (_ammoC >> "irLock")) > 0)}};
 							
 							if not (_isAA) then
-								{
+							{
 								_isAT = ((((getNumber (_ammoC >> "irLock")) + (getNumber (_ammoC >> "laserLock"))) > 0) and {((getNumber (_ammoC >> "airLock")) < 2)})
-								};
+							};
 							
 							if (not (_isAT) and {not (_isAA)}) then
-								{
+							{
 								
-									{
+								{
 									_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 									_ammoC = configfile >> "CfgAmmo" >> _ammo;
 									_actHit = getNumber (_ammoC >> "hit");
 
 									if (_actHit > 150) exitWith {_isAT = true}
-									}
-								foreach _mgs
-								};
+								} foreach _mgs
+							};
 							
 							if (_isAT) then 
-								{
+							{
 								RHQ_ATInf pushBack _veh
-								};
+							};
 								
 							if (_isAA) then  
-								{
+							{
 								RHQ_AAInf pushBack _veh
-								};
-							}
-						};
+							};
+						}
+					};
 						
 					if ((_isAT) or {(_isAA)}) exitWith {}
-					}
-				foreach _wps
-				}
-			}	
-		}
-	foreach _allUnits;
+				} foreach _wps
+			}
+		}	
+	} foreach _allUnits;
 
 	_flareMags = ["Laserbatteries","60Rnd_CMFlareMagazine","120Rnd_CMFlareMagazine","240Rnd_CMFlareMagazine","60Rnd_CMFlare_Chaff_Magazine","120Rnd_CMFlare_Chaff_Magazine","240Rnd_CMFlare_Chaff_Magazine","192Rnd_CMFlare_Chaff_Magazine","168Rnd_CMFlare_Chaff_Magazine","300Rnd_CMFlare_Chaff_Magazine"];
 	
-		{
+	{
 		_veh = toLower (typeOf _x);
 		_vehO = _x;
 		if not (_veh in _addedV) then
-			{
+		{
 			_addedV pushBack _veh;
 			
 			_vehClass2 = _vehClass >> _veh;
@@ -7195,21 +7789,21 @@ RYD_PresentRHQ =
 			_tMags = [];
 			
 			if (_cT > 0) then
-				{
+			{
 				for "_i" from 0 to (_cT - 1) do 
-					{
+				{
 					_trt = _turrets select _i;
 					if (isClass _trt) then
-						{
+					{
 						_trt = configName _trt;
 						_mgT = _vehClass2 >> "Turrets" >> _trt >> "magazines";
 						if (isArray _mgT) then
-							{
+						{
 							_tMags = _tMags + (getArray _mgT)
-							}
 						}
 					}
-				};
+				}
+			};
 
 			_mainT = _turrets >> "MainTurret";
 			_isMainT = isClass _mainT;
@@ -7246,23 +7840,23 @@ RYD_PresentRHQ =
 			_base = _veh;
 			
 			while {not (_base in ["air","ship","tank","car","wheeled_apc_f","ugv_01_base_f"])} do
-				{
+			{
 				_base = inheritsFrom (_vehClass >> _base);
 				if not (isClass _base) exitWith {};
 				_base = toLower (configName _base);
 				if (_base in ["allvehicles","all"]) exitWith {};
-				};			
+			};			
 			
 			if not (_base isEqualTo "ugv_01_base_f") then
-				{
+			{
 				if (_base in ["air","ship","tank","car","wheeled_apc_f"]) then
-					{
+				{
 					_type = _base
-					};
 				};
+			};
 				
 			if (_isArty) then
-				{
+			{
 				RHQ_Art pushBack _veh;
 				
 				_prim = "";
@@ -7272,39 +7866,38 @@ RYD_PresentRHQ =
 				_illum = "";
 
 				if (_isArmed) then
-					{
+				{
 					_mags = magazines _vehO;
 					
 					if (_isMainT) then
-						{
+					{
 						_mags = _mags + ((getArray (_mainT >> "magazines")) - _mags)
-						};
+					};
 						
 					_maxHit = 10;
 					
-						{
+					{
 						_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 						_ammoC = configfile >> "CfgAmmo" >> _ammo;
 						
 						_actHit = getNumber (_ammoC >> "indirectHitRange");
 						_subM = toLower (getText (_ammoC >> "submunitionAmmo"));
-												
+
 						if (_actHit <= 10) then
-							{
+						{
 							if not (_subM isEqualTo "") then
-								{
+							{
 								_ammoC = configfile >> "CfgAmmo" >> _subM;
 								_actHit = getNumber (_ammoC >> "indirectHitRange")
-								}
-							};
+							}
+						};
 						
 						if ((_actHit > _maxHit) and {_actHit < 100}) then
-							{
+						{
 							_maxHit = _actHit;
 							_prim = _x
-							}
 						}
-					foreach _mags;
+					} foreach _mags;
 					
 					_mags = _mags - [_prim];
 					_mags0 = +_mags;
@@ -7313,7 +7906,7 @@ RYD_PresentRHQ =
 					_rareChosen = false;
 					_secChosen = false;
 					
-						{
+					{
 						_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 						_ammoC = configfile >> "CfgAmmo" >> _ammo;
 						
@@ -7323,133 +7916,127 @@ RYD_PresentRHQ =
 						_subM = toLower (getText (_ammoC >> "submunitionAmmo"));
 						
 						if (_hit <= 10) then
-							{
+						{
 							if not (_subM isEqualTo "") then
-								{
+							{
 								_ammoC = configfile >> "CfgAmmo" >> _subM;
 								_hit = getNumber (_ammoC >> "indirectHit")
-								}
-							};
+							}
+						};
 
 						switch (true) do
-							{
+						{
 							case ((isArray _lc) and {not (_illumChosen)}) : 
-								{
+							{
 								_illum = _x;
 								_mags = _mags - [_x];
 								_illumChosen = true
-								};
-								
+							};
 							case ((_hit <= 10) and {(_subM isEqualTo "smokeshellarty") and {not (_smokeChosen)}}) : 
-								{
+							{
 								_smoke = _x;
 								_mags = _mags - [_x];
 								_smokeChosen = true
-								};
-								
+							};
 							case ((_sim isEqualTo "shotsubmunitions") and {not (_rareChosen)}) : 
-								{
+							{
 								_rare = _x;
 								_mags = _mags - [_x];
 								_rareChosen = true
-								};
-								
+							};
 							case ((_hit > 10) and {not ((_secChosen) or {(_rare == _x)})})  : 
-								{
+							{
 								_sec = _x;
 								_mags = _mags - [_x];
 								_secChosen = true
-								}
 							}
 						}
-					foreach _mags0;
+					} foreach _mags0;
 					
 					if (_sec isEqualTo "") then
-						{
+					{
 						_maxHit = 10;
-						
-							{
+						{
 							_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 							_ammoC = configfile >> "CfgAmmo" >> _ammo;
 							_subAmmo = _ammoC >> "subMunitionAmmo";
 							
 							if ((isText _subAmmo) and {not ((getText _subAmmo) isEqualTo "")}) then
-								{
+							{
 								_ammoC = configfile >> "CfgAmmo" >> (getText _subAmmo);
-								};
-								
+							};
+
 							_actHit = getNumber (_ammoC >> "indirectHit");
 							
 							if (_actHit > _maxHit) then
-								{
+							{
 								_maxHit = _actHit;
 								_sec = _x
-								}
 							}
-						foreach _mags;
-						}
-					};
-					
-				_arr = [_prim,_rare,_sec,_smoke,_illum];
-				if (({_x isEqualTo ""} count _arr) < 5) then
-					{
-					RydHQ_Add_OtherArty pushBack [[_veh],_arr]
+						} foreach _mags;
 					}
 				};
+
+				_arr = [_prim,_rare,_sec,_smoke,_illum];
+				if (({_x isEqualTo ""} count _arr) < 5) then
+				{
+					RydHQ_Add_OtherArty pushBack [[_veh],_arr]
+				}
+			};
 			
 			if (_isDriver) then
-				{
+			{
 				switch (_type) do
-					{
+				{
 					case ("car") : {RHQ_Cars pushBack _veh};	
 					case ("tank") : {RHQ_HArmor pushBack _veh};	
 					case ("wheeled_apc_f") : {RHQ_LArmor pushBack _veh};
 					case ("air") : 
-						{
+					{
 						RHQ_Air pushBack _veh;
 
 						if not (_isArmed) then
-							{
+						{
 							RHQ_NCAir pushBack _veh;
-							};
+						};
 							
 						_isUAV = (getNumber (_vehClass2 >> "Uav")) > 0;
 						
 						if not (_isUAV) then
-							{
+						{
 							_isUAV = (toLower (getText (_vehClass2 >> "crew"))) in ["b_uav_ai","i_uav_ai","o_uav_ai"];
-							};
+						};
 							
 						if (_isUAV) then
-							{
-							RHQ_RAir pushBack _veh
-							}
-						};
-						
-					case ("ship") : {RHQ_Naval pushBack _veh};			
-					};
-					
-				if (_isCargo) then 
-					{
-					RHQ_Cargo pushBack _veh;
-					if not (_isArmed) then
 						{
-						RHQ_NCCargo pushBack _veh;
+							RHQ_RAir pushBack _veh
 						}
 					};
+
+					case ("ship") : {RHQ_Naval pushBack _veh};			
+				};
+					
+				if (_isCargo) then 
+				{
+					RHQ_Cargo pushBack _veh;
+					if not (_isArmed) then
+					{
+						RHQ_NCCargo pushBack _veh;
+					}
+				};
 				
 				RHQ_HArmor = RHQ_HArmor - RHQ_Art;
 				
 				if (_isArmed) then
-					{
+				{
 					_mags = magazines _vehO;
 					
 					if (_isMainT) then
-						{
+					{
 						_mags = _mags + ((getArray (_mainT >> "magazines")) - _mags)
-						};
+					};
 					
-						{
+					{
 						_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 						_ammoC = configfile >> "CfgAmmo" >> _ammo;
 						
@@ -7458,39 +8045,38 @@ RYD_PresentRHQ =
 						
 						if ((_isAA) and {not (_type isEqualTo "air")}) then {RHQ_AAInf pushBack _veh};
 						if (_isAT) then 
-							{
+						{
 							if (_type isEqualTo "wheeled_apc_f") then
-								{
+							{
 								RHQ_LArmorAT pushBack _veh
-								}
+							}
 							else
-								{
+							{
 								if (_type isEqualTo "car") then
-									{
+								{
 									RHQ_ATInf pushBack _veh
-									}
 								}
-							};
-							
+							}
+						};
+
 						if ((_isAA) or {(_isAT)}) exitWith {}
-						}
-					foreach _mags
-					}
+					} foreach _mags
 				}
+			}
 			else
-				{
+			{
 				if (_isArmed) then
-					{
+				{
 					RHQ_Static pushBack _veh;
 					
 					_mags = magazines _vehO;
 					
 					if (_isMainT) then
-						{
+					{
 						_mags = _mags + ((getArray (_mainT >> "magazines")) - _mags)
-						};
+					};
 					
-						{
+					{
 						_ammo = getText (configfile >> "CfgMagazines" >> _x >> "ammo");
 						_ammoC = configfile >> "CfgAmmo" >> _ammo;
 						
@@ -7501,83 +8087,81 @@ RYD_PresentRHQ =
 						if (_isAT) then {RHQ_StaticAT pushBack _veh};
 							
 						if ((_isAA) or {(_isAT)}) exitWith {}
-						}
-					foreach _mags
-					}
-				};
-				
+					} foreach _mags
+				}
+			};
+
 			if (_isAmmoS) then 
-				{
+			{
 				if not (_veh in RHQ_Ammo) then
-					{
+				{
 					RHQ_Ammo pushBack _veh
-					};				
+				};				
 
 				if not (_veh in RHQ_Support) then
-					{
+				{
 					RHQ_Support pushBack _veh
-					}
-				};
+				}
+			};
 				
 			if (_isFuelS) then 
-				{				
+			{				
 				if not (_veh in RHQ_Fuel) then
-					{
-					RHQ_Fuel pushBack _veh
-					};					
-				
-				if not (_veh in RHQ_Support) then
-					{
-					RHQ_Support pushBack _veh
-					}
-				};
-				
-			if (_isRepS) then 
-				{				
-				if not (_veh in RHQ_Rep) then
-					{
-					RHQ_Rep pushBack _veh
-					};					
-				
-				if not (_veh in RHQ_Support) then
-					{
-					RHQ_Support pushBack _veh
-					}
-				};
-				
-			if (_isMedS) then 
-				{				
-				if not (_veh in RHQ_Med) then
-					{
-					RHQ_Med pushBack _veh
-					};	
-				
-				if not (_veh in RHQ_Support) then
-					{
-					RHQ_Support pushBack _veh
-					}
-				};
-				
-			if (_type in ["air","tank","wheeled_apc_f"]) then
 				{
+					RHQ_Fuel pushBack _veh
+				};					
+				
+				if not (_veh in RHQ_Support) then
+				{
+					RHQ_Support pushBack _veh
+				}
+			};
+
+			if (_isRepS) then 
+			{				
+				if not (_veh in RHQ_Rep) then
+				{
+					RHQ_Rep pushBack _veh
+				};					
+				
+				if not (_veh in RHQ_Support) then
+				{
+					RHQ_Support pushBack _veh
+				}
+			};
+
+			if (_isMedS) then 
+			{				
+				if not (_veh in RHQ_Med) then
+				{
+					RHQ_Med pushBack _veh
+				};	
+				
+				if not (_veh in RHQ_Support) then
+				{
+					RHQ_Support pushBack _veh
+				}
+			};
+
+			if (_type in ["air","tank","wheeled_apc_f"]) then
+			{
 				_crew = _vehClass >> _veh >> "crew";
 				
 				if (isText _crew) then
-					{
+				{
 					_crew = toLower (getText _crew);
 
 					if not (_crew in (RYD_WS_Crew_class + RHQ_Crew)) then
-						{
+					{
 						RHQ_Crew pushBack _crew;
-						}
 					}
 				}
-			};			
-		}
-	foreach _allVehs;
+			}
+		};			
+	} foreach _allVehs;
 	
 	RHQ_Inf = RHQ_Inf - ["b_uav_ai","i_uav_ai","o_uav_ai"];
 	RHQ_Crew = RHQ_Crew - ["b_uav_ai","i_uav_ai","o_uav_ai"];
 	
 	true
-	};
+};

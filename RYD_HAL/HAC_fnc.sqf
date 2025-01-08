@@ -4566,7 +4566,7 @@ RYD_HQChatter =
 
 	_where = _where + (format ["Grid: %1",mapGridPosition _pos]);
 
-	_sentence = format ["%1. %2 at %3.",_who,_sentence,_where];
+	_sentence = format ["%1, %2 at %3.",_who,_sentence,_where];
 		
 
 	if not (isMultiplayer) then {

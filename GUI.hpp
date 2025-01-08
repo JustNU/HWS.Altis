@@ -874,7 +874,6 @@ class RscHWS
 			h = 1 * GUI_GRID_H;
 			tooltip = "Select interspace between factions, NONE - factions intermixed";
 		};
-			
 
 		class RscBack2: HWS_RscPicture
 		{
@@ -944,14 +943,14 @@ class RscHWS
 
 			x = 36 * GUI_GRID_W + GUI_GRID_X;
 		};
-			
+
 		class Fac_A2: Fac_A
 		{
 			idc = 124;
 
 			x = -16.5 * GUI_GRID_W + GUI_GRID_X;
 		};
-			
+
 		class Fac_B2: Fac_A
 		{
 			idc = 125;
