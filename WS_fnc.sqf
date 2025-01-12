@@ -3176,7 +3176,7 @@ RYD_WS_Battlefield =
 				{
 				_defPos = (_strAr select (floor (random (count _strAr)))) select 0;
 				
-				_attPos = [_defPos,_strAr,1500,3000] call RYD_WS_FindPosInRange;
+				_attPos = [_defPos,_strAr,2500,4000] call RYD_WS_FindPosInRange;
 				_nearSeaD = [_defPos,600] call RYD_WS_NearSea;
 				_nearSeaA = [_attPos,600] call RYD_WS_NearSea;
 				_nearSea = _nearSeaD max _nearSeaA;
@@ -3204,7 +3204,7 @@ RYD_WS_Battlefield =
 				{
 				_center = (_strAr select (floor (random (count _strAr)))) select 0;
 				
-				_posA = [_center,1200,2400,50] call RYD_WS_FindLandPos;
+				_posA = [_center,2500,4000,50] call RYD_WS_FindLandPos;
 				_nearSea = [_posA,600] call RYD_WS_NearSea;
 				_ct = _ct + 1;
 				if (_ct > 10) exitWith {_posA = [_center,100,300] call RYD_RandomAroundMM}
@@ -3216,7 +3216,7 @@ RYD_WS_Battlefield =
 			
 			_center = [_battlePoint,_angleA + 210 - (random 60),1800] call RYD_PosTowards2D;
 			
-			_posB = [_center,0,400,50] call RYD_WS_FindLandPos;
+			_posB = [_center,0,2000,50] call RYD_WS_FindLandPos;
 			_nearSea = [_posB,600] call RYD_WS_NearSea;
 			
 			_ct = 0;
@@ -3225,7 +3225,7 @@ RYD_WS_Battlefield =
 				{
 				_center = [_battlePoint,_angleA + 210 - (random 60),1800 + (((2 * _ct) - 10) * 50)] call RYD_PosTowards2D;
 				
-				_posB = [_center,0,400,50] call RYD_WS_FindLandPos;
+				_posB = [_center,0,2000,50] call RYD_WS_FindLandPos;
 				_nearSea = [_posB,600] call RYD_WS_NearSea;
 				_ct = _ct + 1;
 				if (_ct > 10) exitWith {_posB = [_battlePoint,100,300] call RYD_RandomAroundMM}
@@ -4362,12 +4362,12 @@ RYD_WS_SpawnAir =
 		} foreach _ldrs;
 
 		_ldr = selectRandomWeighted _ldrArr;
-		_vh = createVehicle [_class, [_checkPos select 0, _checkPos select 1, 100], [], 0, "FLY"];
+		_vh = createVehicle [_class, [_checkPos select 0, _checkPos select 1, 75], [], 0, "FLY"];
 		
 		RYD_WS_SpawnPositions set [(count RYD_WS_SpawnPositions),_checkPos];
 
 		_vh setDir _angle;
-		_vh setPos [_checkPos select 0, _checkPos select 1, 100];
+		_vh setPos [_checkPos select 0, _checkPos select 1, 50];
 		
 		_side createVehicleCrew _vh;
 		_gp = (group _vh);
@@ -6296,10 +6296,11 @@ RYD_WS_WholeMapPlacement =
 								removeAllWeapons leaderHQ;
 								leaderHQ hideObject true;
 								leaderHQ allowDamage false;
+								leaderHQ setAnimSpeedCoef 20;
 								leaderHQ addEventHandler ["HandleDamage",{0}];
 							
 								_fldrGp = createGroup _side;
-								RydHQ_ExcludedG pushback _fldrGp;
+								RydHQ_Excluded pushback _fldrGp;
 								fakeLeaderHQ = _fldrGp createUnit [_ldrClass, _x, [], 0, "NONE"];
 								[fakeLeaderHQ] joinSilent _fldrGp;
 								fakeLeaderHQ setDir _dir;
@@ -6360,10 +6361,11 @@ RYD_WS_WholeMapPlacement =
 								removeAllWeapons leaderHQB;
 								leaderHQB hideObject true;
 								leaderHQB allowDamage false;
+								leaderHQB setAnimSpeedCoef 20;
 								leaderHQB addEventHandler ["HandleDamage",{0}];
 							
 								_fldrGp = createGroup _side;
-								RydHQB_ExcludedG pushback _fldrGp;
+								RydHQB_Excluded pushback _fldrGp;
 								fakeLeaderHQB = _fldrGp createUnit [_ldrClass, _x, [], 0, "NONE"];
 								fakeLeaderHQB setDir _dir;
 								[fakeLeaderHQB] joinSilent _fldrGp;
@@ -6430,10 +6432,11 @@ RYD_WS_WholeMapPlacement =
 								removeAllWeapons leaderHQC;
 								leaderHQC hideObject true;
 								leaderHQC allowDamage false;
+								leaderHQC setAnimSpeedCoef 20;
 								leaderHQC addEventHandler ["HandleDamage",{0}];
 								
 								_fldrGp = createGroup _side;
-								RydHQC_ExcludedG pushback _fldrGp;
+								RydHQC_Excluded pushback _fldrGp;
 								fakeLeaderHQC = _fldrGp createUnit [_ldrClass, _x, [], 0, "NONE"];
 								fakeLeaderHQC setDir _dir;
 								[fakeLeaderHQC] joinSilent _fldrGp;
@@ -6495,10 +6498,11 @@ RYD_WS_WholeMapPlacement =
 								removeAllWeapons leaderHQD;
 								leaderHQD hideObject true;
 								leaderHQD allowDamage false;
+								leaderHQD setAnimSpeedCoef 20;
 								leaderHQD addEventHandler ["HandleDamage",{0}];
 								
 								_fldrGp = createGroup _side;
-								RydHQD_ExcludedG pushback _fldrGp;
+								RydHQD_Excluded pushback _fldrGp;
 								fakeLeaderHQD = _fldrGp createUnit [_ldrClass, _x, [], 0, "NONE"];
 								fakeLeaderHQD setDir _dir;
 								[fakeLeaderHQD] joinSilent _fldrGp;
@@ -7375,10 +7379,10 @@ RYD_WS_HQGuard =
 	
 	_excl = switch (true) do
 	{
-		case (_unit in [leaderHQ,fakeLeaderHQ]) :  {RydHQ_ExcludedG};
-		case (_unit in [leaderHQB,fakeLeaderHQB]) :  {RydHQB_ExcludedG};
-		case (_unit in [leaderHQC,fakeLeaderHQC]) :  {RydHQC_ExcludedG};
-		case (_unit in [leaderHQD,fakeLeaderHQD]) :  {RydHQD_ExcludedG};
+		case (_unit in [leaderHQ,fakeLeaderHQ]) :  {RydHQ_Excluded};
+		case (_unit in [leaderHQB,fakeLeaderHQB]) :  {RydHQB_Excluded};
+		case (_unit in [leaderHQC,fakeLeaderHQC]) :  {RydHQC_Excluded};
+		case (_unit in [leaderHQD,fakeLeaderHQD]) :  {RydHQD_Excluded};
 		default {[]}
 	};
 	

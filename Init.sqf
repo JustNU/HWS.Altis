@@ -4,8 +4,19 @@ _taken = profileNamespace getVariable ["RYD_WS_MapColors" + worldName,[]];
 
 RydxHQ_NoRestPlayers = true;
 //RydxHQ_NoCargoPlayers = true;
-RydHQ_Actions = true;
 RydxHQ_ReconCargo = false;
+RydxHQ_SynchroAttack = false;
+RydxHQ_HQChat = true;
+RydxHQ_InfoMarkersID = true;
+RydxHQ_Actions = true;
+RydxHQ_ActionsMenu = true;
+RydxHQ_AIChat_Type = "NONE";
+RydHQx_PlayerCargoCheckLoopTime = 2;
+RydxHQ_DisembarkRange = 200;
+RydxHQ_LZ = false;
+RydxHQ_RHQAutoFill = true;
+RydxHQ_PathFinding = 0;
+RydxHQ_NEAware = 500;
 //RydHQ_Combining = true;
 
 //RHQ SECTION
@@ -301,12 +312,12 @@ RydHQD_ChatDebug = false;
 RydHQE_ChatDebug = false;
 RydHQF_ChatDebug = false;
 
-RydHQ_ExcludedG = [];
-RydHQB_ExcludedG = [];
-RydHQC_ExcludedG = [];
-RydHQD_ExcludedG = [];
-RydHQE_ExcludedG = [];
-RydHQF_ExcludedG = [];
+RydHQ_Excluded = [];
+RydHQB_Excluded = [];
+RydHQC_Excluded = [];
+RydHQD_Excluded = [];
+RydHQE_Excluded = [];
+RydHQF_Excluded = [];
 
 fakeLeaderHQ = objNull;
 fakeLeaderHQB = objNull;
@@ -2052,10 +2063,11 @@ if not (RYD_WS_WholeMap) then
 					removeAllWeapons leaderHQ;
 					leaderHQ hideObject true;
 					leaderHQ allowDamage false;
+					leaderHQ setAnimSpeedCoef 20;
 					leaderHQ addEventHandler ["HandleDamage",{0}];
 					
 					_fldrGp = createGroup _x;
-					RydHQ_ExcludedG pushback _fldrGp;
+					RydHQ_Excluded pushback _fldrGp;
 					fakeLeaderHQ = _fldrGp createUnit [_ldrClass, _ldrPos, [], 0, "NONE"];
 					fakeLeaderHQ setDir _dir;
 					[fakeLeaderHQ] joinSilent _fldrGp;
@@ -2089,10 +2101,11 @@ if not (RYD_WS_WholeMap) then
 					removeAllWeapons leaderHQB;
 					leaderHQB hideObject true;
 					leaderHQB allowDamage false;
+					leaderHQB setAnimSpeedCoef 20;
 					leaderHQB addEventHandler ["HandleDamage",{0}];
 					
 					_fldrGp = createGroup _x;
-					RydHQB_ExcludedG pushback _fldrGp;
+					RydHQB_Excluded pushback _fldrGp;
 					fakeLeaderHQB = _fldrGp createUnit [_ldrClass, _ldrPos, [], 0, "NONE"];
 					fakeLeaderHQB setDir _dir;
 					[fakeLeaderHQ] joinSilent _fldrGp;

@@ -332,6 +332,33 @@ switch (_BBSide) do
 	case ("B") : {missionNameSpace setVariable ["B_SAreas",_strArea]};
 	};
 	
+_BBStr = [];
+
+if (_BBSide == "A") then {if not (isNil "RydBBa_Str") then {_BBStr = RydBBa_Str}};
+if (_BBSide == "B") then {if not (isNil "RydBBb_Str") then {_BBStr = RydBBb_Str}};
+
+_fixedInitStatus = [];
+
+	{
+	_pos = _x select 0;
+	_pos = (_pos select 0) + (_pos select 1);
+
+	_fixedInitStatus pushBack _pos
+	}
+foreach _BBStr;
+
+_BBSAL = RydBBa_SAL;
+if (_BBSide == "B") then {_BBSAL = RydBBb_SAL};
+
+	{
+	_BBStr pushBack [(position _x),_x getVariable "AreaValue",false]
+	}
+foreach (synchronizedObjects _BBSAL);
+
+_strArea = _strArea + _BBStr;
+
+if (RydBB_CustomObjOnly) then {_strArea = _BBStr};
+	
 ////////////////////////////////////////////////////////////////////
 
 _bbCycle = 0;
@@ -656,10 +683,27 @@ while {(RydBB_Active)} do
 
 		_attackAxis = [_ArmyPos,_mainPos,10] call RYD_AngTowards;
 
+		if (_BBSide == "A") then
+			{
+			[[_strArea,_BBSide,RydBBb_Str],RYD_ObjMark] call RYD_Spawn;
+			}
+		else
+			{
+				{
+				if not (_x select 2) then
+					{
+					RYD_WS_ObjToTakeB = RYD_WS_ObjToTakeB + 1;
+					}
+				}
+			foreach _strArea
+			};
+		
+		/*
 		if (RydBB_Debug) then
 			{			
 			[[_strArea,_BBSide],RYD_ObjMark] call RYD_Spawn
 			};
+		*/
 			
 		if (RydBB_Debug) then
 			{
