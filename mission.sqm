@@ -16,14 +16,14 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={7044.6729,952.19183,25387.572};
+		pos[]={7048.6118,950.43481,25383.908};
 		dir[]={0.77995872,-0.62543064,0.022385292};
 		up[]={0.62517327,0.78027976,0.017942855};
 		aside[]={0.0286888,0,-0.99958855};
 	};
 };
 binarizationWanted=0;
-sourceName="HWS_ALTIS";
+sourceName="HWS";
 addons[]=
 {
 	"A3_Structures_F_Civ_Camping",
@@ -112,7 +112,7 @@ class Mission
 	assetType="Free";
 	class Intel
 	{
-		briefingName="HETMAN: War Stories 1.10.1 NR6 - Altis";
+		briefingName="HETMAN: War Stories 1.10.2 NR6 - Altis";
 		overviewText="War has many faces.";
 		startWeather=0.29999998;
 		startWind=0.099999994;
