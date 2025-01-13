@@ -601,6 +601,62 @@ class RscCheckBoxes
 	values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
 	tooltips[] = {"tip0","tip1","tip2","tip3","tip4","tip5","tip6","tip7","tip8","tip9","tip10","tip11","tip12","tip13","tip14","tip15","tip16","tip17","tip18","tip19","tip20","tip21","tip22","tip23","tip24","tip25","tip26","tip27","tip28","tip29","tip30","tip31"};	
 };
+
+class RscListBox
+{
+	deletable = 0;
+	fade = 0;
+	access = 0;
+	type = 5; //CT_LISTBOX
+	rowHeight = 0;
+	colorText[] = {1,1,1,1};
+	colorDisabled[] = {1,1,1,0.25};
+	colorScrollbar[] = {1,0,0,0};
+	colorSelect[] = {0,0,0,1};
+	colorSelect2[] = {0,0,0,1};
+	colorSelectBackground[] = {0.95,0.95,0.95,1};
+	colorSelectBackground2[] = {1,1,1,0.5};
+	colorBackground[] = {0,0,0,0.3};
+	soundSelect[] =
+	{
+		"\A3\ui_f\data\sound\RscListbox\soundSelect",
+		0.09,
+		1
+	};
+	autoScrollSpeed = -1;
+	autoScrollDelay = 5;
+	autoScrollRewind = 0;
+	arrowEmpty = "#(argb,8,8,3)color(1,1,1,1)";
+	arrowFull = "#(argb,8,8,3)color(1,1,1,1)";
+	colorPicture[] = {1,1,1,1};
+	colorPictureSelected[] = {1,1,1,1};
+	colorPictureDisabled[] = {1,1,1,0.25};
+	colorPictureRight[] = {1,1,1,1};
+	colorPictureRightSelected[] = {1,1,1,1};
+	colorPictureRightDisabled[] = {1,1,1,0.25};
+	colorTextRight[] = {1,1,1,1};
+	colorSelectRight[] = {0,0,0,1};
+	colorSelect2Right[] = {0,0,0,1};
+	tooltipColorText[] = {1,1,1,1};
+	tooltipColorBox[] = {1,1,1,1};
+	tooltipColorShade[] = {0,0,0,0.65};
+	class ListScrollBar : ScrollBar
+	{
+		color[] = {1,1,1,1};
+		autoScrollEnabled = 1;
+	};
+	x = 0;
+	y = 0;
+	w = 0.3;
+	h = 0.3;
+	style = 16; //LB_TEXTURES
+	font = "RobotoCondensed";
+	sizeEx = 0.03921;
+	shadow = 0;
+	colorShadow[] = {0,0,0,0.5};
+	period = 1.2;
+	maxHistoryDelay = 1;
+};
 ////////////////////////////////////////////////////////
 // GUI EDITOR OUTPUT START (by Rydygier, v1.063, #Syfezo)
 ////////////////////////////////////////////////////////
@@ -906,37 +962,41 @@ class RscHWS
 			autocomplete = "scripting";
 		};
 		
-		class Fac_A: RscCheckBoxes
+		
+		class Fac_A: RscListBox
 		{
 			onLoad = "";
 
 			idc = 122;
-			style = 2; // ST_CENTER
+			
+			style = 32; //LB_MULTI
 
-			x = -6 * GUI_GRID_W + GUI_GRID_X;
+			x = -16 * GUI_GRID_W + GUI_GRID_X;
 			y = -2.5 * GUI_GRID_H + GUI_GRID_Y;
-			w = 10 * GUI_GRID_W;
-			h = 32 * GUI_GRID_H;
+			w = 20 * GUI_GRID_W;
+			h = 30 * GUI_GRID_H;
 			
 			colorText[] = {0.75,0.75,0.75,0.75};
 			colorTextSelect[] = {1,1,1,1};
 			colorBackground[] = {0,0,0,0.75};
 			colorSelectedBg[] = {0,0,0,0.75};
+			pictureRight = "\a3\Ui_f\data\Map\Markers\Military\unknown_CA.paa";
 			
-			font = "RobotoCondensed";
-			sizeEx = 0.03921;
+			//font = "RobotoCondensed";
+			//sizeEx = 0.03921;
+			//sizeEx2 = 0.03921;
 			
-			onCheckBoxesSelChanged = "";
+			//onCheckBoxesSelChanged = "";
 			
-			columns = 1;
-			rows = 32;
+			//columns = 1;
+			//rows = 32;
 
-			strings[] = {};//{"0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-			checked_strings[] = {};//{"[0]","[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]","[13]","[14]","[15]","[16]","[17]","[18]","[19]","[20]","[21]","[22]","[23]","[24]","[25]","[26]","[27]","[28]","[29]","[30]","[31]"};
-			values[] = {};//{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-			tooltips[] = {};//{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
+			//strings[] = {};//{"0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+			//checked_strings[] = {};//{"[0]","[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]","[13]","[14]","[15]","[16]","[17]","[18]","[19]","[20]","[21]","[22]","[23]","[24]","[25]","[26]","[27]","[28]","[29]","[30]","[31]"};
+			//values[] = {};//{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+			//tooltips[] = {};//{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
 		};
-			
+		
 		class Fac_B: Fac_A
 		{
 			idc = 123;
@@ -944,6 +1004,7 @@ class RscHWS
 			x = 36 * GUI_GRID_W + GUI_GRID_X;
 		};
 
+		/*
 		class Fac_A2: Fac_A
 		{
 			idc = 124;
@@ -957,6 +1018,7 @@ class RscHWS
 
 			x = 46.5 * GUI_GRID_W + GUI_GRID_X;
 		};
+		*/
 
 		class RscButton_HWS: HWS_RscButton
 		{

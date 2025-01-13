@@ -574,33 +574,11 @@ RYD_WS_TakeValues =
 		};	
 
 		_ctrl = (findDisplay 2500) displayCtrl 122;
-		if not ((count _factions) > 32) then
+		for "_i" from 0 to ((count _factions) - 1) do
 		{
-			for "_i" from 0 to ((count _factions) - 1) do
+			if ((_ctrl lbIsSelected _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
 			{
-				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
-				{
-					RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
-				};
-			};
-		}
-		else
-		{
-			_ctrl2 = (findDisplay 2500) displayCtrl 124;			
-			for "_i" from 0 to 31 do
-			{
-				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
-				{
-					RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
-				};
-			};
-
-			for "_i" from 32 to ((count _factions) min 63) do
-			{
-				if ((_ctrl2 ctrlChecked (_i - 32)) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
-				{
-					RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
-				};
+				RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
 			};
 		};
 		
@@ -625,33 +603,11 @@ RYD_WS_TakeValues =
 		};	
 
 		_ctrl = (findDisplay 2500) displayCtrl 122;
-		if not ((count _factions) > 32) then
+		for "_i" from 0 to ((count _factions) - 1) do
 		{
-			for "_i" from 0 to ((count _factions) - 1) do
+			if ((_ctrl lbIsSelected _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
 			{
-				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
-				{
-					RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
-				};
-			};
-		}
-		else
-		{
-			_ctrl2 = (findDisplay 2500) displayCtrl 124;			
-			for "_i" from 0 to 31 do
-			{
-				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
-				{
-					RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
-				};
-			};
-
-			for "_i" from 32 to ((count _factions) min 63) do
-			{
-				if ((_ctrl2 ctrlChecked (_i - 32)) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsA) < 1)}) then
-				{
-					RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
-				};
+				RYD_WS_selFactionsA pushBack [(_factions select _i),_i]
 			};
 		};
 	};
@@ -773,34 +729,12 @@ RYD_WS_TakeValues =
 			case (RYD_ix_SideB_R) : {RYD_WS_B_Factions2};
 		};	
 
-		_ctrl = (findDisplay 2500) displayCtrl 123;		
-		if not ((count _factions) > 32) then
+		_ctrl = (findDisplay 2500) displayCtrl 123;	
+		for "_i" from 0 to ((count _factions) - 1) do
 		{
-			for "_i" from 0 to ((count _factions) - 1) do
+			if ((_ctrl lbIsSelected _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
 			{
-				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
-				{
-					RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
-				};
-			};
-		}
-		else
-		{
-			_ctrl2 = (findDisplay 2500) displayCtrl 124;			
-			for "_i" from 0 to 31 do
-			{
-				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
-				{
-					RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
-				};
-			};
-
-			for "_i" from 32 to ((count _factions) min 63) do
-			{
-				if ((_ctrl2 ctrlChecked (_i - 32)) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
-				{
-					RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
-				};
+				RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
 			};
 		};
 		
@@ -828,34 +762,12 @@ RYD_WS_TakeValues =
 		};	
 
 		_ctrl = (findDisplay 2500) displayCtrl 123;		
-		if not ((count _factions) > 32) then
-		{
-			for "_i" from 0 to ((count _factions) - 1) do
-			{
-				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
-				{
-					RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
-				};
-			};
-		}
-		else
-		{
-			_ctrl2 = (findDisplay 2500) displayCtrl 125;
 
-			for "_i" from 0 to 31 do
+		for "_i" from 0 to ((count _factions) - 1) do
+		{
+			if ((_ctrl lbIsSelected _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
 			{
-				if ((_ctrl ctrlChecked _i) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
-				{
-					RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
-				};
-			};
-
-			for "_i" from 32 to ((count _factions) min 63) do
-			{
-				if ((_ctrl2 ctrlChecked (_i - 32)) and {(({((_x select 1) isEqualTo _i)} count RYD_WS_selFactionsB) < 1)}) then
-				{
-					RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
-				};
+				RYD_WS_selFactionsB pushBack [(_factions select _i),_i]
 			};
 		};
 	};
@@ -1169,6 +1081,23 @@ RYD_FactionFill =
 		_side = _x select 2;
 		
 		_newIx = lbAdd [_ctrlFill, _name];
+		
+		_facSide = getNumber (configFile >> "CfgFactionClasses" >> _fac >> "side");
+		_icon = getText (configFile >> "CfgFactionClasses" >> _fac >> "icon");
+		
+		lbSetPicture [_ctrlFill, _newIx, _icon];
+		lbSetPictureColor [_ctrlFill, _newIx, [1, 1, 1, 1]];
+		lbSetPictureColorSelected [_ctrlFill, _newIx, [1, 1, 1, 1]];
+		
+		// SET RIGHT PIC OR TEXT DO NOT WORK, IM TIRED OF TRYING OT MAKE IT WORK, IM CRYING AND PISSING MY PANTS
+		_sideString = switch (_facSide) do
+		{
+			case (1) : {"BLUFOR"};
+			case (0) : {"OPFOR"};
+			case (2) : {"INDEP"};
+		};
+		
+		lbSetTooltip [_ctrlFill, _newIx, _sideString];
 
 		missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill), [_newIx, _name, toLower _fac, _side]];
 	} foreach _factions;
@@ -1209,15 +1138,8 @@ RYD_FactionFill_M =
 		case (_ctrlA) : {122};
 		case (_ctrlB) : {_facSel = RYD_WS_selFactionsB;123};
 	};
-		
-	_ctrlFill2 = switch (_ctrl) do
-	{
-		case (_ctrlA) : {124};
-		case (_ctrlB) : {125};
-	};
 
 	lbClear _ctrlFill;
-	lbClear _ctrlFill2;
 
 	_factions = switch (_sIx) do
 	{		
@@ -1231,8 +1153,6 @@ RYD_FactionFill_M =
 	};
 
 	_myCtrl = (findDisplay 2500) displayCtrl _ctrlFill;
-	_myCtrl2 = (findDisplay 2500) displayCtrl _ctrlFill2;
-	_myCtrl2 ctrlShow false;
 	
 	if not ((_ix isEqualTo (count _factions)) or (_ix isEqualTo ((count _factions) + 3))) exitwith
 	{
@@ -1240,84 +1160,44 @@ RYD_FactionFill_M =
 		_myCtrl ctrlShow false;
 	}; 
 
-	if not ((count _factions) > 32)	then
 	{
-		{
-			//if (_foreachIndex > 31) exitWith {};
-			_fac = _x select 0;
-			_name = _x select 1;
-			
-			_newIx = lbAdd [_ctrlFill, _name];
-
-			missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,_name,toLower _fac]];
-		} foreach _factions;
-	}
-	else
-	{
-		for "_i" from 0 to 31 do
-		{
-			//if (_foreachIndex > 31) exitWith {};
-			_arr = _factions select _i;
-			_fac = _arr select 0;
-			_name = _arr select 1;
-			
-			_newIx = lbAdd [_ctrlFill, _name];
-
-			missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,_name,toLower _fac]];
-		};
-
-		for "_i" from 32 to (((count _factions) - 1) min 63) do
-		{
-			//if (_foreachIndex > 31) exitWith {};
-			_arr = _factions select _i;
-			_fac = _arr select 0;
-			_name = _arr select 1;
-			
-			_newIx = lbAdd [_ctrlFill2, _name];
-
-			missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill2),[_newIx,_name,toLower _fac]];
-		};				
+		//if (_foreachIndex > 31) exitWith {};
+		_fac = _x select 0;
+		_name = _x select 1;
 		
-		_myCtrl2 ctrlShow true;
-	};
+		_newIx = lbAdd [_ctrlFill, _name];
+		
+		_facSide = getNumber (configFile >> "CfgFactionClasses" >> _fac >> "side");
+		_icon = getText (configFile >> "CfgFactionClasses" >> _fac >> "icon");
+		
+		lbSetPicture [_ctrlFill, _newIx, _icon];
+		lbSetPictureColor [_ctrlFill, _newIx, [1, 1, 1, 1]];
+		lbSetPictureColorSelected [_ctrlFill, _newIx, [1, 1, 1, 1]];
+		
+		// SET RIGHT PIC OR TEXT DO NOT WORK, IM TIRED OF TRYING OT MAKE IT WORK, IM CRYING AND PISSING MY PANTS
+		_sideString = switch (_facSide) do
+		{
+			case (1) : {"BLUFOR"};
+			case (0) : {"OPFOR"};
+			case (2) : {"INDEP"};
+		};
+		
+		lbSetTooltip [_ctrlFill, _newIx, _sideString];
+		
+		missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,_name,toLower _fac]];
+	} foreach _factions;
 
 	//ctrlShow [_ctrlFill,true];
 	
-	if not ((count _factions) > 32)	then
+	_myCtrl ctrlShow true;
+	waitUntil
 	{
-		_myCtrl ctrlShow true;
-		waitUntil
-		{
-			(ctrlShown _myCtrl)
-		};
-		
-		{
-			_myCtrl ctrlSetChecked [(_x select 1),true];
-		}
-		foreach _facSel;
-	}
-	else
-	{
-		_myCtrl ctrlShow true;
-		_myCtrl2 ctrlShow true;
-		
-		waitUntil
-		{
-			((ctrlShown _myCtrl) and {(ctrlShown _myCtrl2)})
-		};
-
-		{
-			_ix = _x select 1;
-			if not (_ix > 31) then
-			{
-				_myCtrl ctrlSetChecked [_ix,true];
-			}
-			else
-			{
-				_myCtrl2 ctrlSetChecked [(_ix - 32),true];
-			};
-		} foreach _facSel;		
+		(ctrlShown _myCtrl)
 	};
+		
+	{
+		_myCtrl lbSetSelected [(_x select 1),true];
+	} foreach _facSel;
 
 	true
 };
