@@ -3176,7 +3176,7 @@ RYD_WS_Battlefield =
 				{
 				_defPos = (_strAr select (floor (random (count _strAr)))) select 0;
 				
-				_attPos = [_defPos,_strAr,2500,4000] call RYD_WS_FindPosInRange;
+				_attPos = [_defPos,_strAr,1500,2500] call RYD_WS_FindPosInRange;
 				_nearSeaD = [_defPos,600] call RYD_WS_NearSea;
 				_nearSeaA = [_attPos,600] call RYD_WS_NearSea;
 				_nearSea = _nearSeaD max _nearSeaA;
@@ -3195,7 +3195,7 @@ RYD_WS_Battlefield =
 			{
 			_center = (_strAr select (floor (random (count _strAr)))) select 0;
 				
-			_posA = [_center,800,1600,50] call RYD_WS_FindLandPos;
+			_posA = [_center,750,1250,50] call RYD_WS_FindLandPos;
 			_nearSea = [_posA,600] call RYD_WS_NearSea;
 			
 			_ct = 0;
@@ -3204,7 +3204,7 @@ RYD_WS_Battlefield =
 				{
 				_center = (_strAr select (floor (random (count _strAr)))) select 0;
 				
-				_posA = [_center,2500,4000,50] call RYD_WS_FindLandPos;
+				_posA = [_center,750,1250,50] call RYD_WS_FindLandPos;
 				_nearSea = [_posA,600] call RYD_WS_NearSea;
 				_ct = _ct + 1;
 				if (_ct > 10) exitWith {_posA = [_center,100,300] call RYD_RandomAroundMM}
@@ -3216,16 +3216,16 @@ RYD_WS_Battlefield =
 			
 			_center = [_battlePoint,_angleA + 210 - (random 60),1800] call RYD_PosTowards2D;
 			
-			_posB = [_center,0,2000,50] call RYD_WS_FindLandPos;
+			_posB = [_center,0,1250,50] call RYD_WS_FindLandPos;
 			_nearSea = [_posB,600] call RYD_WS_NearSea;
 			
 			_ct = 0;
 			
-			while {((surfaceIsWater _posB) or (_nearSea > 10))} do
+			while {((surfaceIsWater _posB) or (_nearSea > 10)) or (_posA distance2D _posB < 1500)} do
 				{
 				_center = [_battlePoint,_angleA + 210 - (random 60),1800 + (((2 * _ct) - 10) * 50)] call RYD_PosTowards2D;
 				
-				_posB = [_center,0,2000,50] call RYD_WS_FindLandPos;
+				_posB = [_center,0,1250,50] call RYD_WS_FindLandPos;
 				_nearSea = [_posB,600] call RYD_WS_NearSea;
 				_ct = _ct + 1;
 				if (_ct > 10) exitWith {_posB = [_battlePoint,100,300] call RYD_RandomAroundMM}

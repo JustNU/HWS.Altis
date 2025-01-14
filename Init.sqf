@@ -1088,21 +1088,24 @@ RYD_FactionFill =
 		lbSetPicture [_ctrlFill, _newIx, _icon];
 		lbSetPictureColor [_ctrlFill, _newIx, [1, 1, 1, 1]];
 		lbSetPictureColorSelected [_ctrlFill, _newIx, [1, 1, 1, 1]];
+		lbSetTooltip [_ctrlFill, _newIx, _fac];
 		
 		// SET RIGHT PIC OR TEXT DO NOT WORK, IM TIRED OF TRYING OT MAKE IT WORK, IM CRYING AND PISSING MY PANTS
-		_sideString = switch (_facSide) do
+		_textColor = switch (_facSide) do
 		{
-			case (1) : {"BLUFOR"};
-			case (0) : {"OPFOR"};
-			case (2) : {"INDEP"};
+			case (1) : {[0.00, 0.30, 0.60, 1.00]};
+			case (0) : {[0.70, 0.00, 0.00, 1.00]};
+			case (2) : {[0.00, 0.70, 0.00, 1.00]};
 		};
 		
-		lbSetTooltip [_ctrlFill, _newIx, _sideString];
+		lbSetColor [_ctrlFill, _newIx, _textColor];
+		lbSetSelectColor [_ctrlFill, _newIx, _textColor];
 
 		missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill), [_newIx, _name, toLower _fac, _side]];
 	} foreach _factions;
 	
 	_newIx = lbAdd [_ctrlFill, "MULTI"];
+	lbSetTooltip [_ctrlFill, _newIx, "USE SHIFT OR CTRL TO SELECT MULTIPLE FROM THE LIST"];
 	missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,"MULTI",""]];	
 	
 	_newIx = lbAdd [_ctrlFill, "RANDOM FULLY"];
@@ -1112,6 +1115,7 @@ RYD_FactionFill =
 	missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,"RANDOM BY SIDE",""]];
 	
 	_newIx = lbAdd [_ctrlFill, "RANDOM FROM CHOSEN"];
+	lbSetTooltip [_ctrlFill, _newIx, "USE SHIFT OR CTRL TO SELECT MULTIPLE FROM THE LIST"];
 	missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,"RANDOM FROM CHOSEN",""]];
 
 	lbSetCurSel [_ctrlFill,(profileNamespace getVariable [_varSel,0])];
@@ -1173,16 +1177,18 @@ RYD_FactionFill_M =
 		lbSetPicture [_ctrlFill, _newIx, _icon];
 		lbSetPictureColor [_ctrlFill, _newIx, [1, 1, 1, 1]];
 		lbSetPictureColorSelected [_ctrlFill, _newIx, [1, 1, 1, 1]];
+		lbSetTooltip [_ctrlFill, _newIx, _fac];
 		
 		// SET RIGHT PIC OR TEXT DO NOT WORK, IM TIRED OF TRYING OT MAKE IT WORK, IM CRYING AND PISSING MY PANTS
-		_sideString = switch (_facSide) do
+		_textColor = switch (_facSide) do
 		{
-			case (1) : {"BLUFOR"};
-			case (0) : {"OPFOR"};
-			case (2) : {"INDEP"};
+			case (1) : {[0.00, 0.30, 0.60, 1.00]};
+			case (0) : {[0.70, 0.00, 0.00, 1.00]};
+			case (2) : {[0.00, 0.70, 0.00, 1.00]};
 		};
 		
-		lbSetTooltip [_ctrlFill, _newIx, _sideString];
+		lbSetColor [_ctrlFill, _newIx, _textColor];
+		lbSetSelectColor [_ctrlFill, _newIx, _textColor];
 		
 		missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill),[_newIx,_name,toLower _fac]];
 	} foreach _factions;
