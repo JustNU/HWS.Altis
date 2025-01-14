@@ -930,6 +930,26 @@ class RscHWS
 			h = 1 * GUI_GRID_H;
 			tooltip = "Select interspace between factions, NONE - factions intermixed";
 		};
+		
+		class BT_Frame: HWS_RscFrame
+		{
+			idc = 1810;
+			text = "Battle Type";
+			x = 16 * GUI_GRID_W + GUI_GRID_X;
+			y = 11 * GUI_GRID_H + GUI_GRID_Y;
+			w = 8 * GUI_GRID_W;
+			h = 2.5 * GUI_GRID_H;
+		};
+			
+		class BT_Combo: HWS_RscCombo
+		{
+			idc = 2110;
+			x = 16.5 * GUI_GRID_W + GUI_GRID_X;
+			y = 12 * GUI_GRID_H + GUI_GRID_Y;
+			w = 7 * GUI_GRID_W;
+			h = 1 * GUI_GRID_H;
+			tooltip = "Select desired battle type, does not affect whole map mode.";
+		};
 
 		class RscBack2: HWS_RscPicture
 		{

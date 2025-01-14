@@ -992,6 +992,21 @@ RYD_WS_TakeValues =
 	
 	_txtM = _txtM + (format ["<font size=13><br /><br />FACTIONS INTERSPACE:</font><font color='#d0a900' size=12><br />%1</font>",_txt]);
 	
+	// BATTLE TYPES
+	_ix = lbCurSel 2110;
+
+	switch (_ix) do
+	{
+		case (RYD_ix_BattleType_0) : {RYD_WS_BattleType = 0;_txt = "A ATTACKS"};
+		case (RYD_ix_BattleType_1) : {RYD_WS_BattleType = 1;_txt = "B ATTACKS"};
+		case (RYD_ix_BattleType_2) : {RYD_WS_BattleType = 2;_txt = "BOTH ATTACK"};
+		case (RYD_ix_BattleType_3) : {RYD_WS_BattleType = 3;_txt = "RANDOM"};
+	};
+		
+	profileNamespace setVariable ["RYD_ix_BattleType",_ix];
+	
+	_txtM = _txtM + (format ["<font size=13><br /><br />BATTLE TYPE:</font><font color='#d0a900' size=12><br />%1</font>",_txt]);
+	
 	RYD_WS_txtM = _txtM;	
 	
 	_code = ctrlText 120;
@@ -1410,7 +1425,6 @@ RYD_WS_Dialog =
 
 	lbSetCurSel [2104, profileNamespace getVariable ["RYD_ix_Weather",RYD_ix_Weather_NC]];
 	
-		
 	RYD_ix_Ratio_31 = lbAdd [2105, "3:1"];
 	RYD_ix_Ratio_21 = lbAdd [2105, "2:1"];
 	RYD_ix_Ratio_32 = lbAdd [2105, "3:2"];
@@ -1458,6 +1472,14 @@ RYD_WS_Dialog =
 
 	lbSetCurSel [2109, profileNamespace getVariable ["RYD_ix_FIS",RYD_ix_FIS_0]];
 	
+	// BATTLE TYPES
+	RYD_ix_BattleType_0 = lbAdd [2110, "Side A Attacks, Side B Defends"];
+	RYD_ix_BattleType_1 = lbAdd [2110, "Side A Defends, Side B Attacks"];
+	RYD_ix_BattleType_2 = lbAdd [2110, "Meeting Engagement"];
+	RYD_ix_BattleType_3 = lbAdd [2110, "RANDOM"];
+
+	lbSetCurSel [2110, profileNamespace getVariable ["RYD_ix_BattleType",RYD_ix_BattleType_3]];
+	
 	_code = profileNamespace getVariable ["RYD_ix_Code",""];
 	
 	ctrlSetText [120, _code];
@@ -1473,7 +1495,7 @@ RYD_WS_Dialog =
 		
 		{
 			profileNamespace setVariable [_x,nil]
-		} 		foreach ["RYD_ix_SideA","RYD_ix_SideB","RYD_ix_FacA","RYD_ix_FacB","RYD_ix_Scale","RYD_ix_Daytime","RYD_ix_Weather","RYD_ix_Ratio","RYD_ix_Campaign","RYD_ix_HSRA","RYD_ix_HSRB","RYD_ix_FIS","RYD_ix_Code"];
+		} 		foreach ["RYD_ix_SideA","RYD_ix_SideB","RYD_ix_FacA","RYD_ix_FacB","RYD_ix_Scale","RYD_ix_Daytime","RYD_ix_Weather","RYD_ix_Ratio","RYD_ix_Campaign","RYD_ix_HSRA","RYD_ix_HSRB","RYD_ix_FIS","RYD_ix_BattleType","RYD_ix_Code"];
 		
 		saveProfileNamespace;
 		
@@ -1519,7 +1541,7 @@ _gpsB = [];
 _fcsA = [];
 _fcsB = [];
 
-_bType = 3;
+RYD_WS_BattleType = 3;
 
 RYD_WS_AdvantageA = 1;
 RYD_WS_AdvantageB = 1;
@@ -1606,14 +1628,17 @@ if not (RYD_WS_WholeMap) then
 
 	//diag_log format ["defc: %1 attc: %2 fA: %3 fB: %4",_defChance,_attChance,_fA,_fB];
 
-	_bType = switch (true) do
+	if (RYD_WS_BattleType == 3) then
 	{
-		case ((_rnd < _defChance) and ((_sumA > 0) or ((random 100) < 50))) : {0};//player def
-		case ((_rnd < (_defChance + _attChance)) and ((_sumB > 0) or ((random 100) < 50))) : {1};//AI def
-		default {2};// meeting engagement
-	};	
+		RYD_WS_BattleType = switch (true) do
+		{
+			case ((_rnd < _defChance) and ((_sumA > 0) or ((random 100) < 50))) : {0};//player def
+			case ((_rnd < (_defChance + _attChance)) and ((_sumB > 0) or ((random 100) < 50))) : {1};//AI def
+			default {2};// meeting engagement
+		};
+	};
 
-	_battlefield = [_bType,[_takenB,_takenA]] call RYD_WS_Battlefield;
+	_battlefield = [RYD_WS_BattleType,[_takenB,_takenA]] call RYD_WS_Battlefield;
 
 	_bfPos = _battlefield select 2;
 	RYD_WS_BFPos = +_bfPos;
@@ -1630,7 +1655,7 @@ if not (RYD_WS_WholeMap) then
 
 	_infFr = ((_topo select 0) + (_topo select 1) + (_topo select 2) + (_topo select 4))/100;
 	
-	_forces = [_bType,RYD_WS_Scale,[_sideA,_sideB],_infFr] call RYD_WS_Forces;
+	_forces = [RYD_WS_BattleType,RYD_WS_Scale,[_sideA,_sideB],_infFr] call RYD_WS_Forces;
 
 	//diag_log format ["all: %1 adv: %2",_sumAll,_sAdvantageA];
 	
@@ -2352,7 +2377,7 @@ if not (RYD_WS_WholeMap) then
 						if ((count _staticClasses) > 0) then
 						{
 							_stPos = +_mainPos;
-							if (_bType == _mainIx) then
+							if (RYD_WS_BattleType == _mainIx) then
 							{
 								_stPos = +_ldrPos;
 							};
@@ -2719,7 +2744,7 @@ if not (RYD_WS_WholeMap) then
 		_x setPos (_battlefield select 2)
 	} foreach _set1;
 
-	switch (_bType) do
+	switch (RYD_WS_BattleType) do
 		{
 		case (0) : 
 		{
@@ -3330,7 +3355,7 @@ if (_locB in [""]) then
 	_locB0 = _locB;
 };
 	
-//diag_log format ["locS: %1 (%6) locB: %2 (%7) locT: %3 (%8) dst: %4 type: %5",_locS,_locB,_locT,_distanceDescrT,_bType,_locS0,_locB0,_locT0];
+//diag_log format ["locS: %1 (%6) locB: %2 (%7) locT: %3 (%8) dst: %4 type: %5",_locS,_locB,_locT,_distanceDescrT,RYD_WS_BattleType,_locS0,_locB0,_locT0];
 
 _clA = switch (RYD_WS_SideA) do
 {
@@ -3349,7 +3374,7 @@ _clB = switch (RYD_WS_SideB) do
 _markPerA = [_gpsA,_clA,"FDiagonal"] call RYD_WS_ClusterMark;
 _markPerB = [_gpsB,_clB,"FDiagonal"] call RYD_WS_ClusterMark;
 
-if not (_bType == 0) then
+if not (RYD_WS_BattleType == 0) then
 {
 	_posM = getMarkerPos _markPerA;	
 	_dst = _posM distance _posT;
@@ -3363,7 +3388,7 @@ if not (_bType == 0) then
 	}
 };
 	
-if not (_bType == 1) then
+if not (RYD_WS_BattleType == 1) then
 {
 	_posM = getMarkerPos _markPerB;	
 	_dst = _posM distance _posT;
@@ -3380,7 +3405,7 @@ if not (_bType == 1) then
 _mission = "";
 _missionB = "";
 
-switch (_bType) do
+switch (RYD_WS_BattleType) do
 {
 	case (0) :
 	{

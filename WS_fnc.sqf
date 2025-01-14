@@ -3195,7 +3195,7 @@ RYD_WS_Battlefield =
 			{
 			_center = (_strAr select (floor (random (count _strAr)))) select 0;
 				
-			_posA = [_center,750,1250,50] call RYD_WS_FindLandPos;
+			_posA = [_center,1250,2000,50] call RYD_WS_FindLandPos;
 			_nearSea = [_posA,600] call RYD_WS_NearSea;
 			
 			_ct = 0;
@@ -3204,7 +3204,7 @@ RYD_WS_Battlefield =
 				{
 				_center = (_strAr select (floor (random (count _strAr)))) select 0;
 				
-				_posA = [_center,750,1250,50] call RYD_WS_FindLandPos;
+				_posA = [_center,1250,2000,50] call RYD_WS_FindLandPos;
 				_nearSea = [_posA,600] call RYD_WS_NearSea;
 				_ct = _ct + 1;
 				if (_ct > 10) exitWith {_posA = [_center,100,300] call RYD_RandomAroundMM}
@@ -3216,7 +3216,7 @@ RYD_WS_Battlefield =
 			
 			_center = [_battlePoint,_angleA + 210 - (random 60),1800] call RYD_PosTowards2D;
 			
-			_posB = [_center,0,1250,50] call RYD_WS_FindLandPos;
+			_posB = [_center,0,2000,50] call RYD_WS_FindLandPos;
 			_nearSea = [_posB,600] call RYD_WS_NearSea;
 			
 			_ct = 0;
@@ -3225,7 +3225,7 @@ RYD_WS_Battlefield =
 				{
 				_center = [_battlePoint,_angleA + 210 - (random 60),1800 + (((2 * _ct) - 10) * 50)] call RYD_PosTowards2D;
 				
-				_posB = [_center,0,1250,50] call RYD_WS_FindLandPos;
+				_posB = [_center,0,2000,50] call RYD_WS_FindLandPos;
 				_nearSea = [_posB,600] call RYD_WS_NearSea;
 				_ct = _ct + 1;
 				if (_ct > 10) exitWith {_posB = [_battlePoint,100,300] call RYD_RandomAroundMM}
@@ -3531,8 +3531,8 @@ RYD_WS_Forces =
 								
 								switch (_foreachIndex) do
 								{
-									case (0) : {Armor_Amount_A = Armor_Amount_A + 1.75};
-									case (1) : {Armor_Amount_B = Armor_Amount_B + 1.75};
+									case (0) : {Armor_Amount_A = Armor_Amount_A + ([2,4] call BIS_fnc_randomInt);};
+									case (1) : {Armor_Amount_B = Armor_Amount_B + ([2,4] call BIS_fnc_randomInt);};
 								};
 							};
 						}
