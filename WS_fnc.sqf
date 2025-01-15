@@ -6817,7 +6817,7 @@ RYD_WS_WholeMapPlacement =
 					*/
 					case (1) :
 					{
-						_amnt = 2 + (ceil (random (3 * RYD_WS_Scale)));
+						_amnt = 4 + (ceil (random (3 * RYD_WS_Scale)));
 					};
 					case (2) :
 					{
@@ -7338,6 +7338,22 @@ RYD_WS_WholeMapPlacement =
 
 	RYD_WS_GroupsA = _gpsA;
 	RYD_WS_GroupsB = _gpsB;
+	
+	if (((count _fcsA) < 1) or {((count _fcsB) < 1)}) exitWith
+	{
+		endLoadingScreen;
+		if ((count _fcsA) < 1) then
+		{
+			hintC format ["Initialization failed: side A has no forces to use, Faction name: %1, Faction class: %2",RYD_WS_FacA select 1,RYD_WS_FacA select 2];
+			sleep 0.1;
+		};
+		if ((count _fcsB) < 1) then
+		{
+			hintC format ["Initialization failed: side B has no forces to use, Faction name: %1, Faction class: %2",RYD_WS_FacB select 1,RYD_WS_FacB select 2];
+			sleep 0.1;
+		};
+		failMission "END1";
+	};
 
 	//player setName profileName;
 };
@@ -8158,6 +8174,7 @@ RYD_PresentRHQ =
 					if not (_crew in (RYD_WS_Crew_class + RHQ_Crew)) then
 					{
 						RHQ_Crew pushBack _crew;
+						RHQ_Inf pushBack _crew;
 					}
 				}
 			}

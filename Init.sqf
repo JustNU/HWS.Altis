@@ -2310,7 +2310,7 @@ if not (RYD_WS_WholeMap) then
 				*/
 				case (1) :
 				{
-					_amnt = 2 + ((ceil (random (3 * RYD_WS_Scale))) * _perc);
+					_amnt = 4 + ((ceil (random (3 * RYD_WS_Scale))) * _perc);
 				};
 				case (2) :
 				{
@@ -2712,8 +2712,16 @@ if not (RYD_WS_WholeMap) then
 	if (((count _fcsA) < 1) or {((count _fcsB) < 1)}) exitWith
 	{
 		endLoadingScreen;
-		hintC "Initialization failed: no forces to use";
-		sleep 0.1;
+		if ((count _fcsA) < 1) then
+		{
+			hintC format ["Initialization failed: side A has no forces to use, Faction name: %1, Faction class: %2",RYD_WS_FacA select 1,RYD_WS_FacA select 2];
+			sleep 0.1;
+		};
+		if ((count _fcsB) < 1) then
+		{
+			hintC format ["Initialization failed: side B has no forces to use, Faction name: %1, Faction class: %2",RYD_WS_FacB select 1,RYD_WS_FacB select 2];
+			sleep 0.1;
+		};
 		failMission "END1";
 	};
 

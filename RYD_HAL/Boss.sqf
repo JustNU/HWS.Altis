@@ -332,33 +332,6 @@ switch (_BBSide) do
 	case ("B") : {missionNameSpace setVariable ["B_SAreas",_strArea]};
 	};
 	
-_BBStr = [];
-
-if (_BBSide == "A") then {if not (isNil "RydBBa_Str") then {_BBStr = RydBBa_Str}};
-if (_BBSide == "B") then {if not (isNil "RydBBb_Str") then {_BBStr = RydBBb_Str}};
-
-_fixedInitStatus = [];
-
-	{
-	_pos = _x select 0;
-	_pos = (_pos select 0) + (_pos select 1);
-
-	_fixedInitStatus pushBack _pos
-	}
-foreach _BBStr;
-
-_BBSAL = RydBBa_SAL;
-if (_BBSide == "B") then {_BBSAL = RydBBb_SAL};
-
-	{
-	_BBStr pushBack [(position _x),_x getVariable "AreaValue",false]
-	}
-foreach (synchronizedObjects _BBSAL);
-
-_strArea = _strArea + _BBStr;
-
-if (RydBB_CustomObjOnly) then {_strArea = _BBStr};
-	
 ////////////////////////////////////////////////////////////////////
 
 _bbCycle = 0;
