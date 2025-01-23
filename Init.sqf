@@ -378,9 +378,9 @@ RYD_WS_TakeToWinA = -1;
 RYD_WS_TakeToWinB = -1;
 
 RYD_WS_Reset = true;
-RYD_WS_B_Factions = [["blu_f","NATO","BLUFOR"],["blu_g_f","FIA","BLUFOR"]];
-RYD_WS_O_Factions = [["opf_f","CSAT","OPFOR"]];
-RYD_WS_I_Factions = [["ind_f","AAF","INDEP"]];
+RYD_WS_B_Factions = [["blu_f","NATO",true],["blu_g_f","FIA",true]];
+RYD_WS_O_Factions = [["opf_f","CSAT",true]];
+RYD_WS_I_Factions = [["ind_f","AAF",true]];
 
 RYD_WS_HQGuardsA = [];
 RYD_WS_HQGuardsB = [];
@@ -396,6 +396,90 @@ RYD_WS_Fatigue = true;
 
 _facClass = configFile >> "CfgFactionClasses";
 
+RYD_WS_FactionsWithUnits = [];
+RYD_WS_FactionsWithGroups = [];
+
+_cfgGroup = configFile >> "CfgGroups";
+_cfgVeh = configFile >> "CfgVehicles";
+
+for "_i" from 0 to ((count _cfgVeh) - 1) do
+{
+	_class = _cfgVeh select _i;
+	
+	if (isClass _class) then
+	{
+		_class = toLower (configName _class);
+		
+		_scope = getNumber (_cfgVeh >> _class >> "Scope");
+		_faction = getText (_cfgVeh >> _class >> "faction");
+		
+		RYD_WS_FactionsWithUnits pushBackUnique (toLower _faction);
+	};
+};
+
+for "_i" from 0 to ((count _cfgGroup) - 1) do
+{
+	_class = _cfgGroup select _i;
+	
+	if (isClass _class) then
+	{
+		_side = configName _class;
+		_rSide = east;
+		
+		switch (toLower _side) do
+		{
+			case ("east") : {_rSide = east};
+			case ("west") : {_rSide = west};
+			case ("indep") : {_rSide = resistance};
+			default {_rSide = civilian};
+		};
+		
+		if (_rSide == civilian) exitWith {};	
+
+		_path = _cfgGroup >> _side;
+		
+		for "_j" from 0 to ((count _path) - 1) do
+		{
+			_class = _path select _j;
+			
+			if (isClass _class) then
+			{
+				_fc = configName _class;
+				
+				_path2 = _path >> _fc;
+				
+				for "_k" from 0 to ((count _path2) - 1) do
+				{
+					_class = _path2 select _k;
+			
+					if (isClass _class) then
+					{
+						_kind = configName _class;
+
+						_path3 = _path2 >> _kind;
+
+						for "_l" from 0 to ((count _path3) - 1) do
+						{
+							_class = _path3 select _l;
+
+							if (isClass _class) then
+							{
+								_gp = configName _class;
+
+								_path4 = _path3 >> _gp;
+
+								_faction = getText (_path4 >> "faction");
+				
+								RYD_WS_FactionsWithGroups pushBackUnique (toLower _faction);
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+
 for "_i" from 0 to ((count _facClass) - 1) do
 {
 	_class = _facClass select _i;
@@ -404,7 +488,7 @@ for "_i" from 0 to ((count _facClass) - 1) do
 	{
 		_faction = toLower (configName _class);
 		
-		if not (_faction in ["blu_f","blu_g_f","opf_f","ind_f","ind_g_f","opf_g_f"]) then
+		if not (_faction in ["blu_f","blu_g_f","opf_f","ind_f"]) then
 		{
 			_side = getNumber (_facClass >> _faction >> "side");
 			
@@ -413,30 +497,33 @@ for "_i" from 0 to ((count _facClass) - 1) do
 				_displayName = getText (_facClass >> _faction >> "displayName");
 				
 				_orignalSide = "";
+				_hasGroups = false;
 				
-				switch (_side) do
-				{				
-					case (0) : 
-					{
-						_orignalSide = "OPFOR";
-						
-						RYD_WS_O_Factions set [(count RYD_WS_O_Factions), [_faction, _displayName, _orignalSide]];
+				if (_faction in RYD_WS_FactionsWithGroups) then
+				{
+					_hasGroups = true;
+				};
+				
+				if (_displayName != "" and _faction in RYD_WS_FactionsWithUnits) then
+				{
+					switch (_side) do
+					{				
+						case (0) : 
+						{
+							RYD_WS_O_Factions set [(count RYD_WS_O_Factions), [_faction, _displayName, _hasGroups]];
+						};
+							
+						case (1) : 
+						{
+							RYD_WS_B_Factions set [(count RYD_WS_B_Factions), [_faction, _displayName, _hasGroups]];
+						};
+							
+						case (2) : 
+						{
+							RYD_WS_I_Factions set [(count RYD_WS_I_Factions), [_faction, _displayName, _hasGroups]];
+						};
 					};
-						
-					case (1) : 
-					{
-						_orignalSide = "BLUFOR";
-						
-						RYD_WS_B_Factions set [(count RYD_WS_B_Factions), [_faction, _displayName, _orignalSide]];
-					};
-						
-					case (2) : 
-					{
-						_orignalSide = "INDEP";
-						
-						RYD_WS_I_Factions set [(count RYD_WS_I_Factions), [_faction, _displayName, _orignalSide]];
-					};
-				}
+				};
 			};
 		};
 	};
@@ -1093,7 +1180,7 @@ RYD_FactionFill =
 	{
 		_fac = _x select 0;
 		_name = _x select 1;
-		_side = _x select 2;
+		_hasGroups = _x select 2;
 		
 		_newIx = lbAdd [_ctrlFill, _name];
 		
@@ -1103,7 +1190,18 @@ RYD_FactionFill =
 		lbSetPicture [_ctrlFill, _newIx, _icon];
 		lbSetPictureColor [_ctrlFill, _newIx, [1, 1, 1, 1]];
 		lbSetPictureColorSelected [_ctrlFill, _newIx, [1, 1, 1, 1]];
-		lbSetTooltip [_ctrlFill, _newIx, _fac];
+		
+		_toolTipTxt = _fac;
+		
+		if (not _hasGroups) then 
+		{
+			_toolTipTxt = _toolTipTxt + " || FACTION HAS NO GROUPS DEFINED, MIGHT NOT WORK PROPERLY";
+		//_toolTipTxt = _hasGroups;
+		};
+		
+		//diag_log format ["_hasGroups: %1",_hasGroups];
+		
+		lbSetTooltip [_ctrlFill, _newIx, _toolTipTxt];
 		
 		// SET RIGHT PIC OR TEXT DO NOT WORK, IM TIRED OF TRYING OT MAKE IT WORK, IM CRYING AND PISSING MY PANTS
 		_textColor = switch (_facSide) do
@@ -1116,7 +1214,7 @@ RYD_FactionFill =
 		lbSetColor [_ctrlFill, _newIx, _textColor];
 		lbSetSelectColor [_ctrlFill, _newIx, _textColor];
 
-		missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill), [_newIx, _name, toLower _fac, _side]];
+		missionNamespace setVariable [(str _newIx)+"_fl_"+(str _ctrlFill), [_newIx, _name, toLower _fac, _hasGroups]];
 	} foreach _factions;
 	
 	_newIx = lbAdd [_ctrlFill, "MULTI"];
@@ -1183,6 +1281,7 @@ RYD_FactionFill_M =
 		//if (_foreachIndex > 31) exitWith {};
 		_fac = _x select 0;
 		_name = _x select 1;
+		_hasGroups = _x select 2;
 		
 		_newIx = lbAdd [_ctrlFill, _name];
 		
@@ -1192,7 +1291,18 @@ RYD_FactionFill_M =
 		lbSetPicture [_ctrlFill, _newIx, _icon];
 		lbSetPictureColor [_ctrlFill, _newIx, [1, 1, 1, 1]];
 		lbSetPictureColorSelected [_ctrlFill, _newIx, [1, 1, 1, 1]];
-		lbSetTooltip [_ctrlFill, _newIx, _fac];
+		
+		_toolTipTxt = _fac;
+		
+		if (not _hasGroups) then 
+		{
+			_toolTipTxt = _toolTipTxt + " || FACTION HAS NO GROUPS DEFINED, MIGHT NOT WORK PROPERLY";
+		//_toolTipTxt = _hasGroups;
+		};
+		
+		//diag_log format ["_hasGroups: %1",_hasGroups];
+		
+		lbSetTooltip [_ctrlFill, _newIx, _toolTipTxt];
 		
 		// SET RIGHT PIC OR TEXT DO NOT WORK, IM TIRED OF TRYING OT MAKE IT WORK, IM CRYING AND PISSING MY PANTS
 		_textColor = switch (_facSide) do
