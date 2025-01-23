@@ -2644,9 +2644,12 @@ RYD_WS_isOnMap =
 		case (({_x < 0} count _pos) > 0) : {false};
 		case (not (isNil "RydBB_MC") and {not (_pos inArea RydBB_MC)}) : {false};
 		case ((isNil "RydBB_MC") and {(({_x > RydBB_MapXMax} count _pos) > 0)}) : {false};
-		default {true}
+		default 
+		{
+			true;
+		}
 	};
-		
+	
 	_onMap
 };
 
@@ -3104,20 +3107,20 @@ RYD_WS_Battlefield =
 	_taken = _this select 1;
 
 	_strAr = if ((count RYD_WS_BattlePosition) < 2) then
-		{
-		+(missionNameSpace getVariable ["A_SAreas",[]])
-		}
+	{
+		+(missionNameSpace getVariable ["A_SAreas",[]]);
+	}
 	else
-		{
-		[[RYD_WS_BattlePosition,1,false]]
-		};
+	{
+		[[RYD_WS_BattlePosition,1,false]];
+	};
 
 	_posArray = [];
 	
 	switch (true) do
-		{
+	{
 		case (_mode in [0,1]) :
-			{
+		{
 			_defPos = [];
 			_attPos = [];
 			
@@ -3129,118 +3132,152 @@ RYD_WS_Battlefield =
 			_taken = _taken - [-1];
 			_taken = +(_taken select 0);
 			
+			// distance between attacking and defending sides
+			_minDistance = 1500;
+			_maxDistance = 2500;
+			
 			_strAr0 = [];
 			
-				{
+			{
 				_pos = _x select 0;
 				
 				if (({((_pos distance _x) < 350)} count _taken) > 0) then
-					{
-					_strAr0 set [(count _strAr0),_x]
-					}
+				{
+					_strAr0 set [(count _strAr0),_x];
 				}
-			foreach _strAr;
+			} foreach _strAr;
 			
 			if (((count _strAr0) > 0) and ((random 100) < 30)) then
-				{
-				_strAr = _strAr0
-				}
+			{
+				_strAr = _strAr0;
+			}
 			else
-				{				
-					{
+			{				
+				{
 					_pos = _x select 0;
 					
 					if (({((_pos distance _x) < 400)} count _excluded) > 0) then
-						{
-						_strAr set [_foreachIndex,0]
-						}
+					{
+						_strAr set [_foreachIndex,0];
 					}
-				foreach _strAr;
+				} foreach _strAr;
 				
-				_strAr = _strAr - [0]
-				};
+				_strAr = _strAr - [0];
+			};
 			
 			if ((count _strAr) < 1) then
-				{
+			{
 				_strAr = if ((count RYD_WS_BattlePosition) < 2) then
-					{
-					+(missionNameSpace getVariable ["A_SAreas",[]])
-					}
+				{
+					+(missionNameSpace getVariable ["A_SAreas",[]]);
+				}
 				else
-					{
-					[[RYD_WS_BattlePosition,1,false]]
-					};
+				{
+					[[RYD_WS_BattlePosition,1,false]];
 				};
+			};
 			
 			while {(((count _attPos) < 2) or not ([_attPos] call RYD_WS_isOnMap) or {_nearSea > 10})} do
-				{
+			{
 				_defPos = (_strAr select (floor (random (count _strAr)))) select 0;
 				
-				_attPos = [_defPos,_strAr,1500,2500] call RYD_WS_FindPosInRange;
+				_attPos = [_defPos,_strAr,_minDistance,_maxDistance] call RYD_WS_FindPosInRange;
 				_nearSeaD = [_defPos,600] call RYD_WS_NearSea;
 				_nearSeaA = [_attPos,600] call RYD_WS_NearSea;
 				_nearSea = _nearSeaD max _nearSeaA;
+				
+				_maxDistance = _maxDistance + 100;
+				
+				//if failed to locate a proper map spot, just place both sides on top of each other. Sad!
 				_ct = _ct + 1;
-				if (_ct > 20) exitWith {_attPos = [_defPos,10,100] call RYD_RandomAroundMM}
-				};
-			
-			_posArray = switch (_mode) do
-				{	
-				case (0) : {[_defPos,_attPos,_defPos]};
-				case (1) : {[_attPos,_defPos,_defPos]}
+				if (_ct > 20) exitWith 
+				{
+					_attPos = [_defPos,10,100] call RYD_RandomAroundMM;
 				}
 			};
 			
+			_posArray = switch (_mode) do
+			{	
+				case (0) : 
+				{
+					[_defPos,_attPos,_defPos];
+				};
+				case (1) : 
+				{
+					[_attPos,_defPos,_defPos];
+				};
+			};
+		};
 		case (_mode in [2]) :
-			{
+		{
 			_center = (_strAr select (floor (random (count _strAr)))) select 0;
-				
+			
 			_posA = [_center,1250,2000,50] call RYD_WS_FindLandPos;
 			_nearSea = [_posA,600] call RYD_WS_NearSea;
 			
 			_ct = 0;
 			
+			// distance between side a and objective
+			_minDistanceA = 1250;
+			_maxDistanceA = 2000;
+			
+			// distance between side b and objective
+			_minDistanceB = 0;
+			_maxDistanceB = 2500;
+			
 			while {((surfaceIsWater _posA) or not ([_posA] call RYD_WS_isOnMap) or {_nearSea > 10})} do
-				{
+			{
 				_center = (_strAr select (floor (random (count _strAr)))) select 0;
 				
-				_posA = [_center,1250,2000,50] call RYD_WS_FindLandPos;
+				_posA = [_center,_minDistanceA,_maxDistanceA,50] call RYD_WS_FindLandPos;
 				_nearSea = [_posA,600] call RYD_WS_NearSea;
-				_ct = _ct + 1;
-				if (_ct > 10) exitWith {_posA = [_center,100,300] call RYD_RandomAroundMM}
-				};
 				
+				_maxDistanceA = _maxDistanceA + 100;
+				
+				_ct = _ct + 1;
+				if (_ct > 20) exitWith
+				{
+					_posA = [_center,100,300] call RYD_RandomAroundMM;
+				}
+			};
+			
 			_battlePoint = +_center;
 			
 			_angleA = [_center,_posA,0] call RYD_AngTowards;
 			
 			_center = [_battlePoint,_angleA + 210 - (random 60),1800] call RYD_PosTowards2D;
 			
-			_posB = [_center,0,2000,50] call RYD_WS_FindLandPos;
+			_posB = [_center,_minDistanceB,_maxDistanceB,50] call RYD_WS_FindLandPos;
 			_nearSea = [_posB,600] call RYD_WS_NearSea;
 			
 			_ct = 0;
 			
 			while {((surfaceIsWater _posB) or (_nearSea > 10)) or (_posA distance2D _posB < 1500)} do
-				{
+			{
 				_center = [_battlePoint,_angleA + 210 - (random 60),1800 + (((2 * _ct) - 10) * 50)] call RYD_PosTowards2D;
 				
-				_posB = [_center,0,2000,50] call RYD_WS_FindLandPos;
+				_posB = [_center,_minDistanceB,_maxDistanceB,50] call RYD_WS_FindLandPos;
 				_nearSea = [_posB,600] call RYD_WS_NearSea;
+				
+				_maxDistanceB = _maxDistanceB + 100;
+				
+				//if failed to locate a proper map spot, just place both sides on top of each other. Sad!
 				_ct = _ct + 1;
-				if (_ct > 10) exitWith {_posB = [_battlePoint,100,300] call RYD_RandomAroundMM}
+				if (_ct > 20) exitWith 
+				{
+					_posB = [_battlePoint,100,300] call RYD_RandomAroundMM;
 				};
-			
-			_posArray = [_posA,_posB,_battlePoint]
 			};
+			
+			_posArray = [_posA,_posB,_battlePoint];
 		};
-		
-		{
-		_x set [2,0]
-		}
-	foreach _posArray;
+	};
 	
-	_posArray
+	{
+		_x set [2,0];
+	} foreach _posArray;
+	
+	_posArray;
 };
 	
 RYD_WS_Forces = 

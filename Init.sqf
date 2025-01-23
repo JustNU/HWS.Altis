@@ -2839,10 +2839,10 @@ else
 	
 	RydBB_Active = true;
 	
-	RydHQ_SubAll = false;
-	RydHQB_SubAll = false;
-	RydHQC_SubAll = false;
-	RydHQD_SubAll = false;
+	RydHQ_SubAll = true;
+	RydHQB_SubAll = true;
+	RydHQC_SubAll = true;
+	RydHQD_SubAll = true;
 	
 	RydHQ_LRelocating = false;
 	RydHQ_GetHQInside = false;
