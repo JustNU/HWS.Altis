@@ -2681,28 +2681,24 @@ RYD_WS_MapAnalyze =
 	}
 	else
 	{
-		// placeholder default size
-		_mapSize = 10000;
+		_mapSize = getNumber (configFile >> "CfgWorlds" >> worldName >> "mapSize");
 		
 		//if is one of faulty configured maps, manually change the size
-		if (worldName in ["Chernarus_Summer","Chernarus_Winter"]) then
+		if (_mapSize < 1) then 
 		{
-			_mapSize = switch (worldName) do
+			_mapSize = switch (toLower (worldName)) do
 			{
-				case "Chernarus_Summer";
-				case "Chernarus_Winter": {15360};
+				case "chernarus_summer";
+				case "chernarus_winter": {15360};
+				default {10000}
 			};
-		}
-		else
-		{
-			_mapSize = getNumber (configFile >> "CfgWorlds" >> worldName >> "mapSize");
 		};
 		
 		RydBB_MapXMax = _mapSize;
 		RydBB_MapYMax = RydBB_MapXMax;
 		RydBB_MapC = [_mapSize/2,_mapSize/2];
 
-		_cntr = RydBB_MapC
+		_cntr = RydBB_MapC;
 	};
 
 	//if ((_cntr select 0) < 1000) then {_cntr = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition")};
@@ -6146,21 +6142,17 @@ RYD_WS_FindLandPosNear =
 		_ct = 0;
 		_dst = 10 * _prec;
 		
-		// placeholder default size
-		_mapSize = 10000;
+		_mapSize = getNumber (configFile >> "CfgWorlds" >> worldName >> "mapSize");
 		
 		//if is one of faulty configured maps, manually change the size
-		if (worldName in ["Chernarus_Summer","Chernarus_Winter"]) then
+		if (_mapSize < 1) then 
 		{
-			_mapSize = switch (worldName) do
+			_mapSize = switch (toLower (worldName)) do
 			{
-				case "Chernarus_Summer"; 
-				case "Chernarus_Winter": {15360};
+				case "chernarus_summer";
+				case "chernarus_winter": {15360};
+				default {10000}
 			};
-		}
-		else
-		{
-			_mapSize = getNumber (configFile >> "CfgWorlds" >> worldName >> "mapSize");
 		};
 		
 		while {((surfaceIsWater _pos) and {(_notMapCount < 360) and {((_limit < 0) or {((_fPos distance2D _pos) <= _limit)})}})} do
