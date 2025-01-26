@@ -656,6 +656,8 @@ while {(RydBB_Active)} do
 
 		_attackAxis = [_ArmyPos,_mainPos,10] call RYD_AngTowards;
 
+		// modified for hws
+		// start
 		if (_BBSide == "A") then
 			{
 			[[_strArea,_BBSide,RydBBb_Str],RYD_ObjMark] call RYD_Spawn;
@@ -670,8 +672,10 @@ while {(RydBB_Active)} do
 				}
 			foreach _strArea
 			};
+		// stop
 		
 		/*
+
 		if (RydBB_Debug) then
 			{			
 			[[_strArea,_BBSide],RYD_ObjMark] call RYD_Spawn
