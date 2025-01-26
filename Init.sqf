@@ -3118,7 +3118,7 @@ call compile preprocessfile (RYD_Path + "HAC_fnc2.sqf");
 
 _date = format ["%1-%2-%3",date select 0,"0" + (str (date select 1)), date select 2];
 _daytime = format ["%1:%2",date select 3,date select 4];
-_where = toUpper (worldName);
+_where = getText (configFile >> "CfgWorlds" >> worldName >> "description");
 _dayTimedescr = "day";
 
 if ((dayTime < 9) and (dayTime >= 5)) then {_dayTimedescr = "morning"};
@@ -3733,7 +3733,8 @@ for "_i" from 1 to _stepsC do
 		_maxHeight = _actHeight
 	}
 };
-	
+
+/*
 if ((dayTime < 7) or (dayTime > 20)) then
 {
 	camUseNVG true 
@@ -3742,6 +3743,7 @@ else
 {
 	camUseNVG false 
 };
+*/
 
 {
 	_eh = _x addEventHandler ["Hit",{_this call RYD_WS_onHit}];
