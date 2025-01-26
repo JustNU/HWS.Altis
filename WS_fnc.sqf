@@ -7545,8 +7545,14 @@ RYD_WS_WholeMapPlacement =
 	RydHQ_Excluded = RydHQ_Excluded + RydHQB_Excluded;
 	RydHQB_Excluded = RydHQ_Excluded;
 	
+	RydHQ_Excluded = RydHQ_Excluded + RydHQB_Included;
+	RydHQB_Excluded = RydHQB_Excluded + RydHQ_Included;
+	
 	RydHQC_Excluded = RydHQC_Excluded + RydHQD_Excluded;
 	RydHQD_Excluded = RydHQC_Excluded;
+	
+	RydHQC_Excluded = RydHQC_Excluded + RydHQD_Included;
+	RydHQD_Excluded = RydHQD_Excluded + RydHQC_Included;
 
 	//player setName profileName;
 };
