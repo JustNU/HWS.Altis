@@ -4336,7 +4336,7 @@ RYD_WS_SpawnAir =
 	_dst = 500 - (random 200);
 
 	_checkPos = [_pos,0,_dst] call RYD_RandomAroundMM;
-	_checkPos = [_checkPos, 400, _oppositeAngle] call BIS_fnc_relPos;
+	_checkPos = [_checkPos, 250, _oppositeAngle] call BIS_fnc_relPos;
 
 	_fe = true;
 	
@@ -4675,12 +4675,14 @@ RYD_WS_SpawnSupport =
 	_classPool = _this select 2;
 	_side = _this select 4;
 	_type = _this select 5;
+	_oppositeAngle = (_angle + 180) % 360;
 	
 	_gp = grpNull;
 	
 	_dst = 200 - (random 150);
 
 	_checkPos = [_pos,0,_dst] call RYD_RandomAroundMM;
+	_checkPos = [_checkPos, 500, _oppositeAngle] call BIS_fnc_relPos;
 
 	_fe = (count (_checkPos isflatempty [6,0,2,10,0,false,objNull])) > 0;
 	
@@ -4705,6 +4707,7 @@ RYD_WS_SpawnSupport =
 		if (_ct > 50) exitWith {};
 		_dst = _dst + 5;
 		_checkPos = [_pos,0,_dst] call RYD_RandomAroundMM;
+		_checkPos = [_checkPos, 500, _oppositeAngle] call BIS_fnc_relPos;
 
 		_fe = (count (_checkPos isflatempty [6,0,2,10,0,false,objNull])) > 0;
 		
@@ -5405,7 +5408,7 @@ RYD_PosTowards2D =
 	};
 	
 RYD_RandomAroundMM = 
-	{//based on Muzzleflash' function
+{//based on Muzzleflash' function
 	private ["_pos","_xPos","_yPos","_a","_b","_dir","_angle","_mag","_nX","_nY","_temp"];
 
 	_pos = _this select 0;
@@ -5426,7 +5429,7 @@ RYD_RandomAroundMM =
 	_pos = [_xPos + _nX, _yPos + _nY,0];  
 
 	_pos	
-	};
+};
 	
 RYD_WPdel = 
 	{//[_gp] call RYD_WPdel
