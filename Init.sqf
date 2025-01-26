@@ -377,6 +377,12 @@ RYD_WS_ObjTakenB = 0;
 RYD_WS_TakeToWinA = -1;
 RYD_WS_TakeToWinB = -1;
 
+RYD_WS_ArmorGroupSizeMinA = 2;
+RYD_WS_ArmorGroupSizeMinB = 2;
+
+RYD_WS_ArmorGroupSizeMaxA = 4;
+RYD_WS_ArmorGroupSizeMaxB = 4;
+
 RYD_WS_Reset = true;
 RYD_WS_B_Factions = [["blu_f","NATO",true],["blu_g_f","FIA",true]];
 RYD_WS_O_Factions = [["opf_f","CSAT",true]];
@@ -1112,13 +1118,72 @@ RYD_WS_TakeValues =
 finishMissionInit;
 
 _tracks = 
-	[
-	"LeadTrack02_F_Bootcamp"
-	];
+[
+	"AmbientTrack01_F",
+	"AmbientTrack01a_F",
+	"AmbientTrack01b_F",
+	"AmbientTrack03_F",
+	"AmbientTrack04_F",
+	"AmbientTrack04a_F",
+	"BackgroundTrack01_F",
+	"BackgroundTrack01a_F",
+	"BackgroundTrack02_F",
+	"BackgroundTrack03_F",
+	"LeadTrack01_F",
+	"LeadTrack01a_F",
+	"LeadTrack01b_F",
+	"LeadTrack01c_F",
+	"LeadTrack02_F",
+	"LeadTrack03_F",
+	"LeadTrack04_F",
+	"LeadTrack04a_F",
+	"LeadTrack05_F",
+	"LeadTrack06_F",
+	
+	"LeadTrack01_F_Bootcamp",
+	"LeadTrack02_F_Bootcamp",
+	"LeadTrack03_F_Bootcamp",
+	
+	"LeadTrack01_F_EPA",
+	"LeadTrack02_F_EPA",
+	"LeadTrack02b_F_EPA",
+	"LeadTrack03_F_EPA",
+	
+	"AmbientTrack01_F_EPB",
+	"BackgroundTrack01_F_EPB",
+	"LeadTrack01_F_EPB",
+	"LeadTrack01a_F_EPB",
+	"LeadTrack02_F_EPB",
+	"LeadTrack02a_F_EPB",
+	"LeadTrack02b_F_EPB",
+	"LeadTrack03_F_EPB",
+	"LeadTrack03a_F_EPB",
+	"LeadTrack04_F_EPB",
+	
+	"BackgroundTrack01_F_EPC",
+	"BackgroundTrack02_F_EPC",
+	"BackgroundTrack03_F_EPC",
+	"BackgroundTrack04_F_EPC",
+	"EventTrack03_F_EPC",
+	"LeadTrack01_F_EPC",
+	"LeadTrack02_F_EPC",
+	"LeadTrack03_F_EPC",
+	"LeadTrack04_F_EPC",
+	"LeadTrack05_F_EPC",
+	"LeadTrack06_F_EPC",
+	"LeadTrack06b_F_EPC",
+	
+	"LeadTrack01_F_Malden",
+	"LeadTrack02_F_Malden"
+];
 
-_track = _tracks select 0;
+0 fadeMusic 0;
+
+_track = selectRandom _tracks;
 
 playMusic _track;
+
+5 fadeMusic 0.7;
 
 sleep 0.1;
 
@@ -2084,7 +2149,7 @@ if not (RYD_WS_WholeMap) then
 					removeAllWeapons leaderHQ;
 					leaderHQ hideObject true;
 					leaderHQ allowDamage false;
-					leaderHQ setAnimSpeedCoef 20;
+					leaderHQ setAnimSpeedCoef 15;
 					leaderHQ addEventHandler ["HandleDamage",{0}];
 					
 					_fldrGp = createGroup _x;
@@ -2094,11 +2159,11 @@ if not (RYD_WS_WholeMap) then
 					[fakeLeaderHQ] joinSilent _fldrGp;
 					(group fakeLeaderHQ) setVariable ["RydHQ_MyDir",_dir];
 					
-					[fakeLeaderHQ] call RYD_WS_HQGuard;
+					[fakeLeaderHQ, false] call RYD_WS_HQGuard;
 				}
 				else
 				{
-					[leaderHQ] call RYD_WS_HQGuard;
+					[leaderHQ, false] call RYD_WS_HQGuard;
 				}
 			};
 			case (1) :
@@ -2122,7 +2187,7 @@ if not (RYD_WS_WholeMap) then
 					removeAllWeapons leaderHQB;
 					leaderHQB hideObject true;
 					leaderHQB allowDamage false;
-					leaderHQB setAnimSpeedCoef 20;
+					leaderHQB setAnimSpeedCoef 15;
 					leaderHQB addEventHandler ["HandleDamage",{0}];
 					
 					_fldrGp = createGroup _x;
@@ -2132,11 +2197,11 @@ if not (RYD_WS_WholeMap) then
 					[fakeLeaderHQ] joinSilent _fldrGp;
 					(group fakeLeaderHQB) setVariable ["RydHQ_MyDir",_dir];
 
-					[fakeLeaderHQB] call RYD_WS_HQGuard;
+					[fakeLeaderHQB, false] call RYD_WS_HQGuard;
 				}
 				else
 				{
-					[leaderHQB] call RYD_WS_HQGuard;
+					[leaderHQB, false] call RYD_WS_HQGuard;
 				}
 			};
 		};
@@ -2759,28 +2824,54 @@ if not (RYD_WS_WholeMap) then
 						if ((count _armorClasses) > 0) then
 						{
 							//diag_log ["_armorClasses"];
-							_gp = [_mainPos,_dir,_armorClasses,_ldrs,_side,9] call RYD_WS_SpawnSupport;
-
-							if not (isNull _gp) then
+							
+							_callsign = "";
+							
+							if (_side == RYD_WS_SideA) then
 							{
-								_vh = assignedVehicle (leader _gp);
-								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
-								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
-								
-								switch (_mainIx) do
+								// safecheck in case we run out of callsigns
+								if (count (Callsigns_Arr) > 0) then
 								{
-									case (0) : 
+									_callsign = selectRandom Callsigns_Arr;
+									
+									Callsigns_Arr = Callsigns_Arr - [_callsign];
+								};
+							};
+							
+							_groupSize = switch (_side) do
+							{
+								case (RYD_WS_SideA) : {[RYD_WS_ArmorGroupSizeMinA, RYD_WS_ArmorGroupSizeMaxA] call BIS_fnc_randomInt};
+								case (RYD_WS_SideB) : {[RYD_WS_ArmorGroupSizeMinB, RYD_WS_ArmorGroupSizeMaxB] call BIS_fnc_randomInt};
+							};
+							
+							_classToSpawn = _armorClasses select (floor (random (count _armorClasses)));
+							_classToSpawn = selectRandom _armorClasses;
+							
+							for "_j" from 1 to _groupSize do
+							{
+								_gp = [_mainPos,_dir,_classToSpawn,_ldrs,_side,_callsign,_j] call RYD_WS_SpawnArmor;
+
+								if not (isNull _gp) then
+								{
+									_vh = assignedVehicle (leader _gp);
+									_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
+									_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+									
+									switch (_mainIx) do
 									{
-										_gpsA set [(count _gpsA),_gp];
-										_fcsA = _fcsA + (units _gp)
+										case (0) : 
+										{
+											_gpsA set [(count _gpsA),_gp];
+											_fcsA = _fcsA + (units _gp)
+										};
+										case (1) : 
+										{
+											_gpsB set [(count _gpsB),_gp];
+											_fcsB = _fcsB + (units _gp)
+										};
 									};
-									case (1) : 
-									{
-										_gpsB set [(count _gpsB),_gp];
-										_fcsB = _fcsB + (units _gp)
-									};
-								}
-							}
+								};
+							};
 						};				
 					};
 					/*
@@ -3606,31 +3697,8 @@ switch (RYD_WS_BattleType) do
 		RydHQF_Order = "ATTACK";
 	};
 };
-	
-_plName = (getText (configFile >> "CfgVehicles" >> (typeOf player) >> "displayName"));
-_asVh = assignedVehicle player;
-
-if not (isNull _asVh) then
-{
-	//_vhName = getText (configFile >> "CfgVehicles" >> (typeOf _asVh) >> "displayName");
-	switch (true) do
-	{
-		case (player == (commander _asVh)) : {_plName = "Commander"};
-		case (player == (driver _asVh)) : {_plName = "Driver"};
-		case (player == (gunner _asVh)) : {_plName = "Gunner"};
-	};
-};
-	
-_plName = _plName + ", "  + (toLower (rank player));
-_gpName = (group player) getVariable ["RYD_WS_myKind",""];
-
-if not (_gpName in [""]) then
-{
-	_gpName = " (" + _gpName + ")"
-};
 
 _briefing = format ["%1. %4%5 %6. %7",_where,_date,_daytime,_weather,_rain,_dayTimedescr,_mission];
-_briefingB = format ["%1. %4%5 %6. %7<br /><br />%8<br />%9%10",_where,_date,_daytime,_weather,_rain,_dayTimedescr,_missionB,player getVariable ["WS_myName",""],_plName,_gpName];
 
 //player createDiaryRecord ["Diary", ["Situation",_briefingB]];
 	
@@ -3699,7 +3767,7 @@ for "_i" from 1 to _stepsC do
 	}
 };
 	
-if ((dayTime < 6) or (dayTime > 20)) then
+if ((dayTime < 7) or (dayTime > 20)) then
 {
 	camUseNVG true 
 }
@@ -3745,7 +3813,7 @@ RYD_init_cam camCommit 8;
 
 {
 	deleteVehicle _x
-} foreach [sc3,dummyPlayer_1,sc2,sc1];
+} foreach [dummyPlayer_1];
 
 enableSentences true;
 
@@ -3819,10 +3887,6 @@ if (Callsign_Arty_Count > 0) then
 {
 	_briefingC = _briefingC + (format["Artillery Callsigns: %1<br />Amount: %2<br /><br />", Callsign_Arty_Str, Callsign_Arty_Count]);
 };
-if (Callsign_Armor_Count > 0) then
-{
-	_briefingC = _briefingC + (format["Armor Callsigns: %1<br />Amount: %2<br /><br />", Callsign_Armor_Str, Callsign_Armor_Count]);
-};
 
 if (count (_briefingC) == 0) then
 {
@@ -3835,9 +3899,33 @@ if (count (_briefingC) == 0) then
 	_marta = [_x,"HWSMarta","","","CommunicationMenuItemAdded"] call BIS_fnc_addCommMenuItem;
 	_ft = [_x,"HWSFT","","",""] call BIS_fnc_addCommMenuItem;
 	
-	_x createDiaryRecord ["Diary", ["Settings review",RYD_WS_txtM]];
-	_x createDiaryRecord ["Diary", ["Situation",_briefingB]];
-	_x createDiaryRecord ["Diary", ["Available Support",_briefingC]];
+	_plName = (getText (configFile >> "CfgVehicles" >> (typeOf _x) >> "displayName"));
+	_asVh = assignedVehicle player;
+
+	if not (isNull _asVh) then
+	{
+		//_vhName = getText (configFile >> "CfgVehicles" >> (typeOf _asVh) >> "displayName");
+		switch (true) do
+		{
+			case (_x == (commander _asVh)) : {_plName = "Commander"};
+			case (_x == (driver _asVh)) : {_plName = "Driver"};
+			case (_x == (gunner _asVh)) : {_plName = "Gunner"};
+		};
+	};
+	
+	_plName = _plName + ", "  + (toLower (rank _x));
+	_gpName = (group _x) getVariable ["RYD_WS_myKind",""];
+
+	if not (_gpName in [""]) then
+	{
+		_gpName = " (" + _gpName + ")"
+	};
+	
+	_briefingB = format ["%1. %4%5 %6. %7<br /><br />%8<br />%9%10",_where,_date,_daytime,_weather,_rain,_dayTimedescr,_missionB,_x getVariable ["WS_myName",""],_plName,_gpName];
+	
+	_x createDiaryRecord ["Diary", ["3 - Available Support",_briefingC]];
+	_x createDiaryRecord ["Diary", ["2 - Situation",_briefingB]];
+	_x createDiaryRecord ["Diary", ["1 - Settings review",RYD_WS_txtM]];
 } foreach switchableUnits;
 
 if (RYD_WS_LeadersPoofItsMagic) then
@@ -4200,7 +4288,7 @@ if (RYD_WS_LeadersPoofItsMagic) then
 			
 			if (_x getVariable ["RYD_WS_Indicted",false]) then
 			{
-				_acc = "MANSLAUGHTER"
+				_acc = "FRIENDLY FIRE"
 			};
 			
 			if (_gp getVariable ("isCaptive" + (str _gp))) then
@@ -4211,11 +4299,11 @@ if (RYD_WS_LeadersPoofItsMagic) then
 					
 					if not (_acc in [""]) then
 					{
-						_acc = _acc + " AND COWARDICE"
+						_acc = _acc + " AND SURRENDERING"
 					}
 					else
 					{
-						_acc = "COWARDICE" 
+						_acc = "SURRENDERING" 
 					}
 				};
 			};
