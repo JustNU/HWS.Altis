@@ -19,7 +19,7 @@ class EditorData
 		pos[]={8163,25.531214,25221};
 		dir[]={0,-0.70710683,0.70710683};
 		up[]={0,0.70710677,0.70710677};
-		aside[]={0.99999994,0,-0};
+		aside[]={0.99999994,0,0};
 	};
 };
 binarizationWanted=0;
@@ -112,7 +112,7 @@ class Mission
 	assetType="Free";
 	class Intel
 	{
-		briefingName="HETMAN: War Stories 1.10.3 NR6 - Altis";
+		briefingName="HETMAN: War Stories 1.10.4 NR6 - Altis";
 		overviewText="War has many faces.";
 		startWeather=0.29999998;
 		startWind=0.099999994;
