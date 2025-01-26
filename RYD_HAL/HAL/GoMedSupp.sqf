@@ -132,6 +132,11 @@ while {(_counter <= 3)} do
 
 	if ((RydxHQ_MagicHeal) and (_timer <= 24)) then { {if (((side _x) getFriend (side _unitG)) >= 0.6) then {_x call ace_medical_treatment_fnc_fullHealLocal; if (isPlayer _x) then {"Medical Treatment Applied" remoteExec ["hint", _x]};}} foreach ((vehicle (leader _unitG)) nearEntities [["Man"], 25]);};
 	
+	// modified for hws
+	// start
+	if ((RydxHQ_WS_MagicHealNonAce) and (_timer <= 24)) then { {if (((side _x) getFriend (side _unitG)) >= 0.6) then {_x setDamage 0; if (isPlayer _x) then {"Medical Treatment Applied" remoteExec ["hint", _x]};}} foreach ((vehicle (leader _unitG)) nearEntities [["Man"], 25]);};
+	// stop
+	
 //	if ((_request) and ((_amb getVariable ["HAL_Requested",false]) or ((_amb distance _Trg) > 500))) then {_counter = 5};
 
 	if ((_request) and (_amb getVariable ["HAL_Requested",false]) and ((_amb distance _Trg) < 500)) then {_counter = 0};

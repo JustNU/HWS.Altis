@@ -17,7 +17,26 @@ RydxHQ_LZ = false;
 RydxHQ_RHQAutoFill = true;
 RydxHQ_PathFinding = 0;
 RydxHQ_NEAware = 500;
-//RydHQ_Combining = true;
+
+RydxHQ_MagicRepair = true;
+RydxHQ_MagicRearm = true;
+RydxHQ_MagicRefuel = true;
+RydxHQ_WS_MagicHealNonAce = true;
+
+RydHQ_ReconDistance = 0.7;
+RydHQB_ReconDistance = 0.7;
+RydHQC_ReconDistance = 0.7;
+RydHQD_ReconDistance = 0.7;
+
+RydHQ_Combining = true;
+RydHQB_Combining = true;
+RydHQC_Combining = true;
+RydHQD_Combining = true;
+
+RydHQ_SupportRTB = true;
+RydHQB_SupportRTB = true;
+RydHQC_SupportRTB = true;
+RydHQD_SupportRTB = true;
 
 //RHQ SECTION
 RHQ_Art = [
