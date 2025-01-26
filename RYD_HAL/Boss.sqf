@@ -262,10 +262,10 @@ _BBSAL = RydBBa_SAL;
 if (_BBSide == "B") then {_BBSAL = RydBBb_SAL};
 
 	{
-	_vTkn = (_x getVariable ["AreaTakenA",false]);
-	if (_BBSide == "B") then {_vTkn = (_x getVariable ["AreaTakenB",false])};
-
-	_BBStr pushBack [(position _x),_x getVariable "AreaValue",_vTkn];
+	// modified for hws
+	// start
+	_BBStr pushBack [(position _x),_x getVariable "AreaValue",false]
+	// stop
 	}
 foreach (synchronizedObjects _BBSAL);
 
