@@ -376,6 +376,9 @@ if ((count RydHQ_GroupMarks) > 0) then
 	[RydHQ_GroupMarks,RYD_GroupMarkerLoop] call RYD_Spawn
 	};
 
+// modified for hws
+// start
 if (RydxHQ_Actions) then {
-nul = [] execVM  (RYD_Path + "SquadTaskingNR6.sqf");
+	nul = [] execVM  (RYD_Path + "SquadTaskingNR6.sqf");
 };
+// stop
