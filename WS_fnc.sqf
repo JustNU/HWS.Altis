@@ -785,7 +785,8 @@ Fake_Weapons_ARR = [
 	"SportCarHorn",
 	"TruckHorn",
 	"TruckHorn2",
-	"TruckHorn3"
+	"TruckHorn3",
+	"SmokeLauncher"
 ];
 
 Fake_Weapons_ARR_Air = [
