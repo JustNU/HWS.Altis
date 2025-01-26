@@ -4507,8 +4507,6 @@ RYD_WS_SpawnAir =
 				case (LeaderHQB) : {RydHQB_Included pushBack _gp};
 				case (LeaderHQC) : {RydHQC_Included pushBack _gp};
 				case (LeaderHQD) : {RydHQD_Included pushBack _gp};
-				case (LeaderHQE) : {RydHQE_Included pushBack _gp};
-				case (LeaderHQF) : {RydHQF_Included pushBack _gp};
 			};
 		};
 	};
@@ -4652,8 +4650,6 @@ RYD_WS_SpawnStatic =
 					case (LeaderHQB) : {RydHQB_Included pushBack _gp};
 					case (LeaderHQC) : {RydHQC_Included pushBack _gp};
 					case (LeaderHQD) : {RydHQD_Included pushBack _gp};
-					case (LeaderHQE) : {RydHQE_Included pushBack _gp};
-					case (LeaderHQF) : {RydHQF_Included pushBack _gp};
 				};
 			};
 			
@@ -5018,8 +5014,6 @@ RYD_WS_SpawnSupport =
 				case (LeaderHQB) : {RydHQB_Included pushBack _gp};
 				case (LeaderHQC) : {RydHQC_Included pushBack _gp};
 				case (LeaderHQD) : {RydHQD_Included pushBack _gp};
-				case (LeaderHQE) : {RydHQE_Included pushBack _gp};
-				case (LeaderHQF) : {RydHQF_Included pushBack _gp};
 			};
 		}; 
 	};
@@ -5150,8 +5144,6 @@ RYD_WS_SpawnArmor =
 				case (LeaderHQB) : {RydHQB_Included pushBack _gp};
 				case (LeaderHQC) : {RydHQC_Included pushBack _gp};
 				case (LeaderHQD) : {RydHQD_Included pushBack _gp};
-				case (LeaderHQE) : {RydHQE_Included pushBack _gp};
-				case (LeaderHQF) : {RydHQF_Included pushBack _gp};
 			};
 		}; 
 	};
@@ -7473,8 +7465,6 @@ RYD_WS_WholeMapPlacement =
 					case (LeaderHQB) : {RydHQB_Included pushBack _gp};
 					case (LeaderHQC) : {RydHQC_Included pushBack _gp};
 					case (LeaderHQD) : {RydHQD_Included pushBack _gp};
-					case (LeaderHQE) : {RydHQE_Included pushBack _gp};
-					case (LeaderHQF) : {RydHQF_Included pushBack _gp};
 				};
 				
 				_gp setVariable ["RYD_WS_myKind",_x select 2];

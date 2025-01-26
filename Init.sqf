@@ -84,8 +84,6 @@ RydHQ_SimpleMode = false;
 RydHQB_SimpleMode = false;
 RydHQC_SimpleMode = false;
 RydHQD_SimpleMode = false;
-RydHQE_SimpleMode = false;
-RydHQF_SimpleMode = false;
 
 _sumB = 0;
 _sumO = 0;
@@ -247,29 +245,21 @@ RydHQ_Debug = false;
 RydHQB_Debug = false;
 RydHQC_Debug = false;
 RydHQD_Debug = false;
-RydHQE_Debug = false;
-RydHQF_Debug = false;
 
 RydHQ_DebugII = false;
 RydHQB_DebugII = false;
 RydHQC_DebugII = false;
 RydHQD_DebugII = false;
-RydHQE_DebugII = false;
-RydHQF_DebugII = false;
 
 RydHQ_CargoFind = 100;
 RydHQB_CargoFind = 100;
 RydHQC_CargoFind = 100;
 RydHQD_CargoFind = 100;
-RydHQE_CargoFind = 100;
-RydHQF_CargoFind = 100;
 
 RydHQ_PathFinding = 0;
 RydHQB_PathFinding = 0;
 RydHQC_PathFinding = 0;
 RydHQD_PathFinding = 0;
-RydHQE_PathFinding = 0;
-RydHQF_PathFinding = 0;
 
 RydHQ_LRelocating = true;
 RydHQ_GetHQInside = true;
@@ -283,60 +273,40 @@ RydHQC_GetHQInside = true;
 RydHQD_LRelocating = true;
 RydHQD_GetHQInside = true;
 
-RydHQE_LRelocating = true;
-RydHQE_GetHQInside = true;
-
-RydHQF_LRelocating = true;
-RydHQF_GetHQInside = true;
-
 RydHQ_IDChance = 15;
 RydHQB_IDChance = 15;
 RydHQC_IDChance = 15;
 RydHQD_IDChance = 15;
-RydHQE_IDChance = 15;
-RydHQF_IDChance = 15;
 
 RydHQ_DynForm = true;
 RydHQB_DynForm = true;
 RydHQC_DynForm = true;
 RydHQD_DynForm = true;
-RydHQE_DynForm = true;
-RydHQF_DynForm = true;
 
 RydHQ_AirEvac = true;
 RydHQB_AirEvac = true;
 RydHQC_AirEvac = true;
 RydHQD_AirEvac = true;
-RydHQE_AirEvac = true;
-RydHQF_AirEvac = true;
 
 RydHQ_AAO = true;
 RydHQB_AAO = true;
 RydHQC_AAO = true;
 RydHQD_AAO = true;
-RydHQE_AAO = true;
-RydHQF_AAO = true;
 
 RydHQ_Rush = true;
 RydHQB_Rush = true;
 RydHQC_Rush = true;
 RydHQD_Rush = true;
-RydHQE_Rush = true;
-RydHQF_Rush = true;
 
 RydHQ_ChatDebug = true;
 RydHQB_ChatDebug = false;
 RydHQC_ChatDebug = false;
 RydHQD_ChatDebug = false;
-RydHQE_ChatDebug = false;
-RydHQF_ChatDebug = false;
 
 RydHQ_Excluded = [];
 RydHQB_Excluded = [];
 RydHQC_Excluded = [];
 RydHQD_Excluded = [];
-RydHQE_Excluded = [];
-RydHQF_Excluded = [];
 
 fakeLeaderHQ = objNull;
 fakeLeaderHQB = objNull;
@@ -355,15 +325,11 @@ RydHQ_MoraleConst = 1.1;
 RydHQB_MoraleConst = 1.1;
 RydHQC_MoraleConst = 1.1;
 RydHQD_MoraleConst = 1.1;
-RydHQE_MoraleConst = 1.1;
-RydHQF_MoraleConst = 1.1;
 
 RydHQ_OffTend = 1.1;
 RydHQB_OffTend = 1.1;
 RydHQC_OffTend = 1.1;
 RydHQD_OffTend = 1.1;
-RydHQE_OffTend = 1.1;
-RydHQF_OffTend = 1.1;
 
 RYD_WS_Debug = false;
 
@@ -3054,8 +3020,6 @@ else
 	RydHQB_Included = [];
 	RydHQC_Included = [];
 	RydHQD_Included = [];
-	RydHQE_Included = [];
-	RydHQF_Included = [];
 	
 	RydBB_Active = true;
 	
@@ -3076,20 +3040,17 @@ else
 	RydHQD_LRelocating = false;
 	RydHQD_GetHQInside = false;
 	
-	RydHQE_LRelocating = false;
-	RydHQE_GetHQInside = false;
-	
-	RydHQF_LRelocating = false;
-	RydHQF_GetHQInside = false;
-	
 	RydHQ_Wait = 20;
 	
 	RydHQ_CaptLimit = 1;
 	RydHQB_CaptLimit = 1;
 	RydHQC_CaptLimit = 1;
 	RydHQD_CaptLimit = 1;
-	RydHQE_CaptLimit = 1;
-	RydHQF_CaptLimit = 1;
+	
+	RydHQ_MaxSimpleObjs = 1;
+	RydHQB_MaxSimpleObjs = 1;
+	RydHQC_MaxSimpleObjs = 1;
+	RydHQD_MaxSimpleObjs = 1;
 	
 	RydHQ_NoRec = 10000;
 	RydHQ_RapidCapt = 10000;
@@ -3138,16 +3099,6 @@ else
 	RydHQD_Obj2 = createTrigger ["EmptyDetector",[0,0,0]];
 	RydHQD_Obj3 = createTrigger ["EmptyDetector",[0,0,0]];
 	RydHQD_Obj4 = createTrigger ["EmptyDetector",[0,0,0]];
-	
-	RydHQE_Obj1 = createTrigger ["EmptyDetector",[0,0,0]];
-	RydHQE_Obj2 = createTrigger ["EmptyDetector",[0,0,0]];
-	RydHQE_Obj3 = createTrigger ["EmptyDetector",[0,0,0]];
-	RydHQE_Obj4 = createTrigger ["EmptyDetector",[0,0,0]];
-	
-	RydHQF_Obj1 = createTrigger ["EmptyDetector",[0,0,0]];
-	RydHQF_Obj2 = createTrigger ["EmptyDetector",[0,0,0]];
-	RydHQF_Obj3 = createTrigger ["EmptyDetector",[0,0,0]];
-	RydHQF_Obj4 = createTrigger ["EmptyDetector",[0,0,0]];
 	
 	_gp = createGroup sideLogic;		
 	RydBBa_SAL = _gp createUnit ["Logic",[0,0,0], [], 0, "NONE"];
@@ -3710,10 +3661,7 @@ switch (RYD_WS_BattleType) do
 		RydHQ_Order = "ATTACK";
 		RydHQB_Order = "ATTACK";
 		RydHQC_Order = "ATTACK";
-		
 		RydHQD_Order = "ATTACK";
-		RydHQE_Order = "ATTACK";
-		RydHQF_Order = "ATTACK";
 	};
 };
 
