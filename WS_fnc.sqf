@@ -4337,7 +4337,7 @@ RYD_WS_SpawnAir =
 	_dst = 500 - (random 200);
 
 	_checkPos = [_pos,0,_dst] call RYD_RandomAroundMM;
-	_checkPos = [_checkPos, 250, _oppositeAngle] call BIS_fnc_relPos;
+	_checkPos = [_checkPos, 0, _oppositeAngle] call BIS_fnc_relPos;
 
 	_fe = true;
 	
