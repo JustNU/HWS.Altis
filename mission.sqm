@@ -8,7 +8,7 @@ class EditorData
 	toggles=5;
 	class ItemIDProvider
 	{
-		nextID=104;
+		nextID=105;
 	};
 	class MarkerIDProvider
 	{
@@ -17,9 +17,9 @@ class EditorData
 	class Camera
 	{
 		pos[]={8163,25.531214,25221};
-		dir[]={-1.2363449e-07,-0.70710683,0.70710683};
-		up[]={-1.2363449e-07,0.70710671,0.70710683};
-		aside[]={1,0,1.7484557e-07};
+		dir[]={0,-0.70710683,0.70710683};
+		up[]={0,0.70710677,0.70710677};
+		aside[]={0.99999994,0,-0};
 	};
 };
 binarizationWanted=0;
@@ -131,7 +131,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=8;
+		items=9;
 		class Item0
 		{
 			dataType="Object";
@@ -371,6 +371,20 @@ class Mission
 			};
 			id=82;
 			atlOffset=3.0994415e-06;
+		};
+		class Item8
+		{
+			dataType="Trigger";
+			position[]={15360,-49.639999,15360};
+			class Attributes
+			{
+				name="RydBB_MC";
+				sizeA=15360;
+				sizeB=15360;
+				isRectangle=1;
+			};
+			id=104;
+			type="EmptyDetector";
 		};
 	};
 };
