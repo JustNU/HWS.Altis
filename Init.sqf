@@ -1728,7 +1728,7 @@ if not (RYD_WS_WholeMap) then
 	if (_sumAll < 1) exitWith 
 	{
 		endLoadingScreen;
-		hintC "Initialization failed: No sufficient landmass";
+		hintC "Initialization failed: No sufficient landmass, try placing RydBB_MC trigger";
 		sleep 0.1;
 		failMission "END1";
 	};
