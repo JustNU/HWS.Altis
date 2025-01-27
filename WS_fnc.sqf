@@ -2684,22 +2684,6 @@ RYD_WS_MapAnalyze =
 	{
 		_mapSize = getNumber (configFile >> "CfgWorlds" >> worldName >> "mapSize");
 		
-		//if is one of faulty configured maps, manually change the size
-		if (_mapSize < 1) then 
-		{
-			diag_log "HWS - MAP SIZE WAS NOT DEFINED, PICKING FROM A LIST";
-			
-			_mapSize = switch (toLower (worldName)) do
-			{
-				case "chernarus_summer";
-				case "chernarus_winter": {15360};
-				case "abel": {12800};
-				default {10000}
-			};
-			
-			diag_log format ["HWS - MAP SIZE: %1", _mapSize];
-		};
-		
 		RydBB_MapXMax = _mapSize;
 		RydBB_MapYMax = RydBB_MapXMax;
 		RydBB_MapC = [_mapSize/2,_mapSize/2];
@@ -6147,20 +6131,7 @@ RYD_WS_FindLandPosNear =
 		_notMapCount = 0;
 		_ct = 0;
 		_dst = 10 * _prec;
-		
 		_mapSize = getNumber (configFile >> "CfgWorlds" >> worldName >> "mapSize");
-		
-		//if is one of faulty configured maps, manually change the size
-		if (_mapSize < 1) then 
-		{
-			_mapSize = switch (toLower (worldName)) do
-			{
-				case "chernarus_summer";
-				case "chernarus_winter": {15360};
-				case "abel": {12800};
-				default {10000}
-			};
-		};
 		
 		while {((surfaceIsWater _pos) and {(_notMapCount < 360) and {((_limit < 0) or {((_fPos distance2D _pos) <= _limit)})}})} do
 			{
