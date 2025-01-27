@@ -2687,12 +2687,17 @@ RYD_WS_MapAnalyze =
 		//if is one of faulty configured maps, manually change the size
 		if (_mapSize < 1) then 
 		{
+			diag_log "HWS - MAP SIZE WAS NOT DEFINED, PICKING FROM A LIST";
+			
 			_mapSize = switch (toLower (worldName)) do
 			{
 				case "chernarus_summer";
 				case "chernarus_winter": {15360};
+				case "abel": {12800};
 				default {10000}
 			};
+			
+			diag_log format ["HWS - MAP SIZE: %1", _mapSize];
 		};
 		
 		RydBB_MapXMax = _mapSize;
@@ -6152,6 +6157,7 @@ RYD_WS_FindLandPosNear =
 			{
 				case "chernarus_summer";
 				case "chernarus_winter": {15360};
+				case "abel": {12800};
 				default {10000}
 			};
 		};

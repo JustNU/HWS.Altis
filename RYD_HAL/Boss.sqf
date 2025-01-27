@@ -60,8 +60,26 @@ if (_BBSide == "A") then
 		}
 	else
 		{
+		// modified for hws
+		// start
 		_mapSize = getNumber (configFile >> "CfgWorlds" >> worldName >> "mapSize");
 		
+		//if is one of faulty configured maps, manually change the size
+		if (_mapSize < 1) then 
+		{
+			diag_log "HWS - MAP SIZE WAS NOT DEFINED, PICKING FROM A LIST";
+			
+			_mapSize = switch (toLower (worldName)) do
+			{
+				case "chernarus_summer";
+				case "chernarus_winter": {15360};
+				case "abel": {12800};
+				default {10000}
+			};
+			
+			diag_log format ["HWS - MAP SIZE: %1", _mapSize];
+		};
+		// stop
 		RydBB_MapXMax = _mapSize;
 		RydBB_MapYMax = RydBB_MapXMax;
 		RydBB_MapC = [_mapSize/2,_mapSize/2];
