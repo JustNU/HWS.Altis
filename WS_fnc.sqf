@@ -3196,8 +3196,8 @@ RYD_WS_Battlefield =
 				_defPos = (_strAr select (floor (random (count _strAr)))) select 0;
 				
 				_attPos = [_defPos,_strAr,_minDistance,_maxDistance] call RYD_WS_FindPosInRange;
-				_nearSeaD = [_defPos,600] call RYD_WS_NearSea;
-				_nearSeaA = [_attPos,600] call RYD_WS_NearSea;
+				_nearSeaD = [_defPos,400] call RYD_WS_NearSea;
+				_nearSeaA = [_attPos,400] call RYD_WS_NearSea;
 				_nearSea = _nearSeaD max _nearSeaA;
 				
 				_maxDistance = _maxDistance + 100;
@@ -3227,7 +3227,7 @@ RYD_WS_Battlefield =
 			_center = (_strAr select (floor (random (count _strAr)))) select 0;
 			
 			_posA = [_center,1250,2000,50] call RYD_WS_FindLandPos;
-			_nearSea = [_posA,600] call RYD_WS_NearSea;
+			_nearSea = [_posA,400] call RYD_WS_NearSea;
 			
 			_ct = 0;
 			
@@ -3244,7 +3244,7 @@ RYD_WS_Battlefield =
 				_center = (_strAr select (floor (random (count _strAr)))) select 0;
 				
 				_posA = [_center,_minDistanceA,_maxDistanceA,50] call RYD_WS_FindLandPos;
-				_nearSea = [_posA,600] call RYD_WS_NearSea;
+				_nearSea = [_posA,400] call RYD_WS_NearSea;
 				
 				_maxDistanceA = _maxDistanceA + 100;
 				
@@ -3262,7 +3262,7 @@ RYD_WS_Battlefield =
 			_center = [_battlePoint,_angleA + 210 - (random 60),1800] call RYD_PosTowards2D;
 			
 			_posB = [_center,_minDistanceB,_maxDistanceB,50] call RYD_WS_FindLandPos;
-			_nearSea = [_posB,600] call RYD_WS_NearSea;
+			_nearSea = [_posB,400] call RYD_WS_NearSea;
 			
 			_ct = 0;
 			
@@ -3271,7 +3271,7 @@ RYD_WS_Battlefield =
 				_center = [_battlePoint,_angleA + 210 - (random 60),1800 + (((2 * _ct) - 10) * 50)] call RYD_PosTowards2D;
 				
 				_posB = [_center,_minDistanceB,_maxDistanceB,50] call RYD_WS_FindLandPos;
-				_nearSea = [_posB,600] call RYD_WS_NearSea;
+				_nearSea = [_posB,400] call RYD_WS_NearSea;
 				
 				_maxDistanceB = _maxDistanceB + 100;
 				
@@ -3621,7 +3621,7 @@ RYD_WS_FindLandPos =
 	_minR = _this select 1;
 	_maxR = _this select 2;
 	_maxT = _this select 3;
-	_noWater = 600;
+	_noWater = 400;
 	if ((count _this) > 4) then {_noWater = _this select 4};
 	
 	_final = [_center,_minR,_maxR] call RYD_RandomAroundMM;
@@ -3665,7 +3665,7 @@ RYD_WS_FindPosInRange =
 				{
 				if (_dst > _minR) then
 					{
-					_nearSea = [_pos,600] call RYD_WS_NearSea;
+					_nearSea = [_pos,400] call RYD_WS_NearSea;
 					
 					if (_nearSea < 10) then
 						{
