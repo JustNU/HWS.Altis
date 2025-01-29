@@ -2571,8 +2571,10 @@ if not (RYD_WS_WholeMap) then
 							if not (isNull _gp) then
 							{
 								_vh = assignedVehicle (leader _gp);
+								_vh allowCrewInImmobile true;
 								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
 								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
+								
 								switch (_mainIx) do
 								{
 									case (0) : 
@@ -2669,6 +2671,7 @@ if not (RYD_WS_WholeMap) then
 							if not (isNull _gp) then
 							{
 								_vh = assignedVehicle (leader _gp);
+								_vh allowCrewInImmobile true;
 								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
 								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
 								
@@ -2699,6 +2702,7 @@ if not (RYD_WS_WholeMap) then
 							if not (isNull _gp) then
 							{
 								_vh = assignedVehicle (leader _gp);
+								_vh allowCrewInImmobile true;
 								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
 								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
 								switch (_mainIx) do
@@ -2727,6 +2731,7 @@ if not (RYD_WS_WholeMap) then
 							if not (isNull _gp) then
 							{
 								_vh = assignedVehicle (leader _gp);
+								_vh allowCrewInImmobile true;
 								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
 								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
 								
@@ -2756,6 +2761,7 @@ if not (RYD_WS_WholeMap) then
 							if not (isNull _gp) then
 							{
 								_vh = assignedVehicle (leader _gp);
+								_vh allowCrewInImmobile true;
 								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
 								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
 								
@@ -2785,6 +2791,7 @@ if not (RYD_WS_WholeMap) then
 							if not (isNull _gp) then
 							{
 								_vh = assignedVehicle (leader _gp);
+								_vh allowCrewInImmobile true;
 								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
 								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
 								
@@ -2814,6 +2821,7 @@ if not (RYD_WS_WholeMap) then
 							if not (isNull _gp) then
 							{
 								_vh = assignedVehicle (leader _gp);
+								_vh allowCrewInImmobile true;
 								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
 								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
 								
@@ -2843,6 +2851,7 @@ if not (RYD_WS_WholeMap) then
 							if not (isNull _gp) then
 							{
 								_vh = assignedVehicle (leader _gp);
+								_vh allowCrewInImmobile true;
 								_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
 								_gp setVariable ["RYD_WS_myKind",_name + " crew"];
 								
@@ -2897,6 +2906,7 @@ if not (RYD_WS_WholeMap) then
 								if not (isNull _gp) then
 								{
 									_vh = assignedVehicle (leader _gp);
+									_vh allowCrewInImmobile true;
 									_name = getText (configFile >> "CfgVehicles" >> (typeof _vh) >> "displayName");
 									_gp setVariable ["RYD_WS_myKind",_name + " crew"];
 									
