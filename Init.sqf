@@ -2151,7 +2151,7 @@ if not (RYD_WS_WholeMap) then
 		
 		_ldrPos = [_ldrPos0,0,160,5,0,1.5,0,[],[_ldrPos0,_ldrPos0]] call BIS_fnc_findSafePos;
 		_fe = not (isOnRoad _ldrPos);
-		_nR = _ldrPos nearRoads 50;
+		_nR = _ldrPos nearRoads 30;
 		if (((count _nR) > 0) or ((_ldrPos0 distance _ldrPos) > 5000)) then {_fe = false};
 		_ct = 0;
 		
@@ -2162,7 +2162,7 @@ if not (RYD_WS_WholeMap) then
 			_ct = _ct + 1;
 			if (_ct > 20) exitWith {};
 			_fe = not (isOnRoad _ldrPos);
-			_nR = _ldrPos nearRoads 50;
+			_nR = _ldrPos nearRoads 30;
 			if (((count _nR) > 0) or ((_ldrPos0 distance _ldrPos) > 5000)) then {_fe = false};
 		};
 			

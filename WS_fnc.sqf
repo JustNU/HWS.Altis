@@ -3844,12 +3844,7 @@ RYD_WS_SpawnGroupSafe =
 		if (getNumber(configFile >> "CfgVehicles" >> _type >> "isMan") == 1) then 
 		{
 			_itemPos0 = [_pos,0,160,10,0,4,0,[],[_pos,_pos]] call BIS_fnc_findSafePos;
-			_fe = not ((isOnRoad _itemPos0) or not ([_itemPos0] call RYD_WS_isOnMap));
-			_nR = _itemPos0 nearRoads 50;
-			if ((count _nR) > 0) then 
-			{
-				_fe = false;
-			};
+			_fe = [_itemPos0] call RYD_WS_isOnMap;
 			
 			if (_fe) then
 			{
@@ -3873,12 +3868,7 @@ RYD_WS_SpawnGroupSafe =
 				if (_ct > 200) exitWith {};
 				_itemPos = [_itemPos0,10,100 + (_ct * 5)] call RYD_RandomAroundMM;
 				_itemPos = [_itemPos,0,160,10,0,4,0,[],[_itemPos,_itemPos]] call BIS_fnc_findSafePos;
-				_fe = not ((isOnRoad _itemPos) or not ([_itemPos] call RYD_WS_isOnMap));
-				_nR = _itemPos nearRoads 50;
-				if ((count _nR) > 0) then 
-				{
-					_fe = false
-				};
+				_fe = [_itemPos] call RYD_WS_isOnMap;
 				if (_fe) then
 				{
 					_cl = [_itemPos,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
@@ -3896,12 +3886,7 @@ RYD_WS_SpawnGroupSafe =
 		else
 		{
 			_itemPos0 = [_pos,0,200,20,0,6,0,[],[_pos,_pos]] call BIS_fnc_findSafePos;
-			_fe = not ((isOnRoad _itemPos0) or not ([_itemPos0] call RYD_WS_isOnMap));
-			_nR = _itemPos0 nearRoads 50;
-			if ((count _nR) < 1) then 
-			{
-				_fe = false
-			};
+			_fe = [_itemPos0] call RYD_WS_isOnMap;
 			
 			if (_fe) then
 			{
@@ -3925,12 +3910,8 @@ RYD_WS_SpawnGroupSafe =
 				if (_ct > 500) exitWith {};
 				_itemPos = [_itemPos0,10,100 + (_ct * 5)] call RYD_RandomAroundMM;
 				_itemPos = [_itemPos,0,200,20 - (_ct/10),0,6,0,[],[_itemPos,_itemPos]] call BIS_fnc_findSafePos;
-				_fe = not ((isOnRoad _itemPos) or not ([_itemPos] call RYD_WS_isOnMap));
-				_nR = _itemPos nearRoads (50 - (_ct/10));
-				if ((count _nR) < 1) then 
-				{
-					_fe = false
-				};
+				_fe = [_itemPos] call RYD_WS_isOnMap
+				;
 				if (_fe) then
 				{
 					_cl = [_itemPos,RYD_WS_SpawnPositions] call RYD_WS_FindClosest;
@@ -4549,7 +4530,7 @@ RYD_WS_SpawnStatic =
 	
 	_ct = 0;
 	
-	while {(not (_isLOS) or not (_fe) or {isOnRoad _checkPos})} do
+	while {(not (_isLOS) or not (_fe))} do
 	{
 		_ct = _ct + 1;
 		if (_ct > 50) exitWith {};
@@ -4698,7 +4679,7 @@ RYD_WS_SpawnSupport =
 	
 	_ct = 0;
 	
-	while {(not (_fe) or {isOnRoad _checkPos})} do
+	while {(not (_fe))} do
 	{
 		_ct = _ct + 1;
 		if (_ct > 50) exitWith {};
@@ -5056,7 +5037,7 @@ RYD_WS_SpawnArmor =
 	
 	_ct = 0;
 	
-	while {(not (_fe) or {isOnRoad _checkPos})} do
+	while {(not (_fe))} do
 	{
 		_ct = _ct + 1;
 		if (_ct > 50) exitWith {};
@@ -6351,7 +6332,7 @@ RYD_WS_WholeMapPlacement =
 			
 			_ldrPos = [_ldrPos0,0,160,5,0,1.5,0,[],[_ldrPos0,_ldrPos0]] call BIS_fnc_findSafePos;
 			_fe = not (isOnRoad _ldrPos);
-			_nR = _ldrPos nearRoads 50;
+			_nR = _ldrPos nearRoads 30;
 			if (((count _nR) > 0) or ((_ldrPos0 distance _ldrPos) > 5000)) then {_fe = false};
 			_ct = 0;
 			
@@ -6362,7 +6343,7 @@ RYD_WS_WholeMapPlacement =
 				_ct = _ct + 1;
 				if (_ct > 20) exitWith {};
 				_fe = not (isOnRoad _ldrPos);
-				_nR = _ldrPos nearRoads 50;
+				_nR = _ldrPos nearRoads 30;
 				if (((count _nR) > 0) or ((_ldrPos0 distance _ldrPos) > 5000)) then {_fe = false};
 			};
 				
