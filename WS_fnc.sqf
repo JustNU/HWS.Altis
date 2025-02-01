@@ -786,7 +786,26 @@ Fake_Weapons_ARR = [
 	"TruckHorn",
 	"TruckHorn2",
 	"TruckHorn3",
-	"SmokeLauncher"
+	"SmokeLauncher",
+	"gm_typ2_horn",
+	"gm_u1300l_horn",
+	"vn_m113_horn",
+	"FakeWeapon",
+	"PickupHorn_rf",
+	"Throw",
+	"Put",
+	"Rangefinder",
+	"Binocular",
+	"Laserdesignator",
+	"rhs_weap_smokegen",
+	"CUP_weapon_mastersafe",
+	"CUP_Laserdesignator_mounted",
+	"Truckhorn3",
+	"Laserdesignator_03",
+	"vn_m19_binocs_grn",
+	"vn_m19_binocs_grey",
+	"vn_mk21_binocs",
+	"vn_m274_mulehorn"
 ];
 
 Fake_Weapons_ARR_Air = [
@@ -1243,7 +1262,7 @@ RYD_WS_DynamicRHQ =
 																		[]
 																	};
 																
-																	_weaponsArr =	_weaponsArr - ["Throw","Put"];
+																	_weaponsArr = _weaponsArr - ["Throw","Put"];
 																	
 																	if ((count _weaponsArr) > 1) then
 																	{
