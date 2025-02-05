@@ -375,7 +375,7 @@ RYD_WS_I_Factions = [["ind_f","AAF",true]];
 
 RYD_WS_HQGuardsA = [];
 RYD_WS_HQGuardsB = [];
-RYD_WS_LeadersPoofItsMagic = false;
+RYD_WS_LeadersPoofItsMagic = true;
 
 RYD_WS_wholeMap = false;
 RYD_WS_mixFactions = 0;
