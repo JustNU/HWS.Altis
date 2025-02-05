@@ -805,7 +805,15 @@ Fake_Weapons_ARR = [
 	"vn_m19_binocs_grn",
 	"vn_m19_binocs_grey",
 	"vn_mk21_binocs",
-	"vn_m274_mulehorn"
+	"vn_m274_mulehorn",
+	"vn_v_launcher_m18r",
+	"vn_v_launcher_m7",
+	"vn_v_launcher_m127",
+	"vn_cmflarelauncher_singles_f4c",
+	"vn_ptf_horn",
+	"vn_pbr_horn",
+	"vn_mx991_red",
+	"vn_m127"
 ];
 
 Fake_Weapons_ARR_Air = [
@@ -920,7 +928,8 @@ Callsigns_Arr =
 	"Hippo",
 	"Flash",
 	"Nightwolf",
-	"Zeus"
+	"Zeus",
+	"Shield"
 ];
 	
 Callsign_AirAttack_Str = "";
@@ -1112,7 +1121,17 @@ RYD_WS_DynamicRHQ =
 									_path4 = _path3 >> _gp;
 									
 									_name = getText (_path4 >> "name");
-									if ((toLower _name) in ["diver team"]) exitWith {};
+									
+									// dont include groups with forbidden words
+									_forbiddenGroups = ["diver","crew","hq","udt"];
+									_skipGroup = false;
+									
+									{
+										if (_skipGroup) exitWith {};
+										
+										_skipGroup = [_x, tolower _name] call BIS_fnc_inString;
+									} foreach _forbiddenGroups;
+									if (_skipGroup) exitWith {};
 									
 									_cnt = count _path4;
 									_countOfunits = 0;
@@ -1159,7 +1178,7 @@ RYD_WS_DynamicRHQ =
 												_base = _veh;
 												_wrong = false;
 												
-												while {not (_base in ["air","ship","tank","car","wheeled_apc_f","ugv_01_base_f"])} do
+												while {not (_base in ["air","ship","tank","car","wheeled_apc_f","ugv_01_base_f","staticweapon"])} do
 												{
 													if (_isArty) exitWith {};
 													_base = inheritsFrom (_vehClass >> _base);
@@ -1172,10 +1191,10 @@ RYD_WS_DynamicRHQ =
 													if (_base in ["allvehicles","all"]) exitWith {};
 												};
 
-												if (_base in ["ugv_01_base_f"]) then 
+												if (_base in ["ugv_01_base_f","staticweapon"]) then 
 												{
 													_wrong = true;
-													_gpType = "ugv_01_base_f"
+													_gpType = _base;
 												};
 
 												if not (_wrong) then
@@ -1195,6 +1214,14 @@ RYD_WS_DynamicRHQ =
 													};
 													
 													_myFac = getText (_vehClass2 >> "faction");
+													
+													// artificially bump unit count for recon units
+													if ((getNumber (_vehClass2 >> "camouflage")) < 1) then
+													{
+														_countOfunits = _countOfunits + 4;
+														//diag_log format ["_name: %1",_name];
+														//diag_log format ["_veh: %1",_veh];
+													};
 													
 													if not (_veh in RYD_WS_AllClasses) then
 													{
@@ -1543,7 +1570,7 @@ RYD_WS_DynamicRHQ =
 									
 									//diag_log format ["[_rSide,_path4,_isArty,_name]: %1 typ: %2",[_rSide,_path4,_isArty,_name],_gpType];
 									
-									if not (_gpType in ["air","ship","ugv_01_base_f"]) then
+									if not (_gpType in ["air","ship","ugv_01_base_f","staticweapon"]) then
 									{
 										_fac = _myFac;
 										if ((toLower _fac) in ["guerilla"]) then {_fac = "blu_g_f"};
@@ -1808,9 +1835,11 @@ RYD_WS_DynamicRHQ =
 						_isUAV = (toLower (getText (_vehClass2 >> "crew"))) in ["b_uav_ai","i_uav_ai","o_uav_ai"];
 						_isArty = false;
 						
-						if (_side in [0,1,2]) then
+						if ((_side in [0,1,2]) and {not (_isUAV)}) then
 						{
 							_fac = toLower (getText (_vehClass2 >> "faction"));
+							
+							if not ((toLower _fac) in RYD_WS_SelectedFactions) exitWith {};
 							
 							if ((getNumber (_vehClass2 >> "artilleryScanner")) > 0) then
 							{

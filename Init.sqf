@@ -2144,7 +2144,6 @@ if not (RYD_WS_WholeMap) then
 		_ldrClass = _ldrClassArr select (floor (random (count _ldrClassArr)));
 
 		_ldrGp = createGroup _x;
-		_ldrGp setGroupId ["HQ"];
 		_ldrPos0 = +_mainPos;
 		
 		_ldrPos0 = [_ldrPos0,_dirL + 180,((_dst/3) min 800) max 500] call RYD_PosTowards2D;
@@ -2177,6 +2176,7 @@ if not (RYD_WS_WholeMap) then
 				leaderHQ setDir _dir;
 				
 				[leaderHQ] joinSilent _ldrGp;
+				_ldrGp setGroupId ["HQ A"];
 				(group leaderHQ) setVariable ["RydHQ_MyDir",_dir];
 				
 				_myFactions = [];
@@ -2195,14 +2195,17 @@ if not (RYD_WS_WholeMap) then
 					leaderHQ setAnimSpeedCoef 15;
 					leaderHQ addEventHandler ["HandleDamage",{0}];
 					
+					/*
 					_fldrGp = createGroup _x;
 					RydHQ_Excluded pushback _fldrGp;
 					fakeLeaderHQ = _fldrGp createUnit [_ldrClass, _ldrPos, [], 0, "NONE"];
 					fakeLeaderHQ setDir _dir;
 					[fakeLeaderHQ] joinSilent _fldrGp;
 					(group fakeLeaderHQ) setVariable ["RydHQ_MyDir",_dir];
+					(group fakeLeaderHQ) setVariable ["RydHQ_MyFactions",_myFactions];
 					
 					[fakeLeaderHQ, false] call RYD_WS_HQGuard;
+					*/
 				}
 				else
 				{
@@ -2215,6 +2218,7 @@ if not (RYD_WS_WholeMap) then
 
 				leaderHQB setDir _dir;
 				[leaderHQB] joinSilent _ldrGp;
+				_ldrGp setGroupId ["HQ B"];
 				(group leaderHQB) setVariable ["RydHQ_MyDir",_dir];
 				
 				_myFactions = [];
@@ -2233,14 +2237,17 @@ if not (RYD_WS_WholeMap) then
 					leaderHQB setAnimSpeedCoef 15;
 					leaderHQB addEventHandler ["HandleDamage",{0}];
 					
+					/*
 					_fldrGp = createGroup _x;
 					RydHQB_Excluded pushback _fldrGp;
 					fakeLeaderHQB = _fldrGp createUnit [_ldrClass, _ldrPos, [], 0, "NONE"];
 					fakeLeaderHQB setDir _dir;
 					[fakeLeaderHQ] joinSilent _fldrGp;
 					(group fakeLeaderHQB) setVariable ["RydHQ_MyDir",_dir];
+					(group fakeLeaderHQB) setVariable ["RydHQ_MyFactions",_myFactions];
 
 					[fakeLeaderHQB, false] call RYD_WS_HQGuard;
+					*/
 				}
 				else
 				{
