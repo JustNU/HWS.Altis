@@ -7501,28 +7501,86 @@ RYD_WS_WholeMapPlacement =
 					case (LeaderHQD) : {RydHQD_Included pushBack _gp};
 				};
 				
-				_gp setVariable ["RYD_WS_myKind",_x select 2];
+				_ourVehs = _gp getVariable ["RYD_WS_OurVehs", []];
+				_kind = _x select 2;
 				
-				_prog = _prog + 1;
-				
-				progressLoadingScreen (0.5 + (_prog/_sum));
-				
-				if not (isNull _gp) then
+				//if group has more than 1 vehicles, seperate them into seperate groups
+				if (count (_ourVehs) > 1) then
 				{
-					switch (_mainIx) do
+					_count = 1;
+					_callsign = groupId _gp;
+					
 					{
-						case (0) : 
+						_vehIndex = _x;
+						_fullCrew = fullCrew vehicle _x;
+						_crewUnits = [];
+						
 						{
-							_gpsA set [(count _gpsA),_gp];
-							_fcsA = _fcsA + (units _gp)
+							_crewUnits pushBackUnique (_x select 0);
+						} foreach _fullCrew;
+						
+						_newGrp = createGroup _side;
+						
+						//diag_log format ["_ourVehs: %1", _crewUnits];
+						
+						_crewUnits joinSilent _newGrp;
+						_newGrp setGroupId [format ["%1-%2", _callsign, _count]];
+						_count = _count + 1;
+						
+						_newGrp setVariable ["RYD_WS_GroupCount",{alive _x} count (units _newGrp)];
+						_newGrp setVariable ["RYD_WS_OurVehs",_crewUnits select 0];
+						_newGrp setVariable ["RYD_WS_myKind",_kind];
+						
+						if not (isNull _newGrp) then
+						{
+							switch (_mainIx) do
+							{
+								case (0) : 
+								{
+									_gpsA set [(count _gpsA),_newGrp];
+									_fcsA = _fcsA + (units _newGrp)
+								};
+								case (1) : 
+								{
+									_gpsB set [(count _gpsB),_newGrp];
+									_fcsB = _fcsB + (units _newGrp)
+								};
+							};
 						};
-						case (1) : 
+						
+					} foreach _ourVehs;
+					
+					deletegroup _gp;
+					
+					_prog = _prog + 1;
+					
+					progressLoadingScreen (0.5 + (_prog/_sum));
+				}
+				else
+				{
+					_gp setVariable ["RYD_WS_myKind",_x select 2];
+					
+					_prog = _prog + 1;
+					
+					progressLoadingScreen (0.5 + (_prog/_sum));
+					
+					if not (isNull _gp) then
+					{
+						switch (_mainIx) do
 						{
-							_gpsB set [(count _gpsB),_gp];
-							_fcsB = _fcsB + (units _gp)
+							case (0) : 
+							{
+								_gpsA set [(count _gpsA),_gp];
+								_fcsA = _fcsA + (units _gp)
+							};
+							case (1) : 
+							{
+								_gpsB set [(count _gpsB),_gp];
+								_fcsB = _fcsB + (units _gp)
+							};
 						};
 					};
-				}
+				};
 			} foreach _x	
 		} foreach _x
 	} foreach _forces;
