@@ -4081,6 +4081,13 @@ if (RYD_WS_LeadersPoofItsMagic) then
 			_minimalEff = _HQa getVariable ["RydHQ_CaptLimit",10];
 			
 			_lossesA = ((_HQa getVariable ["RydHQ_LTotal",0]) > 0.75) or (_combatAv < _minimalEff);
+			/*
+			diag_log format ["_lossesA: %1", _lossesA];
+			diag_log format ["RydHQ_LTotal: %1", _HQa getVariable "RydHQ_LTotal"];
+			diag_log format ["_combatAv: %1", _combatAv];
+			diag_log format ["_minimalEff: %1", _minimalEff];
+			diag_log format ["_combatAv _minimalEff: %1", _combatAv < _minimalEff];
+			*/
 			
 			if (RYD_WS_WholeMap) then
 			{
@@ -4088,6 +4095,10 @@ if (RYD_WS_LeadersPoofItsMagic) then
 				
 				{
 					_lossesA = ((_x getVariable ["RydHQ_LTotal",0]) > 0.75);
+					/*
+					diag_log format ["_lossesA: %1", _lossesA];
+					diag_log format ["RydHQ_LTotal: %1", _x getVariable "RydHQ_LTotal"];
+					*/
 					if not (_lossesA) exitWith {};
 				} foreach [_HQa,_HQb]
 			};
@@ -4225,6 +4236,17 @@ if (RYD_WS_LeadersPoofItsMagic) then
 	};
 		
 	diag_log "END OF BATTLE";
+	/*
+	diag_log format ["_noEnemy: %1", _noEnemy];
+	diag_log format ["_noAlly: %1", _noAlly];
+	diag_log format ["_noLeaders: %1", _noLeaders];
+	diag_log format ["_panic_A: %1", _panic_A];
+	diag_log format ["_panic_B: %1", _panic_B];
+	diag_log format ["_lossesA: %1", _lossesA];
+	diag_log format ["_lossesB: %1", _lossesB];
+	diag_log format ["_dominationA: %1", _dominationA];
+	diag_log format ["_dominationB: %1", _dominationB];
+	*/
 
 	_cl = "";
 	_clA = switch (RYD_WS_SideA) do

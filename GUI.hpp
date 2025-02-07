@@ -683,7 +683,7 @@ class RscHWS
 		class RscFrame_HWS: HWS_RscFrame
 		{
 			idc = 1799;
-			text = "HETMAN: WAR STORIES version 1.10.4 NR6";
+			text = "HETMAN: WAR STORIES version 1.10.5 NR6";
 			x = 5.5 * GUI_GRID_W + GUI_GRID_X;
 			y = -2.5 * GUI_GRID_H + GUI_GRID_Y;
 			w = 29 * GUI_GRID_W;

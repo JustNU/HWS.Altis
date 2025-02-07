@@ -1839,7 +1839,7 @@ RYD_WS_DynamicRHQ =
 						{
 							_fac = toLower (getText (_vehClass2 >> "faction"));
 							
-							if not ((toLower _fac) in RYD_WS_SelectedFactions) exitWith {};
+							//if not ((toLower _fac) in RYD_WS_SelectedFactions) exitWith {};
 							
 							if ((getNumber (_vehClass2 >> "artilleryScanner")) > 0) then
 							{
@@ -2883,7 +2883,7 @@ RYD_WS_MapAnalyze =
 
 	_loc10 = nearestLocations [_cntr, ["NameCityCapital"], _objRad]; 
 	_loc5 = nearestLocations [_cntr, ["NameCity","Airport"], _objRad]; 
-	_loc2 = nearestLocations [_cntr, ["NameVillage"], _objRad]; 
+	_loc2 = nearestLocations [_cntr, ["NameVillage","NameLocal","Area","StrongpointArea","Strategic","CityCenter"], _objRad]; 
 	
 	{
 		if ((tolower (text _x)) in ["sagonisi"]) exitWith
@@ -2895,7 +2895,7 @@ RYD_WS_MapAnalyze =
 	
 	_loc2 = _loc2 - ["deleteThis"];
 	
-	_loc1 = nearestLocations [_cntr, ["BorderCrossing"], _objRad]; 
+	_loc1 = nearestLocations [_cntr, ["BorderCrossing","Hill","FlatArea","ViewPoint","RockArea"], _objRad]; 
 	_locHill = nearestLocations [_cntr, ["Hill","ViewPoint"], _objRad]; 
 
 	{
@@ -2984,7 +2984,7 @@ RYD_WS_MapAnalyze =
 					{
 						_strArea pushBack [_pos,1,false];
 						_loc = createLocation ["NameLocal", _pos, ((size _x) select 0),((size _x) select 1)];
-						_loc setText (format ["Area %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
+						_loc setText (format ["Forest %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
 						_sectors2 set [_foreachIndex,0];
 						//_mark = "sectorF" + (str _pos);
 						//_mark = [_mark,_pos,"ColorGreen","RECTANGLE",size _x,direction _x,1,"SolidBorder",""] call RYD_Marker;
@@ -2997,7 +2997,7 @@ RYD_WS_MapAnalyze =
 						{
 							_strArea pushBack [_pos,1,false];
 							_loc = createLocation ["NameLocal", _pos, ((size _x) select 0),((size _x) select 1)];
-							_loc setText (format ["Area %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
+							_loc setText (format ["Hill %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
 							_sectors2 set [_foreachIndex,0];
 							//_mark = "sectorH" + (str _pos);
 							//_mark = [_mark,_pos,"ColorKhaki","RECTANGLE",size _x,direction _x,1,"SolidBorder",""] call RYD_Marker;
@@ -3010,7 +3010,7 @@ RYD_WS_MapAnalyze =
 							{
 								_strArea pushBack [_pos,1,false];
 								_loc = createLocation ["NameLocal", _pos, ((size _x) select 0),((size _x) select 1)];
-								_loc setText (format ["Area %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
+								_loc setText (format ["Field %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
 								_sectors2 set [_foreachIndex,0];
 								//_mark = "sectorG" + (str _pos);
 								//_mark = [_mark,_pos,"ColorRed","RECTANGLE",size _x,direction _x,1,"SolidBorder",""] call RYD_Marker;
@@ -3064,7 +3064,7 @@ RYD_WS_MapAnalyze =
 				{
 					_strArea pushBack [_pos,1,false];
 					_loc = createLocation ["NameLocal", _pos, ((size _x) select 0),((size _x) select 1)];
-					_loc setText (format ["Area %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
+					_loc setText (format ["Forest %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
 					//_mark = "sectorF" + (str _pos);
 					//_mark = [_mark,_pos,"ColorGreen","RECTANGLE",size _x,direction _x,1,"SolidBorder",""] call RYD_Marker;
 					//_mark = [(_mark + "I"),_pos,"ColorBlack","ICON",[1,1],direction _x,1,"mil_dot",(format ["F: %1",_forest])] call RYD_Marker;
@@ -3076,7 +3076,7 @@ RYD_WS_MapAnalyze =
 					{
 						_strArea pushBack [_pos,1,false];
 						_loc = createLocation ["NameLocal", _pos, ((size _x) select 0),((size _x) select 1)];
-						_loc setText (format ["Area %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
+						_loc setText (format ["Hill %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
 						//_mark = "sectorH" + (str _pos);
 						//_mark = [_mark,_pos,"ColorKhaki","RECTANGLE",size _x,direction _x,1,"SolidBorder",""] call RYD_Marker;
 						//_mark = [(_mark + "I"),_pos,"ColorBlack","ICON",[1,1],direction _x,1,"mil_dot",(format ["H: %1",_hills])] call RYD_Marker;
@@ -3088,7 +3088,7 @@ RYD_WS_MapAnalyze =
 						{
 							_strArea pushBack [_pos,1,false];
 							_loc = createLocation ["NameLocal", _pos, ((size _x) select 0),((size _x) select 1)];
-							_loc setText (format ["Area %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
+							_loc setText (format ["Field %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
 							//_mark = "sectorG" + (str _pos);
 							//_mark = [_mark,_pos,"ColorRed","RECTANGLE",size _x,direction _x,1,"SolidBorder",""] call RYD_Marker;
 							//_mark = [(_mark + "I"),_pos,"ColorBlack","ICON",[1,1],direction _x,1,"mil_dot",(format ["G: %1",_grd])] call RYD_Marker;
@@ -3099,7 +3099,7 @@ RYD_WS_MapAnalyze =
 							{
 								_strArea pushBack [_pos,1,false];
 								_loc = createLocation ["NameLocal", _pos, ((size _x) select 0),((size _x) select 1)];
-								_loc setText (format ["Area %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
+								_loc setText (format ["Bay %1",(_x getVariable ["RYD_myLocIx",(_foreachIndex + 1)])]);
 								//_mark = "sectorL" + (str _pos);
 								//_mark = [_mark,_pos,"ColorWhite","RECTANGLE",size _x,direction _x,1,"SolidBorder",""] call RYD_Marker;
 								//_mark = [(_mark + "I"),_pos,"ColorBlack","ICON",[1,1],direction _x,1,"mil_dot",(format ["L: %1",_sea])] call RYD_Marker;
@@ -5311,7 +5311,7 @@ RYD_TerraCognita =
 	};
 	
 RYD_Sectorize = 
-	{
+{
 	private ["_ctr","_lng","_ang","_nbr","_EdgeL","_rd","_main","_step","_X1","_Y1","_posX","_posY","_centers","_first",
 	"_sectors","_centers2","_Xa","_Ya","_dXa","_dYa","_dst","_ang2","_Xb","_Yb","_dXb","_dYb","_center","_crX","_crY","_crPoint","_sec"];
 
@@ -5339,25 +5339,31 @@ RYD_Sectorize =
 	_first = false;
 
 	while {(true)} do
-		{
+	{
 		while {(true)} do
+		{
+			if not (_first) then 
 			{
-			if not (_first) then {_first = true;_posX = _posX + _step};
-			if not ([_posX,_PosY] in _main) exitwith {_posX = ((_ctr select 0) - _rd) + _step/2;_first = true};
+				_first = true;_posX = _posX + _step
+			};
+			if not ([_posX,_PosY] in _main) exitwith 
+			{
+				_posX = ((_ctr select 0) - _rd) + _step/2;_first = true
+			};
 			_centers set [(count _centers),[_posX,_PosY]];
 			_first = false
-			};
+		};
 		_posY = _posY + _step;
 		if not ([_posX,_PosY] in _main) exitwith {}
-		};
+	};
 
 	if not (_ang in [0,90,180,270]) then
-		{
+	{
 		_main setDirection _ang;
 		_centers2 = +_centers;
 		_centers = [];
 
-			{
+		{
 			_Xa = _x select 0;
 			_Ya = _x select 1;
 			_dXa = (_X1 - _Xa);
@@ -5373,13 +5379,13 @@ RYD_Sectorize =
 			_Yb = _Y1 + _dYb;
 			_center = [_Xb,_Yb];
 			_centers set [(count _centers),_center]
-			}
+		}
 		foreach _centers2
-		};
+	};
 	
 	_sectors = [];
 
-		{
+	{
 		_crX = _x select 0;
 		_crY = _x select 1;
 		_crPoint = [_crX,_crY,0];
@@ -5388,12 +5394,11 @@ RYD_Sectorize =
 		_sec setRectangular true;
 
 		_sectors set [(count _sectors),_sec];
-		}
-	foreach _centers;
+	} foreach _centers;
 
 	[_sectors,_main]	
-	};
-			
+};
+
 RYD_AngTowards = 
 	{
 	private ["_source0","_target0","_rnd0","_dX0","_dY0","_angleAzimuth0"];
@@ -6018,10 +6023,10 @@ RYD_WS_LandConnectedLine =
 	
 //["NameCityCapital","NameCity","NameVillage","NameLocal","Hill"]	
 RYD_WS_LandMassLocations = 
-	{
+{
 	private ["_mapSize","_mapRad","_mapC","_newType","_actTypes2","_actLocs","_type","_newLocs","_addLocs","_allCnt","_newLock","_locWebs","_locWeb","_potentials","_foundNew","_pot","_maxWeb","_maxL","_toRem"];
 	params ["_types","_actTypes","_currentLocs","_minLoc","_maxMpl"];
-		
+	
 	_mapSize = RydBB_MapXMax;//getNumber (configFile >> "CfgWorlds" >> worldName >> "mapSize");
 	_mapRad = (_mapSize/2) * (sqrt 2);
 	_mapC = +RydBB_MapC;
@@ -6036,7 +6041,7 @@ RYD_WS_LandMassLocations =
 	_actLocs = [];
 	
 	while {(((count _actLocs) < _maxL) and {(count _actTypes2) > 0})} do
-		{
+	{
 		_type = _actTypes2 select 0;
 		_actTypes2 = _actTypes2 - [_type];
 		
@@ -6044,90 +6049,89 @@ RYD_WS_LandMassLocations =
 		_newLocs = [];
 		
 		if (not (isNil "RydBB_MC") and {((typeName RydBB_MC) isEqualTo (typeName objNull))}) then
+		{
 			{
-				{
 				if ((position _x) inArea RydBB_MC) then
-					{
+				{
 					_newLocs pushBack _x
-					}
 				}
-			foreach _newLocs0
 			}
+			foreach _newLocs0
+		}
 		else
-			{
+		{
 			_newLocs = +_newLocs0
-			};
+		};
 		
 		_addLocs = [];
 		_allCnt = count _actLocs;
 
 		for "_i" from 1 to (_maxL min (count _newLocs)) do
 		//for "_i" from 1 to (count _newLocs) do
-			{
+		{
 			_newLoc = selectRandom _newLocs;
 			_newLocs = _newLocs - [_newLoc];
 			_addLocs pushBackUnique _newLoc;
 			
 			if (random ((((count _addLocs) + _allCnt) - _maxL) max 0) > 1) exitWith {};
-			};
+		};
 
 		_allLocs appEnd _addLocs;
 		_actLocs appEnd _addLocs;
-		};
+	};
 		
 	//_allLocs = _currentLocs + (_allLocs - _currentLocs); 
 	_cnt = count _allLocs;
 
 	_locWebs = [];
 	
-		{
+	{
 		_locWeb = [_x];	
 		_potentials = _allLocs - _locWeb;
 		
 		_foundNew = (count _potentials) > 0;
 		while {_foundNew} do
-			{
+		{
 			_foundNew = false;
 			_pot = locationNull;
 			
-				{
+			{
 				_pot = _x;
 
 				if (({([position _pot,position _x,100] call RYD_WS_LandConnectedLine)} count _locWeb) > 0) exitWith
-					{
+				{
 					_locWeb pushBack _pot;
 					_foundNew = true;
-					}
 				}
+			}
 			foreach _potentials;
 			_potentials = _potentials - [_pot];
-			};
+		};
 
 		_locWebs pushBack _locWeb;
-		}
-	foreach _allLocs;
+	} foreach _allLocs;
 	
 	_maxWeb = _locWebs call RYD_WS_FindLongestArray;
 
 	_maxWeb = _currentLocs + (_maxWeb - _currentLocs); 
 	
 	while {((count _maxWeb) > _maxL)} do
-		{
+	{
 		_toRem = selectRandom _maxWeb;
 		_maxWeb = _maxWeb - [_toRem]
-		};
-		
+	};
+	
 	//diag_log format ["[_actTypes,_cnt,count _maxWeb,_minLoc,_maxL]: %1",[_actTypes,_cnt,count _maxWeb,_minLoc,_maxL]];
 
 	if ((((count _maxWeb) - _maxL) < 0) and {((count _types) > 0)}) then
-		{
+	{
 		([_types,_actTypes,_maxWeb,_min,_maxMpl] call RYD_WS_LandMassLocations)
-		}
+	}
 	else	
-		{
+	{
 		_maxWeb
-		}
-	};
+	}
+};
 	
 RYD_WS_FindLongestArray = 
 	{
@@ -6206,7 +6210,7 @@ RYD_WS_FindLandPosNear =
 	
 RYD_WS_WholeMapPlacement = 
 {	
-	_types = ["NameCityCapital","NameCity","NameVillage","NameLocal","Hill"];
+	_types = ["BorderCrossing","Hill","NameCity","Airport","NameVillage","NameLocal","Area","FlatArea","StrongpointArea","Strategic","ViewPoint","CityCenter","RockArea"];
 
 	_min = 10;
 	_maxMpl = 1.5;
