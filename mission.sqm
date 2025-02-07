@@ -112,7 +112,7 @@ class Mission
 	assetType="Free";
 	class Intel
 	{
-		briefingName="HETMAN: War Stories 1.10.4 NR6 - Altis";
+		briefingName="HWS 1.10.5 NR6 - Altis";
 		overviewText="War has many faces.";
 		startWeather=0.29999998;
 		startWind=0.099999994;
