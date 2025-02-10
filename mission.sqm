@@ -8,11 +8,15 @@ class EditorData
 	toggles=5;
 	class ItemIDProvider
 	{
-		nextID=105;
+		nextID=126;
 	};
 	class MarkerIDProvider
 	{
 		nextID=5;
+	};
+	class LayerIndexProvider
+	{
+		nextID=14;
 	};
 	class Camera
 	{
@@ -131,7 +135,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=9;
+		items=10;
 		class Item0
 		{
 			dataType="Object";
@@ -385,6 +389,135 @@ class Mission
 			};
 			id=104;
 			type="EmptyDetector";
+		};
+		class Item9
+		{
+			dataType="Layer";
+			name="location trigger";
+			class Entities
+			{
+				items=1;
+				class Item0
+				{
+					dataType="Layer";
+					name="locations";
+					class Entities
+					{
+						items=7;
+						class Item0
+						{
+							dataType="Trigger";
+							position[]={9526,120.58611,15050};
+							class Attributes
+							{
+								condition="true";
+								onActivation="_location = createLocation [""NameVillage"", getPos thisTrigger, 100, 100];" \n "";
+								sizeA=100;
+								sizeB=100;
+								isServerOnly=1;
+							};
+							id=106;
+							type="EmptyDetector";
+						};
+						class Item1
+						{
+							dataType="Trigger";
+							position[]={20958,15.476104,19254};
+							class Attributes
+							{
+								condition="true";
+								onActivation="_location = createLocation [""NameVillage"", getPos thisTrigger, 125, 125];" \n "";
+								sizeA=125;
+								sizeB=125;
+								isServerOnly=1;
+							};
+							id=124;
+							type="EmptyDetector";
+						};
+						class Item2
+						{
+							dataType="Trigger";
+							position[]={14295.857,4.9422874,13030.164};
+							class Attributes
+							{
+								condition="true";
+								onActivation="_location = createLocation [""Hill"", getPos thisTrigger, 100, 100];" \n "";
+								sizeA=100;
+								sizeB=100;
+								isServerOnly=1;
+							};
+							id=121;
+							type="EmptyDetector";
+						};
+						class Item3
+						{
+							dataType="Trigger";
+							position[]={8241.8086,14.243672,10894.989};
+							class Attributes
+							{
+								condition="true";
+								onActivation="_location = createLocation [""NameVillage"", getPos thisTrigger, 100, 100];" \n "";
+								sizeA=100;
+								sizeB=100;
+								isServerOnly=1;
+							};
+							id=112;
+							type="EmptyDetector";
+							atlOffset=-9.5367432e-07;
+						};
+						class Item4
+						{
+							dataType="Trigger";
+							position[]={10256,95.108673,14830};
+							class Attributes
+							{
+								condition="true";
+								onActivation="_location = createLocation [""NameVillage"", getPos thisTrigger, 100, 100];" \n "";
+								sizeA=100;
+								sizeB=100;
+								isServerOnly=1;
+							};
+							id=109;
+							type="EmptyDetector";
+						};
+						class Item5
+						{
+							dataType="Trigger";
+							position[]={8316.126,75.940002,10060.432};
+							class Attributes
+							{
+								condition="true";
+								onActivation="_location = createLocation [""NameVillage"", getPos thisTrigger, 100, 100];" \n "";
+								sizeA=100;
+								sizeB=100;
+								isServerOnly=1;
+							};
+							id=115;
+							type="EmptyDetector";
+						};
+						class Item6
+						{
+							dataType="Trigger";
+							position[]={14204.364,74.190155,21218.436};
+							class Attributes
+							{
+								condition="true";
+								onActivation="_location = createLocation [""NameVillage"", getPos thisTrigger, 100, 100];" \n "";
+								sizeA=100;
+								sizeB=100;
+								isServerOnly=1;
+							};
+							id=118;
+							type="EmptyDetector";
+							atlOffset=7.6293945e-06;
+						};
+					};
+					id=105;
+					atlOffset=13.575211;
+				};
+			};
+			id=107;
+			atlOffset=13.575211;
 		};
 	};
 };
