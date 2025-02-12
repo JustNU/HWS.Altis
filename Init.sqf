@@ -14,7 +14,7 @@ RydxHQ_AIChat_Type = "NONE";
 RydHQx_PlayerCargoCheckLoopTime = 2;
 RydxHQ_DisembarkRange = 200;
 RydxHQ_LZ = false;
-RydxHQ_RHQAutoFill = true;
+RydxHQ_RHQAutoFill = false;
 RydxHQ_PathFinding = 0;
 RydxHQ_NEAware = 500;
 

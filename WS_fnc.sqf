@@ -766,59 +766,213 @@ RYD_WS_ammo_O = [
 	"o_truck_02_ammo_f"
 ];
 
-Fake_Weapons_ARR = [
-	"CMFlareLauncher",
-	"FakeHorn",
-	"Laserdesignator_mounted",
-	"AmbulanceHorn",
-	"BikeHorn",
-	"CarHorn",
-	"CMFlareLauncher_Singles",
-	"CMFlareLauncher_Triples",
-	"FlareLauncher",
-	"Laserdesignator_pilotCamera",
-	"Laserdesignator_vehicle",
-	"MiniCarHorn",
-	"PoliceHorn",
-	"ProbingLaser_01_F",
-	"SEARCHLIGHT",
-	"SportCarHorn",
-	"TruckHorn",
-	"TruckHorn2",
-	"TruckHorn3",
+RYD_WS_RemoveWeapons_Common = [
 	"SmokeLauncher",
-	"gm_typ2_horn",
-	"gm_u1300l_horn",
+	"TruckHorn",
+	"Laserdesignator_vehicle",
+	"TruckHorn2",
+	"Laserdesignator_mounted",
+	"TruckHorn3",
+	"CSLA_sirena",
 	"vn_m113_horn",
-	"FakeWeapon",
-	"PickupHorn_rf",
-	"Throw",
-	"Put",
-	"Rangefinder",
-	"Binocular",
-	"Laserdesignator",
+	"vn_pt76_horn",
+	"cannon_railgun_fake",
+	"rhs_weap_fcs_noLRF",
+	"rhs_weap_fcs",
 	"rhs_weap_smokegen",
-	"CUP_weapon_mastersafe",
-	"CUP_Laserdesignator_mounted",
-	"Truckhorn3",
-	"Laserdesignator_03",
-	"vn_m19_binocs_grn",
-	"vn_m19_binocs_grey",
-	"vn_mk21_binocs",
-	"vn_m274_mulehorn",
-	"vn_v_launcher_m18r",
-	"vn_v_launcher_m7",
-	"vn_v_launcher_m127",
-	"vn_cmflarelauncher_singles_f4c",
-	"vn_ptf_horn",
-	"vn_pbr_horn",
-	"vn_mx991_red",
-	"vn_m127"
+	"rhs_weap_fcs_ammo",
+	"rhs_weap_902a",
+	"rhs_weap_PL1",
+	"rhs_weap_902b",
+	"CarHorn",
+	"rhsusf_weap_M6",
+	"rhsusf_weap_M6_GLUA",
+	"rhsusf_weap_M6_L1",
+	"rhsusf_weap_M6_L2",
+	"rhsusf_weap_M6_L3",
+	"rhsusf_weap_M6_R1",
+	"rhsusf_weap_M6_R2",
+	"rhsusf_weap_M6_R3",
+	"vn_t54_horn",
+	"UK3CB_BAF_Safe",
+	"rhsusf_weap_duke",
+	"rhsusf_weap_DummyLauncher"
 ];
 
-Fake_Weapons_ARR_Air = [
-	"LMG_Minigun_Transport",
-	"LMG_Minigun_Transport2"
+RYD_WS_RemoveWeapons_Air = [
+	""
+];
+
+RYD_WS_RemoveWeapons_Armor = [
+	"AANF1",
+	"LMG_coax_ext",
+	"LMG_coax",
+	"ACE_LMG_coax_L94A1_mem3",
+	"ACE_LMG_coax_ext_MAG58",
+	"ACE_LMG_coax_ext_MG3",
+	"ACE_LMG_coax_MAG58_mem3",
+	"ACE_LMG_coax_DenelMG4",
+	"mortar_155mm_AMOS",
+	"rockets_230mm_GAT",
+	"HMG_127_LECLERC",
+	"Mag58",
+	"LOCAL_127",
+	"HK_GMG_40mm",
+	"qav_challenger_coax",
+	"VME_NSVT",
+	"VME_PLA_QJY88_rveh",
+	"T99_coax",
+	"VME_120mm_Mortar",
+	"VME_PLZ05_Cannon",
+	"VME_Type86_122mm_Cannon",
+	"CSLA_PKT",
+	"CSLA_UK59T_2",
+	"CSLA_PKT_T72",
+	"US85_M240_LAV25_coax",
+	"US85_M240_M1A1_coax",
+	"US85_M2_M113",
+	"US85_M269",
+	"US85_Mk19_veh",
+	"HMG_127_lxWS",
+	"mortar_60mm_lxWS",
+	"MMG_02_coax_amv",
+	"vn_m1919_v_05",
+	"vn_sgmt_v_05",
+	"EF_LMG_coax_AAV9",
+	"gm_luna_launcher",
+	"gm_122mm_2a18",
+	"gm_pk_coax",
+	"gm_mg3_coax",
+	"gm_mg3_coax_emes18",
+	"gm_155mm_m126",
+	"gm_155mm_m126g",
+	"gm_pkt_coax",
+	"gm_sgmt_driver",
+	"gm_sgmt_coax",
+	"gm_pkt_coax_kladivo",
+	"rhs_weap_2a31",
+	"RHS_Weap_2a33",
+	"rhs_weap_pkt",
+	"rhs_weap_pkt_bmd_coax",
+	"rhs_weap_nsvt_obj681",
+	"rhs_weap_pkt_btr",
+	"rhs_weap_pkt_btr80a",
+	"LMG_M200",
+	"rhs_weap_pktm_t14_RWS",
+	"rhs_weap_m240_bradley_coax",
+	"rhs_weap_m284",
+	"RHS_M2_M1117",
+	"RHS_MK19",
+	"RHS_M2",
+	"rhs_weap_m240_m113",
+	"rhs_weap_m240_abrams_coax",
+	"RHS_M2_Abrams_Gunner",
+	"vn_sgmt_v_06",
+	"vn_ato54_v_05",
+	"vn_m7_v_02",
+	"UK3CB_BAF_L94A1_veh",
+	"uk3cb_weap_m240veh",
+	"uk3cb_weap_m240veh_lr",
+	"UK3CB_PKT",
+	"UK3CB_DT",
+	"uns_M1919_v_int",
+	"CUP_Vgmg_HKGMG_veh",
+	"CUP_Vhmg_M2_veh",
+	"CUP_Vlmg_MG3_coax_veh",
+	"CUP_Vmlauncher_MLRS_veh",
+	"CUP_Vlmg_M240_M60Patton_Coax",
+	"CUP_Vhmg_PKT_veh_Noeject",
+	"CUP_Vhmg_PKT_veh",
+	"CUP_Vhmg_DSHKM_veh",
+	"CUP_Vhmg_PKT_T34",
+	"CUP_Vhmg_SGMT",
+	"CUP_Vhmg_PKT_veh_Noeject_FCS",
+	"uns_DT_v",
+	"uns_PKT2",
+	"uns_SGMT_v",
+	"uns_ATO42_flamethrower",
+	"UNS_DSHKM",
+	"uns_M2",
+	"OPTRE_M247T_Coax_dual",
+	"OPTRE_M247T_Coax",
+	"OPTRE_mortar_155mm",
+	"CUP_Vgmg_AGS17_veh",
+	"CUP_Vhmg_AGS30_veh",
+	"CUP_Vhmg_PKT_T90M",
+	"CUP_Vlmg_MG3_veh_noeject",
+	"CUP_Vlmg_M240_M1Abrams_Coax",
+	"CUP_Vhmg_M2_M1Abrams_TUSK_Coax",
+	"CUP_Vlmg_M240_veh_laser",
+	"CUP_Vlmg_M240_veh",
+	"CUP_Vgmg_MK19_veh",
+	"CUP_Vhmg_L111A1_veh",
+	"CUP_Vlmg_L7A2_veh",
+	"CUP_Vlmg_L94A1_Coax",
+	"uns_M113_175mm",
+	"uns_M201_203mm",
+	"uns_MK18",
+	"uns_M60_PBR",
+	"uns_m1919x2",
+	"uns_M134",
+	"uns_m10_8_flamethrower",
+	"uns_M40RR",
+	"uns_M76_flamethrower",
+	"uns_m1919_v",
+	"rhs_weap_pkt_zeroing",
+	"BWA3_MG3_vehicle",
+	"BWA3_MG5_vehicle",
+	"BWA3_RH155mm_AMOS",
+	"BWA3_MG3_loader",
+	"uk3cb_weap_l7veh_lr",
+	"uk3cb_M2_MARID",
+	"UK3CB_L94A1_veh",
+	"SPE_M2_Pintle",
+	"SPE_M1919A4_coax",
+	"SPE_MG34_coax",
+	"CUP_Vmortar_M121",
+	"CUP_Vlmg_M240_M1128MGS_Coax",
+	"cwr3_vlmg_m37_coax",
+	"cwr3_Vhmg_pkt_t55"
+];
+
+RYD_WS_RemoveWeapons_Armor_Missiles = [
+	"VME_PLA_HQ7Launcher",
+	"VME_PLA_QW2Launcher",
+	"missiles_titan",
+	"missiles_Vorona_vehicle_lxWS",
+	"missiles_titan_AA",
+	"missiles_SAAMI",
+	"missiles_Firefist",
+	"MMPLauncher",
+	"VME_AFT9Launcher",
+	"VME_PLA_HJ73Launcher",
+	"QN502C_Launcher",
+	"QN201_Launcher",
+	"ZBD04_AT10",
+	"CSLA_9K11",
+	"gm_maljutka_launcher",
+	"rhs_weap_9k11",
+	"rhs_weap_s8",
+	"rhs_weap_9k133",
+	"rhs_weap_9m113",
+	"Rhs_weap_TOW_Launcher",
+	"Rhs_weap_stinger_Launcher",
+	"UK3CB_9M311M1_launcher",
+	"CUP_Vmlauncher_AT5_veh",
+	"CUP_Vmlauncher_AT5_single_veh",
+	"CUP_Vmlauncher_AT3_veh",
+	"OPTRE_M670_ATGM_Launcher",
+	"OPTRE_M79_Grizzly_MLRS",
+	"OPTRE_M21",
+	"CUP_Vmlauncher_9M311M_veh",
+	"CUP_Vmlauncher_TOW_veh",
+	"CUP_Vmlauncher_Stinger_vehicle_veh",
+	"rhs_weap_9P148",
+	"bwa3_land_spikeLR_atgm",
+	"cwr3_launch_9K35",
+	"UK3CB_9M311_launcher",
+	"CUP_Vmlauncher_9M311_veh",
+	"cwr3_vmlauncher_tow_veh_m901"
 ];
 
 Callsigns_Arr =
@@ -1307,7 +1461,7 @@ RYD_WS_DynamicRHQ =
 																					
 																					if (isNumber (configfile >> "CfgAmmo" >> _ammo >> "airLock")) then
 																					{
-																						_isAT = (getNumber (configfile >> "CfgAmmo" >> _ammo >> "airLock")) < 1;
+																						_isAT = (getNumber (configfile >> "CfgAmmo" >> _ammo >> "airLock")) < 2;
 																					}
 																				};
 																			};
@@ -1342,8 +1496,8 @@ RYD_WS_DynamicRHQ =
 																};
 																
 																// remove not actual weapons such as flares and etc
-																_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
-																_wpnsArr = _wpnsArr - Fake_Weapons_ARR_Air;
+																_wpnsArr = _wpnsArr - RYD_WS_RemoveWeapons_Common;
+																_wpnsArr = _wpnsArr - RYD_WS_RemoveWeapons_Air;
 																
 																if (count(_wpnsArr) isEqualTo 0) then
 																{
@@ -1376,7 +1530,7 @@ RYD_WS_DynamicRHQ =
 															};
 															
 															// remove not actual weapons such as flares and etc
-															_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
+															_wpnsArr = _wpnsArr - RYD_WS_RemoveWeapons_Common;
 															
 															if (_isCargo) then 
 															{
@@ -2352,7 +2506,8 @@ RYD_WS_DynamicRHQ =
 
 												// remove not actual weapons such as flares and etc
 												_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
-												_wpnsArr = _wpnsArr - Fake_Weapons_ARR_Air;
+												_wpnsArr = _wpnsArr - RYD_WS_RemoveWeapons_Common;
+												_wpnsArr = _wpnsArr - RYD_WS_RemoveWeapons_Air;
 
 												//diag_log format ["%1, %2, %3, %4", [_wpnsArr], [count(_wpnsArr)], [count(_wpnsArr) isEqualTo 0], _class];
 
@@ -2509,7 +2664,7 @@ RYD_WS_DynamicRHQ =
 											_wpnsArr = _wpnsArr + (getArray(_mainT >> "Weapons"));
 
 											// remove not actual weapons such as flares and etc
-											_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
+											_wpnsArr = _wpnsArr - (RYD_WS_RemoveWeapons_Common + RYD_WS_RemoveWeapons_Armor + RYD_WS_RemoveWeapons_Armor_Missiles);
 
 											// make sure it has weapons in the said turret
 											if (count(_wpnsArr) > 0) then
@@ -2582,53 +2737,102 @@ RYD_WS_DynamicRHQ =
 										// remove not actual weapons such as flares and etc
 										//diag_log format ["%1", _class];
 										//diag_log format ["%1", _wpnsArr];
-										_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
+										_wpnsArr = _wpnsArr - (RYD_WS_RemoveWeapons_Common + RYD_WS_RemoveWeapons_Armor + RYD_WS_RemoveWeapons_Armor_Missiles);
 										//diag_log format ["%1", _wpnsArr];
 										
-										if (count(_wpnsArr) isEqualTo 0) then
+										if ((_sim in ["carx"]) and (not (_class isKindOf "wheeled_apc_f"))) then
 										{
 											RHQ_NCCargo pushBack _class;
+											RHQ_AAInf = RHQ_AAInf - [_class];
+											RHQ_ATInf = RHQ_ATInf - [_class];
+											RHQ_Cargo = RHQ_Cargo - [_class];
 											
-											if (({_x} count [_isAmmoS,_isFuelS,_isRepS,_isMedS]) < 1) then
+											if (_fac in _aFactions) then 
 											{
-												if (_fac in _aFactions) then 
+												switch (RYD_WS_SideA) do
 												{
-													switch (RYD_WS_SideA) do
+													case (west):
 													{
-														case (west):
-														{
-															RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
-														};
-														case (resistance):
-														{
-															RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
-														};
-														case (east):
-														{
-															RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
-														};
+														RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
+													};
+													case (resistance):
+													{
+														RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
+													};
+													case (east):
+													{
+														RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
 													};
 												};
-
-												if (_fac in _bFactions) then 
-												{
-													switch (RYD_WS_SideB) do
-													{
-														case (west):
-														{
-															RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
-														};
-														case (resistance):
-														{
-															RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
-														};
-														case (east):
-														{
-															RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
-														};
-													}
-												};
 											};
+											
+											if (_fac in _bFactions) then 
+											{
+												switch (RYD_WS_SideB) do
+												{
+													case (west):
+													{
+														RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
+													};
+													case (resistance):
+													{
+														RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
+													};
+													case (east):
+													{
+														RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
+													};
+												}
+											};
+										}
+										else
+										{
+										
+											if (count(_wpnsArr) isEqualTo 0) then
+											{
+												RHQ_NCCargo pushBack _class;
+												
+												if (({_x} count [_isAmmoS,_isFuelS,_isRepS,_isMedS]) < 1) then
+												{
+													if (_fac in _aFactions) then 
+													{
+														switch (RYD_WS_SideA) do
+														{
+															case (west):
+															{
+																RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
+															};
+															case (resistance):
+															{
+																RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
+															};
+															case (east):
+															{
+																RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
+															};
+														};
+													};
+
+													if (_fac in _bFactions) then 
+													{
+														switch (RYD_WS_SideB) do
+														{
+															case (west):
+															{
+																RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
+															};
+															case (resistance):
+															{
+																RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
+															};
+															case (east):
+															{
+																RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
+															};
+														}
+													};
+												};
+											}
 										}
 									}	
 								}
@@ -8123,7 +8327,7 @@ RYD_PresentRHQ =
 			};
 
 			// remove not actual weapons such as flares and etc
-			_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
+			_wpnsArr = _wpnsArr - RYD_WS_RemoveWeapons_Common;
 			_isArmed = ((count _wpnsArr) > 0);
 			
 			// true transport cargo
