@@ -2505,7 +2505,6 @@ RYD_WS_DynamicRHQ =
 												};
 
 												// remove not actual weapons such as flares and etc
-												_wpnsArr = _wpnsArr - Fake_Weapons_ARR;
 												_wpnsArr = _wpnsArr - RYD_WS_RemoveWeapons_Common;
 												_wpnsArr = _wpnsArr - RYD_WS_RemoveWeapons_Air;
 
