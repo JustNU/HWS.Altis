@@ -3830,6 +3830,12 @@ else
 	_eh = _x addEventHandler ["Killed",{_this call RYD_WS_onDeathB}]
 } foreach _fcsB;
 
+// giver radios and maps to every unit on the map
+{
+	_x linkItem "ItemRadio";
+	_x linkItem "ItemMap";
+} forEach allUnits;
+
 //player allowdamage false;
 	
 endLoadingScreen;
