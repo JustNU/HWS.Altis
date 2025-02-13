@@ -1320,8 +1320,8 @@ RYD_WS_DynamicRHQ =
 												_crewSeats = [_veh, false] call BIS_fnc_crewCount; // Number of crew seats only
 												_cargoSeats = _totalSeats - _crewSeats; // Number of total cargo/passenger seats: non-FFV + FFV
 												
-												// set minimum cargo count to a regular fire team of 4, not a lot of factinos have groups smaller
-												_isCargo = (_cargoSeats >= 4);
+												// set minimum cargo count to a team of 6
+												_isCargo = (_cargoSeats >= 6);
 												if ((getNumber (_vehClass2 >> "artilleryScanner")) > 0) then
 												{
 													_isArty = true
@@ -1332,7 +1332,7 @@ RYD_WS_DynamicRHQ =
 												_base = _veh;
 												_wrong = false;
 												
-												while {not (_base in ["air","ship","tank","car","wheeled_apc_f","ugv_01_base_f","staticweapon"])} do
+												while {not (_base in ["air","ship","tank","car","wheeled_apc_f","ugv_01_base_f","staticweapon","gm_wheeled_APC_base"])} do
 												{
 													if (_isArty) exitWith {};
 													_base = inheritsFrom (_vehClass >> _base);
@@ -1353,7 +1353,7 @@ RYD_WS_DynamicRHQ =
 
 												if not (_wrong) then
 												{
-													if (_base in ["air","ship","tank","car","wheeled_apc_f"]) then
+													if (_base in ["air","ship","tank","car","wheeled_apc_f","gm_wheeled_APC_base"]) then
 													{
 														_type = _base
 													};
@@ -1482,6 +1482,7 @@ RYD_WS_DynamicRHQ =
 															case ("car") : {RHQ_Cars set [(count RHQ_Cars),_veh]};	
 															case ("tank") : {RHQ_HArmor set [(count RHQ_HArmor),_veh]};	
 															case ("wheeled_apc_f") : {RHQ_LArmor set [(count RHQ_LArmor),_veh]};
+															case ("gm_wheeled_APC_base") : {RHQ_LArmor set [(count RHQ_LArmor),_veh]};
 															case ("air") : 
 															{
 																RHQ_Air set [(count RHQ_Air),_veh];
@@ -1680,7 +1681,7 @@ RYD_WS_DynamicRHQ =
 																	
 																	if (_isAT) then 
 																	{
-																		if (_type in ["wheeled_apc_f"]) then
+																		if (_type in ["wheeled_apc_f","gm_wheeled_APC_base"]) then
 																		{
 																			RHQ_LArmorAT set [(count RHQ_LArmorAT),_veh]
 																		}
@@ -1738,7 +1739,7 @@ RYD_WS_DynamicRHQ =
 										
 										switch (true) do
 										{
-											case (_gpType in ["wheeled_apc_f", "tank"]) : 
+											case (_gpType in ["wheeled_apc_f", "tank", "gm_wheeled_APC_base"]) : 
 											{
 												_added = false;
 												
@@ -1977,8 +1978,8 @@ RYD_WS_DynamicRHQ =
 						_crewSeats = [_class, false] call BIS_fnc_crewCount; // Number of crew seats only
 						_cargoSeats = _totalSeats - _crewSeats; // Number of total cargo/passenger seats: non-FFV + FFV
 						
-						// set minimum cargo count to a regular fire team of 4, not a lot of factinos have groups smaller
-						_isCargo = (_cargoSeats >= 4);
+						// set minimum cargo count to a team of 6
+						_isCargo = (_cargoSeats >= 6);
 						
 						_sim = toLower (getText (_vehClass2 >> "simulation"));
 						_turrets = _vehClass2 >> "Turrets";
@@ -2653,7 +2654,7 @@ RYD_WS_DynamicRHQ =
 									};
 									
 									// deal with armor assets
-									if ((_class isKindOf "wheeled_apc_f") or (_class isKindOf "tank")) then
+									if ((_class isKindOf "wheeled_apc_f") or (_class isKindOf "tank") or (_class isKindOf "gm_wheeled_APC_base")) then
 									{
 										//only proceed if not arty, not AI controlled unit, has a main turret and is not support
 										if (not _isArty and {not (_isUAV)} and (_isMainT) and {not (_class in RHQ_Support)}) then
@@ -2663,12 +2664,13 @@ RYD_WS_DynamicRHQ =
 											_wpnsArr = _wpnsArr + (getArray(_mainT >> "Weapons"));
 
 											// remove not actual weapons such as flares and etc
-											_wpnsArr = _wpnsArr - (RYD_WS_RemoveWeapons_Common + RYD_WS_RemoveWeapons_Armor + RYD_WS_RemoveWeapons_Armor_Missiles);
+											_arrToRemove = RYD_WS_RemoveWeapons_Common + RYD_WS_RemoveWeapons_Armor + RYD_WS_RemoveWeapons_Armor_Missiles;
+											_wpnsArr = _wpnsArr - _arrToRemove;
 
 											// make sure it has weapons in the said turret
 											if (count(_wpnsArr) > 0) then
 											{
-												if (_class isKindOf "wheeled_apc_f") then
+												if ((_class isKindOf "wheeled_apc_f") or (_class isKindOf "gm_wheeled_APC_base")) then
 												{
 													RHQ_LArmor set [(count RHQ_LArmor),_class];
 												}
@@ -2725,71 +2727,36 @@ RYD_WS_DynamicRHQ =
 									
 									if ((_isCargo) and {not (_class in (RYD_WS_NCCargo_class + RHQ_NCCargo))} and {_sim in ["helicopterx","helicopterrtd","carx","tankx"]}) then
 									{
-										// get all possible weapons (more or less, doesnt count pylons yet)
-										_wpnsArr = getArray (_vehClass2 >> "Weapons");
-										
-										if (_isMainT) then
+										//only proceed if not arty, not AI controlled unit and is not support
+										if (not _isArty and {not (_isUAV)} and {not (_class in RHQ_Support)}) then
 										{
-											_wpnsArr = _wpnsArr + (getArray(_mainT >> "Weapons"));
-										};
+										
+											// get all possible weapons (more or less, doesnt count pylons yet)
+											_wpnsArr = getArray (_vehClass2 >> "Weapons");
+											
+											if (_isMainT) then
+											{
+												_wpnsArr = _wpnsArr + (getArray(_mainT >> "Weapons"));
+											};
 
-										// remove not actual weapons such as flares and etc
-										//diag_log format ["%1", _class];
-										//diag_log format ["%1", _wpnsArr];
-										_wpnsArr = _wpnsArr - (RYD_WS_RemoveWeapons_Common + RYD_WS_RemoveWeapons_Armor + RYD_WS_RemoveWeapons_Armor_Missiles);
-										//diag_log format ["%1", _wpnsArr];
-										
-										if ((_sim in ["carx"]) and (not (_class isKindOf "wheeled_apc_f"))) then
-										{
-											RHQ_NCCargo pushBack _class;
-											RHQ_AAInf = RHQ_AAInf - [_class];
-											RHQ_ATInf = RHQ_ATInf - [_class];
-											RHQ_Cargo = RHQ_Cargo - [_class];
+											// remove not actual weapons such as flares and etc
+											//diag_log format ["%1", _class];
+											//diag_log format ["%1", _wpnsArr];
+											_arrToRemove = RYD_WS_RemoveWeapons_Common + RYD_WS_RemoveWeapons_Armor + RYD_WS_RemoveWeapons_Armor_Missiles;
+											_wpnsArr = _wpnsArr - _arrToRemove;
+											//diag_log format ["%1", _wpnsArr];
 											
-											if (_fac in _aFactions) then 
-											{
-												switch (RYD_WS_SideA) do
-												{
-													case (west):
-													{
-														RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
-													};
-													case (resistance):
-													{
-														RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
-													};
-													case (east):
-													{
-														RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
-													};
-												};
-											};
-											
-											if (_fac in _bFactions) then 
-											{
-												switch (RYD_WS_SideB) do
-												{
-													case (west):
-													{
-														RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
-													};
-													case (resistance):
-													{
-														RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
-													};
-													case (east):
-													{
-														RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
-													};
-												}
-											};
-										}
-										else
-										{
-										
-											if (count(_wpnsArr) isEqualTo 0) then
+											if ((_sim in ["carx"]) and {not ((_class isKindOf "wheeled_apc_f") or (_class isKindOf "gm_wheeled_APC_base"))}) then
 											{
 												RHQ_NCCargo pushBack _class;
+												RHQ_AAInf = RHQ_AAInf - [_class];
+												RHQ_ATInf = RHQ_ATInf - [_class];
+												//RHQ_Cargo = RHQ_Cargo - [_class];
+												
+												diag_log "cars";
+												diag_log format ["_class: %1", _class];
+												diag_log format ["_wpnsArr: %1", _wpnsArr];
+												diag_log format ["isKindOf: %1", not (_class isKindOf "wheeled_apc_f")];
 												
 												if (({_x} count [_isAmmoS,_isFuelS,_isRepS,_isMedS]) < 1) then
 												{
@@ -2811,7 +2778,7 @@ RYD_WS_DynamicRHQ =
 															};
 														};
 													};
-
+													
 													if (_fac in _bFactions) then 
 													{
 														switch (RYD_WS_SideB) do
@@ -2832,8 +2799,60 @@ RYD_WS_DynamicRHQ =
 													};
 												};
 											}
-										}
-									}	
+											else
+											{
+												if (count(_wpnsArr) isEqualTo 0) then
+												{
+													RHQ_NCCargo pushBack _class;
+												
+													diag_log "armor";
+													diag_log format ["_class: %1", _class];
+													diag_log format ["_wpnsArr: %1", _wpnsArr];
+													
+													if (({_x} count [_isAmmoS,_isFuelS,_isRepS,_isMedS]) < 1) then
+													{
+														if (_fac in _aFactions) then
+														{
+															switch (RYD_WS_SideA) do
+															{
+																case (west):
+																{
+																	RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
+																};
+																case (resistance):
+																{
+																	RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
+																};
+																case (east):
+																{
+																	RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
+																};
+															};
+														};
+
+														if (_fac in _bFactions) then 
+														{
+															switch (RYD_WS_SideB) do
+															{
+																case (west):
+																{
+																	RYD_WS_B_NCCargo_G2 set [(count RYD_WS_B_NCCargo_G2),_class];
+																};
+																case (resistance):
+																{
+																	RYD_WS_I_NCCargo_G2 set [(count RYD_WS_I_NCCargo_G2),_class];
+																};
+																case (east):
+																{
+																	RYD_WS_O_NCCargo_G2 set [(count RYD_WS_O_NCCargo_G2),_class];
+																};
+															}
+														};
+													};
+												}
+											}
+										}	
+									}
 								}
 								else
 								{
@@ -8335,15 +8354,15 @@ RYD_PresentRHQ =
 			_crewSeats = [_veh, false] call BIS_fnc_crewCount; // Number of crew seats only
 			_cargoSeats = _totalSeats - _crewSeats; // Number of total cargo/passenger seats: non-FFV + FFV
 
-			// set minimum cargo count to a regular fire team of 4, not a lot of factinos have groups smaller
-			_isCargo = (_cargoSeats >= 4) and {((getNumber (_vehClass2 >> "transportAmmo")) + (getNumber (_vehClass2 >> "transportFuel")) + (getNumber (_vehClass2 >> "transportRepair")) + (getNumber (_vehClass2 >> "attendant"))) < 1};
+			// set minimum cargo count to a team of 6
+			_isCargo = (_cargoSeats >= 6) and {((getNumber (_vehClass2 >> "transportAmmo")) + (getNumber (_vehClass2 >> "transportFuel")) + (getNumber (_vehClass2 >> "transportRepair")) + (getNumber (_vehClass2 >> "attendant"))) < 1};
 			_isArty = (getNumber (_vehClass2 >> "artilleryScanner")) > 0;
 			
 			_type = "inf";
 
 			_base = _veh;
 			
-			while {not (_base in ["air","ship","tank","car","wheeled_apc_f","ugv_01_base_f"])} do
+			while {not (_base in ["air","ship","tank","car","wheeled_apc_f","gm_wheeled_APC_base","ugv_01_base_f"])} do
 			{
 				_base = inheritsFrom (_vehClass >> _base);
 				if not (isClass _base) exitWith {};
@@ -8353,7 +8372,7 @@ RYD_PresentRHQ =
 			
 			if not (_base isEqualTo "ugv_01_base_f") then
 			{
-				if (_base in ["air","ship","tank","car","wheeled_apc_f"]) then
+				if (_base in ["air","ship","tank","car","wheeled_apc_f","gm_wheeled_APC_base"]) then
 				{
 					_type = _base
 				};
@@ -8495,6 +8514,7 @@ RYD_PresentRHQ =
 					case ("car") : {RHQ_Cars pushBack _veh};	
 					case ("tank") : {RHQ_HArmor pushBack _veh};	
 					case ("wheeled_apc_f") : {RHQ_LArmor pushBack _veh};
+					case ("gm_wheeled_APC_base") : {RHQ_LArmor pushBack _veh};
 					case ("air") : 
 					{
 						RHQ_Air pushBack _veh;
@@ -8550,7 +8570,7 @@ RYD_PresentRHQ =
 						if ((_isAA) and {not (_type isEqualTo "air")}) then {RHQ_AAInf pushBack _veh};
 						if (_isAT) then 
 						{
-							if (_type isEqualTo "wheeled_apc_f") then
+							if ((_type isEqualTo "wheeled_apc_f") or (_type isEqualTo "gm_wheeled_APC_base")) then
 							{
 								RHQ_LArmorAT pushBack _veh
 							}
@@ -8647,7 +8667,7 @@ RYD_PresentRHQ =
 				}
 			};
 
-			if (_type in ["air","tank","wheeled_apc_f"]) then
+			if (_type in ["air","tank","wheeled_apc_f","gm_wheeled_APC_base"]) then
 			{
 				_crew = _vehClass >> _veh >> "crew";
 				
