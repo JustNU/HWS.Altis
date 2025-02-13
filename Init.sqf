@@ -3823,15 +3823,11 @@ else
 {
 	_eh = _x addEventHandler ["Hit",{_this call RYD_WS_onHit}];
 	_eh2 = _x addEventHandler ["Killed",{_this call RYD_WS_onDeathA}];
-	_x setVariable ["WS_myName",name _x];
-	_x linkItem "ItemRadio";
-	_x linkItem "ItemMap";
+	_x setVariable ["WS_myName",name _x]
 } foreach (_fcsA - [player]);
 
 {
 	_eh = _x addEventHandler ["Killed",{_this call RYD_WS_onDeathB}]
-	_x linkItem "ItemRadio";
-	_x linkItem "ItemMap";
 } foreach _fcsB;
 
 //player allowdamage false;
