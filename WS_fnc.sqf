@@ -796,11 +796,82 @@ RYD_WS_RemoveWeapons_Common = [
 	"vn_t54_horn",
 	"UK3CB_BAF_Safe",
 	"rhsusf_weap_duke",
-	"rhsusf_weap_DummyLauncher"
+	"rhsusf_weap_DummyLauncher",
+	"FakeHorn",
+	"Laserdesignator_pilotCamera",
+	"CMFlareLauncher",
+	"CUP_weapon_mastersafe",
+	"VME_VehFlareLauncher",
+	"CMFlareLauncher_Singles",
+	"VME_MASTERSAFE",
+	"CSLA_CMFlareLauncher_128",
+	"CSLA_CMFlareLauncher_192",
+	"CMFlareLauncher_Triples",
+	"CMFlareLauncher_Quadruples",
+	"rhs_weap_MASTERSAFE_Holdster15",
+	"rhsusf_weap_LWIRCM",
+	"rhs_weap_MASTERSAFE",
+	"vn_v_launcher_m18r",
+	"vn_v_launcher_m61",
+	"vn_v_launcher_m7",
+	"vn_v_launcher_m127",
+	"vn_v_launcher_rdg2",
+	"vn_v_launcher_rsp30",
+	"vn_v_launcher_rgd5",
+	"vn_cmflarelauncher_singles_f4c",
+	"gm_platan_launcher",
+	"rhs_weap_DIRCM_Lipa",
+	"rhs_weap_fcs_mi24",
+	"rhs_weap_klen_ps",
+	"rhs_weap_DIRCM_Vitebsk",
+	"rhs_weap_CMFlareLauncher",
+	"rhsusf_weap_ANALQ144",
+	"rhs_weap_fcs_ah64",
+	"rhs_weap_laserDesignator_AI",
+	"rhsusf_weap_ANALQ212",
+	"rhsusf_weap_ANAAQ24",
+	"UK3CB_BAF_CMFlareLauncher",
+	"UK3CB_BAF_IRJammer",
+	"UK3CB_BAF_Laserdesignator_mounted",
+	"FakeWeapon",
+	"Uns_FakeWeapon",
+	"CUP_Vmlauncher_FFAR_veh_19In",
+	"rhs_weap_planeai",
+	"SEARCHLIGHT",
+	"CUP_Vmlauncher_FFAR_veh",
+	"CUP_Laserdesignator_mounted",
+	"AmbulanceHorn",
+	"BikeHorn",
+	"MiniCarHorn",
+	"PoliceHorn",
+	"SportCarHorn",
+	"Bomb_Leaflets",
+	"FlareLauncher",
+	"ProbingLaser_01_F",
+	"BombDemine_01_F"
 ];
 
 RYD_WS_RemoveWeapons_Air = [
-	""
+	"LMG_Minigun_Transport",
+	"CUP_M134",
+	"US85_M240_UH60_L",
+	"US85_M139_Dispenser",
+	"vn_m60_v_07",
+	"vn_m1919_v_07",
+	"vn_pk_v_07",
+	"vn_ns23_v_01",
+	"rhs_weap_pkt_v1",
+	"rhs_weap_m134_minigun_1",
+	"uns_M2_v1",
+	"uns_m2_v3",
+	"uns_pkt2",
+	"uns_M60_v1",
+	"CUP_Vlmg_L7A2_veh",
+	"CUP_Vlmg_M134_UH1Y_veh",
+	"CUP_Vhmg_PKT_veh_Noeject",
+	"CUP_Vlmg_M134_veh",
+	"CUP_Vhmg_GAU21_MH60_Left",
+	"LMG_Minigun_Transport2"
 ];
 
 RYD_WS_RemoveWeapons_Armor = [
@@ -2752,11 +2823,12 @@ RYD_WS_DynamicRHQ =
 												RHQ_AAInf = RHQ_AAInf - [_class];
 												RHQ_ATInf = RHQ_ATInf - [_class];
 												//RHQ_Cargo = RHQ_Cargo - [_class];
+												RHQ_Cars pushBackUnique _class;
 												
-												diag_log "cars";
-												diag_log format ["_class: %1", _class];
-												diag_log format ["_wpnsArr: %1", _wpnsArr];
-												diag_log format ["isKindOf: %1", not (_class isKindOf "wheeled_apc_f")];
+												//diag_log "cars";
+												//diag_log format ["_class: %1", _class];
+												//diag_log format ["_wpnsArr: %1", _wpnsArr];
+												//diag_log format ["isKindOf: %1", not (_class isKindOf "wheeled_apc_f")];
 												
 												if (({_x} count [_isAmmoS,_isFuelS,_isRepS,_isMedS]) < 1) then
 												{
@@ -2805,9 +2877,9 @@ RYD_WS_DynamicRHQ =
 												{
 													RHQ_NCCargo pushBack _class;
 												
-													diag_log "armor";
-													diag_log format ["_class: %1", _class];
-													diag_log format ["_wpnsArr: %1", _wpnsArr];
+													//diag_log "armor";
+													//diag_log format ["_class: %1", _class];
+													//diag_log format ["_wpnsArr: %1", _wpnsArr];
 													
 													if (({_x} count [_isAmmoS,_isFuelS,_isRepS,_isMedS]) < 1) then
 													{
