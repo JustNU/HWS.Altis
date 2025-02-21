@@ -28,10 +28,10 @@ RydHQB_ReconDistance = 0.7;
 RydHQC_ReconDistance = 0.7;
 RydHQD_ReconDistance = 0.7;
 
-RydHQ_Combining = true;
-RydHQB_Combining = true;
-RydHQC_Combining = true;
-RydHQD_Combining = true;
+RydHQ_Combining = false;
+RydHQB_Combining = false;
+RydHQC_Combining = false;
+RydHQD_Combining = false;
 
 RydHQ_SupportRTB = true;
 RydHQB_SupportRTB = true;
